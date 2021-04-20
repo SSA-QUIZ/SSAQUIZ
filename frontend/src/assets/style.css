@@ -41,3 +41,20 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* Login.vue */
+
+.bg {
+  background-color: #cfe1f6;
+  height: 100vh;
+}
+.login-btn {
+  background-color: #636be8 !important;
+  color: #ffffff !important;
+}
+.card {
+  background-color: transparent !important;
+}
+.atag {
+  text-align: end;
+}
