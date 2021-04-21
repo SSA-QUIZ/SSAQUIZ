@@ -22,6 +22,7 @@ export default {
 .inputBox {
   font-family: 'Noto Sans KR', sans-serif;
 	font-weight: bold;
+	max-width: 100%;
 	width: 300px;
 	height: 50px;
 	padding: 10px;
