@@ -1,32 +1,40 @@
 <template>
-  <v-list-item>
-    <v-list-item-content>
-      <v-text-field
-        label="ID를 입력해주세요."
-        solo
-        hide-details
-        class="mt-10 mb-3"
-      ></v-text-field>
-      <v-text-field
-        label="PW를 입력해주세요."
-        solo
-        hide-details
-        class="mb-3"
-      ></v-text-field>
-      <v-btn class="login-btn mb-3">로그인 하기</v-btn>
-      <v-btn class="login-btn mb-3">구글로그인 하기</v-btn>
-      <p class="atag">퀴즈를 풀러 오셨어요?</p>
-      <p class="atag" @click="moveToSignup">아직 저희 회원이 아니신가요?</p>
-    </v-list-item-content>
-  </v-list-item>
+  <div id="loginForm">
+    <InputBox placeholder="ID를 입력해주세요." @change-input="setID" />
+    <InputBox placeholder="PW를 입력해주세요." @change-input="setPW" />
+    <InputButton @click.prevent="" text="로그인 하기" />
+    <InputButton @click.prevent="" text="구글로 로그인하기" />
+    <br />
+    <router-link class="hyperLink" to="">퀴즈를 풀러 오셨어요?</router-link>
+    <br />
+    <a class="hyperLink" @click="moveToSignup">아직 저희 회원이 아니신가요?</a>
+  </div>
 </template>
 
 <script>
+import InputBox from "@/components/common/InputBox.vue";
+import InputButton from "@/components/common/InputButton.vue";
 export default {
   name: "LoginForm",
+  components: {
+    InputBox,
+    InputButton,
+  },
+  data: function () {
+    return {
+      ID: "",
+      PW: "",
+    };
+  },
   methods: {
     moveToSignup: function () {
-      this.$emit("signal", true);
+      this.$emit("move-to-signup");
+    },
+    setID: function (data) {
+      this.ID = data;
+    },
+    setPW: function (data) {
+      this.PW = data;
     },
   },
 };

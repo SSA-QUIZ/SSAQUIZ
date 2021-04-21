@@ -44,30 +44,6 @@ table {
 	border-spacing: 0;
 }
 
-/* Login.vue */
-
-#login {
-	background-color: #cfe1f6 !important;
-  height: 100vh;
-	display: flex;
-	align-items: center;
-}
-#login .login-btn {
-  background-color: #636be8;
-  color: #ffffff;
-}
-#login .card-bg {
-  background-color: transparent;
-	max-width: 344px;
-}
-#login .atag {
-  text-align: end;
-}
-
-/* Signup.vue */
-#signup .card {
-	background-color: transparent;
-}
 /* 초기화 코드 끝 */
 
 
@@ -127,3 +103,43 @@ input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder {
 }
 
 /* app 화면 높이 지정 끝 */
+
+/* Login.vue */
+
+#login {
+	background-color: #cfe1f6 !important;
+  height: 100vh;
+	display: flex;
+	align-items: center;
+}
+
+#login .card-bg {
+  background-color: transparent;
+	max-width: 344px;
+	height: 450px;
+}
+
+#loginForm {
+	text-align: center;
+	margin-top: 40px;
+	height: 300px;
+}
+
+#loginForm .hyperLink {
+	font-family: 'Noto Sans KR', sans-serif;
+	color: grey;
+	margin: 5px 0 0 0;
+}
+
+/* Signup */
+#signup {
+	text-align: center;
+	margin-top: 40px;
+	height: 300px;
+}
+
+#signup .hyperLink {
+	font-family: 'Noto Sans KR', sans-serif;
+	color: grey;
+	margin: 5px 0 0 0;
+}
