@@ -44,17 +44,20 @@ table {
 
 /* Login.vue */
 
-.bg {
-  background-color: #cfe1f6;
+#login {
+	background-color: #cfe1f6 !important;
   height: 100vh;
+	display: flex;
+	align-items: center;
 }
-.login-btn {
-  background-color: #636be8 !important;
-  color: #ffffff !important;
+#login .login-btn {
+  background-color: #636be8;
+  color: #ffffff;
 }
-.card {
-  background-color: transparent !important;
+#login .card-bg {
+  background-color: transparent;
+	max-width: 344px;
 }
-.atag {
+#login .atag {
   text-align: end;
 }
