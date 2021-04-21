@@ -1,10 +1,10 @@
 <template>
   <v-container id="welcomePage" fluid fill-height>
     <v-card class="mx-auto card d-flex flex-column align-center" color="rgba(0,0,0,0)" flat>
-      <v-img class="ssaquizImage" src="@/assets/images/파랑고래_아이콘.png"></v-img>
+      <v-img class="ssaquizImage" src="@/assets/images/WelcomPage-icon.png"></v-img>
       <v-img class="ssaquizLogo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ"></v-img>
       <InputBox type="number" placeholder="PIN을 입력해주세요" @change-input="changePIN" />
-      <InputButton @click.prevent="sendPIN" text="퀴즈 입장하기"/>
+      <InputButton @click.prevent="sendPIN" text="퀴즈 입장하기" />
       <router-link class="hyperLink" to="Login">퀴즈를 만들러 오셨어요?</router-link>
     </v-card>
   </v-container>
@@ -42,12 +42,11 @@ export default {
 }
 
 #welcomePage .ssaquizImage {
-  width: 300px;
-	transform: matrix(-0.99, -0.11, -0.11, 0.99, 0, 0);
+  width: 70%;
 }
 
 #welcomePage .ssaquizLogo {
-	width: 320px;
+  width: 70%;
 	justify-content: center;
 	margin: 0 0 15px 0;
 }
