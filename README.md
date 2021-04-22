@@ -1,5 +1,4 @@
-![SSAQUIZ](C:\ssafy\s04p31a304\README.assets\banner.png)
-
+<center><img src="README.assets/banner.png" width="100%" height="100%" alt="SSAQUIZ"></center>
 <br/>
 
 # ✨About SSAQUIZ
@@ -40,13 +39,15 @@
   3. 제한 시간이 다 지난 뒤, 교육자는 퀴즈의 정답이 나온 페이지를 보여주고, 학생 개별에게는 정/오답 페이지가 나타남
 
 * 퀴즈가 끝나면 1, 2, 3등 학생의 닉네임을 표시
-  <br/>
+
+<br/>
 
 ## 🛠기술 스택  
 
 <center><img src="README.assets/tech_stack.png" width="70%" height="100%" alt="tech_stack"></center>
 
-  
+<br/><br/>
+
 
 ## 💫기대효과  
 
