@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import LoginForm from "@/components/LoginForm.vue";
-import SignupForm from "@/components/SignupForm.vue";
+import LoginForm from "@/components/Form/LoginForm.vue";
+import SignupForm from "@/components/Form/SignupForm.vue";
 export default {
   name: "Login",
   components: {
@@ -25,6 +25,7 @@ export default {
   },
   data: function () {
     return {
+      // window slide를 위한 변수
       step: 0,
     };
   },
