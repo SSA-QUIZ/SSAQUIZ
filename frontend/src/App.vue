@@ -10,10 +10,8 @@ import '@/assets/style.css';
 export default {
   name: "App",
 
-  components: {
-  },
+  components: {},
 
-  data: () => ({
-  }),
+  data: () => ({}),
 };
 </script>
