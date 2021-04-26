@@ -7,7 +7,9 @@ import com.ssafy.ssaquizauth.repository.UserRepository;
 import com.ssafy.ssaquizauth.security.UserPrincipal;
 import com.ssafy.ssaquizauth.security.oauth2.user.OAuth2UserInfo;
 import com.ssafy.ssaquizauth.security.oauth2.user.OAuth2UserInfoFactory;
+import com.ssafy.ssaquizauth.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -21,14 +23,18 @@ import java.util.Optional;
 
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+    @Value("${app.auth.tokenExpirationMsec}")
+    private long tokenExpirationMsec;
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-
         try {
             return processOAuth2User(oAuth2UserRequest, oAuth2User);
         } catch (AuthenticationException ex) {
@@ -43,6 +49,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
+        // 소셜 로그인시 Redis에 데이터 넣기
+        redisUtil.setDataExpire(oAuth2UserInfo.getEmail(), "exist", tokenExpirationMsec);
+
         if(StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
         	System.out.println("StringUtils.isEmpty");
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
