@@ -184,7 +184,7 @@ table {
 /* <input> type="number" 화살표 없애기 끝 */
 
 
-/* <input> focus 시 placehodler 안보이게 하기 시작 */
+/* <input> focus 시 placeholder 안보이게 하기 시작 */
 
 /* WebKit browsers */ 
 input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder {
@@ -206,7 +206,7 @@ input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder {
 	color:transparent;
 }
 
-/* <input> focus 시 placehodler 안보이게 하기 끝 */
+/* <input> focus 시 placeholder 안보이게 하기 끝 */
 
 
 /* app 화면 높이 지정 시작 */

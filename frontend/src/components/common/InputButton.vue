@@ -1,5 +1,5 @@
 <template>
-  <button class="PINButton">{{ text }}</button>
+  <button class="input-button">{{ text }}</button>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style>
-.PINButton {
+.input-button {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: bold;
 	color: #FFFFFF;
@@ -23,15 +23,15 @@ export default {
 	margin: 5px 0;
 }
 
-.PINButton:hover {
+.input-button:hover {
 	background-color: #454995;
 }
 
-.PINButton:focus {
+.input-button:focus {
   outline: none;
 }
 
-.PINButton:active {
+.input-button:active {
 	background-color: #989DED;
 }
 
