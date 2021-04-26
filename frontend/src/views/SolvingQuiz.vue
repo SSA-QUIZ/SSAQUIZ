@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: #f2f2f2; height: 100%;">
-    <Header nickname="최씨" score="950" />
+    <Header mode="on" nickname="최씨" score="950" />
     <ProgressBar index="2" all="12" />
     <MultipleChoice :choice="choice" v-show="type == 'multiple' || type == 'vote'" />
   </div>

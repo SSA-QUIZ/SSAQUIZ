@@ -1,12 +1,13 @@
 <template>
   <header>
-    <div>
-      <img width="40%" src="@/assets/images/SSAQUIZ.png">
+    <div style="width: 30%;">
+      <img width="100%" src="@/assets/images/SSAQUIZ.png">
     </div>
-    <div id="user-info" v-if="mode == 'student'">
+    <div id="user-info" v-if="mode == 'on'">
       <div id="user-info__nickname">{{ nickname }}</div>
       <div id="user-info__score">{{ score }}</div>
     </div>
+    <div id="user-info" v-else></div>
   </header>
 </template>
 
@@ -14,14 +15,10 @@
 export default {
   name: 'Header',
   props: [
+    'mode',
     'nickname',
     'score'
   ],
-  data: function () {
-    return {
-      mode: 'student'
-    }
-  }
 }
 </script>
 
@@ -29,15 +26,15 @@ export default {
 header {
 	height: 15%;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-  margin-top: -0.5%;
   margin-bottom: -2%;
 	padding: 0vh 3vh 0vh 3vh;
 }
 #user-info {
+  width: 50%;
 	display: flex;
-	justify-content: center;
+	justify-content:flex-end;
 	align-items: center;
 }
 #user-info__nickname {
@@ -53,6 +50,7 @@ header {
 	color: rgb(255, 255, 255);
 	background-color: rgb(170, 170, 170);
 	border-radius: 15px;
+  margin-right: 3%;
 	padding: 1vh 3vh 1vh 3vh;
 }
 </style>
