@@ -1,6 +1,6 @@
 <template>
   <v-chip
-    class="nicknameButton"
+    class="nickname-button"
     large
   >
     {{student.nickname}}
@@ -12,13 +12,12 @@ export default {
   name: "NicknameButton",
   props: ['student', 'index'],
   mounted: function () {
-    console.log(this.student)
-    document.getElementsByClassName("nicknameButton")[this.index].style.backgroundColor = this.student.color
+    document.getElementsByClassName("nickname-button")[this.index].style.backgroundColor = this.student.color
   },
 }
 </script>
 <style>
-.nicknameButton {
+.nickname-button {
   margin: 1vh;
   vertical-align: baseline;
 }

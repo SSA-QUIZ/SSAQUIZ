@@ -1,22 +1,21 @@
 <template>
-  <v-container id="lobbyPageT" fluid fill-height>
-    <v-card class="mx-auto card d-flex flex-column align-center" color="rgba(0,0,0,0)" flat>
-      <v-img class="ssaquizLogo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ"></v-img>
-      <div>
-        
-        <v-img class="ssaquizLogo" src="@/assets/images/QRcode.png" alt="SSAQUIZ"></v-img>
-
-        <div class="nicknameArea">
-          <div
-            class="nicknameBox"
-            v-for="(student, index) in students"
-            :key="index"
-          ><NicknameButton :student=student :index=index /></div>
-        </div>
+  <div id="lobby-page--teacher">
+    <div id="lobby-page--teacher__header">
+      <img class="ssaquiz-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
+    </div>
+    <div id="lobby-page--teacher__body">
+      <div id="lobby-page--teacher__info">
+        <button class="PIN-button">{{ PIN }}</button>
+        <img class="QR-code" src="@/assets/images/QRcode.png" alt="QRcode">
       </div>
-      
-    </v-card>
-  </v-container>
+      <div id="lobby-page--teacher__nickname">
+        <div
+          v-for="(student, index) in students"
+          :key="index"
+        ><NicknameButton :student=student :index=index /></div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -29,6 +28,7 @@ export default {
   },
   data: function () {
     return {
+      PIN: 4964848,
       students: [
         {
           nickname: '기능 정의서',
@@ -101,27 +101,63 @@ export default {
 </script>
 
 <style>
-#lobbyPageT {
+#lobby-page--teacher {
+  height: 100%;
   background-color: #CFE1F6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#lobbyPageT .ssaquizImage {
-  width: 70%;
+#lobby-page--teacher__header {
+  margin: 150px 0 50px 0;
+  max-width: 100vw;
+  width: 95%;
+  display: flex;
+  justify-content: center;
 }
 
-#lobbyPageT .ssaquizLogo {
-  width: 70%;
+.ssaquiz-logo {
+  max-width: 100%;
 	justify-content: center;
 	margin: 0 0 15px 0;
 }
 
-#lobbyPageT .PINQR {
-  background-color: red;
+#lobby-page--teacher__body {
+  display: flex;
 }
 
-#lobbyPageT .nicknameArea {
-  width: 500px;
-  height: 300px;
+#lobby-page--teacher__info {
+  margin-right: 30px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PIN-button {
+  font-family: 'Noto Sans KR', sans-serif;
+	font-weight: bold;
+  font-size: 40px;
+	color: #FFFFFF;
+  max-width: 100%;
+	width: 250px;
+	height: 60px;
+	background-color: #545DE3;
+	border-radius: 20px;
+}
+
+.QR-code {
+  width: 100%;
+}
+
+#lobby-page--teacher__nickname {
+  width: 600px;
+  height: 400px;
+  border-width: 10px 0 10px 10px;
+  border-style: solid;
+  border-color: #FFFFFF;
+  border-radius: 20px;
   background-color: #FFFFFF;
   overflow: auto;
   display: flex;

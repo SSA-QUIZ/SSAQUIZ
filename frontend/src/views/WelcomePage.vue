@@ -1,13 +1,13 @@
 <template>
-  <v-container id="welcomePage" fluid fill-height>
-    <v-card class="mx-auto card d-flex flex-column align-center" color="rgba(0,0,0,0)" flat>
-      <v-img class="ssaquizImage" src="@/assets/images/WelcomPage-icon.png"></v-img>
-      <v-img class="ssaquizLogo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ"></v-img>
+  <div id="welcome-page">
+    <div id="PIN-form">
+      <img class="ssaquiz-image" src="@/assets/images/WelcomPage-icon.png" alt="">
+      <img class="ssaquiz-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
       <InputBox type="number" placeholder="PIN을 입력해주세요" @change-input="changePIN" />
       <InputButton @click.prevent="sendPIN" text="퀴즈 입장하기" />
-      <router-link class="hyperLink" to="Login">퀴즈를 만들러 오셨어요?</router-link>
-    </v-card>
-  </v-container>
+      <router-link class="hyperlink" to="Login">퀴즈를 만들러 오셨어요?</router-link>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -37,21 +37,32 @@ export default {
 </script>
 
 <style>
-#welcomePage {
+#welcome-page {
+  height: 100%;
   background-color: #CFE1F6;
+  display: flex;
+  justify-content: center;
 }
 
-#welcomePage .ssaquizImage {
-  width: 70%;
+#welcome-page #PIN-form {
+  display: flex;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#welcomePage .ssaquizLogo {
-  width: 70%;
+#welcome-page #PIN-form .ssaquiz-image {
+  width: 95%;
+}
+
+#welcome-page #PIN-form .ssaquiz-logo {
+  width: 95%;
 	justify-content: center;
 	margin: 0 0 15px 0;
 }
 
-#welcomePage .hyperLink {
+#welcome-page #PIN-form .hyperlink {
 	font-family: 'Noto Sans KR', sans-serif;
 	color: grey;
 	margin: 5px 0 0 0;
