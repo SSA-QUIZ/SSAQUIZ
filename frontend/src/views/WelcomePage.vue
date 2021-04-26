@@ -1,25 +1,27 @@
 <template>
   <div id="welcome-page">
     <div id="PIN-form">
-      <img
-        class="ssaquiz-image"
-        src="@/assets/images/WelcomPage-icon.png"
-        alt=""
-      />
-      <img
-        class="ssaquiz-logo"
-        src="@/assets/images/SSAQUIZ.png"
-        alt="SSAQUIZ"
-      />
-      <InputBox
-        type="number"
-        placeholder="PIN을 입력해주세요"
-        @change-input="changePIN"
-      />
-      <InputButton @click.prevent="sendPIN" text="퀴즈 입장하기" />
-      <router-link class="hyperlink" to="Login"
-        >퀴즈를 만들러 오셨어요?</router-link
-      >
+      <img class="ssaquiz-image" src="@/assets/images/WelcomPage-icon.png" alt="logo" />
+      <img class="ssaquiz-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ"/>
+      <div id="slide">
+        <input type="radio" name="pos" id="pos1" class="input-style" checked />
+        <input type="radio" name="pos" id="pos2" class="input-style" />
+        <ul>
+          <li>
+            <div id="PIN-form">
+              <InputBox type="number" placeholder="PIN을 입력해주세요" @change-input="changePIN" />
+              <InputButton @click.native="moveToNickname" text="퀴즈 입장하기" />
+              <router-link class="hyperlink" to="Login">퀴즈를 만들러 오셨어요?</router-link>
+            </div>
+          </li>
+          <li>
+            <div id="nickname-form">
+              <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" />
+              <InputButton @click.native="connectQuiz" text="퀴즈 풀러가기" />
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +39,7 @@ export default {
   data: function () {
     return {
       PIN: Number,
+      nickname: String,
     };
   },
   mounted() {
@@ -46,8 +49,14 @@ export default {
     changePIN: function (data) {
       this.PIN = data;
     },
-    sendPIN: function () {
-      console.log("클릭하면 PIN 서버로 보내기");
+    changeNickname: function (data) {
+      this.nickname = data;
+    },
+    moveToNickname: function () {
+      document.getElementById("pos2").checked = true;
+    },
+    connectQuiz: function () {
+      console.log(this.PIN + " " + this.nickname + " websocket 연결")
     },
 
     // 구글 로그인 token
@@ -96,4 +105,44 @@ export default {
   color: grey;
   margin: 5px 0 0 0;
 }
+
+/* slide css */
+
+#slide {
+  overflow: hidden;
+  max-width: 344px;
+}
+
+/* 슬라이드 컨테이너(ul)와 슬라이드 아이템(li) */
+
+#slide ul {
+  width: 400%;
+  height: 100%;
+  transition: 0.3s;
+}
+#slide ul:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+#slide li {
+  float: left;
+  width: 25%;
+  height: 100%;
+}
+
+/* Radio의 속성인 input 제거 & */
+
+#slide .input-style {
+  display: none;
+}
+
+/* radio check에 따른 슬라이드 아이템 변경 */
+#pos1:checked ~ ul {
+  margin-left: -5%;
+}
+#pos2:checked ~ ul {
+  margin-left: -105%;
+}
+
 </style>
