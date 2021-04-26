@@ -3,10 +3,7 @@ package com.ssafy.ssaquizauth.controller;
 import com.ssafy.ssaquizauth.exception.BadRequestException;
 import com.ssafy.ssaquizauth.model.AuthProvider;
 import com.ssafy.ssaquizauth.model.User;
-import com.ssafy.ssaquizauth.payload.ApiResponse;
-import com.ssafy.ssaquizauth.payload.AuthResponse;
-import com.ssafy.ssaquizauth.payload.LoginRequest;
-import com.ssafy.ssaquizauth.payload.SignUpRequest;
+import com.ssafy.ssaquizauth.payload.*;
 import com.ssafy.ssaquizauth.repository.UserRepository;
 import com.ssafy.ssaquizauth.security.TokenProvider;
 
@@ -27,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -94,9 +92,25 @@ public class AuthController {
     }
 
     @ApiOperation(value = "로그아웃")
-    @GetMapping("/logout/{email}")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(@PathVariable("email") String email) {
         redisUtil.deleteData(email);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "회원정보수정")
+    @PostMapping("/modify")
+    public ResponseEntity<?> modify(@RequestBody ModifyRequest modifyRequest) {
+        Optional<User> user = userRepository.findByEmail(modifyRequest.getEmail());
+        if(!user.isPresent()) {
+            throw new BadRequestException("Email does not exist.");
+        }
+
+        user.get().setImageUrl(modifyRequest.getImageUri());
+        user.get().setName(modifyRequest.getName());
+        user.get().setPassword(passwordEncoder.encode(modifyRequest.getPassword()));
+        userRepository.save(user.get());
+
         return new ResponseEntity(HttpStatus.OK);
     }
 
