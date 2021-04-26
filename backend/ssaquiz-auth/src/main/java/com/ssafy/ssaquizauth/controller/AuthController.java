@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -90,6 +91,13 @@ public class AuthController {
 
         return ResponseEntity.created(location)
                 .body(new ApiResponse(true, "User registered successfully@"));
+    }
+
+    @ApiOperation(value = "로그아웃")
+    @GetMapping("/logout/{email}")
+    public ResponseEntity<?> logout(@PathVariable("email") String email) {
+        redisUtil.deleteData(email);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
