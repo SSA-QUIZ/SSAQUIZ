@@ -10,7 +10,9 @@ import com.ssafy.ssaquizauth.payload.SignUpRequest;
 import com.ssafy.ssaquizauth.repository.UserRepository;
 import com.ssafy.ssaquizauth.security.TokenProvider;
 
-import springfox.documentation.annotations.ApiIgnore;
+import com.ssafy.ssaquizauth.util.RedisUtil;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
-@ApiIgnore
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    @Value("${app.auth.tokenExpirationMsec}")
+    private long tokenExpirationMsec;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,6 +45,10 @@ public class AuthController {
     @Autowired
     private TokenProvider tokenProvider;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @ApiOperation(value = "로그인")
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -53,10 +60,13 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        redisUtil.setDataExpire(loginRequest.getEmail(), "exist", tokenExpirationMsec);
+
         String token = tokenProvider.createToken(authentication);
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
+    @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
