@@ -1,8 +1,8 @@
 <template>
-  <div id="progress_bar">
+  <div id="progress-bar">
     <div id="progress"><h1>{{ index }} / {{ all }}</h1></div>
-    <div id="progress_all">
-      <div id="progress_now"></div>
+    <div id="progress-all">
+      <div id="progress-now"></div>
     </div>
   </div>
 </template>
@@ -30,12 +30,36 @@ export default {
   methods: {
     changeWidth: function () {
       this.width = this.index / this.all * 100;
-      document.getElementById("progress_now").style.width = this.width + "%";
+      document.getElementById("progress-now").style.width = this.width + "%";
     }
   },
 }
 </script>
 
 <style>
-
+#progress-bar {
+	padding: 1vh 4vh 2vh 4vh;
+}
+#progress {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: Jua;
+	font-size: 3vh;
+	font-weight: 900;
+	margin-bottom: 2%;
+}
+#progress-all {
+	position: relative; 
+	background-color: #989ded; 
+	width: 100%; 
+	height: 2vh; 
+	border-radius: 15px;
+}
+#progress-now {
+	position: absolute;
+	background-color: #4f38de;
+	height: 2vh;
+	border-radius: 15px;
+}
 </style>
