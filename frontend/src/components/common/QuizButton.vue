@@ -1,5 +1,5 @@
 <template>
-  <button><div class="quiz-button" :style="style"><i :class="icon"></i></div></button>
+  <button class="quiz-button" :style="style"><i :class="icon"></i></button>
 </template>
 
 <script>
