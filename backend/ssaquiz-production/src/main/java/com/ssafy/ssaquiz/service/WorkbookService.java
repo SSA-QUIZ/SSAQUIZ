@@ -24,11 +24,11 @@ public class WorkbookService {
 
     public BasicResponse insertSlide(Workbook workbook,
                                      String category, String question,
-                                     MultipartFile inputFile, String answer,
+                                     String imgPath, String answer,
                                      List<String> orderedAnswer, List<String> answerList,
                                      int time, int scoreFactor, int type) {
         Slide slide = Slide.builder()
-                .category(category).question(question).resourceUrl("http")
+                .category(category).question(question).imagePath(imgPath)
                 .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
                 .time(time).scoreFactor(scoreFactor).type(type).build();
 
@@ -46,12 +46,12 @@ public class WorkbookService {
 
     public BasicResponse insertWorkbook(String workbookTitle, long userId,
                                         String category, String question,
-                                        MultipartFile inputFile, String answer,
+                                        String imgPath, String answer,
                                         List<String> orderedAnswer, List<String> answerList,
                                         int time, int scoreFactor, int type) {
 
         Slide slide = Slide.builder()
-                .category(category).question(question).resourceUrl("http")
+                .category(category).question(question).imagePath(imgPath)
                 .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
                 .time(time).scoreFactor(scoreFactor).type(type).build();
 
