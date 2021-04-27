@@ -34,7 +34,7 @@ export default {
 .choice-row {
 	display: flex;
 	width: 100%;
-	margin: 1% 0% 1% 0%;
+	margin: 0.3% 0% 0.3% 0%;
 }
 .choice {
 	display: flex;

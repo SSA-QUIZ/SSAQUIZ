@@ -38,6 +38,7 @@ export default {
 
 <style>
 #progress-bar {
+  width: 100%;
 	padding: 1vh 4vh 2vh 4vh;
 }
 #progress {
