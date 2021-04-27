@@ -1,32 +1,11 @@
 <template>
-  <div id="signup">
-    <!---------- Tab ------------>
-    <v-tabs
-      v-model="tabs"
-      class="tabs"
-      background-color="transparent"
-      centered
-      height="30"
-    >
-      <v-tab v-for="item in items" :key="item.id" @click="changeTabs(item.id)">
-        {{ item.name }}
-      </v-tab>
-    </v-tabs>
-
-    <!---------- window slide ------------>
-    <v-window v-model="turn">
-      <v-window-item class="SSAQUIZSignup">
-        <InputBox placeholder="E-MAIL" @change-input="setEmail" />
-        <InputBox placeholder="비밀번호" @change-input="setPW" />
-        <InputBox placeholder="비밀번호 확인" @change-input="setPWConfirm" />
-        <InputButton @click.prevent="" text="회원가입" />
-        <br />
-        <a class="hyperLink" @click="moveToLogin">로그인 화면으로 돌아가기</a>
-      </v-window-item>
-      <v-window-item class="googleSignup">
-        <InputButton @click.prevent="" text="구글 계정으로 회원가입" />
-      </v-window-item>
-    </v-window>
+  <div id="signup-form">
+    <InputBox placeholder="E-MAIL" @change-input="setEmail" />
+    <InputBox placeholder="비밀번호" @change-input="setPW" />
+    <InputBox placeholder="비밀번호 확인" @change-input="setPWConfirm" />
+    <InputButton @click.prevent="" text="회원가입" />
+    <br />
+    <a class="hyper-link" @click="moveToLogin">로그인 화면으로 돌아가기</a>
   </div>
 </template>
 
@@ -41,14 +20,6 @@ export default {
   },
   data: function () {
     return {
-      // tab change를 위한 변수
-      tabs: null,
-      items: [
-        { id: 0, name: "SSAQUIZ" },
-        { id: 1, name: "Google" },
-      ],
-      turn: 0,
-
       // input parameter
       Email: "",
       Password: "",
@@ -56,13 +27,6 @@ export default {
     };
   },
   methods: {
-    changeTabs: function (id) {
-      if (id === 0) {
-        this.turn--;
-      } else {
-        this.turn++;
-      }
-    },
     moveToLogin: function () {
       this.$emit("move-to-login");
     },
@@ -80,4 +44,16 @@ export default {
 </script>
 
 <style>
+/* Signup.vue */
+#signup-form {
+  text-align: center;
+  margin-top: 55px;
+  height: 300px;
+}
+
+#signup-form .hyper-link {
+  font-family: "Noto Sans KR", sans-serif;
+  color: grey;
+  margin: 5px 0 0 0;
+}
 </style>

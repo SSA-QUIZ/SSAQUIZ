@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import WelcomePage from '@/views/WelcomePage.vue'
+import SolvingQuiz from '@/views/SolvingQuiz.vue'
+import LobbyPageT from '@/views/LobbyPageT.vue'
 import Login from '../views/Login.vue'
-import SolvingQuiz from '../views/SolvingQuiz.vue'
+import UserPage from '../views/UserPage.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +23,16 @@ const routes = [
     path: '/solving-quiz',
     name: 'SolvingQuiz',
     component: SolvingQuiz
+  },
+  {
+    path: '/lobby/:quizID',
+    name: 'LobbyPageT',
+    component: LobbyPageT
+  },
+  {
+    path: '/user-page',
+    name: 'UserPage',
+    component: UserPage
   },
 ]
 
