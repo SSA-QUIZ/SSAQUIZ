@@ -7,6 +7,7 @@ import Login from '../views/Login.vue'
 import UserPage from '../views/UserPage.vue'
 import CorrectAnswer from '../views/QuizResultsPage/CorrectAnswer.vue'
 import WrongAnswer from '../views/QuizResultsPage/WrongAnswer.vue'
+import AnswerPage from '../views/AnswerPage.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
     path: '/user-page',
     name: 'UserPage',
     component: UserPage
+  },
+  {
+    path: '/answer-page',
+    name: 'AnswerPage',
+    component: AnswerPage
   },
 ]
 
