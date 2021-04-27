@@ -5,6 +5,7 @@ import SolvingQuiz from '@/views/SolvingQuiz.vue'
 import LobbyPageT from '@/views/LobbyPageT.vue'
 import Login from '../views/Login.vue'
 import UserPage from '../views/UserPage.vue'
+import UserInfoPage from '../views/UserInfoPage.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/user-page',
     name: 'UserPage',
     component: UserPage
+  },
+  {
+    path: '/user-info',
+    name: 'UserInfo',
+    component: UserInfoPage
   },
 ]
 
