@@ -4,13 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Document(collection="workbook")
 @ToString
@@ -18,8 +17,12 @@ import java.util.Map;
 @Setter
 @Getter
 public class Workbook {
-    long id;
-    String workbookTitle;
-    long userId;
-    Map<Integer, Slide> slides = new HashMap<>();
+    @Id
+    private ObjectId id;
+
+    private long userId;
+
+    private String workbookTitle;
+
+    private List<Slide> slideList = new ArrayList<>();
 }

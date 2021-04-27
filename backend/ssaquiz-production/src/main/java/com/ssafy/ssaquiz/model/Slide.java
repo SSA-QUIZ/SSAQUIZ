@@ -1,9 +1,7 @@
 package com.ssafy.ssaquiz.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,11 +13,13 @@ import lombok.ToString;
 @Setter
 @Getter
 public class Slide {
-	String answer;
-	List<String> orderedAnswer = new ArrayList<>();
-	List<String> answerList = new ArrayList<>();
-	String category;
-	String question;
-	String resourceUrl;
-	Map<String, String> settings = new HashMap<>();
+    private String category;
+    private String question;
+    private String resourceUrl;
+    private String answer;
+    private List<String> orderedAnswer = new ArrayList<>();
+    private List<String> answerList = new ArrayList<>();
+    private int time;
+    private int scoreFactor;
+    private int type;
 }
