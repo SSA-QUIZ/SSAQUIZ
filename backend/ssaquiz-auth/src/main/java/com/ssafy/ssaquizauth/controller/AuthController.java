@@ -1,5 +1,6 @@
 package com.ssafy.ssaquizauth.controller;
 
+import com.ssafy.ssaquizauth.Service.S3Service;
 import com.ssafy.ssaquizauth.exception.BadRequestException;
 import com.ssafy.ssaquizauth.model.AuthProvider;
 import com.ssafy.ssaquizauth.model.User;
@@ -51,14 +52,11 @@ public class AuthController {
     @Autowired
     private RedisUtil redisUtil;
 
-    @Value("${file.localPath}")
-    private String LOCAL_PATH;
+    @Autowired
+    private S3Service s3Service;
 
-    @Value("${file.serverPath}")
-    private String SERVER_PATH;
-
-    @Value("${file.imagePath}")
-    private String IMAGE_PATH;
+    @Value("${file.defaultImagePath}")
+    private String DEFAULT_IMAGE_PATH;
 
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
@@ -91,6 +89,7 @@ public class AuthController {
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
+        user.setImageUrl(DEFAULT_IMAGE_PATH);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -119,16 +118,10 @@ public class AuthController {
             throw new BadRequestException("Email does not exist.");
         }
 
-        UUID uuid = UUID.randomUUID();
-        File file = new File(SERVER_PATH, uuid + ".jpg");
+        String imgPath = s3Service.upload(inputFile);
+        String fileName = UUID.randomUUID().toString() + ".jpg";
 
-        try {
-            inputFile.transferTo(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        user.get().setImageUrl(IMAGE_PATH + file.getName());
+        user.get().setImageUrl(fileName);
         user.get().setName(name);
         user.get().setPassword(passwordEncoder.encode(password));
         userRepository.save(user.get());
