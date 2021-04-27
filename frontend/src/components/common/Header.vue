@@ -38,7 +38,8 @@ header {
 	align-items: center;
 }
 #user-info__nickname {
-  width:8vh;
+  width: 30vh;
+  text-align: end;
 	font-family: "Jua";
 	font-size: 3.5vh;
 	font-weight: 900;
@@ -52,5 +53,11 @@ header {
 	border-radius: 15px;
   margin-right: 3%;
 	padding: 1vh 3vh 1vh 3vh;
+}
+@media (max-width: 700px) {
+  #user-info__nickname {
+    font-size: 2.5vh;
+    margin-right: 2%;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: #f2f2f2; height: 100%;">
-    <Header mode="on" nickname="최씨" score="950" />
+    <Header mode="on" nickname="[서울_3반_최나현]" score="950" />
     <ProgressBar index="2" all="12" />
     <MultipleChoice :choice="choice" v-show="type == 'multiple' || type == 'vote'" />
   </div>
@@ -12,7 +12,7 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 
 export default {
-  name: 'SolvingQuiz',
+  name: 'SolvingQuizPage',
   components: {
     Header,
     ProgressBar,
