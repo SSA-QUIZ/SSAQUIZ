@@ -22,16 +22,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
@@ -79,7 +77,10 @@ public class AuthController {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("accessToken", token);
+        jsonObject.put("id", user.get().getId());
         jsonObject.put("nickname", user.get().getName());
+        jsonObject.put("email", user.get().getEmail());
+        jsonObject.put("imageUrl", user.get().getImageUrl());
 
         BasicResponse result = new BasicResponse();
         result.status = true;
@@ -93,7 +94,7 @@ public class AuthController {
     @PostMapping("/signup")
     public BasicResponse registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new BadRequestException("Email address already in use.");
+            throw new BadRequestException("이메일 중복");
         }
 
         // Creating user's account
@@ -131,12 +132,12 @@ public class AuthController {
         return result;
     }
 
-    @ApiOperation(value = "회원정보 수정")
-    @PostMapping("/modify")
-    public BasicResponse modify(@RequestParam("file") MultipartFile inputFile, @RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
+    @ApiOperation(value = "회원정보 수정 (사진포함)")
+    @PostMapping("/modify-image")
+    public BasicResponse modifyImage(@RequestParam("file") MultipartFile inputFile, @RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if(!user.isPresent()) {
-            throw new BadRequestException("Email does not exist.");
+            throw new BadRequestException("이메일 없음");
         }
 
         String imgPath = s3Service.upload(inputFile);
@@ -153,4 +154,40 @@ public class AuthController {
         return result;
     }
 
+    @ApiOperation(value = "회원정보 수정")
+    @PostMapping("/modify")
+    public BasicResponse modify(@RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(!user.isPresent()) {
+            throw new BadRequestException("이메일 없음");
+        }
+
+        user.get().setName(name);
+        user.get().setPassword(passwordEncoder.encode(password));
+        userRepository.save(user.get());
+
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "회원정보 수정 성공";
+
+        return result;
+    }
+
+    @Transactional
+    @ApiOperation(value = "회원탈퇴")
+    @PostMapping("/withdrawal")
+    public BasicResponse delete(@RequestParam("email") String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(!user.isPresent()) {
+            throw new BadRequestException("이메일 없음");
+        }
+
+        userRepository.deleteByEmail(email);
+
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "회원 탈퇴 성공";
+
+        return result;
+    }
 }
