@@ -1,5 +1,9 @@
 <template>
-  <button class="quiz-button" :style="style"><i :class="icon"></i></button>
+  <button class="quiz-button" :style="style">
+    <span><i :class="icon"></i></span>
+    <span>{{ answer }}</span>
+    <span></span>
+  </button>
 </template>
 
 <script>
@@ -10,11 +14,12 @@ export default {
     'width',
     'height',
     'icon',
-    'margin'
+    'margin',
+    'answer'
   ],
   data: function () {
     return {
-      style: ''
+      style: '',
     }
   },
   created: function () {
@@ -26,21 +31,23 @@ export default {
       if (this.width != undefined) this.style += "width: " + this.width + ";\n";
       if (this.height != undefined) this.style += "height: " + this.height + ";\n";
       if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
+      if (this.answer != undefined) this.style += "justify-content: space-between;\n";
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .quiz-button {
 	display: flex;
 	flex-grow: 1;
 	justify-content: center;
 	align-items: center;
 	height: 30vh;
-	margin: 10px;
+	margin: 0.3%;
 	border-radius: 15px;
 	font-family: Jua;
 	font-size: 6rem;
+  padding: 0% 10% 0% 10%;
 }
 </style>
