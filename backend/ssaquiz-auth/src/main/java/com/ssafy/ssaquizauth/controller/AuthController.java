@@ -3,6 +3,7 @@ package com.ssafy.ssaquizauth.controller;
 import com.ssafy.ssaquizauth.Service.S3Service;
 import com.ssafy.ssaquizauth.exception.BadRequestException;
 import com.ssafy.ssaquizauth.model.AuthProvider;
+import com.ssafy.ssaquizauth.model.BasicResponse;
 import com.ssafy.ssaquizauth.model.User;
 import com.ssafy.ssaquizauth.payload.*;
 import com.ssafy.ssaquizauth.repository.UserRepository;
@@ -10,6 +11,7 @@ import com.ssafy.ssaquizauth.security.TokenProvider;
 
 import com.ssafy.ssaquizauth.util.RedisUtil;
 import io.swagger.annotations.ApiOperation;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,7 @@ public class AuthController {
 
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public BasicResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
@@ -72,13 +74,24 @@ public class AuthController {
 
         redisUtil.setDataExpire(loginRequest.getEmail(), "exist", tokenExpirationMsec);
 
+        Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
         String token = tokenProvider.createToken(authentication);
-        return ResponseEntity.ok(new AuthResponse(token));
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("accessToken", token);
+        jsonObject.put("nickname", user.get().getName());
+
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "로그인 성공";
+        result.object = jsonObject;
+
+        return result;
     }
 
     @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public BasicResponse registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new BadRequestException("Email address already in use.");
         }
@@ -99,20 +112,28 @@ public class AuthController {
                 .fromCurrentContextPath().path("/user/me")
                 .buildAndExpand(result.getId()).toUri();
 
-        return ResponseEntity.created(location)
-                .body(new ApiResponse(true, "User registered successfully@"));
+        BasicResponse basicResponse = new BasicResponse();
+        basicResponse.status = true;
+        basicResponse.data = "회원가입 성공";
+
+        return basicResponse;
     }
 
     @ApiOperation(value = "로그아웃")
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@PathVariable("email") String email) {
+    public BasicResponse logout(@RequestBody String email) {
         redisUtil.deleteData(email);
-        return new ResponseEntity(HttpStatus.OK);
+
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "로그아웃 성공";
+
+        return result;
     }
 
-    @ApiOperation(value = "회원정보수정")
+    @ApiOperation(value = "회원정보 수정")
     @PostMapping("/modify")
-    public ResponseEntity<?> modify(@RequestParam("file") MultipartFile inputFile, @RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
+    public BasicResponse modify(@RequestParam("file") MultipartFile inputFile, @RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if(!user.isPresent()) {
             throw new BadRequestException("Email does not exist.");
@@ -126,7 +147,11 @@ public class AuthController {
         user.get().setPassword(passwordEncoder.encode(password));
         userRepository.save(user.get());
 
-        return new ResponseEntity(HttpStatus.OK);
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "회원정보 수정 성공";
+
+        return result;
     }
 
 }
