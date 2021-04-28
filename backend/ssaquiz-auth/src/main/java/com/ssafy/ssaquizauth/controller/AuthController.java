@@ -162,8 +162,13 @@ public class AuthController {
             throw new BadRequestException("이메일 없음");
         }
 
-        user.get().setName(name);
-        user.get().setPassword(passwordEncoder.encode(password));
+        if(name != null && !"".equals(name)){
+            user.get().setName(name);
+        }
+        if(password != null && !"".equals(password)) {
+            user.get().setPassword(passwordEncoder.encode(password));
+        }
+
         userRepository.save(user.get());
 
         BasicResponse result = new BasicResponse();
