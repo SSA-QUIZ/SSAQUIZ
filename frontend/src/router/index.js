@@ -11,6 +11,7 @@ import WrongAnswer from '@/views/QuizResultsPage/WrongAnswer.vue';
 import AnswerPage from '@/views/AnswerPage.vue';
 import ComponentsPage from '@/views/ComponentsPage.vue';
 import UserInfoPage from '@/views/UserInfoPage.vue';
+import Test from '@/views/Test.vue';
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
     path: '/user-info',
     name: 'UserInfo',
     component: UserInfoPage
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   },
 ]
 

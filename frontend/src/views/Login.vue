@@ -7,26 +7,41 @@
         <input type="radio" name="pos" id="pos2" class="input-style" />
         <ul>
           <li>
-            <LoginForm @move-to-signup="moveToSignup" />
+            <LoginForm @move-to-signup="moveToSignup" @login-fail="loginFail"/>
           </li>
           <li>
-            <SignupForm @move-to-login="moveToLogin" />
+            <SignupForm @move-to-login="moveToLogin" @signup-result="signUpResult"/>
           </li>
         </ul>
       </div>
     </div>
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color
+    />
   </div>
 </template>
 
 <script>
 import LoginForm from "@/components/Form/LoginForm.vue";
 import SignupForm from "@/components/Form/SignupForm.vue";
+import Alert from "@/components/Popup/Alert.vue";
 
 export default {
   name: "Login",
   components: {
     LoginForm,
     SignupForm,
+    Alert
+  },
+  data: function () {
+    return {
+      // Alert Message parameters
+      flag: false,
+      alertMessage: '',
+      color: '',
+    }
   },
   methods: {
     moveToSignup: function () {
@@ -36,6 +51,26 @@ export default {
     moveToLogin: function () {
       document.getElementById("pos1").checked = true;
     },
+    loginFail: function () {
+      this.alertMessage = "로그인 실패! 다시 시도해주세요";
+      this.color = "red";
+      this.flag = !this.flag;
+    },
+    signUpResult: function (result) {
+      if (result === "success") {
+        this.alertMessage = "회원가입 완료! 로그인 해주세요~";
+        this.color = "#454995";
+        this.flag = !this.flag;
+      } else if (result === "fail") {
+        this.alertMessage = "이메일이 이미 존재합니다!";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else {
+        this.alertMessage = "비밀번호가 일치하지 않습니다! 다시 입력해주세요!";
+        this.color = "red";
+        this.flag = !this.flag;
+      }
+    }
   },
 };
 </script>

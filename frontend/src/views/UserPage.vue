@@ -7,7 +7,7 @@
         <div id="profile__info">
           <div style="font-size: 5vh; font-weight: 900; font-family: Jua;">
             {{ nickname }}
-            <button style="font-size: 3vh; color: gray;" @click="moveToUserInfo"><i class="fas fa-pen"></i></button>
+            <button v-if="googleLogin===false" style="font-size: 3vh; color: gray;" @click="moveToUserInfo"><i class="fas fa-pen"></i></button>
           </div>
           <div><u>{{ email }}</u></div>
         </div>
@@ -42,7 +42,10 @@ export default {
   data: function () {
     return {
       nickname: localStorage.getItem('nickname'),
-      email: localStorage.getItem('email')
+      email: localStorage.getItem('email'),
+
+      // 구글 로그인 여부
+      googleLogin: this.$store.state.googleLogin,
     }
   },
   methods: {

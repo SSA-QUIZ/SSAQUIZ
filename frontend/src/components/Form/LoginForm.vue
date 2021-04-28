@@ -51,7 +51,8 @@ export default {
 
             this.$router.push({ name: "UserPage" });
           } else {
-            // 로그인 실패시 alert 처리 예정
+            // 로그인 실패시 Alert 창 띄우기
+            this.$emit("login-fail");
           }
         })
     },

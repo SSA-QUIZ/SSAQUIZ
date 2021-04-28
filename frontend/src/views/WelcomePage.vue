@@ -65,8 +65,12 @@ export default {
       const idx = url.indexOf("token=");
       console.log(idx);
       if (idx != -1) {
+        // store에 google 계정으로 로그인했다는 사실 알리기 (회원정보 수정 할 수 없도록.)
+        this.$store.dispatch("googleLogin", true);
+
+        // url로부터 token 획득하기
         const token = url.slice(idx + 6);
-        this.$store.dispatch("setLoginToken", token);
+        localStorage.setItem("token", token);
         this.$router.push({ name: "WelcomePage" }).catch(() => {});
       }
     },
