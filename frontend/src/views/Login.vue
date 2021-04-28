@@ -46,8 +46,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #cfe1f6 !important;
-  height: 100vh;
+  background-color: #cfe1f6;
+  height: 100%;
 }
 
 #login .bg {
