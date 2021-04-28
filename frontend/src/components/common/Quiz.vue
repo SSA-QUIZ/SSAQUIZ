@@ -1,7 +1,7 @@
 <template>
   <div id="quiz-container">
     <div class="quiz-content">
-      <img width="30%" src="../../assets/images/파랑고래_아이콘.png" />
+      <img width="30%" src="../../assets/images/Default.png" />
     </div>
     <div class="quiz-content">
       <span>{{ title }}</span>

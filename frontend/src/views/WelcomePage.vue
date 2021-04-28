@@ -59,14 +59,14 @@ export default {
       console.log(this.PIN + " " + this.nickname + " websocket 연결")
     },
 
-    // 구글 로그인 token
+    // 구글 로그인 token (메인페이지 완성되는 대로 이동시킬 예정)
     getToken() {
       const url = window.location.href;
       const idx = url.indexOf("token=");
       console.log(idx);
       if (idx != -1) {
         const token = url.slice(idx + 6);
-        this.$store.dispatch("setGoogleLoginToken", token);
+        this.$store.dispatch("setLoginToken", token);
         this.$router.push({ name: "WelcomePage" }).catch(() => {});
       }
     },

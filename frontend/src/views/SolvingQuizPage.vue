@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #f2f2f2; height: 100%;">
+  <div style="background-color: #f2f2f2; height: 100%; position: relative;">
     <Header mode="on" nickname="[서울_3반_최나현]" score="950" />
     <ProgressBar index="2" all="12" />
     <MultipleChoice :choice="choice" v-show="type == 'multiple' || type == 'vote'" />
@@ -16,7 +16,7 @@ export default {
   components: {
     Header,
     ProgressBar,
-    MultipleChoice
+    MultipleChoice,
   },
   data: function () {
     return {
