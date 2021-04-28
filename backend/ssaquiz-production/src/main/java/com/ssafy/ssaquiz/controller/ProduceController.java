@@ -52,4 +52,11 @@ public class ProduceController {
         return workbookService.insertWorkbook(workbookTitle, userId, category, question, imgPath,
                                               answer, orderedAnswer, answerList, time, scoreFactor, type);
     }
+
+    @ApiOperation(value = "문제집 조회")
+    @PostMapping("/findAllWorkbook")
+    public Object findAllWorkbook(@RequestParam("userId") long userId) {
+        List<Workbook> workbookList = workbookService.findAllWorkbook(userId);
+        return workbookService.findIdAndTitleByWorkbookList(workbookList);
+    }
 }
