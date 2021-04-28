@@ -1,7 +1,7 @@
 <template>
-  <div id="container">
+  <div id="user-page-container">
     <Header mode="off" />
-    <div id="content">
+    <div id="user-page-content">
       <div id="profile">
         <span id="profile__image"><i class="fas fa-user-circle"></i></span>
         <div id="profile__info">
@@ -50,25 +50,29 @@ export default {
 </script>
 
 <style scoped>
-#container {
+#user-page-container {
   background-color: #CFE1F6;
   height: 100%;
 }
-#content {
+
+#user-page-content {
   display: flex;
   height: 87.5%;
 }
-#profile {
+
+#user-page-content > #profile {
   display: flex;
   width: 40%;
   height: 60%;
   align-items: center;
 }
+
 #profile__image {
   font-size: 18vh;
   color: #4F37DE;
   margin-left: 7%;
 }
+
 #quiz-set-list {
   display: flex;
   flex-flow: column;
@@ -77,10 +81,12 @@ export default {
   width:60%;
   height: 100%;
 }
+
 #profile__info {
   margin-left: 5%;
   font-size: 2vh;
 }
+
 #quiz-set-list__list {
   display: flex;
   flex-wrap: wrap;
@@ -92,6 +98,7 @@ export default {
   overflow-x: no-display;
   overflow-y: scroll;
 }
+
 #quiz-set-list__title {
   width: 90%;
   display: flex;
@@ -99,6 +106,7 @@ export default {
   align-items: center;
   margin-bottom: 1%;
 }
+
 .quiz-set {
   width: 37%;
   height: 35%;
