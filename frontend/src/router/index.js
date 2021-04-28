@@ -1,10 +1,13 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import WelcomePage from '@/views/WelcomePage.vue'
-import SolvingQuiz from '@/views/SolvingQuiz.vue'
-import LobbyPageT from '@/views/LobbyPageT.vue'
-import Login from '../views/Login.vue'
-import UserPage from '../views/UserPage.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import WelcomePage from '@/views/WelcomePage.vue';
+import SolvingQuiz from '@/views/SolvingQuiz.vue';
+import LobbyPageT from '@/views/LobbyPageT.vue';
+import Login from '@/views/Login.vue';
+import UserPage from '@/views/UserPage.vue';
+import CreatorPage from '@/views/CreatorPage.vue';
+
+
 
 Vue.use(VueRouter)
 
@@ -33,6 +36,11 @@ const routes = [
     path: '/user-page',
     name: 'UserPage',
     component: UserPage
+  },
+  {
+    path: '/creator',
+    name: 'CreatorPage',
+    component: CreatorPage
   },
 ]
 

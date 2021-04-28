@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 #container {
   background-color: #CFE1F6;
   height: 100%;
