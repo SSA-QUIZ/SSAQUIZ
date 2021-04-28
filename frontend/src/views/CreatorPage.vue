@@ -24,7 +24,10 @@
         </div>
       </div>
       <div id="creator-page__content">
-        <MultipleChoiceCreator />
+        <MultipleChoiceCreator 
+          @change-question="getQuestion"
+          @change-choices="getChoices"
+        />
       </div>
       <div id="creator-page__settings">
         <span class="settings__title">문제 설정</span>
@@ -43,7 +46,6 @@
         </select>
         <span class="settings__subtitle">추가 옵션</span>
         <div>
-          <RadioOption />
           <div class="settings__option">
             <input type="radio" name="additionalOption" id="no-option" checked>
             <label for="no-option">없음</label>
@@ -183,6 +185,19 @@ export default {
         "_class": "com.last.ssaquiz.quizstore.mongodb.TestQuizFormat"
       }]
     }
+  },
+  methods: {
+    getChoices: function (data, type) {
+      console.log(data, 33)
+      if (type === "multipleChoice") {
+        console.log(this.quizData[0])
+      }
+    },
+    getQuestion: function (data) {
+      console.log(data)
+      // return data
+      // console.log(data)
+    },
   },
 }
 </script>
