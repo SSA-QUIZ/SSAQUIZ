@@ -1,6 +1,7 @@
 package com.ssafy.ssaquiz.service;
 
 import com.ssafy.ssaquiz.dto.CoverDto;
+import com.ssafy.ssaquiz.dto.WorkbookDto;
 import com.ssafy.ssaquiz.model.BasicResponse;
 import com.ssafy.ssaquiz.model.Slide;
 import com.ssafy.ssaquiz.model.Workbook;
@@ -21,7 +22,34 @@ public class WorkbookService {
 
     public Workbook findWorkbook(String objectId) {
         Workbook workbook = workbookRepository.findById(new ObjectId(objectId));
+
+        WorkbookDto workbookDto = WorkbookDto.builder()
+                .id(workbook.getId().toString())
+                .userId(workbook.getUserId())
+                .workbookTitle(workbook.getWorkbookTitle())
+                .slideList(workbook.getSlideList())
+                .build();
+
         return workbook;
+    }
+
+    public WorkbookDto findWorkbookAndConvert(String objectId) {
+        Workbook workbook = workbookRepository.findById(new ObjectId(objectId));
+
+        WorkbookDto workbookDto = convertWorkbookDto(workbook);
+
+        return workbookDto;
+    }
+
+    public WorkbookDto convertWorkbookDto(Workbook workbook) {
+        WorkbookDto workbookDto = WorkbookDto.builder()
+                .id(workbook.getId().toString())
+                .userId(workbook.getUserId())
+                .workbookTitle(workbook.getWorkbookTitle())
+                .slideList(workbook.getSlideList())
+                .build();
+
+        return workbookDto;
     }
 
     public BasicResponse insertSlide(Workbook workbook,
@@ -68,6 +96,26 @@ public class WorkbookService {
         BasicResponse result = new BasicResponse();
         result.status = true;
         result.data = "문제집 저장 성공";
+        return result;
+    }
+
+    public BasicResponse insertWorkbook(long userId, String workbookTitle) {
+
+        Slide slide = Slide.builder().build();
+
+        Workbook workbook = Workbook.builder()
+                .workbookTitle(workbookTitle)
+                .userId(userId)
+                .slideList(List.of(slide))
+                .build();
+
+        workbookRepository.save(workbook);
+
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "문제집 저장 성공";
+        result.object = convertWorkbookDto(workbook);
+
         return result;
     }
 
