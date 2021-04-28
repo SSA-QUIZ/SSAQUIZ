@@ -140,9 +140,8 @@ public class AuthController {
         }
 
         String imgPath = s3Service.upload(inputFile);
-        String fileName = UUID.randomUUID().toString() + ".jpg";
 
-        user.get().setImageUrl(fileName);
+        user.get().setImageUrl(imgPath);
         user.get().setName(name);
         user.get().setPassword(passwordEncoder.encode(password));
         userRepository.save(user.get());
