@@ -7,7 +7,7 @@
         <div id="profile__info">
           <div style="font-size: 5vh; font-weight: 900; font-family: Jua;">
             {{ nickname }}
-            <button style="font-size: 3vh; color: gray;"><i class="fas fa-pen"></i></button>
+            <button style="font-size: 3vh; color: gray;" @click="moveToUserInfo"><i class="fas fa-pen"></i></button>
           </div>
           <div><u>{{ email }}</u></div>
         </div>
@@ -27,7 +27,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -42,8 +41,13 @@ export default {
   },
   data: function () {
     return {
-      nickname: '현나최',
-      email: 'ssafy@ssaquiz.com'
+      nickname: localStorage.getItem('nickname'),
+      email: localStorage.getItem('email')
+    }
+  },
+  methods: {
+    moveToUserInfo: function () {
+      this.$router.push({ name: "UserInfo" });
     }
   }
 }
