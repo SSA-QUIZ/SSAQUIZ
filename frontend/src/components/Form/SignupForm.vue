@@ -34,34 +34,39 @@ export default {
       this.$emit("move-to-login");
     },
     setEmail: function (data) {
-      this.Email = data;
+      this.email = data;
     },
     setNickname: function (data) {
       this.nickname = data
     },
     setPW: function (data) {
-      this.Password = data;
+      this.password = data;
     },
     setPWConfirm: function (data) {
-      this.PasswordConfirm = data;
+      this.passwordConfirm = data;
     },
+    // 회원가입 요청
     signup: function () {
-      const userInfo = [this.Email, this.nickname, this.Password]
-      this.$store.dispatch("setUserInfo", userInfo);
-      const data = {"email": this.email, "name": this.nickname, "password": this.password}
+      if (this.password === this.passwordConfirm) {     // 비밀번호 일치할 경우
+        const data = { "email": this.email, "name": this.nickname, "password": this.password }
+        axios.post("http://k4a304.p.ssafy.io/api-auth/auth/signup", data)
+          .then(res => {
+            console.log(res)
+            if (res.data.status === true){
+              this.email = "";
+              this.nickname = "";
+              this.password = "";
+              this.passwordConfirm = "";
 
-      axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify", data)
-        .then(res => {
-          // 변수 초기화 및 페이지 이동
-          console.log(res)
-          this.email = ''
-          this.nickname = ''
-          this.password = ''
-          this.passwordConfirm = ''
+              this.$emit("move-to-login");
+            }
+          })
+          .catch(err => { console.log(err) })
+          // 이메일 중복 처리(alert 띄울 예정)
 
-          this.$router.push({ name: "Login" });
-        })
-        .catch(err => { console.log(err) })
+      } else {
+        //비밀번호 일치하지 않을 경우 (alert 띄울 예정)
+      }
     }
   },
 };

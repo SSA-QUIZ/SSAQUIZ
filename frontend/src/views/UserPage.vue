@@ -27,7 +27,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -42,8 +41,8 @@ export default {
   },
   data: function () {
     return {
-      nickname: '현나최',
-      email: 'ssafy@ssaquiz.com'
+      nickname: localStorage.getItem('nickname'),
+      email: localStorage.getItem('email')
     }
   },
   methods: {

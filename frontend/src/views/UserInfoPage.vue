@@ -6,8 +6,9 @@
         <!------ 프로필 이미지 ------>
         <div class="profile">
           <div class="img-wrapper">
-            <img class="image file-input" src="@/assets/images/Default.png">
+            <img class="image file-input" src="https://ssaquiz.s3.ap-northeast-2.amazonaws.com/2281a4ad-cc38-4099-b483-862639c71869.jpg">
             <input type="file" name="file" class="file-input">
+
             <div class="hover"></div>
             <div class="image-upload-btn" onclick="document.all.file.click();">
               <span draggable="false"><i class="far fa-file-image"></i></span>
@@ -24,7 +25,7 @@
         <!-- 취소,수정 버튼 -->
         <div>
           <button class="cancel-button" @click="cancel">취소</button>
-          <button class="update-button">수정</button>
+          <button class="update-button" @click="update">수정</button>
         </div>
       </div>
     </div>
@@ -32,6 +33,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import $ from 'jquery';
 import Logo from '@/components/common/Logo.vue';
 import InputBox from '@/components/common/InputBox.vue';
@@ -44,23 +46,30 @@ export default {
   },
   data: function () {
     return {
-      nickname: this.$store.state.userInfo[1],
+      // parameters
+      nickname: localStorage.getItem('nickname'),
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+
+      // image file data
+      imgData: {},
     }
   },
   mounted: function () {
     $('.file-input').change(function(){
+      // 이미지 파일을 선택하고 img 태그에 넣는다.
       var curElement = $(this).parent().parent().find('.image');
-      console.log(curElement);
       var reader = new FileReader();
       reader.onload = function (e) {
         curElement.attr('src', e.target.result);
       };
+      // 화면에 바뀐 이미지를 띄운다.
       reader.readAsDataURL(this.files[0]);
+      this.imgData = this.files[0];
     });
   },
   methods: {
+    // 변수들 변경하는 함수
     updateNickname: function (data) {
       this.nickname = data;
     },
@@ -70,8 +79,32 @@ export default {
     updatePasswordConfirm: function (data) {
       this.passwordConfirm = data;
     },
+    // 취소 함수
     cancel: function () {
       this.$router.push({ name: "UserPage" });
+    },
+    // 변경 함수
+    update: function () {
+      const formData = new FormData();
+
+      if (Object.keys(this.imgData).length === 0) {
+        // 1. 사진을 바꾸지 않을 때
+        formData.append("email", localStorage.getItem('email'));
+        formData.append("name", this.nickname);
+        formData.append("password", this.password);
+      } else {  
+        // 2. 사진을 바꿀 때
+        formData.append("file", this.imgData);
+        formData.append("email", localStorage.getItem('email'));
+        formData.append("name", this.nickname);
+        formData.append("password", this.password);
+      }
+
+      const headers = { "Content-Type": "multipart/form-data" };
+
+      axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify", formData, headers)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
     }
   }
 }
