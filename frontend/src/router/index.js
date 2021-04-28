@@ -1,15 +1,16 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import WelcomePage from '@/views/WelcomePage.vue'
-import SolvingQuizPage from '@/views/SolvingQuizPage.vue'
-import LobbyPageT from '@/views/LobbyPageT.vue'
-import LobbyPageS from '@/views/LobbyPageS.vue'
-import Login from '../views/Login.vue'
-import UserPage from '../views/UserPage.vue'
-import CorrectAnswer from '../views/QuizResultsPage/CorrectAnswer.vue'
-import WrongAnswer from '../views/QuizResultsPage/WrongAnswer.vue'
-import AnswerPage from '../views/AnswerPage.vue'
-import ComponentsPage from '../views/ComponentsPage.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import WelcomePage from '@/views/WelcomePage.vue';
+import SolvingQuizPage from '@/views/SolvingQuizPage.vue';
+import LobbyPageT from '@/views/LobbyPageT.vue';
+import LobbyPageS from '@/views/LobbyPageS.vue';
+import Login from '@/views/Login.vue';
+import UserPage from '@/views/UserPage.vue';
+import CorrectAnswer from '@/views/QuizResultsPage/CorrectAnswer.vue';
+import WrongAnswer from '@/views/QuizResultsPage/WrongAnswer.vue';
+import AnswerPage from '@/views/AnswerPage.vue';
+import ComponentsPage from '@/views/ComponentsPage.vue';
+import UserInfoPage from '@/views/UserInfoPage.vue';
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,11 @@ const routes = [
     path: '/components-page',
     name: 'ComponentsPage',
     component: ComponentsPage
+  },
+  {
+    path: '/user-info',
+    name: 'UserInfo',
+    component: UserInfoPage
   },
 ]
 
