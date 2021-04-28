@@ -57,15 +57,16 @@ export default {
               this.nickname = "";
               this.password = "";
               this.passwordConfirm = "";
-
+              this.$emit("signup-result", "success");
               this.$emit("move-to-login");
             }
           })
-          .catch(err => { console.log(err) })
-          // 이메일 중복 처리(alert 띄울 예정)
-
+          .catch(err => { 
+            console.log(err)
+            this.$emit("signup-result", "fail");
+          })
       } else {
-        //비밀번호 일치하지 않을 경우 (alert 띄울 예정)
+        this.$emit("signup-result", "password-fail");
       }
     }
   },
