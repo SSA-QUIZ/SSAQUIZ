@@ -22,7 +22,7 @@ public class ProduceController {
     private S3Service s3Service;
 
     @ApiOperation(value = "슬라이드 저장하기")
-    @PostMapping("/insertSlide")
+    @PostMapping("/slide")
     public Object insertSlide(@RequestParam("objectId") String objectId, @RequestParam("category") String category,
                               @RequestParam("question") String question, @RequestParam("file") MultipartFile inputFile,
                               @RequestParam("answer") String answer, @RequestParam("orderedAnswer") List<String> orderedAnswer,
@@ -34,14 +34,22 @@ public class ProduceController {
                                            orderedAnswer, answerList, time, scoreFactor, type);
     }
 
-    @ApiOperation(value = "문제집 검색하기")
-    @PostMapping("/findWorkbook")
-    public Workbook findWorkbook(@RequestParam("objectId") String objectId) {
-        return workbookService.findWorkbook(objectId);
+    @ApiOperation(value = "문제집 조회하기",
+            notes = "[sample data] 6088e1e504228a182a4159e3, 6088fb4792ab8f759867aefe"
+    )
+    @GetMapping("/workbook/{objectId}")
+    public BasicResponse findWorkbook(@PathVariable("objectId") String objectId) {
+        BasicResponse result = new BasicResponse();
+
+        result.status = true;
+        result.data = "문제집 조회 성공";
+        result.object = workbookService.findWorkbook(objectId);
+
+        return result;
     }
 
     @ApiOperation(value = "문제집 만들기")
-    @PostMapping("/insertWorkbook")
+    @PostMapping("/workbook")
     public Object insertWorkbook(@RequestParam("workbookTitle") String workbookTitle, @RequestParam("userId") long userId,
                                  @RequestParam("category") String category, @RequestParam("question") String question,
                                  @RequestParam("file") MultipartFile inputFile, @RequestParam("answer") String answer,
@@ -53,9 +61,11 @@ public class ProduceController {
                                               answer, orderedAnswer, answerList, time, scoreFactor, type);
     }
 
-    @ApiOperation(value = "문제집 조회")
-    @PostMapping("/findAllWorkbook")
-    public Object findAllWorkbook(@RequestParam("userId") long userId) {
+    @ApiOperation(value = "전체 문제집 조회하기",
+            notes = "[sample data] 1, 2"
+    )
+    @GetMapping("/workbook-all/{userId}")
+    public Object findAllWorkbook(@PathVariable("userId") long userId) {
         List<Workbook> workbookList = workbookService.findAllWorkbook(userId);
         return workbookService.findIdAndTitleByWorkbookList(workbookList);
     }
