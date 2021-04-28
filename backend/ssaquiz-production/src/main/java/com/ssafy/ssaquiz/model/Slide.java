@@ -15,7 +15,7 @@ import lombok.ToString;
 public class Slide {
     private String category;
     private String question;
-    private String resourceUrl;
+    private String imagePath;
     private String answer;
     private List<String> orderedAnswer = new ArrayList<>();
     private List<String> answerList = new ArrayList<>();

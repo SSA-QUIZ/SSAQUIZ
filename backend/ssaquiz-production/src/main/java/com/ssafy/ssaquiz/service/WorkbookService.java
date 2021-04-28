@@ -1,5 +1,6 @@
 package com.ssafy.ssaquiz.service;
 
+import com.ssafy.ssaquiz.dto.CoverDto;
 import com.ssafy.ssaquiz.model.BasicResponse;
 import com.ssafy.ssaquiz.model.Slide;
 import com.ssafy.ssaquiz.model.Workbook;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,11 +26,11 @@ public class WorkbookService {
 
     public BasicResponse insertSlide(Workbook workbook,
                                      String category, String question,
-                                     MultipartFile inputFile, String answer,
+                                     String imgPath, String answer,
                                      List<String> orderedAnswer, List<String> answerList,
                                      int time, int scoreFactor, int type) {
         Slide slide = Slide.builder()
-                .category(category).question(question).resourceUrl("http")
+                .category(category).question(question).imagePath(imgPath)
                 .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
                 .time(time).scoreFactor(scoreFactor).type(type).build();
 
@@ -46,12 +48,12 @@ public class WorkbookService {
 
     public BasicResponse insertWorkbook(String workbookTitle, long userId,
                                         String category, String question,
-                                        MultipartFile inputFile, String answer,
+                                        String imgPath, String answer,
                                         List<String> orderedAnswer, List<String> answerList,
                                         int time, int scoreFactor, int type) {
 
         Slide slide = Slide.builder()
-                .category(category).question(question).resourceUrl("http")
+                .category(category).question(question).imagePath(imgPath)
                 .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
                 .time(time).scoreFactor(scoreFactor).type(type).build();
 
@@ -69,4 +71,22 @@ public class WorkbookService {
         return result;
     }
 
+    public List<Workbook> findAllWorkbook(long userId) {
+        return workbookRepository.findByUserId(userId);
+    }
+
+    public BasicResponse findIdAndTitleByWorkbookList(List<Workbook> workbookList) {
+        List<CoverDto> CoverDtoList = new ArrayList<>();
+
+        for (Workbook workbook : workbookList) {
+            CoverDtoList.add(CoverDto.builder().id(workbook.getId().toString()).title(workbook.getWorkbookTitle()).build());
+        }
+
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "문제집 조회 성공";
+        result.object = CoverDtoList;
+
+        return result;
+    }
 }
