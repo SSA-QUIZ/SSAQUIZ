@@ -43,22 +43,15 @@ public class ProduceController {
 
         result.status = true;
         result.data = "문제집 조회 성공";
-        result.object = workbookService.findWorkbook(objectId);
+        result.object = workbookService.findWorkbookAndConvert(objectId);
 
         return result;
     }
 
     @ApiOperation(value = "문제집 만들기")
     @PostMapping("/workbook")
-    public Object insertWorkbook(@RequestParam("workbookTitle") String workbookTitle, @RequestParam("userId") long userId,
-                                 @RequestParam("category") String category, @RequestParam("question") String question,
-                                 @RequestParam("file") MultipartFile inputFile, @RequestParam("answer") String answer,
-                                 @RequestParam("orderedAnswer") List<String> orderedAnswer, @RequestParam("answerList") List<String> answerList,
-                                 @RequestParam("time") int time, @RequestParam("scoreFactor") int scoreFactor,
-                                 @RequestParam("type") int type) {
-        String imgPath = s3Service.upload(inputFile);
-        return workbookService.insertWorkbook(workbookTitle, userId, category, question, imgPath,
-                                              answer, orderedAnswer, answerList, time, scoreFactor, type);
+    public Object insertWorkbook(@RequestParam("userId") long userId, @RequestParam("workbookTitle") String workbookTitle) {
+        return workbookService.insertWorkbook(userId, workbookTitle);
     }
 
     @ApiOperation(value = "전체 문제집 조회하기",
