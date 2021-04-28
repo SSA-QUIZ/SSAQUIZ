@@ -141,10 +141,14 @@ public class AuthController {
         }
 
         String imgPath = s3Service.upload(inputFile);
-
         user.get().setImageUrl(imgPath);
-        user.get().setName(name);
-        user.get().setPassword(passwordEncoder.encode(password));
+
+        if(name != null && !"".equals(name)){
+            user.get().setName(name);
+        }
+        if(password != null && !"".equals(password)) {
+            user.get().setPassword(passwordEncoder.encode(password));
+        }
         userRepository.save(user.get());
 
         BasicResponse result = new BasicResponse();
