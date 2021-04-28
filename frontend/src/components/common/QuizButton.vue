@@ -9,7 +9,8 @@ export default {
     'color',
     'width',
     'height',
-    'icon'
+    'icon',
+    'margin'
   ],
   data: function () {
     return {
@@ -24,6 +25,7 @@ export default {
       if (this.color != undefined) this.style += "background-color: " + this.color + ";\n";
       if (this.width != undefined) this.style += "width: " + this.width + ";\n";
       if (this.height != undefined) this.style += "height: " + this.height + ";\n";
+      if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
     }
   }
 }
