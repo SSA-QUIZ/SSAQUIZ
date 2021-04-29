@@ -11,30 +11,38 @@
     />
     <div id="component-title">Dialog</div>
     <button @click="openDialog = true" style="background-color: pink;">dialog 열기</button>
-      <Dialog 
-        emoticon="🤓"
-        content="문제집의 이름을 작성해주세요." 
-        @close="openDialog = false" 
-        @accept="openDialog = false" 
-        v-if="openDialog" 
-      />
+    <Dialog 
+      emoticon="🤓"
+      content="문제집의 이름을 작성해주세요." 
+      @close="openDialog = false" 
+      @accept="openDialog = false" 
+      v-if="openDialog" 
+    />
+    <button @click="openQuizTypeDialog = true" style="background-color: pink;">quiztypedialog 열기</button>
+    <QuizTypeDialog
+      v-if="openQuizTypeDialog"
+      @close="openQuizTypeDialog = false"
+    />
   </div>
 </template>
 
 <script>
 import Confirm from '@/components/Popup/Confirm.vue';
 import Dialog from '@/components/Popup/Dialog.vue';
+import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 
 export default {
   name: 'ComponentsPage',
   components: {
     Confirm,
-    Dialog
+    Dialog,
+    QuizTypeDialog
   },
   data: function () {
     return {
       openConfirm: false,
       openDialog: false,
+      openQuizTypeDialog: false,
       contentsArray: ["최나현의 강아지 이름은?", "최나현의 생일은?", "최나현의 ??"]
     }
   }

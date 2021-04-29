@@ -15,7 +15,7 @@
       <div id="quiz-set-list">
         <div id="quiz-set-list__title">
           <span style="font-size: 4vh; font-family: Jua;">{{ nickname }}님의 퀴즈</span>
-          <button style="font-size: 5vh; color: #4F37DE;"><i class="fa fa-plus-circle"></i></button>
+          <button @click="openDialog = true" style="font-size: 5vh; color: #4F37DE;"><i class="fa fa-plus-circle"></i></button>
         </div>
         <div id="quiz-set-list__list">
           <QuizSet quizTitle="퀴즈1" class="quiz-set"/>
@@ -27,27 +27,56 @@
         </div>
       </div>
     </div>
+    <Dialog
+      emoticon="🤓"
+      content="퀴즈의 이름을 작성해주세요." 
+      @close="openDialog = false" 
+      @accept="createQuiz(); openDialog = false;"
+      @change-input-value="changeQuizTitle"
+      v-if="openDialog"
+    />
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
+import Dialog from '@/components/Popup/Dialog';
+
 export default {
   name: 'UserPage',
   components: {
     Header,
-    QuizSet
+    QuizSet,
+    Dialog
   },
   data: function () {
     return {
       nickname: localStorage.getItem('nickname'),
-      email: localStorage.getItem('email')
+      email: localStorage.getItem('email'),
+      openDialog: false,
+      quizTitle: '',
     }
   },
   methods: {
+    ...mapActions("CreateQuizStore", [
+      "setQuizData"
+    ]),
     moveToUserInfo: function () {
       this.$router.push({ name: "UserInfo" });
+    },
+    changeQuizTitle: function (data) {
+      this.quizTitle = data
+    },
+    createQuiz: function () {
+      const params = {"userId": parseInt(localStorage.getItem('id')), "workbookTitle": this.quizTitle}
+      this.setQuizData(params)
+        .then(() => {
+          this.$router.push({ name: "CreatorPage" })
+        })
+        .catch(err => console.log(err))
     }
   }
 }

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import { GOOGLE_AUTH_URL } from "@/config/index.js";
 
 import InputBox from "@/components/common/InputBox.vue";
@@ -48,6 +48,7 @@ export default {
             localStorage.setItem('token',res.data.object.accessToken)
             localStorage.setItem('nickname', res.data.object.nickname)
             localStorage.setItem('email', this.email)
+            localStorage.setItem('id', res.data.object.id)
 
             this.$router.push({ name: "UserPage" });
           } else {

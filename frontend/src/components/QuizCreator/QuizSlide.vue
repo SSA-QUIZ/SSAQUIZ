@@ -30,7 +30,9 @@ export default {
 	overflow: hidden;
 	padding-bottom: 56.26%;
 }
-
+.quiz-slide p {
+  margin-left: 10px;
+}
 .quiz-img {
   background-color: #c4c4c4;
   position: relative;

@@ -9,16 +9,16 @@
       <div id="creator-page__preview-wrap">
         <div id="creator-page__preview">
           <template
-            v-for="(slide, index) in quizData[0].slide"
+            v-for="(slide, index) in quizData.slideList"
           >
             <QuizSlide
               :key="index"
-              :number="index"
+              :number="index+1"
               :slide="slide"
             />
           </template>
         </div>
-        <div id="slide-create-button">
+        <div id="slide-create-button" @click="addSlide">
           <i class="far fa-plus-square"></i>
           <span>슬라이드 추가</span>
         </div>
@@ -77,113 +77,7 @@ export default {
   },
   data: function () {
     return {
-      quizData: [{
-        "_id": {
-          "$oid": "607fdf21dcd9cc31a95faaad"
-        },
-        "quizNum": 1,
-        "quizTitle": "퀴즈 제목",
-        "userId": 3,
-        "slide": {
-          "1": {
-            "answer": "1",
-            "answerList": [
-              "뱁새",
-              "오리너구리",
-              "구렁이",
-              "매새"
-            ],
-            "category": "4지선다",
-            "question": "이 동물은 무엇일까요?",
-            "resourceUrl": "https:.///",
-            "settings": {
-              "scoreFactor": "2",
-              "time": "10",
-              "type": "0" // (0: 선택x, 1: 선착순, 2: 랜덤뽑기)
-            }
-          },
-          "2": {
-            "answer": "장장주빈",
-            "category": "단답형",
-            "question": "우리 팀장님 이름은 무엇일까요?",
-            "resourceUrl": "https:.///fdd",
-            "settings": {
-              "scoreFactor": "2",
-              "time": "10",
-              "type": "0" // (0: 선택x, 1: 선착순, 2: 랜덤뽑기)
-            }
-          },
-          "3": {
-            "orderedAnswer": [
-              "java 기초",
-              "java 심화",
-              "spring",
-              "vue.js"
-            ],
-            "answerList": [
-              "java 심화",
-              "java 기초",
-              "vue.js",
-              "spring"
-            ],
-            "category": "순서맞히기",
-            "question": "싸피 커리큘럼을 순서대로 맞춰보세요!",
-            "resourceUrl": "https://ddd.com"
-          },
-          "4": {
-            "orderedAnswer": [
-              "java 기초",
-              "java 심화",
-              "spring",
-              "vue.js"
-            ],
-            "answerList": [
-              "java 심화",
-              "java 기초",
-              "vue.js",
-              "spring"
-            ],
-            "category": "순서맞히기",
-            "question": "싸피 커리큘럼을 순서대로 맞춰보세요!",
-            "resourceUrl": "https://ddd.com"
-          },
-          "5": {
-            "orderedAnswer": [
-              "java 기초",
-              "java 심화",
-              "spring",
-              "vue.js"
-            ],
-            "answerList": [
-              "java 심화",
-              "java 기초",
-              "vue.js",
-              "spring"
-            ],
-            "category": "순서맞히기",
-            "question": "싸피 커리큘럼을 순서대로 맞춰보세요!",
-            "resourceUrl": "https://ddd.com"
-          },
-          "6": {
-            "orderedAnswer": [
-              "java 기초",
-              "java 심화",
-              "spring",
-              "vue.js"
-            ],
-            "answerList": [
-              "java 심화",
-              "java 기초",
-              "vue.js",
-              "spring"
-            ],
-            "category": "순서맞히기",
-            "question": "싸피 커리큘럼을 순서대로 맞춰보세요!",
-            "resourceUrl": "https://ddd.com"
-          },
-        },
-        "_class": "com.last.ssaquiz.quizstore.mongodb.TestQuizFormat"
-      }]
+      quizData: {}
     }
   },
   methods: {
@@ -198,6 +92,9 @@ export default {
       // return data
       // console.log(data)
     },
+    addSlide: function () {
+
+    }
   },
 }
 </script>
@@ -259,11 +156,10 @@ export default {
 
 #creator-page__preview {
   overflow: auto;
-  display: flex;
+
   width: 100%;
-  flex-flow: row wrap;
-  justify-content: center;
-  /* align-items: center; */
+  height: 90%;
+
 }
 
 #slide-create-button {
