@@ -1,8 +1,8 @@
 <template>
   <button class="quiz-button" :style="style">
-    <span><i :class="icon"></i></span>
+    <span v-if="icon"><i :class="icon"></i></span>
     <span>{{ answer }}</span>
-    <span></span>
+    <span v-if="icon"></span>
   </button>
 </template>
 

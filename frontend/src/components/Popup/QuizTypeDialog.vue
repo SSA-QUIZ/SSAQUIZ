@@ -2,41 +2,37 @@
   <div class="dialog-container">
     <div id="dialog-container">
       <div id="dialog-content">
-        <p style="font-size: 4rem;">{{ emoticon }}</p>
-        <span v-html="content"></span>
-        <InputBox class="input-box" @change-input="changeInputValue" />
+        <p>퀴즈 추가</p>
+        <div class="type-row">
+          <QuizButton style="font-size: 30px;" answer="4지선다" width="48%" height="100px" color="#ffdc46" />
+          <QuizButton style="font-size: 30px;" answer="T/F" width="48%" height="100px" color="#ff85b1" />
+        </div>
+        <div class="type-row">
+          <QuizButton style="font-size: 30px;" answer="순서맞히기" width="48%" height="100px" color="#7cb1ff" />
+          <QuizButton style="font-size: 30px;" answer="투표" width="48%" height="100px" color="#aaed81" />
+        </div>
       </div>
-      <footer id="dialog-footer">
-        <button style="width: 30%; color: #C3346A;" @click="$emit('close')">취소</button>
-        <button style="width: 30%; color: #454995;" @click="$emit('accept')">확인</button>
-      </footer>
     </div>
     <div class="overlay" @click="$emit('close')"></div>
   </div>
 </template>
 
 <script>
-import InputBox from '@/components/common/InputBox.vue';
+import QuizButton from '@/components/common/QuizButton.vue';
 
 export default {
-  name: 'Dialog',
+  name: 'QuizTypeDialog',
   components: {
-    InputBox
+    QuizButton
   },
   props: [
-    'content',
-    'emoticon'
   ],
   data: function () {
     return {
-      inputValue: '',
     }
   },
   methods: {
-    changeInputValue: function (data) {
-      this.inputValue = data;
-      this.$emit('change-input-value', this.inputValue);
-    },
+
   }
 }
 </script>
@@ -52,10 +48,16 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .overlay {
   opacity: 0.5;
   background-color: black;
 }
+
+.type-row {
+  display: flex;
+}
+
 #dialog-container {
   width: auto;
   max-width: 60%;
@@ -72,6 +74,7 @@ export default {
   font-size: 1.8rem;
   text-align: center;
   padding: 7% 4%;
+  /* display: flex; */
 }
 #dialog-footer {
   display: flex;
