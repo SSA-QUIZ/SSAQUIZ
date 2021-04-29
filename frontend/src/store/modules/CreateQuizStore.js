@@ -9,7 +9,10 @@ const CreateQuizStore = {
   mutations: {
     SET_QUIZ_DATA: function (state, value) {
       state.quizData = value;
-    }
+    },
+    SET_SLIDE_QUESTION: function (state, value) {
+      state.quizData.slideList[value[0]].question = value[1];
+    },
   },
   actions: {
     setQuizData: function ({ commit }, value) {
@@ -20,6 +23,9 @@ const CreateQuizStore = {
           return res.data.object.id
         })
         .catch(err => console.log(err))
+    },
+    setSlideQuestion: function ({ commit }, value) {
+      commit('SET_SLIDE_QUESTION', value);
     }
   }
 };

@@ -1,7 +1,12 @@
 <template>
   <div id="multiple-choice-creator">
     <div id="multiple-choice-creator__question-box">
-      <input type="text" placeholder="문제를 입력해주세요." :value="question" @input="changeQuestion" id="multiple-choice-creator__input-question">
+      <input type="text" 
+        placeholder="문제를 입력해주세요." 
+        :value="question" 
+        @input="changeQuestion" 
+        id="multiple-choice-creator__input-question"
+        >
       <i class="fas fa-camera camera-img"></i>
     </div>
     <div>
@@ -19,10 +24,14 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import CreatorQuizButton from '@/components/QuizCreator/CreatorQuizButton.vue';
 
 export default {
   name: "MultipleChoiceCreator",
+  props: [
+    "slideIndex"
+  ],
   components: {
     CreatorQuizButton
   },
@@ -35,13 +44,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions("CreateQuizStore", ["setSlideQuestion"]),
     getChoice: function (idx, data) {
       this.choices[idx-1] = data;
       this.$emit("change-choices", this.choices, 'multipleChoice')
    },
     changeQuestion(e) {
       this.question = e.target.value;
-      this.$emit("change-question", this.question)
+      let val = [this.slideIndex, this.question];
+      this.setSlideQuestion(val);
+      this.$emit("change-question", this.question);
     }
   },
 }

@@ -15,16 +15,21 @@
               :key="index"
               :number="index+1"
               :slide="slide"
+              @click="selectSlide(index)"
             />
           </template>
         </div>
-        <div id="slide-create-button" @click="addSlide">
+        <div id="slide-create-button" @click="openQuizTypeDialog = true">
           <i class="far fa-plus-square"></i>
           <span>슬라이드 추가</span>
         </div>
+        <QuizTypeDialog
+          v-if="openQuizTypeDialog"
+          @close="openQuizTypeDialog = false" />
       </div>
       <div id="creator-page__content">
         <MultipleChoiceCreator 
+          :slideIndex="selectedSlide"
           @change-question="getQuestion"
           @change-choices="getChoices"
         />
@@ -59,7 +64,6 @@
             <label for="random-select">랜덤뽑기</label>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -68,18 +72,25 @@
 <script>
 import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
-
+import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: "CreatorPage",
   components: {
-    MultipleChoiceCreator, QuizSlide
+    MultipleChoiceCreator,
+    QuizSlide,
+    QuizTypeDialog
   },
   data: function () {
     return {
-      quizData: {}
+      openQuizTypeDialog: false,
+      selectedSlide: 0,
     }
   },
+  computed: mapState("CreateQuizStore", [
+    'quizData'
+  ]),
   methods: {
     getChoices: function (data, type) {
       console.log(data, 33)
@@ -89,11 +100,12 @@ export default {
     },
     getQuestion: function (data) {
       console.log(data)
-      // return data
-      // console.log(data)
     },
     addSlide: function () {
 
+    },
+    selectSlide: function (idx) {
+      this.seletedSlide = idx;
     }
   },
 }
