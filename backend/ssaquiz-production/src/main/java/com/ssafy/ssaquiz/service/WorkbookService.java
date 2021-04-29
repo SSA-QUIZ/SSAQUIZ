@@ -7,6 +7,7 @@ import com.ssafy.ssaquiz.model.Slide;
 import com.ssafy.ssaquiz.model.Workbook;
 import com.ssafy.ssaquiz.model.WorkbookRepository;
 import org.bson.types.ObjectId;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,12 +92,10 @@ public class WorkbookService {
             return result;
         }
 
-        Slide slide = Slide.builder().build();
-
         Workbook workbook = Workbook.builder()
                 .workbookTitle(workbookTitle)
                 .userId(userId)
-                .slideList(List.of(slide))
+                .slideList(new ArrayList<Slide>())
                 .build();
 
         workbookRepository.save(workbook);
