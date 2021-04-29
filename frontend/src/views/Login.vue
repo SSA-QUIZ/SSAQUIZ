@@ -43,6 +43,12 @@ export default {
       color: '',
     }
   },
+  mounted: function () {
+    // 로그인하지 않았을 때만 접속 가능
+    if (localStorage.getItem('token') !== null) {
+      this.$router.push({ name: "UserPage" });
+    }
+  },
   methods: {
     moveToSignup: function () {
       // radio의 check를 설정해주어 슬라이드가 바뀌도록 설정.
@@ -51,10 +57,17 @@ export default {
     moveToLogin: function () {
       document.getElementById("pos1").checked = true;
     },
-    loginFail: function () {
-      this.alertMessage = "로그인 실패! 다시 시도해주세요";
-      this.color = "red";
-      this.flag = !this.flag;
+    loginFail: function (result) {
+      if (result === "invalid") {
+        this.alertMessage = "아이디나 비밀번호가 틀렸어요! 다시 시도해주세요~";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else {
+        this.alertMessage = "등록된 회원이 아닙니다! 회원가입 해주세요~";
+        this.color = "red";
+        this.flag = !this.flag;
+      }
+      
     },
     signUpResult: function (result) {
       if (result === "success") {
