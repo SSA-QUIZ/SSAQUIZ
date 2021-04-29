@@ -1,5 +1,6 @@
 package com.ssafy.ssaquiz.controller;
 
+import com.ssafy.ssaquiz.dto.InsertWorkbookDto;
 import com.ssafy.ssaquiz.model.*;
 import com.ssafy.ssaquiz.service.S3Service;
 import com.ssafy.ssaquiz.service.WorkbookService;
@@ -64,8 +65,8 @@ public class ProduceController {
 
     @ApiOperation(value = "문제집 만들기")
     @PostMapping("/workbook")
-    public Object insertWorkbook(@RequestParam("userId") long userId, @RequestParam("workbookTitle") String workbookTitle) {
-        return workbookService.insertWorkbook(userId, workbookTitle);
+    public Object insertWorkbook(@RequestBody InsertWorkbookDto dto) {
+        return workbookService.insertWorkbook(dto.getUserId(), dto.getWorkbookTitle());
     }
 
     @ApiOperation(value = "전체 문제집 조회하기",
