@@ -4,7 +4,7 @@
       <div id="dialog-content">
         <p style="font-size: 4rem;">{{ emoticon }}</p>
         <span v-html="content"></span>
-        <InputBox class="input-box" />
+        <InputBox class="input-box" type="text"/>
       </div>
       <footer id="dialog-footer">
         <button style="width: 30%; color: #C3346A;" @click="$emit('close')">취소</button>
