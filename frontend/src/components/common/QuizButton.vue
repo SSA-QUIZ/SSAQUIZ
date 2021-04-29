@@ -31,7 +31,8 @@ export default {
       if (this.width != undefined) this.style += "width: " + this.width + ";\n";
       if (this.height != undefined) this.style += "height: " + this.height + ";\n";
       if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
-      if (this.answer != undefined) this.style += "justify-content: space-between;\n";
+      if (this.answer != undefined && this.icon != undefined) 
+        this.style += "justify-content: space-between;\n";
     }
   }
 }

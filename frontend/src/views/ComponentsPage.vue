@@ -18,7 +18,8 @@
       @accept="openDialog = false" 
       v-if="openDialog" 
     />
-    <button @click="openQuizTypeDialog = true" style="background-color: pink;">quiztypedialog 열기</button>
+    <div id="component-title">QuizTypeDialog</div>
+    <button @click="openQuizTypeDialog = true" style="background-color: yellow;">quiztypedialog 열기</button>
     <QuizTypeDialog
       v-if="openQuizTypeDialog"
       @close="openQuizTypeDialog = false"
