@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @CrossOrigin(origins = {"*"})
-@RequestMapping("/produce")
 @RestController
 public class ProduceController {
     @Autowired
@@ -28,8 +27,17 @@ public class ProduceController {
                               @RequestParam("answer") String answer, @RequestParam("orderedAnswer") List<String> orderedAnswer,
                               @RequestParam("answerList") List<String> answerList, @RequestParam("time") int time,
                               @RequestParam("scoreFactor") int scoreFactor, @RequestParam("type") int type) {
+        BasicResponse result = new BasicResponse();
+
+        if(objectId == null) {
+            result.status = false;
+            result.data = "문제집 조회 실패(null)";
+            return result;
+        }
+
         Workbook workbook = workbookService.findWorkbook(objectId);
         String imgPath = s3Service.upload(inputFile);
+
         return workbookService.insertSlide(workbook, category, question, imgPath, answer,
                                            orderedAnswer, answerList, time, scoreFactor, type);
     }
@@ -41,24 +49,23 @@ public class ProduceController {
     public BasicResponse findWorkbook(@PathVariable("objectId") String objectId) {
         BasicResponse result = new BasicResponse();
 
+        if(objectId == null) {
+            result.status = false;
+            result.data = "문제집 조회 실패(null)";
+            return result;
+        }
+
         result.status = true;
         result.data = "문제집 조회 성공";
-        result.object = workbookService.findWorkbook(objectId);
+        result.object = workbookService.findWorkbookAndConvert(objectId);
 
         return result;
     }
 
     @ApiOperation(value = "문제집 만들기")
     @PostMapping("/workbook")
-    public Object insertWorkbook(@RequestParam("workbookTitle") String workbookTitle, @RequestParam("userId") long userId,
-                                 @RequestParam("category") String category, @RequestParam("question") String question,
-                                 @RequestParam("file") MultipartFile inputFile, @RequestParam("answer") String answer,
-                                 @RequestParam("orderedAnswer") List<String> orderedAnswer, @RequestParam("answerList") List<String> answerList,
-                                 @RequestParam("time") int time, @RequestParam("scoreFactor") int scoreFactor,
-                                 @RequestParam("type") int type) {
-        String imgPath = s3Service.upload(inputFile);
-        return workbookService.insertWorkbook(workbookTitle, userId, category, question, imgPath,
-                                              answer, orderedAnswer, answerList, time, scoreFactor, type);
+    public Object insertWorkbook(@RequestParam("userId") long userId, @RequestParam("workbookTitle") String workbookTitle) {
+        return workbookService.insertWorkbook(userId, workbookTitle);
     }
 
     @ApiOperation(value = "전체 문제집 조회하기",
