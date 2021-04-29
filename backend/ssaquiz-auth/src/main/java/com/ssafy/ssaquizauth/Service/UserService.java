@@ -173,9 +173,13 @@ public class UserService {
             user.get().setPassword(passwordEncoder.encode(password));
         }
 
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("imageUrl", imgPath);
+
         userRepository.save(user.get());
         result.status = true;
         result.data = "회원정보 수정 성공";
+        result.object = jsonObject;
         return result;
     }
 
