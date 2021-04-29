@@ -2,7 +2,8 @@
   <div>
     <div class="snackbar">
       <span>
-        <i class="fa fa-exclamation-triangle"></i>
+        <i v-if="color==='red'" class="fa fa-exclamation-triangle"></i>
+        <i v-else class="start-icon fa fa-thumbs-up faa-bounce animated"></i>
         {{ alertMessage }}
       </span>
       <button @click="hideSnackBar">OK</button>

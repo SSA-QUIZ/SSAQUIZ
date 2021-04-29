@@ -1,9 +1,9 @@
 <template>
   <div id="signup-form">
-    <InputBox placeholder="E-MAIL" @change-input="setEmail" />
-    <InputBox placeholder="닉네임" @change-input="setNickname" />
-    <InputBox placeholder="비밀번호" @change-input="setPW" />
-    <InputBox placeholder="비밀번호 확인" @change-input="setPWConfirm" />
+    <InputBox placeholder="E-MAIL" type="text" @change-input="setEmail" />
+    <InputBox placeholder="닉네임" type="text" @change-input="setNickname" />
+    <InputBox placeholder="비밀번호" type="password" @change-input="setPW" />
+    <InputBox placeholder="비밀번호 확인" type="password" @change-input="setPWConfirm" />
     <InputButton @click.native="signup" text="회원가입" />
     <br />
     <a class="hyper-link" @click="moveToLogin">로그인 화면으로 돌아가기</a>

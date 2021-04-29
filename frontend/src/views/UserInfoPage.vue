@@ -6,7 +6,7 @@
         <!------ 프로필 이미지 ------>
         <div class="profile">
           <div class="img-wrapper">
-            <img class="image file-input" src="https://ssaquiz.s3.ap-northeast-2.amazonaws.com/2281a4ad-cc38-4099-b483-862639c71869.jpg">
+            <img class="image file-input" :src="defaultImg">
             <input type="file" name="file" class="file-input">
             <div class="hover"></div>
             <div class="image-upload-btn" onclick="document.all.file.click();">
@@ -15,9 +15,9 @@
           </div>
         </div>
         <!-- 닉네임, 비밀번호, 비밀번호 확인, 회원탈퇴 -->
-        <InputBox :placeholder="nickname" @change-input="updateNickname" />
-        <InputBox placeholder="비밀번호" @change-input="updatePassword" />
-        <InputBox placeholder="비밀번호 확인" @change-input="updatePasswordConfirm" />
+        <InputBox :placeholder="nickname"  type="text" @change-input="updateNickname" />
+        <InputBox placeholder="비밀번호" type="password" @change-input="updatePassword" />
+        <InputBox placeholder="비밀번호 확인" type="password" @change-input="updatePasswordConfirm" />
         <div class="signout">
           <a @click="signoutConfirm">회원탈퇴</a>
         </div>
@@ -67,6 +67,7 @@ export default {
       passwordConfirm: '',
 
       // image file data
+      defaultImg: localStorage.getItem('imageUrl'),
       imgData: File,
 
       // signout confirm
@@ -157,12 +158,14 @@ export default {
           formData.append("password", this.password);
 
           axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify-image", formData, headers)
-          .then(res => console.log(res))
+          .then(res => {
+            localStorage.setItem("imageUrl", res.data.object.imageUrl)
+          })
           .catch(err => console.log(err))
         }
         this.password = "";
         this.passwordConfirm = "";
-        this.$router.push({ name: "UserInfo" });
+        this.$router.push({ name: "UserPage", params: { modify: "success", img: localStorage.getItem("imageUrl") } });
       }
     }
   }
