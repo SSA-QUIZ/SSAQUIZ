@@ -3,11 +3,14 @@
     <Header mode="off" />
     <div id="user-page-content">
       <div id="profile">
-        <span id="profile__image"><i class="fas fa-user-circle"></i></span>
+        <div class="img-wrapper">
+          <img class="image" :src="profileImg">
+        </div>
         <div id="profile__info">
           <div style="font-size: 5vh; font-weight: 900; font-family: Jua;">
             {{ nickname }}
-            <button style="font-size: 3vh; color: gray;" @click="moveToUserInfo"><i class="fas fa-pen"></i></button>
+            <button v-if="googleLogin==='false'" style="font-size: 3vh; color: gray;" @click="moveToUserInfo"><i class="fas fa-pen"></i></button>
+            <button style="font-size: 3.5vh; color: gray; margin-left: 10px; margin-top: 3px;" @click="logoutConfirm"><i class="fas fa-sign-out-alt"></i></button>
           </div>
           <div><u>{{ email }}</u></div>
         </div>
@@ -27,27 +30,83 @@
         </div>
       </div>
     </div>
+    <Confirm 
+      v-if="confirmFlag===true"
+      :content="content"
+      :emoticon="emoticon"
+      @close="confirmFlag=false"
+      @accept="logout"
+    />
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color
+    />
   </div>
 </template>
 
 <script>
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
+import Confirm from "@/components/Popup/Confirm.vue";
+import Alert from "@/components/Popup/Alert.vue";
 export default {
   name: 'UserPage',
   components: {
     Header,
-    QuizSet
+    QuizSet,
+    Confirm,
+    Alert
   },
   data: function () {
     return {
       nickname: localStorage.getItem('nickname'),
-      email: localStorage.getItem('email')
+      email: localStorage.getItem('email'),
+
+      //프로필
+      profileImg: "",
+
+      // 구글 로그인 여부
+      googleLogin: localStorage.getItem('googleLogin'),
+
+      // 로그아웃 Confirm
+      confirmFlag: false,
+      content: '',
+      emoticon: '',
+
+      // alert
+      flag: false,
+      alertMessage: '',
+      color: ''
+    }
+  },
+  mounted: function () {
+    this.profileImg = localStorage.getItem('imageUrl');
+
+    // 로그인하지 않으면 접속 불가
+    if (localStorage.getItem('token') === null) {
+      this.$router.push({ name: "Login" });
+    } else if (this.$route.params.modify === "success") {
+      this.setAlert();
     }
   },
   methods: {
     moveToUserInfo: function () {
       this.$router.push({ name: "UserInfo" });
+    },
+    logoutConfirm: function () {
+      this.content = "로그아웃 하시겠습니까?";
+      this.emoticon = "😳";
+      this.confirmFlag = true;
+    },
+    logout: function () {
+      localStorage.clear();
+      this.$router.push({ name: "WelcomePage" });
+    },
+    setAlert: function () {
+      this.alertMessage = "회원 정보가 수정되었습니다!";
+      this.color = "#454995";
+      this.flag = !this.flag;
     }
   }
 }
@@ -75,6 +134,22 @@ export default {
   font-size: 18vh;
   color: #4F37DE;
   margin-left: 7%;
+}
+
+/* 프로필 이미지 */
+#profile .img-wrapper {
+  width:150px;
+  height:150px;
+  transform:translate(17%,-20%);
+  border-radius: 70%;
+  overflow: hidden;
+  margin-right: 30px;
+}
+
+#profile .img-wrapper img {
+  box-shadow: 0 1px 10px rgba(0,0,0,0.4);
+  width:inherit;
+  height:inherit;
 }
 
 #quiz-set-list {

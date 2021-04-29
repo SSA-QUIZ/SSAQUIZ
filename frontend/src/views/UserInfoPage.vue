@@ -6,9 +6,8 @@
         <!------ 프로필 이미지 ------>
         <div class="profile">
           <div class="img-wrapper">
-            <img class="image file-input" src="https://ssaquiz.s3.ap-northeast-2.amazonaws.com/2281a4ad-cc38-4099-b483-862639c71869.jpg">
+            <img class="image file-input" :src="defaultImg">
             <input type="file" name="file" class="file-input">
-
             <div class="hover"></div>
             <div class="image-upload-btn" onclick="document.all.file.click();">
               <span draggable="false"><i class="far fa-file-image"></i></span>
@@ -16,11 +15,11 @@
           </div>
         </div>
         <!-- 닉네임, 비밀번호, 비밀번호 확인, 회원탈퇴 -->
-        <InputBox :placeholder="nickname" @change-input="updateNickname" />
-        <InputBox placeholder="비밀번호" @change-input="updatePassword" />
-        <InputBox placeholder="비밀번호 확인" @change-input="updatePasswordConfirm" />
+        <InputBox :placeholder="nickname"  type="text" @change-input="updateNickname" />
+        <InputBox placeholder="비밀번호" type="password" @change-input="updatePassword" />
+        <InputBox placeholder="비밀번호 확인" type="password" @change-input="updatePasswordConfirm" />
         <div class="signout">
-          <a>회원탈퇴</a>
+          <a @click="signoutConfirm">회원탈퇴</a>
         </div>
         <!-- 취소,수정 버튼 -->
         <div>
@@ -29,6 +28,18 @@
         </div>
       </div>
     </div>
+    <Confirm 
+      v-if="confirmFlag===true"
+      :content="content"
+      :emoticon="emoticon"
+      @close="confirmFlag=false"
+      @accept="signout"
+    />
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color
+    />
   </div>
 </template>
 
@@ -37,12 +48,16 @@ import axios from 'axios';
 import $ from 'jquery';
 import Logo from '@/components/common/Logo.vue';
 import InputBox from '@/components/common/InputBox.vue';
+import Alert from "@/components/Popup/Alert.vue";
+import Confirm from "@/components/Popup/Confirm.vue";
 
 export default {
   name: "UserInfo",
   components: {
     Logo,
-    InputBox
+    InputBox,
+    Alert,
+    Confirm
   },
   data: function () {
     return {
@@ -52,20 +67,34 @@ export default {
       passwordConfirm: '',
 
       // image file data
-      imgData: {},
+      defaultImg: localStorage.getItem('imageUrl'),
+      imgData: File,
+
+      // signout confirm
+      confirmFlag: false,
+      content: '',
+      emoticon: '',
+
+      // Alert Message parameters
+      flag: false,
+      alertMessage: '',
+      color: '',
     }
   },
   mounted: function () {
-    $('.file-input').change(function(){
-      // 이미지 파일을 선택하고 img 태그에 넣는다.
-      var curElement = $(this).parent().parent().find('.image');
+    $('.file-input').change(() => {
+      var newThis = document.getElementsByClassName('file-input')[1];
+
+      // // 이미지 파일을 선택하고 img 태그에 넣는다.
+      var curElement = $(newThis).parent().parent().find('.image');
       var reader = new FileReader();
       reader.onload = function (e) {
         curElement.attr('src', e.target.result);
       };
+
       // 화면에 바뀐 이미지를 띄운다.
-      reader.readAsDataURL(this.files[0]);
-      this.imgData = this.files[0];
+      reader.readAsDataURL(newThis.files[0]);
+      this.imgData = newThis.files[0];
     });
   },
   methods: {
@@ -79,32 +108,65 @@ export default {
     updatePasswordConfirm: function (data) {
       this.passwordConfirm = data;
     },
+
+    // 회원 탈퇴
+    signoutConfirm: function () {
+      this.content = "정말로 탈퇴하시겠습니까?";
+      this.emoticon = "😭";
+      this.confirmFlag = true;
+    },
+
+    signout: function () {
+
+      
+      // 회원 탈퇴 기능 넣기
+
+    },
+
     // 취소 함수
     cancel: function () {
       this.$router.push({ name: "UserPage" });
     },
+
     // 변경 함수
     update: function () {
       const formData = new FormData();
-
-      if (Object.keys(this.imgData).length === 0) {
-        // 1. 사진을 바꾸지 않을 때
-        formData.append("email", localStorage.getItem('email'));
-        formData.append("name", this.nickname);
-        formData.append("password", this.password);
-      } else {  
-        // 2. 사진을 바꿀 때
-        formData.append("file", this.imgData);
-        formData.append("email", localStorage.getItem('email'));
-        formData.append("name", this.nickname);
-        formData.append("password", this.password);
-      }
-
       const headers = { "Content-Type": "multipart/form-data" };
 
-      axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify", formData, headers)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+      if (this.password.length !== 0 && this.password !== this.passwordConfirm){
+        this.alertMessage = "비밀번호가 일치하지 않습니다! 다시 입력해주세요!";
+        this.color = "red";
+        this.flag = !this.flag;
+
+      } else {
+
+        if (this.imgData.name == 'File') {
+          // 1. 사진을 바꾸지 않을 때
+          formData.append("email", localStorage.getItem('email'));
+          formData.append("name", this.nickname);
+          formData.append("password", this.password);
+
+          axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify", formData, headers)
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+
+        } else {  
+          // 2. 사진을 바꿀 때
+          formData.append("file", this.imgData);
+          formData.append("email", localStorage.getItem('email'));
+          formData.append("name", this.nickname);
+          formData.append("password", this.password);
+
+          axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify-image", formData, headers)
+          .then(res => {
+            localStorage.setItem("imageUrl", res.data.object.imageUrl)
+          })
+          .catch(err => console.log(err))
+        }
+        this.password = "";
+        this.passwordConfirm = "";
+        this.$router.push({ name: "UserPage", params: { modify: "success", img: localStorage.getItem("imageUrl") } });
+      }
     }
   }
 }
