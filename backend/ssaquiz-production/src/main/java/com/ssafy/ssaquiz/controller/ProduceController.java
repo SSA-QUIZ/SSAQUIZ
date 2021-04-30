@@ -40,7 +40,7 @@ public class ProduceController {
         String imgPath = s3Service.upload(inputFile);
 
         return workbookService.insertSlide(workbook, category, question, imgPath, answer,
-                                           orderedAnswer, answerList, time, scoreFactor, type);
+                orderedAnswer, answerList, time, scoreFactor, type);
     }
 
     @ApiOperation(value = "문제집 조회하기",
