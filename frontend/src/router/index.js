@@ -5,6 +5,7 @@ import SolvingQuizPage from '@/views/SolvingQuizPage.vue';
 import LobbyPageT from '@/views/LobbyPageT.vue';
 import LobbyPageS from '@/views/LobbyPageS.vue';
 import Login from '@/views/Login.vue';
+import CreatorPage from '@/views/CreatorPage.vue';
 import UserPage from '@/views/UserPage.vue';
 import CorrectAnswer from '@/views/QuizResultsPage/CorrectAnswer.vue';
 import WrongAnswer from '@/views/QuizResultsPage/WrongAnswer.vue';
@@ -54,6 +55,11 @@ const routes = [
     path: '/user-page',
     name: 'UserPage',
     component: UserPage
+  },
+  {
+    path: '/creator',
+    name: 'CreatorPage',
+    component: CreatorPage
   },
   {
     path: '/answer-page',

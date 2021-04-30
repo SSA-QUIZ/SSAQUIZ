@@ -18,7 +18,7 @@
       <div id="quiz-set-list">
         <div id="quiz-set-list__title">
           <span style="font-size: 4vh; font-family: Jua;">{{ nickname }}님의 퀴즈</span>
-          <button style="font-size: 5vh; color: #4F37DE;"><i class="fa fa-plus-circle"></i></button>
+          <button @click="openDialog = true" style="font-size: 5vh; color: #4F37DE;"><i class="fa fa-plus-circle"></i></button>
         </div>
         <div id="quiz-set-list__list">
           <template v-for="(quiz, index) in quizSetList">
@@ -46,12 +46,22 @@
       :alertMessage=alertMessage
       :color=color
     />
+    <Dialog
+      emoticon="🤓"
+      content="퀴즈 제목을 작성해주세요." 
+      @close="openDialog = false" 
+      @accept="createQuiz(); openDialog = false;"
+      @change-input-value="changeQuizTitle"
+      v-if="openDialog"
+    />
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
+import Dialog from '@/components/Popup/Dialog';
 import Confirm from "@/components/Popup/Confirm.vue";
 import Alert from "@/components/Popup/Alert.vue";
 import axios from 'axios';
@@ -62,7 +72,8 @@ export default {
     Header,
     QuizSet,
     Confirm,
-    Alert
+    Alert,
+    Dialog
   },
   data: function () {
     return {
@@ -85,7 +96,9 @@ export default {
       alertMessage: '',
       color: '',
 
-      quizSetList:[]
+      quizSetList:[],
+      openDialog: false,
+      quizTitle: '',
     }
   },
   created: function () {
@@ -107,6 +120,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions("CreateQuizStore", [
+      "setQuizData"
+    ]),
     moveToUserInfo: function () {
       this.$router.push({ name: "UserInfo" });
     },
@@ -132,6 +148,17 @@ export default {
     },
     deleteQuiz: function () {
     },
+    changeQuizTitle: function (data) {
+      this.quizTitle = data
+    },
+    createQuiz: function () {
+      const params = {"userId": parseInt(localStorage.getItem('id')), "workbookTitle": this.quizTitle}
+      this.setQuizData(params)
+        .then(() => {
+          this.$router.push({ name: "CreatorPage" })
+        })
+        .catch(err => console.log(err))
+    }
   }
 }
 </script>

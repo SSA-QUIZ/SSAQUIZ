@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import { GOOGLE_AUTH_URL } from "@/config/index.js";
 
 import InputBox from "@/components/common/InputBox.vue";
@@ -46,12 +46,12 @@ export default {
       axios.post("http://k4a304.p.ssafy.io/api-auth/auth/login", data)
         .then(res => {
           if (res.data.status === true) {     //로그인 성공시
-            localStorage.setItem('token',res.data.object.accessToken)
-            localStorage.setItem('nickname', res.data.object.nickname)
-            localStorage.setItem('email', this.email)
-            localStorage.setItem('googleLogin', false)
-            localStorage.setItem('imageUrl', res.data.object.imageUrl)
-            localStorage.setItem('id', res.data.object.id)
+            localStorage.setItem('token',res.data.object.accessToken);
+            localStorage.setItem('nickname', res.data.object.nickname);
+            localStorage.setItem('email', this.email);
+            localStorage.setItem('googleLogin', false);
+            localStorage.setItem('imageUrl', res.data.object.imageUrl);
+            localStorage.setItem('id', res.data.object.id);
 
             this.$router.push({ name: "UserPage" });
           } else {

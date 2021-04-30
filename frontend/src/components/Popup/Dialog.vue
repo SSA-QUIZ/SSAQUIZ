@@ -4,7 +4,7 @@
       <div id="dialog-content">
         <p style="font-size: 4rem;">{{ emoticon }}</p>
         <span v-html="content"></span>
-        <InputBox class="input-box" />
+        <InputBox class="input-box" @change-input="changeInputValue" />
       </div>
       <footer id="dialog-footer">
         <button style="width: 30%; color: #C3346A;" @click="$emit('close')">취소</button>
@@ -26,11 +26,22 @@ export default {
   props: [
     'content',
     'emoticon'
-  ]
+  ],
+  data: function () {
+    return {
+      inputValue: '',
+    }
+  },
+  methods: {
+    changeInputValue: function (data) {
+      this.inputValue = data;
+      this.$emit('change-input-value', this.inputValue);
+    },
+  }
 }
 </script>
 
-<style>
+<style scoped>
 .overlay, .dialog-container {
   width: 100%;
   height: 100%;

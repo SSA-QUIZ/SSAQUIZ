@@ -33,13 +33,13 @@ header {
 	padding: 0vh 3vh 0vh 3vh;
 }
 #user-info {
-  width: 50%;
+  width: 70%;
 	display: flex;
 	justify-content:flex-end;
 	align-items: center;
 }
 #user-info__nickname {
-  width: 30vh;
+  width: 40%;
   text-align: end;
 	font-family: "Jua";
 	font-size: 3.5vh;

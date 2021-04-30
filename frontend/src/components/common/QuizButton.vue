@@ -1,8 +1,8 @@
 <template>
   <button class="quiz-button" :style="style">
-    <span><i :class="icon"></i></span>
+    <span v-if="icon"><i :class="icon"></i></span>
     <span>{{ answer }}</span>
-    <span></span>
+    <span v-if="icon"></span>
   </button>
 </template>
 
@@ -14,6 +14,7 @@ export default {
     'width',
     'height',
     'icon',
+    'margin',
     'answer'
   ],
   data: function () {
@@ -29,7 +30,9 @@ export default {
       if (this.color != undefined) this.style += "background-color: " + this.color + ";\n";
       if (this.width != undefined) this.style += "width: " + this.width + ";\n";
       if (this.height != undefined) this.style += "height: " + this.height + ";\n";
-      if (this.answer != undefined) this.style += "justify-content: space-between;\n";
+      if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
+      if (this.answer != undefined && this.icon != undefined) 
+        this.style += "justify-content: space-between;\n";
     }
   }
 }
@@ -46,6 +49,10 @@ export default {
 	border-radius: 15px;
 	font-family: Jua;
 	font-size: 6rem;
-  padding: 0% 10% 0% 10%;
+  padding: 0 auto;
+}
+
+i {
+  margin: 30px;
 }
 </style>
