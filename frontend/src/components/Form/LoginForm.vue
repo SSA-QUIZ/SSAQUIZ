@@ -1,7 +1,7 @@
 <template>
   <div id="login-form">
-    <InputBox placeholder="ID를 입력해주세요." @change-input="setEmail" />
-    <InputBox placeholder="PW를 입력해주세요." @change-input="setPassword" />
+    <InputBox placeholder="ID를 입력해주세요." type="text" @change-input="setEmail" />
+    <InputBox placeholder="PW를 입력해주세요." type="password" @change-input="setPassword" />
     <InputButton @click.native="login" text="로그인 하기" />
     <InputButton @click.native="googleLogin" text="구글로 로그인하기" />
     <br />
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import { GOOGLE_AUTH_URL } from "@/config/index.js";
 
 import InputBox from "@/components/common/InputBox.vue";
@@ -26,33 +26,43 @@ export default {
   data: function () {
     return {
       email: "",
-      password: "",
+      PW: "",
     };
   },
   methods: {
     moveToSignup: function () {
+      this.email = "";
+      this.PW = "";
       this.$emit("move-to-signup");
     },
     setEmail: function (data) {
       this.email = data;
     },
     setPassword: function (data) {
-      this.password = data;
+      this.PW = data;
     },
     login: function () {
-      const data = {"email": this.email, "password": this.password}
+      const data = {"email": this.email, "password": this.PW}
       axios.post("http://k4a304.p.ssafy.io/api-auth/auth/login", data)
         .then(res => {
-          console.log(res)
           if (res.data.status === true) {     //로그인 성공시
-            localStorage.setItem('token',res.data.object.accessToken)
-            localStorage.setItem('nickname', res.data.object.nickname)
-            localStorage.setItem('email', this.email)
+            localStorage.setItem('token',res.data.object.accessToken);
+            localStorage.setItem('nickname', res.data.object.nickname);
+            localStorage.setItem('email', this.email);
+            localStorage.setItem('googleLogin', false);
+            localStorage.setItem('imageUrl', res.data.object.imageUrl);
+            localStorage.setItem('id', res.data.object.id);
 
             this.$router.push({ name: "UserPage" });
           } else {
-            // 로그인 실패시 alert 처리 예정
+            // DB에 유저 정부가 없을 때
+            this.$emit("login-fail", "execution");
           }
+        })
+        .catch(err => {
+          // 유효하지 않은 아이디/비밀번호일 때
+          console.log(err)
+          this.$emit("login-fail", "invalid");
         })
     },
     // google login
