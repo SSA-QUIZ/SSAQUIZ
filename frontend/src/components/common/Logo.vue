@@ -15,6 +15,7 @@ export default {
 <style>
 #logo {
   position: fixed;
+  display: inline-block;
   margin-top: 3%;
   margin-left: 3%;
   width: 15%;
