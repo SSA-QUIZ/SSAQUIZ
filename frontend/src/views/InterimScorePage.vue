@@ -1,7 +1,7 @@
 <template>
   <div id="interim-page">
     <!-- 배경 -->
-    <!-- <div class="bubbles">
+    <div class="bubbles">
       <div class="bubble"></div>
       <div class="bubble"></div>
       <div class="bubble"></div>
@@ -12,7 +12,7 @@
       <div class="bubble"></div>
       <div class="bubble"></div>
       <div class="bubble"></div>
-    </div> -->
+    </div>
 
     <!-- 본문 -->
     <Logo />
@@ -44,11 +44,16 @@
               <h1>복어</h1>
             </div>
             <h1 class="score">879점</h1>
-
           </div>
         </div>
       </div>
       <h1 class="mention">문어님이 현재까지 3번 연속이나 답을 맞추셨어요!</h1>
+      <!-- 문제 진행 버튼 -->
+      <button class="button"><img src="@/assets/images/arrow.png"></button>
+      <!-- 배경의 고래 이미지 -->
+      <img class="whale-img-1" src="@/assets/images/pinkWhale.png">
+      <img class="whale-img-2" src="@/assets/images/purpleWhale.png">
+      <img class="whale-img-3" src="@/assets/images/greenWhale.png">
     </div>
   </div>
 </template>
@@ -64,11 +69,15 @@ export default {
 </script>
 
 <style scoped>
+/* 전체 영역 */
+
 #interim-page {
   width: 100%;
   height: 100%;
   background-color: #4f37de;
 }
+
+/* 로고를 제외한 나머지 영역 */
 
 #interim-page #content  {
   display: flex;
@@ -107,7 +116,12 @@ export default {
   border-radius: 15px;
   background-color: white;
   border: 3px solid black;
+
+  position: relative;
+  z-index: 1;
 }
+
+/* 각 점수를 나타내는 영역 */
 
 #content .container .scores {
   width: 80%;
@@ -120,12 +134,14 @@ export default {
   justify-content: space-between;
 }
 
+/* 각 점수 */
+
 .scores .score{
   color: black;
   font-size: 2.5vw;
   font-family: Jua;
   width: 30%;
-  margin-top: 5%;
+  margin-top: 3%;
   margin-left: 3%;
 }
 
@@ -136,33 +152,54 @@ export default {
 
 .row img {
   width: 15%;
+  float: left;
 }
 
 .row h1 {
   color: black;
-  font-size: 3.5vw;
+  font-size: 3vw;
   font-family: Jua;
-  margin-top: 5%;
+  margin-top: 3%;
   margin-left: 3%;
 }
 
-/* #content .container .scores img {
-  float: left;
+/* 배경의 고래 이미지 */
+
+#content .whale-img-1 {
+  position: absolute;
+  z-index: 2;
+  width: 30%;
+  left: 0%;
+  top: 20%;
+  transform: rotate( 35deg );
+}
+
+#content .whale-img-2 {
+  position: absolute;
+  z-index: 2;
+  width: 12%;
+  right: 7%;
+  top: 8%;
+  transform: scaleX(-1) rotate( 15deg );
+}
+
+#content .whale-img-3 {
+  position: absolute;
+  z-index: 2;
   width: 20%;
-
+  right: 5%;
+  top: 50%;
+  transform: scaleX(-1) rotate( -15deg );
 }
 
-#content .container .scores h1 {
-  color: black;
-  font-size: 3.5vw;
-  font-family: Jua;
-  justify-content: start;
-  margin-left: 3%;
-} */
+/* 이동 버튼 */
 
-/* #content .container .scores .score {
-  margin-left: 30%;
-} */
+#content .button {
+  position: absolute;
+  z-index: 2;
+  right: 10%;
+  top: 43%;
+}
 
 
 /* 배경 효과 */
