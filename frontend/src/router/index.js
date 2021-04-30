@@ -12,6 +12,7 @@ import WrongAnswer from '@/views/QuizResultsPage/WrongAnswer.vue';
 import AnswerPage from '@/views/AnswerPage.vue';
 import ComponentsPage from '@/views/ComponentsPage.vue';
 import UserInfoPage from '@/views/UserInfoPage.vue';
+import InterimScorePage from '@/views/InterimScorePage.vue';
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,11 @@ const routes = [
     path: '/user-info',
     name: 'UserInfo',
     component: UserInfoPage
+  },
+  {
+    path: '/interim-score',
+    name: 'InterimScorePage',
+    component: InterimScorePage
   },
 ]
 
