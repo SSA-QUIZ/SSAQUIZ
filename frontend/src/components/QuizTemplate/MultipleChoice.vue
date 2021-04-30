@@ -45,6 +45,7 @@ export default {
 	border-radius: 15px;
 	font-family: Jua;
 	font-size: 6rem;
+  width: 48%;
 }
 
 @media (max-width: 700px) {
@@ -56,11 +57,13 @@ export default {
 	.choice-row {
     display: flex;
     flex-direction: column;
+    align-items: center;
 	}
 	.choice {
     height: 100px;
     font-size: 2rem;
     margin: 5px;
+    width: 95%;
 	}
 	.quiz-button {
     height: 100px !important;

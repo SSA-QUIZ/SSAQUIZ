@@ -1,5 +1,5 @@
 <template>
-  <input @keyup="onInput" class="input-box" v-model="data">
+  <input :value="data" @input="onInput" class="input-box">
 </template>
 
 <script>
@@ -11,7 +11,8 @@ export default {
 		}
 	},
 	methods: {
-		onInput: function () {
+		onInput: function (e) {
+			this.data = e.target.value;
 			this.$emit('change-input', this.data)
 		}
 	}
@@ -20,7 +21,7 @@ export default {
 
 <style>
 .input-box {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif !important;
 	font-weight: bold;
 	max-width: 100%;
 	width: 300px;

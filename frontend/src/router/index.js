@@ -5,12 +5,14 @@ import SolvingQuizPage from '@/views/SolvingQuizPage.vue';
 import LobbyPageT from '@/views/LobbyPageT.vue';
 import LobbyPageS from '@/views/LobbyPageS.vue';
 import Login from '@/views/Login.vue';
+import CreatorPage from '@/views/CreatorPage.vue';
 import UserPage from '@/views/UserPage.vue';
 import CorrectAnswer from '@/views/QuizResultsPage/CorrectAnswer.vue';
 import WrongAnswer from '@/views/QuizResultsPage/WrongAnswer.vue';
 import AnswerPage from '@/views/AnswerPage.vue';
 import ComponentsPage from '@/views/ComponentsPage.vue';
 import UserInfoPage from '@/views/UserInfoPage.vue';
+import InterimScorePage from '@/views/InterimScorePage.vue';
 
 Vue.use(VueRouter)
 
@@ -56,6 +58,11 @@ const routes = [
     component: UserPage
   },
   {
+    path: '/creator',
+    name: 'CreatorPage',
+    component: CreatorPage
+  },
+  {
     path: '/answer-page',
     name: 'AnswerPage',
     component: AnswerPage
@@ -69,6 +76,11 @@ const routes = [
     path: '/user-info',
     name: 'UserInfo',
     component: UserInfoPage
+  },
+  {
+    path: '/interim-score',
+    name: 'InterimScorePage',
+    component: InterimScorePage
   },
 ]
 

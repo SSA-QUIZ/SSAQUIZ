@@ -42,6 +42,7 @@ export default {
       nickname: String,
     };
   },
+  // 구글 로그인 (메인페이지 완성되는 대로 이동시킬 예정)
   mounted() {
     this.getToken();
   },
@@ -58,15 +59,18 @@ export default {
     connectQuiz: function () {
       console.log(this.PIN + " " + this.nickname + " websocket 연결")
     },
-
     // 구글 로그인 token (메인페이지 완성되는 대로 이동시킬 예정)
     getToken() {
       const url = window.location.href;
       const idx = url.indexOf("token=");
       console.log(idx);
       if (idx != -1) {
+        // google 계정으로 로그인했다는 사실 저장(회원정보 수정 할 수 없도록.)
+        localStorage.setItem("googleLogin", true);
+
+        // url로부터 token 획득하기
         const token = url.slice(idx + 6);
-        this.$store.dispatch("setLoginToken", token);
+        localStorage.setItem("token", token);
         this.$router.push({ name: "WelcomePage" }).catch(() => {});
       }
     },

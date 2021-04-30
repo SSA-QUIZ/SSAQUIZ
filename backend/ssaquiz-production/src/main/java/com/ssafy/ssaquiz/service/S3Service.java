@@ -44,6 +44,10 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) {
+        if(file == null) {
+            return("");
+        }
+
         String fileName = UUID.randomUUID().toString() + ".jpg";
 
         try {
