@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -123,6 +124,7 @@ public class WorkbookService {
         for (Workbook workbook : workbookList) {
             CoverDtoList.add(CoverDto.builder().id(workbook.getId().toString()).title(workbook.getWorkbookTitle()).build());
         }
+        Collections.reverse(CoverDtoList);
 
         result.status = true;
         result.data = "문제집 조회 성공";
