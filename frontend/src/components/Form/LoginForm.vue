@@ -51,6 +51,7 @@ export default {
             localStorage.setItem('email', this.email)
             localStorage.setItem('googleLogin', false)
             localStorage.setItem('imageUrl', res.data.object.imageUrl)
+            localStorage.setItem('id', res.data.object.id)
 
             this.$router.push({ name: "UserPage" });
           } else {

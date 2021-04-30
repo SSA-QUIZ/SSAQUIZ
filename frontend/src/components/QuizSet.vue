@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button id="quiz-set">
+    <button id="quiz-set" @click="$emit('start-quiz')">
       <span style="font-size: 1.8rem;">{{ quizTitle }}</span>
     </button>
     <div class="quiz-set__buttons">
-      <button style="margin-right: 2%;"><i class="far fa-edit"></i></button>
-      <button><i class="far fa-trash-alt"></i></button>
+      <button style="margin-right: 2%;" @click="$emit('edit-quiz')"><i class="far fa-edit"></i></button>
+      <button><i class="far fa-trash-alt" @click="$emit('delete-quiz')"></i></button>
     </div>
   </div>
 
