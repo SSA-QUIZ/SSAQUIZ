@@ -15,13 +15,14 @@ export default {
     'icon',
     'margin',
     'answer',
-    'index'
+    'index',
+    'choice'
   ],
   data: function () {
     return {
       style: '',
-      choice: '',
       placeholder: '',
+      inputChoice: ''
     }
   },
   created: function () {
@@ -30,8 +31,8 @@ export default {
   },
   methods: {
     changeChoice: function (e) {
-      this.choice = e.target.value;
-      this.$emit('change-choice', this.index, this.choice);
+      this.inputChoice = e.target.value;
+      this.$emit('change-choice', this.index, this.inputChoice);
     },
     setStyle: function () {
       if (this.color != undefined) this.style += "background-color: " + this.color + ";\n";
