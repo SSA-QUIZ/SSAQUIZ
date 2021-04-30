@@ -8,12 +8,15 @@
       <div id="dialog-content">
         <div class="type-row">
           <QuizButton style="font-size: 40px;" margin="5px" answer="4지선다" width="48%" height="150px" color="#ffdc46"
-            @click="addMultipleChoice" />
-          <QuizButton style="font-size: 40px;" margin="5px" answer="T/F" width="48%" height="150px" color="#ff85b1" />
+            @click.native="addMultipleChoice" />
+          <QuizButton style="font-size: 40px;" margin="5px" answer="T/F" width="48%" height="150px" color="#ff85b1"
+            @click.native="addTrueFalse" />
         </div>
         <div class="type-row">
-          <QuizButton style="font-size: 40px;" margin="5px" answer="순서맞히기" width="48%" height="150px" color="#7cb1ff" />
-          <QuizButton style="font-size: 40px;" margin="5px" answer="투표" width="48%" height="150px" color="#aaed81" />
+          <QuizButton style="font-size: 40px;" margin="5px" answer="순서맞히기" width="48%" height="150px" color="#7cb1ff"
+            @click.native="addOrder" />
+          <QuizButton style="font-size: 40px;" margin="5px" answer="투표" width="48%" height="150px" color="#aaed81" 
+            @click.native="addVote" />
         </div>
       </div>
     </div>
@@ -23,6 +26,8 @@
 
 <script>
 import QuizButton from '@/components/common/QuizButton.vue';
+import { mapActions } from 'vuex';
+
 
 export default {
   name: 'QuizTypeDialog',
@@ -36,10 +41,23 @@ export default {
     }
   },
   methods: {
+    ...mapActions("CreateQuizStore", ["addSlide"]),
     addMultipleChoice: function () {
-      
+      let defaultValue = {
+        "category": "4지선다",
+        "question": "",
+        "imagePath": "",
+        "answer": "",
+        "orderedAnswer": [],
+        "answerList": ["", "", "", ""],
+        "time": 10,
+        "scoreFactor": 1,
+        "type": 1
+      }
+      this.addSlide(defaultValue);
       this.$emit('close');
-    }
+    },
+
   }
 }
 </script>
