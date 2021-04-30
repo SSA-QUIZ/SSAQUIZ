@@ -31,7 +31,7 @@ const routes = [
     component: SolvingQuizPage
   },
   {
-    path: '/lobby/:quizID',
+    path: '/lobby/:PIN',
     name: 'LobbyPageT',
     component: LobbyPageT
   },
