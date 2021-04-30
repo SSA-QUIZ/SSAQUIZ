@@ -40,6 +40,7 @@ export default {
 	height: 0;
 	overflow: hidden;
 	padding-bottom: 56.26%;
+  cursor: pointer;
 }
 
 .slide-number {

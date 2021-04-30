@@ -13,6 +13,12 @@ const CreateQuizStore = {
     SET_SLIDE_QUESTION: function (state, value) {
       state.quizData.slideList[value[0]].question = value[1];
     },
+    ADD_SLIDE: function (state, value) {
+      state.quizData.slideList.push(value);
+    },
+    SET_MULTIPLE_CHOICE: function (state, value) {
+      state.quizData.slideList[value[0]].answerList = value[1];
+    },
   },
   actions: {
     setQuizData: function ({ commit }, value) {
@@ -26,7 +32,13 @@ const CreateQuizStore = {
     },
     setSlideQuestion: function ({ commit }, value) {
       commit('SET_SLIDE_QUESTION', value);
-    }
+    },
+    addSlide: function ({ commit }, value) {
+      commit('ADD_SLIDE', value);
+    },
+    setMultipleChoice: function ({ commit }, value) {
+      commit('SET_MULTIPLE_CHOICE', value)
+    },
   }
 };
 

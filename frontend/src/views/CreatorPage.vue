@@ -15,7 +15,7 @@
               :key="index"
               :number="index+1"
               :slide="slide"
-              @click="selectSlide(index)"
+              @click.native="selectSlide(index)"
             />
           </template>
         </div>
@@ -30,8 +30,7 @@
       <div id="creator-page__content">
         <MultipleChoiceCreator 
           :slideIndex="selectedSlide"
-          @change-question="getQuestion"
-          @change-choices="getChoices"
+          v-if="slideType === '4지선다'"
         />
       </div>
       <div id="creator-page__settings">
@@ -74,6 +73,7 @@ import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreato
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import { mapState } from 'vuex';
+// import axios from 'axios';
 
 export default {
   name: "CreatorPage",
@@ -85,28 +85,23 @@ export default {
   data: function () {
     return {
       openQuizTypeDialog: false,
-      selectedSlide: 0,
+      selectedSlide: -1,
     }
   },
-  computed: mapState("CreateQuizStore", [
-    'quizData'
-  ]),
-  methods: {
-    getChoices: function (data, type) {
-      console.log(data, 33)
-      if (type === "multipleChoice") {
-        console.log(this.quizData[0])
+  computed: {
+    ...mapState("CreateQuizStore", ['quizData']),
+    slideType: function () {
+      if (this.selectedSlide !== -1) {
+        return this.quizData.slideList[this.selectedSlide].category
+      } else {
+        return 0
       }
     },
-    getQuestion: function (data) {
-      console.log(data)
-    },
-    addSlide: function () {
-
-    },
+  },
+  methods: {
     selectSlide: function (idx) {
-      this.seletedSlide = idx;
-    }
+      this.selectedSlide = idx;
+    },
   },
 }
 </script>

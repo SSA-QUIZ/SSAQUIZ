@@ -11,12 +11,12 @@
     </div>
     <div>
       <div class="choice-row">
-        <CreatorQuizButton @change-choice="getChoice" index="1" height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
-        <CreatorQuizButton @change-choice="getChoice" index="2" height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
+        <CreatorQuizButton :choice=choices[0] @change-choice="getChoice" index="1" height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
+        <CreatorQuizButton :choice=choices[1] @change-choice="getChoice" index="2" height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
       </div>
       <div class="choice-row">
-        <CreatorQuizButton @change-choice="getChoice" index="3" height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
-        <CreatorQuizButton @change-choice="getChoice" index="4" height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
+        <CreatorQuizButton :choice=choices[2] @change-choice="getChoice" index="3" height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
+        <CreatorQuizButton :choice=choices[3] @change-choice="getChoice" index="4" height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
       </div>
 
     </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import CreatorQuizButton from '@/components/QuizCreator/CreatorQuizButton.vue';
 
 export default {
@@ -43,18 +43,32 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapState("CreateQuizStore", ['quizData']),
+  },
+  watch: {
+    slideIndex: function (newVal) {
+      this.question = this.quizData.slideList[newVal].question;
+      console.log(this.choices, this.quizData.slideList[newVal].answerList)
+      this.choices = this.quizData.slideList[newVal].answerList;
+    }
+  },
   methods: {
-    ...mapActions("CreateQuizStore", ["setSlideQuestion"]),
+    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setMultipleChoice"]),
     getChoice: function (idx, data) {
       this.choices[idx-1] = data;
-      this.$emit("change-choices", this.choices, 'multipleChoice')
+      let val = [this.slideIndex, this.choices];
+      this.setMultipleChoice(val);
+      this.$emit('change-choice');
    },
     changeQuestion(e) {
       this.question = e.target.value;
       let val = [this.slideIndex, this.question];
       this.setSlideQuestion(val);
-      this.$emit("change-question", this.question);
-    }
+      this.$emit('change-question');
+
+    },
+
   },
 }
 </script>
