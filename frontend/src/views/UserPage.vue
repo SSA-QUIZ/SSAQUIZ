@@ -21,12 +21,16 @@
           <button style="font-size: 5vh; color: #4F37DE;"><i class="fa fa-plus-circle"></i></button>
         </div>
         <div id="quiz-set-list__list">
-          <QuizSet quizTitle="퀴즈1" class="quiz-set"/>
-          <QuizSet quizTitle="퀴즈2" class="quiz-set"/>
-          <QuizSet quizTitle="퀴즈3" class="quiz-set"/>
-          <QuizSet quizTitle="퀴즈4" class="quiz-set"/>
-          <QuizSet quizTitle="퀴즈4" class="quiz-set"/>
-          <QuizSet quizTitle="퀴즈4" class="quiz-set"/>
+          <template v-for="(quiz, index) in quizSetList">
+            <QuizSet 
+              :key="index" 
+              :quizTitle="quiz.title" 
+              @start-quiz="startQuiz"
+              @edit-quiz="editQuiz(quiz.id)"
+              @deleteQuiz="deleteQuiz"
+              class="quiz-set"
+            />
+          </template>
         </div>
       </div>
     </div>
@@ -50,6 +54,8 @@ import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
 import Confirm from "@/components/Popup/Confirm.vue";
 import Alert from "@/components/Popup/Alert.vue";
+import axios from 'axios';
+
 export default {
   name: 'UserPage',
   components: {
@@ -77,8 +83,18 @@ export default {
       // alert
       flag: false,
       alertMessage: '',
-      color: ''
+      color: '',
+
+      quizSetList:[]
     }
+  },
+  created: function () {
+    let id = localStorage.getItem('id');
+    axios.get("http://k4a304.p.ssafy.io/api-quiz/workbook-all/" + id)
+    .then(res => {
+      this.quizSetList = res.data.object;
+    })
+    .catch(err => { console.log(err); })
   },
   mounted: function () {
     this.profileImg = localStorage.getItem('imageUrl');
@@ -107,7 +123,15 @@ export default {
       this.alertMessage = "회원 정보가 수정되었습니다!";
       this.color = "#454995";
       this.flag = !this.flag;
-    }
+    },
+    // quizSet methods
+    startQuiz: function () {
+    },
+    editQuiz: function (id) {
+      this.$router.push({ name: "CreatorPage", params: id });
+    },
+    deleteQuiz: function () {
+    },
   }
 }
 </script>
@@ -158,7 +182,8 @@ export default {
   justify-content: center;
   align-items: center;
   width:60%;
-  height: 100%;
+  height: 600px;
+  min-height: 600px;
 }
 
 #profile__info {
