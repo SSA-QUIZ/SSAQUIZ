@@ -49,7 +49,6 @@ export default {
   watch: {
     slideIndex: function (newVal) {
       this.question = this.quizData.slideList[newVal].question;
-      console.log(this.choices, this.quizData.slideList[newVal].answerList)
       this.choices = this.quizData.slideList[newVal].answerList;
     }
   },
@@ -59,14 +58,11 @@ export default {
       this.choices[idx-1] = data;
       let val = [this.slideIndex, this.choices];
       this.setMultipleChoice(val);
-      this.$emit('change-choice');
    },
     changeQuestion(e) {
       this.question = e.target.value;
       let val = [this.slideIndex, this.question];
       this.setSlideQuestion(val);
-      this.$emit('change-question');
-
     },
 
   },

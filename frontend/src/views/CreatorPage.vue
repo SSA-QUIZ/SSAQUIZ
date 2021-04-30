@@ -1,9 +1,16 @@
 <template>
   <div id="creator-page">
     <div id="creator-page__header">
-      <button class="creator-page__header__button">나가기</button>
+      <button class="creator-page__header__button" @click="openExitConfirm = true">나가기</button>
+      <Confirm 
+        emoticon="🤔"
+        content="작업한 내용이 저장되지 않았습니다.<br>정말로 나가시겠습니까?" 
+        @close="openExitConfirm = false" 
+        @accept="openExitConfirm = false; exit();"
+        v-if="openExitConfirm" 
+      />
       <img class="ssaquiz-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
-      <button class="creator-page__header__button">저장하기</button>
+      <button class="creator-page__header__button" @click="save">저장하기</button>
     </div>
     <div id="creator-page__body">
       <div id="creator-page__preview-wrap">
@@ -72,6 +79,7 @@
 import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
+import Confirm from '@/components/Popup/Confirm.vue';
 import { mapState } from 'vuex';
 // import axios from 'axios';
 
@@ -80,12 +88,14 @@ export default {
   components: {
     MultipleChoiceCreator,
     QuizSlide,
-    QuizTypeDialog
+    QuizTypeDialog,
+    Confirm
   },
   data: function () {
     return {
       openQuizTypeDialog: false,
       selectedSlide: -1,
+      openExitConfirm: false,
     }
   },
   computed: {
@@ -102,6 +112,12 @@ export default {
     selectSlide: function (idx) {
       this.selectedSlide = idx;
     },
+    exit: function () {
+      this.$router.push({ name: "UserPage" }).catch(() => {});
+    },
+    save: function () {
+      this.$router.push({ name: "UserPage" }).catch(() => {});
+    }
   },
 }
 </script>
