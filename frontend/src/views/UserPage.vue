@@ -24,10 +24,10 @@
           <template v-for="(quiz, index) in quizSetList">
             <QuizSet 
               :key="index" 
-              :quizTitle="quiz.title" 
+              :quizTitle="quiz.title"
               @start-quiz="startQuiz"
               @edit-quiz="editQuiz(quiz.id)"
-              @deleteQuiz="deleteQuiz"
+              @delete-quiz="deleteQuiz"
               class="quiz-set"
             />
           </template>
@@ -121,7 +121,7 @@ export default {
   },
   methods: {
     ...mapActions("CreateQuizStore", [
-      "setQuizData"
+      "addQuiz", "getQuizData", "resetQuizData"
     ]),
     moveToUserInfo: function () {
       this.$router.push({ name: "UserInfo" });
@@ -144,21 +144,21 @@ export default {
     startQuiz: function () {
     },
     editQuiz: function (id) {
-      this.$router.push({ name: "CreatorPage", params: id });
+      this.$router.push({ name: "CreatorPage", params: {"workbookId" : id} });
     },
     deleteQuiz: function () {
     },
-    changeQuizTitle: function (data) {
-      this.quizTitle = data
-    },
     createQuiz: function () {
       const params = {"userId": parseInt(localStorage.getItem('id')), "workbookTitle": this.quizTitle}
-      this.setQuizData(params)
+      this.addQuiz(params)
         .then(() => {
           this.$router.push({ name: "CreatorPage" })
         })
         .catch(err => console.log(err))
-    }
+    },
+    changeQuizTitle: function (data) {
+      this.quizTitle = data
+    },
   }
 }
 </script>

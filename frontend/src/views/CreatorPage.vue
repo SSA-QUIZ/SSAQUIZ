@@ -2,13 +2,6 @@
   <div id="creator-page">
     <div id="creator-page__header">
       <button class="creator-page__header__button" @click="openExitConfirm = true">나가기</button>
-      <Confirm 
-        emoticon="🤔"
-        content="작업한 내용이 저장되지 않았습니다.<br>정말로 나가시겠습니까?" 
-        @close="openExitConfirm = false" 
-        @accept="openExitConfirm = false; exit();"
-        v-if="openExitConfirm" 
-      />
       <img class="ssaquiz-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
       <button class="creator-page__header__button" @click="save">저장하기</button>
     </div>
@@ -30,15 +23,13 @@
           <i class="far fa-plus-square"></i>
           <span>슬라이드 추가</span>
         </div>
-        <QuizTypeDialog
-          v-if="openQuizTypeDialog"
-          @close="openQuizTypeDialog = false" />
       </div>
       <div id="creator-page__content">
         <MultipleChoiceCreator 
           :slideIndex="selectedSlide"
-          v-if="slideType === '4지선다'"
+          v-if="category === '4지선다'"
         />
+        <div v-else>슬라이드 없음</div>
       </div>
       <div id="creator-page__settings">
         <span class="settings__title">문제 설정</span>
@@ -72,6 +63,17 @@
         </div>
       </div>
     </div>
+    <Confirm 
+      emoticon="🤔"
+      content="작업한 내용이 저장되지 않았습니다.<br>정말로 나가시겠습니까?" 
+      @close="openExitConfirm = false" 
+      @accept="openExitConfirm = false; exit();"
+      v-if="openExitConfirm" 
+    />
+    <QuizTypeDialog
+      v-if="openQuizTypeDialog"
+      @close="openQuizTypeDialog = false" 
+    />
   </div>
 </template>
 
@@ -80,7 +82,7 @@ import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreato
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 // import axios from 'axios';
 
 export default {
@@ -94,30 +96,63 @@ export default {
   data: function () {
     return {
       openQuizTypeDialog: false,
-      selectedSlide: -1,
       openExitConfirm: false,
+      selectedSlide: 0,
+      category: '',
     }
+  },
+  created: function () {
+    this.getQuizData(this.$route.params.workbookId)
+      .then(res=>{
+        console.log(res)
+        if (this.quizData.slideList.length == 0)
+          return "none";
+        else this.selectSlide(0);
+      })
+      .catch(err=>console.log(err))
   },
   computed: {
     ...mapState("CreateQuizStore", ['quizData']),
-    slideType: function () {
-      if (this.selectedSlide !== -1) {
-        return this.quizData.slideList[this.selectedSlide].category
-      } else {
-        return 0
-      }
-    },
   },
-  methods: {
+  methods: {    
+    ...mapActions("CreateQuizStore", [
+      "addQuiz", "getQuizData", "resetQuizData"
+    ]),
     selectSlide: function (idx) {
+      console.log("slide 클릭할 때 : " + this.quizData.slideList.length)
       this.selectedSlide = idx;
+      this.setSettings(idx);
     },
     exit: function () {
-      this.$router.push({ name: "UserPage" }).catch(() => {});
+      this.$router.push({ name: "UserPage" });
     },
     save: function () {
-      this.$router.push({ name: "UserPage" }).catch(() => {});
-    }
+    },
+    setSettings: function (idx) {
+      let val = this.quizData.slideList[idx];
+      this.category = val.category;
+      let selectTime = document.getElementById('time-limit');
+      for (let i = 0; i < 3; i++) {
+        if (selectTime.options[i].value == val.time) {
+          selectTime.options[i].selected = true;
+          break;
+        }
+      }
+      let selectScoreFactor = document.getElementById('score-factor');
+      for (let i = 0; i < 4; i++) {
+        if (selectScoreFactor.options[i].value == val.scoreFactor) {
+          selectScoreFactor.options[i].selected = true;
+          break;
+        }
+      }
+      if (val.type == 0) {
+        document.getElementById('no-option').checked = true;
+      } else if (val.type == 1) {
+        document.getElementById('FIFO').checked = true;
+      } else {
+        document.getElementById('random-select').checked = true;
+      }
+    },
   },
 }
 </script>
