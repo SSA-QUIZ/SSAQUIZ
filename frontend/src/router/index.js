@@ -59,7 +59,7 @@ const routes = [
     component: UserPage
   },
   {
-    path: '/creator',
+    path: '/creator/:workbookId',
     name: 'CreatorPage',
     component: CreatorPage
   },
