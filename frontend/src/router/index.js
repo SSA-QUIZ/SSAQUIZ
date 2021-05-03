@@ -13,6 +13,7 @@ import AnswerPage from '@/views/AnswerPage.vue';
 import ComponentsPage from '@/views/ComponentsPage.vue';
 import UserInfoPage from '@/views/UserInfoPage.vue';
 import InterimScorePage from '@/views/InterimScorePage.vue';
+import AwaitPage from '@/views/AwaitPage.vue';
 
 Vue.use(VueRouter)
 
@@ -81,6 +82,11 @@ const routes = [
     path: '/interim-score',
     name: 'InterimScorePage',
     component: InterimScorePage
+  },
+  {
+    path: '/await',
+    name: 'AwaitPage',
+    component: AwaitPage
   },
 ]
 
