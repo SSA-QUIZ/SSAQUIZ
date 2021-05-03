@@ -21,12 +21,19 @@ const CreateQuizStore = {
     },
   },
   actions: {
-    setQuizData: function ({ commit }, value) {
+    addQuiz: function ({ commit }, value) {
       console.log(value)
       axios.post("http://k4a304.p.ssafy.io/api-quiz/workbook", value)
         .then(res => {
           commit('SET_QUIZ_DATA', res.data.object);
           return res.data.object.id
+        })
+        .catch(err => console.log(err))
+    },
+    getQuizData: async function ({ commit }, value) {
+      await axios.get("http://k4a304.p.ssafy.io/api-quiz/workbook/" + value)
+        .then(res => {
+          commit('SET_QUIZ_DATA', res.data.object);
         })
         .catch(err => console.log(err))
     },
@@ -39,6 +46,9 @@ const CreateQuizStore = {
     setMultipleChoice: function ({ commit }, value) {
       commit('SET_MULTIPLE_CHOICE', value)
     },
+    resetQuizData: function ({ commit }) {
+      commit('SET_QUIZ_DATA', [])
+    }
   }
 };
 
