@@ -7,7 +7,8 @@
         @input="changeQuestion" 
         id="multiple-choice-creator__input-question"
         >
-      <i class="fas fa-camera camera-img"></i>
+      <span v-if="image == ''"><i class="fas fa-camera camera-img"></i></span>
+      <span v-else id="image__span"><img :src="image" width="150px;" /></span>
     </div>
     <div>
       <div class="choice-row">
@@ -41,15 +42,24 @@ export default {
       choices: [
         "", "", "", ""
       ],
+      image: ""
     }
+  },
+  created: function () {
+    let data = this.quizData.slideList[this.slideIndex];
+    this.choices = data.answerList;
+    this.question = data.question;
+    this.image = data.imagePath;
   },
   computed: {
     ...mapState("CreateQuizStore", ['quizData']),
   },
   watch: {
     slideIndex: function (newVal) {
-      this.question = this.quizData.slideList[newVal].question;
-      this.choices = this.quizData.slideList[newVal].answerList;
+      let data = this.quizData.slideList[newVal];
+      this.question = data.question;
+      this.choices = data.answerList;
+      this.image = data.imagePath;
     }
   },
   methods: {
@@ -85,6 +95,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 #multiple-choice-creator__input-question {
@@ -99,6 +110,12 @@ export default {
 
 #multiple-choice-creator__input-question:focus, #multiple-choice-creator__input-question:active {
 	outline: none;
+}
+
+#image__span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .camera-img {
