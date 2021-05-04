@@ -61,6 +61,7 @@ export default {
     connectQuiz: function () {
       console.log(this.PIN + " " + this.nickname + " websocket 연결")
       this.setPINWS([this.PIN, this.nickname]);
+      this.$router.push({ name: "LobbyPageS", params: {nickname: this.nickname} });
     },
     // 구글 로그인 token (메인페이지 완성되는 대로 이동시킬 예정)
     getToken() {

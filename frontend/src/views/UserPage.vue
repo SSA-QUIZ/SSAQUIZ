@@ -25,7 +25,7 @@
             <QuizSet 
               :key="index" 
               :quizTitle="quiz.title"
-              @start-quiz="startQuiz"
+              @start-quiz="startQuiz(quiz.id)"
               @edit-quiz="editQuiz(quiz.id)"
               @delete-quiz="deleteQuiz"
               class="quiz-set"
@@ -122,7 +122,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["setPINWS"]),
+    ...mapActions("CreateQuizRoomStore", ["setPINWS", "sendAnswerList"]),
     ...mapActions("CreateQuizStore", [
       "addQuiz", "getQuizData", "resetQuizData"
     ]),
@@ -151,6 +151,14 @@ export default {
           this.$router.push({name: "LobbyPageT", params: {"PIN": this.PIN}})
         })
         .catch(err => console.log(err))
+      // console.log(id)
+      // axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/6088e1e504228a182a4159e3`)
+      //   .then(res => {
+      //     let answerList = [];
+      //     res.data.object.slideList.forEach(slide => answerList.push(slide.answer))
+      //     this.sendAnswerList(answerList)
+      //   })
+      //   .catch(err => console.log(err))
     },
 
     editQuiz: function (id) {
