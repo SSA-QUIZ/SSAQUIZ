@@ -1,10 +1,14 @@
 <template>
-  <button class="step-button"><img src="@/assets/images/arrow.png"></button>
+  <button class="step-button">
+    <img v-if="dark" src="@/assets/images/arrow-black.png">
+    <img v-else src="@/assets/images/arrow.png">
+  </button>
 </template>
 
 <script>
 export default {
-  name: "NextStepButton"
+  name: "NextStepButton",
+  props: ["dark"]
 }
 </script>
 
