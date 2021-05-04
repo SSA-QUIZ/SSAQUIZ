@@ -1,12 +1,12 @@
 <template>
   <div id="multiple-choice">
     <div class="choice-row">
-      <QuizButton color="#ffdc46" icon="fas fa-cat" class="choice" />
-      <QuizButton color="#ff85b1" icon="fas fa-leaf" class="choice" />
+      <QuizButton :answer="choice[0]" :height="height" color="#ffdc46" icon="fas fa-cat" class="choice" />
+      <QuizButton :answer="choice[1]" :height="height" color="#ff85b1" icon="fas fa-leaf" class="choice" />
     </div>
     <div class="choice-row">
-      <QuizButton color="#7cb1ff" icon="fa fa-car" class="choice" />
-      <QuizButton color="#aaed81" icon="fas fa-pills" class="choice" />
+      <QuizButton :answer="choice[2]" :height="height" color="#7cb1ff" icon="fa fa-car" class="choice" />
+      <QuizButton :answer="choice[3]" :height="height" color="#aaed81" icon="fas fa-pills" class="choice" />
     </div>
   </div>
 </template>
@@ -19,7 +19,8 @@ export default {
     QuizButton
   },
   props: [
-    'choice'
+    'choice',
+    'height'
   ]
 }
 </script>
@@ -41,7 +42,7 @@ export default {
 	flex-grow: 1;
 	justify-content: center;
 	align-items: center;
-	height: 30vh;
+	height: 100%;
 	border-radius: 15px;
 	font-family: Jua;
 	font-size: 6rem;

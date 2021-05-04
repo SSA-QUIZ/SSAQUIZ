@@ -48,7 +48,7 @@ export default {
 	margin: 0.3%;
 	border-radius: 15px;
 	font-family: Jua;
-	font-size: 6rem;
+	font-size: 4rem;
   padding: 0 auto;
 }
 
