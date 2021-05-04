@@ -15,6 +15,7 @@ import UserInfoPage from '@/views/UserInfoPage.vue';
 import InterimScorePage from '@/views/InterimScorePage.vue';
 import AwaitPage from '@/views/AwaitPage.vue';
 import ResultPage from '@/views/ResultPage.vue';
+import LoadingPage from '@/views/LoadingPage.vue';
 
 Vue.use(VueRouter)
 
@@ -60,7 +61,7 @@ const routes = [
     component: UserPage
   },
   {
-    path: '/creator',
+    path: '/creator/:workbookId',
     name: 'CreatorPage',
     component: CreatorPage
   },
@@ -93,6 +94,11 @@ const routes = [
     path: '/result',
     name: 'ResultPage',
     component: ResultPage
+  },
+  {
+    path: '/loading',
+    name: 'LoadingPage',
+    component: LoadingPage
   },
 ]
 

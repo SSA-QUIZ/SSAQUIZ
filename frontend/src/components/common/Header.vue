@@ -1,7 +1,7 @@
 <template>
   <header>
     <div style="width: 30%;">
-      <img width="100%" src="@/assets/images/SSAQUIZ.png">
+      <img width="100%" src="@/assets/images/SSAQUIZ.png" @click="goWelcomePage" style="cursor: pointer;">
     </div>
     <div id="user-info" v-if="mode == 'on'">
       <div id="user-info__nickname">{{ nickname }}</div>
@@ -19,6 +19,11 @@ export default {
     'nickname',
     'score'
   ],
+  methods: {
+    goWelcomePage: function () {
+      this.$router.push({ name: "WelcomePage" });
+    }
+  }
 }
 </script>
 

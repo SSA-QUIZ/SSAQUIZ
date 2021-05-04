@@ -52,7 +52,7 @@ export default {
         "answerList": ["", "", "", ""],
         "time": 10,
         "scoreFactor": 1,
-        "type": 1
+        "type": 0
       }
       this.addSlide(defaultValue);
       this.$emit('close');
