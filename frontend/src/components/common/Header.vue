@@ -3,11 +3,18 @@
     <div style="width: 30%;">
       <img width="100%" src="@/assets/images/SSAQUIZ.png" @click="goWelcomePage" style="cursor: pointer;">
     </div>
-    <div id="user-info" v-if="mode == 'on'">
-      <div id="user-info__nickname">{{ nickname }}</div>
-      <div id="user-info__score">{{ score }}</div>
+    <div class="header-content" v-if="mode == 'userInfo'">
+      <div class="header-content-text">{{ nickname }}</div>
+      <div id="header-content-score">{{ score }}</div>
     </div>
-    <div id="user-info" v-else></div>
+    <div class="header-content" v-else-if="mode == 'playQuiz'">
+      <div class="header-content-text">
+        <div>현재까지</div>
+        <div><span style="color: red;">{{ solved }}명 </span>응답</div>
+      </div>
+      <div id="header-content-second">{{ second }}</div>
+    </div>
+    <div class="header-content" v-else></div>
   </header>
 </template>
 
@@ -17,11 +24,30 @@ export default {
   props: [
     'mode',
     'nickname',
-    'score'
+    'score',
+    'time'
   ],
+  data: function () {
+    return {
+      solved: 0,
+      second: this.time
+    }
+  },
+  created: function () {
+    this.changeSecond();
+  },
   methods: {
     goWelcomePage: function () {
       this.$router.push({ name: "WelcomePage" });
+    },
+    countDown: function () {
+      if (this.second == 0) {
+        return;
+      }
+      this.second--;
+    },
+    changeSecond: function () {
+      setInterval(() => this.countDown(), 1000);
     }
   }
 }
@@ -37,13 +63,13 @@ header {
   margin-bottom: -2%;
 	padding: 0vh 3vh 0vh 3vh;
 }
-#user-info {
+.header-content {
   width: 70%;
 	display: flex;
 	justify-content:flex-end;
 	align-items: center;
 }
-#user-info__nickname {
+.header-content-text {
   width: 40%;
   text-align: end;
 	font-family: "Jua";
@@ -51,7 +77,7 @@ header {
 	font-weight: 900;
 	margin-right: 3%;
 }
-#user-info__score {
+#header-content-score {
 	font-size: 3.5vh;
 	font-weight: 900;
 	color: rgb(255, 255, 255);
@@ -60,10 +86,30 @@ header {
   margin-right: 3%;
 	padding: 1vh 3vh 1vh 3vh;
 }
+
+#header-content-second {
+  width: 100px;
+  height: 100px;
+	font-size: 50px;
+	font-weight: 900;
+	color: white;
+	background-color: #4f37de;
+	border-radius: 50%;
+  margin-right: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 700px) {
-  #user-info__nickname {
+  .header-content-text {
     font-size: 2.5vh;
     margin-right: 2%;
+  }
+  #header-content-second {
+    width: 70px;
+    height: 70px;
+    font-size: 30px;
   }
 }
 </style>

@@ -25,7 +25,7 @@
             <QuizSet 
               :key="index" 
               :quizTitle="quiz.title"
-              @start-quiz="startQuiz"
+              @start-quiz="startQuiz(quiz.id)"
               @edit-quiz="editQuiz(quiz.id)"
               @delete-quiz="deleteQuiz"
               class="quiz-set"
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
 import Dialog from '@/components/Popup/Dialog';
@@ -101,6 +101,9 @@ export default {
       quizTitle: '',
     }
   },
+  computed: {
+  ...mapState("CreateQuizRoomStore", ['PIN']),
+  },
   created: function () {
     let id = localStorage.getItem('id');
     axios.get("http://k4a304.p.ssafy.io/api-quiz/workbook-all/" + id)
@@ -111,7 +114,6 @@ export default {
   },
   mounted: function () {
     this.profileImg = localStorage.getItem('imageUrl');
-
     // 로그인하지 않으면 접속 불가
     if (localStorage.getItem('token') === null) {
       this.$router.push({ name: "Login" });
@@ -120,6 +122,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("CreateQuizRoomStore", ["setPINWS", "sendAnswerList"]),
     ...mapActions("CreateQuizStore", [
       "addQuiz", "getQuizData", "resetQuizData"
     ]),
@@ -142,7 +145,22 @@ export default {
     },
     // quizSet methods
     startQuiz: function () {
+      this.setPINWS()
+        .then(() => {
+          console.log(this.PIN)
+          this.$router.push({name: "LobbyPageT", params: {"PIN": this.PIN}})
+        })
+        .catch(err => console.log(err))
+      // console.log(id)
+      // axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/6088e1e504228a182a4159e3`)
+      //   .then(res => {
+      //     let answerList = [];
+      //     res.data.object.slideList.forEach(slide => answerList.push(slide.answer))
+      //     this.sendAnswerList(answerList)
+      //   })
+      //   .catch(err => console.log(err))
     },
+
     editQuiz: function (id) {
       this.$router.push({ name: "CreatorPage", params: {"workbookId" : id} });
     },

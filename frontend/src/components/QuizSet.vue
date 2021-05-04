@@ -16,7 +16,9 @@ export default {
   name: 'QuizSet',
   props: [
     'quizTitle'
-  ]
+  ],
+  methods: {
+  }
 }
 </script>
 

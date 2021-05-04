@@ -24,6 +24,8 @@
       v-if="openQuizTypeDialog"
       @close="openQuizTypeDialog = false"
     />
+    <div id="component-title">Header</div>
+    <Header mode="playQuiz" second="30" />
   </div>
 </template>
 
@@ -31,13 +33,15 @@
 import Confirm from '@/components/Popup/Confirm.vue';
 import Dialog from '@/components/Popup/Dialog.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
+import Header from '@/components/common/Header.vue';
 
 export default {
   name: 'ComponentsPage',
   components: {
     Confirm,
     Dialog,
-    QuizTypeDialog
+    QuizTypeDialog,
+    Header
   },
   data: function () {
     return {
