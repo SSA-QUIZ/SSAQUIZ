@@ -19,7 +19,6 @@
         <h1 class="msg">잘 하고 있어요!</h1>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -92,7 +91,7 @@ export default {
   width: 100px;
   height: 100px;
   transform-origin: center 500%;
-  animation: spin 6s linear infinite;
+  animation: spin 3s linear infinite;
 }
 
 .inner-wheel{

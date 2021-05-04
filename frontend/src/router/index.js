@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import WelcomePage from '@/views/WelcomePage.vue';
 import SolvingQuizPage from '@/views/SolvingQuizPage.vue';
+import SolvingQuizPageT from '@/views/SolvingQuizPageT.vue';
 import LobbyPageT from '@/views/LobbyPageT.vue';
 import LobbyPageS from '@/views/LobbyPageS.vue';
 import Login from '@/views/Login.vue';
@@ -14,6 +15,8 @@ import ComponentsPage from '@/views/ComponentsPage.vue';
 import UserInfoPage from '@/views/UserInfoPage.vue';
 import InterimScorePage from '@/views/InterimScorePage.vue';
 import AwaitPage from '@/views/AwaitPage.vue';
+import ResultPage from '@/views/ResultPage.vue';
+import LoadingPage from '@/views/LoadingPage.vue';
 
 Vue.use(VueRouter)
 
@@ -34,7 +37,7 @@ const routes = [
     component: SolvingQuizPage
   },
   {
-    path: '/lobby/:quizID',
+    path: '/lobby/:PIN',
     name: 'LobbyPageT',
     component: LobbyPageT
   },
@@ -87,6 +90,21 @@ const routes = [
     path: '/await',
     name: 'AwaitPage',
     component: AwaitPage
+  },
+  {
+    path: '/result',
+    name: 'ResultPage',
+    component: ResultPage
+  },
+  {
+    path: '/loading',
+    name: 'LoadingPage',
+    component: LoadingPage
+  },
+  {
+    path: '/solving-quiz-t',
+    name: 'SolvingQuizPageT',
+    component: SolvingQuizPageT
   },
 ]
 
