@@ -1,38 +1,36 @@
 <template>
   <div id="result">
     <div class="bg"></div>
-    <img class="anetwork" src="@/assets/images/WelcomPage-icon.png"/>
+    <img class="whale" src="@/assets/images/WelcomPage-icon.png"/>
     <div class="text">1등은 누구일까요?!</div>
-
     <img class="logo" src="@/assets/images/resultLogo.png"/>
-    <div class="podium-container">
-      <div class="podium-1">
-        <h1>ff</h1>
-        <img src="@/assets/images/bronzePodium.png"/>
-      </div>
-      <div class="podium-3">
-        <h1>ff</h1>
-        <img src="@/assets/images/goldPodium.png"/>
-      </div>
-      <div class="podium-2">
-        <h1>ff</h1>
-        <img src="@/assets/images/silverPodium.png"/>
-      </div>
-    </div>
+    <Podium/>
+    <Winner/>
   </div>
 </template>
 
 <script>
+import Podium from "@/components/ResultPageTemplate/Podium.vue";
+import Winner from "@/components/ResultPageTemplate/Winner.vue";
 export default {
-  name: "ResultPage"
+  name: "ResultPage",
+  components: {
+    Podium,
+    Winner,
+  }
 }
 </script>
 
-<style scoped>
+<style>
+/* 결과 페이지 css */
+
 #result {
   display: flex;
   justify-content: center;
+  height: 100%;
 }
+
+/* 두구두구 효과 */
 
 #result .bg {
   background: #cfe1f6;
@@ -48,7 +46,7 @@ export default {
   
 }
 
-#result .anetwork {
+#result .whale {
   position: absolute;
   top: 30%;
   width: 300px;
@@ -57,7 +55,7 @@ export default {
   animation: shake .16s linear 20, moveTop both .5s ease-in-out 3.5s, goOut forwards .2s ease 5s;
 }
 
-#result .anetwork:before {
+#result .whale:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -66,7 +64,7 @@ export default {
   animation: fill both 2s linear;
 }
 
-#result .anetwork:after {
+#result .whale:after {
   content: 'A';
   color: #fff;
   position: absolute;
@@ -85,63 +83,15 @@ export default {
   animation: fave .7s both ease-in-out 3.5s, goOut forwards .2s ease 5s;
 }
 
-#result .podium-container {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  height: 80%;
-}
-
-#result .podium-container h1 {
-  position: absolute;
-  bottom: 100%;
-}
-
-#result .podium-1 {
-  position: absolute;
-  left: 5.5%;
-  height: 20%;
-  width: 35%;
-  bottom: -5%;
-  animation: podium-effect .3s ease both 5.5s;
-  animation-delay: 5.5s;
-}
-
-#result .podium-2 {
-  position: absolute;
-  right: 5.5%;
-  height: 35%;
-  width: 35%;
-  bottom: 5%;
-  animation: podium-effect .3s ease both 5.5s;
-  animation-delay: 6.5s;
-}
-
-#result .podium-3 {
-  position: absolute;
-  left: 32.5%;
-  height: 50%;
-  width: 35%;
-  bottom: 5%;
-  z-index: 2;
-  animation: podium-effect .3s ease both 5.5s;
-  animation-delay: 7.5s;
-}
-
-
-#result .podium-1 img,
-#result .podium-2 img,
-#result .podium-3 img {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
+/* 결과 페이지 result 로고 */
 
 #result .logo {
   position: absolute;
   width: 40vh;
+  height: 90px;
   animation: comeIn both .2s ease 5.5s;
 }
+
 
 /* 애니메이션 효과 */
 
@@ -205,17 +155,6 @@ export default {
   100% {
     opacity: 1;
     top: 2%;
-  }
-}
-
-@keyframes podium-effect {
-  0% {
-   opacity: 0;
-   bottom: -20%;
-  }
-  100% {
-    opacity: 1;
-    bottom: 0%;
   }
 }
 </style>
