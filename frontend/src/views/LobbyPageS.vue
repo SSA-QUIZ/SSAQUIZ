@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import NicknameButton from '@/components/common/NicknameButton.vue';
 
 export default {
@@ -29,12 +29,26 @@ export default {
         nickname: this.$route.params.nickname,
         color: '#D98EF8'
       },
-      PIN: 4964848,
+      PIN: Number,
     }
+  },
+  created: function () {
+    this.defaultIsStart();
   },
   computed: {
     ...mapState("PlayQuizStore", ["students", "isStart"])
-  }
+  },
+  watch: {
+    isStart: function (val) {
+      console.log('isStart ',this.isStart)
+      if (val === true) {
+        this.$router.push({name: "LoadingPage"})
+      }
+    }
+  },
+  methods: {
+    ...mapActions("PlayQuizStore", ["defaultIsStart"])
+  },
 }
 </script>
 

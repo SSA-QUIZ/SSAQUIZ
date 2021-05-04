@@ -12,6 +12,7 @@ const CreateQuizRoomStore = {
     PIN: pin,
     students: [],
     isStart: false,
+    quizData: Object,
   },
   getters: {},
   mutations: {
@@ -38,10 +39,19 @@ const CreateQuizRoomStore = {
     SET_ISSTART: function (state, value) {
       state.isStart = value;
     },
+    SET_QUIZDATA: function (state, value) {
+      state.quizData = value;
+    }
   },
   actions: {
+    setQuizData: function ({ commit }, value) {
+      commit('SET_QUIZDATA', value)
+    },
     defaultIsStart: function ({ commit }) {
       commit('SET_ISSTART', false);
+    },
+    startQuiz: function ({ commit }) {
+      commit('SET_ISSTART', true);
     },
     setPINWS: async function ({ commit }) {
       await axios.get("http://k4a304.p.ssafy.io/api-play/pin")

@@ -35,7 +35,6 @@ export default {
     }
   },
   created: function () {
-    console.log('아아아')
     this.defaultIsStart();
   },
   computed: {
@@ -43,20 +42,21 @@ export default {
   },
   watch: {
     isStart: function (val) {
-      console.log('isStart ',this.isStart)
       if (val === true) {
-        console.log('3, 2, 1 로딩 페이지로 이동하기', val)
+        this.$router.push({name: "LoadingPage"})
       }
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["sendAnswerList", "defaultIsStart"]),
+    ...mapActions("CreateQuizRoomStore", ["sendAnswerList", "defaultIsStart", "startQuiz", "setQuizData"]),
     clickStartButton: function () {
       axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/6088e1e504228a182a4159e3`)
         .then(res => {
+          this.setQuizData(res.data.object);
           let answerList = [];
           res.data.object.slideList.forEach(slide => answerList.push(slide.answer))
-          this.sendAnswerList(answerList)
+          this.sendAnswerList(answerList);
+          this.startQuiz();
         })
         .catch(err => console.log(err))
     },
