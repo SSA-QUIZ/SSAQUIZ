@@ -14,6 +14,7 @@ import ComponentsPage from '@/views/ComponentsPage.vue';
 import UserInfoPage from '@/views/UserInfoPage.vue';
 import InterimScorePage from '@/views/InterimScorePage.vue';
 import AwaitPage from '@/views/AwaitPage.vue';
+import ResultPage from '@/views/ResultPage.vue';
 import LoadingPage from '@/views/LoadingPage.vue';
 
 Vue.use(VueRouter)
@@ -88,6 +89,11 @@ const routes = [
     path: '/await',
     name: 'AwaitPage',
     component: AwaitPage
+  },
+  {
+    path: '/result',
+    name: 'ResultPage',
+    component: ResultPage
   },
   {
     path: '/loading',
