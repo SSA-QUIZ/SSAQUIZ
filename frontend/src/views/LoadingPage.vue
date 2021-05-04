@@ -14,7 +14,9 @@ export default {
     }
   },
   created: function () {
-    this.changeSecound();
+    console.log(this.second)
+    this.second = 3;
+    this.changeSecond();
   },
   methods: {
     countDown: function () {
@@ -25,12 +27,12 @@ export default {
       else if (this.second == 0) {
         document.getElementById('loading-page-start').style.display = "none";
         // 여기에서 퀴즈 진행 페이지로 넘어가면 됩니다!
-        // this.$router.push({ name: "퀴즈 진행 페이지" })
+        this.$router.push({ name: "SolvingQuizPage" })
       }
       this.second--;
     },
-    changeSecound: function () {
-      this.second = setInterval(() => this.countDown(), 1000);
+    changeSecond: function () {
+      setInterval(() => this.countDown(), 1000);
     }
   }
 }
