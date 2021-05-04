@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="board">
     <div class="scores">
       <!-- 금메달 -->
       <div>
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style>
-#content .container {
+#board {
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
@@ -53,20 +53,20 @@ export default {
 
 /* 각 점수를 나타내는 영역 */
 
-#content .container .scores {
+#board .scores {
   width: 80%;
   height: 50%;
   margin-top: 8%;
 }
 
-.scores > div {
+#board .scores > div {
   display: flex;
   justify-content: space-between;
 }
 
 /* 각 점수 */
 
-.scores .score{
+#board .scores .score{
   color: black;
   font-size: 2.5vw;
   font-family: Jua;
@@ -75,17 +75,17 @@ export default {
   margin-left: 3%;
 }
 
-.row {
+#board .scores .row {
   display: flex;
   width: 100%;
 }
 
-.row img {
+#board .scores .row img {
   width: 15%;
   float: left;
 }
 
-.row h1 {
+#board .scores .row h1 {
   color: black;
   font-size: 3vw;
   font-family: Jua;
