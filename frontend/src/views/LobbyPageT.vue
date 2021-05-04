@@ -15,12 +15,14 @@
         ><NicknameButton :student=student :index=index /></div>
       </div>
     </div>
+    <button @click="clickStartButton">문제 시작</button>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import NicknameButton from '@/components/common/NicknameButton.vue';
+import axios from 'axios';
 
 export default {
   name: "LobbyPageT",
@@ -32,9 +34,33 @@ export default {
       PIN: this.$route.params.PIN,
     }
   },
+  created: function () {
+    console.log('아아아')
+    this.defaultIsStart();
+  },
   computed: {
-    ...mapState("CreateQuizRoomStore", ['students'])
-  }
+    ...mapState("CreateQuizRoomStore", ["students", "isStart"])
+  },
+  watch: {
+    isStart: function (val) {
+      console.log('isStart ',this.isStart)
+      if (val === true) {
+        console.log('3, 2, 1 로딩 페이지로 이동하기', val)
+      }
+    }
+  },
+  methods: {
+    ...mapActions("CreateQuizRoomStore", ["sendAnswerList", "defaultIsStart"]),
+    clickStartButton: function () {
+      axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/6088e1e504228a182a4159e3`)
+        .then(res => {
+          let answerList = [];
+          res.data.object.slideList.forEach(slide => answerList.push(slide.answer))
+          this.sendAnswerList(answerList)
+        })
+        .catch(err => console.log(err))
+    },
+  },
 }
 </script>
 
