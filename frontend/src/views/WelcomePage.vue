@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import InputBox from "@/components/common/InputBox.vue";
 import InputButton from "@/components/common/InputButton.vue";
 
@@ -47,6 +48,7 @@ export default {
     this.getToken();
   },
   methods: {
+    ...mapActions("PlayQuizStore", ["setPINWS"]),
     changePIN: function (data) {
       this.PIN = data;
     },
@@ -58,6 +60,8 @@ export default {
     },
     connectQuiz: function () {
       console.log(this.PIN + " " + this.nickname + " websocket 연결")
+      this.setPINWS([this.PIN, this.nickname]);
+      this.$router.push({ name: "LobbyPageS", params: {nickname: this.nickname} });
     },
     // 구글 로그인 token (메인페이지 완성되는 대로 이동시킬 예정)
     getToken() {
