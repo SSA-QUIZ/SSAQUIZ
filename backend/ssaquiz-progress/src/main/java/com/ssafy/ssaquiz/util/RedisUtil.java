@@ -91,9 +91,9 @@ public class RedisUtil {
         return valueOperations.add(key, value, score);
     }
 
-    public Set<String> getRanking(String key, long startIndex, long endIndex) {
+    public Set<ZSetOperations.TypedTuple<String>> getRanking(String key, long startIndex, long endIndex) {
         ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
-        return valueOperations.reverseRange(key, startIndex, endIndex);
+        return valueOperations.reverseRangeWithScores(key, startIndex, endIndex);
     }
 
     public Double getScore(String key, Object nickname) {
@@ -104,5 +104,10 @@ public class RedisUtil {
     public Double plusScore(String key, String nickname, double score) {
         ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
         return valueOperations.incrementScore(key, nickname, score);
+    }
+
+    public Long deleteZdata(String key, long startIndex, long endIndex) {
+        ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
+        return valueOperations.removeRange(key, startIndex, endIndex);
     }
 }

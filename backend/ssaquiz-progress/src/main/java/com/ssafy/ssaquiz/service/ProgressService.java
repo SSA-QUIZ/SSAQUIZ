@@ -4,6 +4,7 @@ import com.ssafy.ssaquiz.model.BasicResponse;
 import com.ssafy.ssaquiz.util.RedisUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class ProgressService {
         return redisUtil.addZdata(key, nickname, 0.0);
     }
 
-    public Set<String> viewRanking(String key, long startIndex, long endIndex) {
+    public Set<ZSetOperations.TypedTuple<String>> viewRanking(String key, long startIndex, long endIndex) {
         if (key == null) {
             return null;
         }
@@ -49,17 +50,25 @@ public class ProgressService {
         return redisUtil.getRanking(key, startIndex, endIndex);
     }
 
-    public double plusScore(String key, String nickname, String quizNum) {
-        if (key == null || nickname == null || quizNum == null) {
+    public double plusScore(String key, String nickname, double score) {
+        if (key == null || nickname == null) {
             return -1.0;
         }
 
-        System.out.println(redisUtil.getScore(key, nickname));
-        // 정답 비교 로직
-        redisUtil.plusScore(key, nickname, 100);
-        System.out.println(redisUtil.getScore(key, nickname));
+        return redisUtil.plusScore(key, nickname, score);
+    }
 
-        return redisUtil.getScore(key, nickname);
+    public boolean grade(String key, String quizNum, int answer) {
+        if (key == null || quizNum == null) {
+            return false;
+        }
+
+        int rightAnswer = (int) redisUtil.getHdata(key, quizNum);
+        if(answer == rightAnswer) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean setAnswerList(String key, ArrayList answerList) {
