@@ -1,22 +1,31 @@
 <template>
   <div id="text-box">
-    <input placeholder="답안을 작성해주세요." :value="data" @input="onInput">
+    <input class="text-box-input" :placeholder=message :value="data" @input="onInput">
   </div>
 </template>
 
 <script>
 export default {
   name: "TextBox",
+  props: [
+    "message"
+  ],
   data: function () {
     return {
       data: "",
     }
+  },
+  methods: {
+    onInput: function (e) {
+			this.data = e.target.value;
+			this.$emit('change-input', this.data)
+		}
   }
 }
 </script>
 
 <style>
-#text-box input {
+#text-box .text-box-input {
   font-family: 'Noto Sans KR', sans-serif !important;
 	font-weight: bold;
   font-size: 30px;
@@ -30,7 +39,7 @@ export default {
 	margin-left: 2.5%;
 }
 
-#text-box input:focus, #text-box input:active {
+#text-box .text-box-input:focus, #text-box .text-box-input:active {
 	outline: none;
 	border: 3px solid #545DE3;
 }

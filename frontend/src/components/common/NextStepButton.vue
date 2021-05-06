@@ -18,9 +18,17 @@ export default {
   z-index: 2;
   right: 5%;
   top: 43%;
+  z-index: 2;
 }
 
-.step-button:hover {
-  color: blue;
+@media (max-width: 1100px) {
+  .step-button {
+    position: absolute;
+    z-index: 2;
+    right: 5%;
+    top: 87%;
+    z-index: 2;
+  }
 }
+
 </style>
