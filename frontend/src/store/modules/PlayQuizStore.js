@@ -13,7 +13,7 @@ const PlayQuizStore = {
     isStart: false,
     category: '',
     totalNum: 0,
-    quizIndex: 1,
+    quizIndex: 0,
     username: '',
   },
   getters: {},
@@ -42,11 +42,21 @@ const PlayQuizStore = {
     SET_USERNAME: function (state, value) {
       state.username = value;
     },
+    SEND_ANSWER: function (state, value) {
+      state.stompClient = value;
+    },
   },
   actions: {
-    // sendAnswer: function ({ commit }, value) {
-    //   ws.send(`/quiz/room/sendAnswer/${pin}`)
-    // },
+    sendAnswer: function ({ commit }, value) {
+      let sendAnswerMessage = {
+        sender: value[1],
+        content: value[0],
+        type: "SUBMIT",
+        quizNum: value[2],
+      };
+      ws.send(`/quiz/room/sendAnswer/${pin}`, {}, JSON. stringify(sendAnswerMessage));
+      commit('SEND_ANSWER', ws)
+    },
     setUsername: function ({ commit }, value) {
       commit('SET_USERNAME', value);
     },
@@ -54,6 +64,7 @@ const PlayQuizStore = {
       commit('SET_ISSTART', false);
     },
     setPINWS: function ({ commit }, value) {
+      pin = value[0];
       ws = Stomp.over(new SockJS("http://k4a304.p.ssafy.io/api-play/connect"));
       ws.connect({}, () => {
         const subscribeMessage = {
@@ -73,6 +84,9 @@ const PlayQuizStore = {
           } else if (type === "CATEGORY") {
             commit('SET_CATEGORY', JSON.parse(msg.body).content);
           }
+        })
+        ws.subscribe(`/pin/${value[0]}/nickname/${value[1]}`, (msg) => {
+          console.log(msg.body);
         })
         commit('SUBSCRIBE_QUIZ_ROOM', ws);
         return 1

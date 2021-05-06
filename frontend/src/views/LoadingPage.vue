@@ -39,7 +39,7 @@ export default {
         if (this.isStudent === true) {
           this.$router.push({ name: "SolvingQuizPage" })
         } else {
-          console.log('여기서 다음 퀴즈 진행 페이지로 넘어가면 됨');
+          this.$router.push({ name: "SolvingQuizPageT" })
         }
       }
       this.second--;

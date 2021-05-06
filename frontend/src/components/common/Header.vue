@@ -10,7 +10,7 @@
     <div class="header-content" v-else-if="mode == 'playQuiz'">
       <div class="header-content-text">
         <div>현재까지</div>
-        <div><span style="color: red;">{{ solved }}명 </span>응답</div>
+        <div><span style="color: red;">{{ solvedNum }}명 </span>응답</div>
       </div>
       <div id="header-content-second">{{ second }}</div>
     </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'Header',
   props: [
@@ -29,9 +30,11 @@ export default {
   ],
   data: function () {
     return {
-      solved: 0,
       second: this.time
     }
+  },
+  computed: {
+    ...mapState("CreateQuizRoomStore", ["solvedNum"])
   },
   created: function () {
     this.changeSecond();

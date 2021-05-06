@@ -14,6 +14,7 @@ const CreateQuizRoomStore = {
     isStart: false,
     quizData: Object,
     quizIndex: 0,
+    solvedNum: 0,
   },
   getters: {},
   mutations: {
@@ -51,6 +52,9 @@ const CreateQuizRoomStore = {
     },
     SEND_TOTALNUM: function (state, value) {
       state.stompClient = value;
+    },
+    ADD_SOLVEDNUM: function (state) {
+      state.solvedNum++;
     },
   },
   actions: {
@@ -95,7 +99,9 @@ const CreateQuizRoomStore = {
               if (type === "JOIN") {
                 commit('ADD_STUDENTS', JSON.parse(msg.body).sender);
               } else if (type === "START") {
-                commit('SET_ISSTART', true)
+                commit('SET_ISSTART', true);
+              } else if (type === "SUBMIT") {
+                commit('ADD_SOLVEDNUM');
               }
             })
             commit('SUBSCRIBE_QUIZ_ROOM', ws);
