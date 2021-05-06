@@ -11,6 +11,7 @@ import { mapActions, mapState } from 'vuex';
 import Header from '@/components/common/Header.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
+// import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';
 
 export default {
   name: 'SolvingQuizPage',
@@ -18,6 +19,7 @@ export default {
     Header,
     ProgressBar,
     MultipleChoice,
+    // ShortAnswer
   },
   data: function () {
     return {

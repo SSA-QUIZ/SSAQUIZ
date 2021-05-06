@@ -1,6 +1,6 @@
 <template>
   <div id="quiz-results-container--blue">
-    <Header mode="on" nickname="[서울_3반_최나현]" score="354" />
+    <Header mode="userInfo" nickname="[서울_3반_최나현]" score="354" />
     <div id="quiz-results-content">
       <p id="title">대단해요!</p>
       <p id="emoticon">🥰</p>
