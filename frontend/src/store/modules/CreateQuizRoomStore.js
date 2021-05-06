@@ -13,6 +13,7 @@ const CreateQuizRoomStore = {
     students: [],
     isStart: false,
     quizData: Object,
+    quizIndex: 0,
   },
   getters: {},
   mutations: {
@@ -41,11 +42,39 @@ const CreateQuizRoomStore = {
     },
     SET_QUIZDATA: function (state, value) {
       state.quizData = value;
-    }
+    },
+    SET_QUIZINDEX: function (state) {
+      state.quizIndex++;
+    },
+    SEND_CATEGORY: function (state, value) {
+      state.stompClient = value;
+    },
+    SEND_TOTALNUM: function (state, value) {
+      state.stompClient = value;
+    },
   },
   actions: {
+    sendTotalNum: function ({ commit }, value) {
+      let sendTotalNumMessage = {
+        type: "TOTALNUM",
+        content: value
+      };
+      ws.send(`/quiz/room/sendTotalNum/${pin}`, {}, JSON.stringify(sendTotalNumMessage));
+      commit('SEND_TOTALNUM', ws);
+    },
+    sendCategory: function ({ commit }, value) {
+      let sendCategoryMessage = {
+        type: "CATEGORY",
+        content: value
+      };
+      ws.send(`/quiz/room/sendCategory/${pin}`, {}, JSON.stringify(sendCategoryMessage));
+      commit('SEND_CATEGORY', ws);
+    },
+    setQuizIndex: function ({ commit }) {
+      commit('SET_QUIZINDEX');
+    },
     setQuizData: function ({ commit }, value) {
-      commit('SET_QUIZDATA', value)
+      commit('SET_QUIZDATA', value);
     },
     defaultIsStart: function ({ commit }) {
       commit('SET_ISSTART', false);

@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'LoadingPage',
   data: function () {
@@ -13,12 +15,19 @@ export default {
       second: 3,
     }
   },
+  computed: {
+    ...mapState("CommonStore", ["isStudent"]),
+    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
+  },
   created: function () {
-    console.log(this.second)
+    if (this.isStudent === false) {
+      this.sendCategory(this.quizData.slideList[this.quizIndex].category);
+    }
     this.second = 3;
     this.changeSecond();
   },
   methods: {
+    ...mapActions("CreateQuizRoomStore", ["sendCategory"]),
     countDown: function () {
       if (this.second == 1) {
         document.getElementById('loading-page-timer').style.display = "none";
@@ -27,7 +36,11 @@ export default {
       else if (this.second == 0) {
         document.getElementById('loading-page-start').style.display = "none";
         // 여기에서 퀴즈 진행 페이지로 넘어가면 됩니다!
-        this.$router.push({ name: "SolvingQuizPage" })
+        if (this.isStudent === true) {
+          this.$router.push({ name: "SolvingQuizPage" })
+        } else {
+          console.log('여기서 다음 퀴즈 진행 페이지로 넘어가면 됨');
+        }
       }
       this.second--;
     },
