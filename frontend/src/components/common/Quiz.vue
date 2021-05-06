@@ -1,11 +1,9 @@
 <template>
   <div id="quiz-container">
     <div class="quiz-content">
-      <img width="30%" src="../../assets/images/Default.png" />
-    </div>
-    <div class="quiz-content">
+      <img src="../../assets/images/Default.png" style="max-width:25%; margin-bottom: 2%;"/>
       <span>{{ title }}</span>
-    </div>
+    </div>  
   </div>
 </template>
 
@@ -27,7 +25,7 @@ export default {
 <style>
 #quiz-container {
   width: 100%;
-  height: 55%;
+  height: 100%;
   display: flex;
   flex-flow: column;
 }
@@ -36,13 +34,8 @@ export default {
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  font-size: 5rem;
+  font-size: 50px;
   font-family: Jua;
-  height: 60%;
-}
-@media (max-width: 700px) {
-  .quiz-content {
-    font-size: 2rem;
-  }
+  height: 100%;
 }
 </style>

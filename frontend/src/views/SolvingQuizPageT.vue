@@ -2,8 +2,17 @@
   <div id="solving-quiz-page-t-container">
     <Header mode="playQuiz" time="20" />
     <ProgressBar index="1" all="12" />
-    <Quiz id="solving-quiz-t-quiz" title="이 동물은 무엇일까요?" image="" />
-    <MultipleChoice id="solving-quiz-t-choice" :choice="choice" height="18vh" />
+    <div id="solving-quiz-page-t-content">
+      <div class="solving-quiz-t-div solving-quiz-t-div__side">
+      </div>
+      <div class="solving-quiz-t-div solving-quiz-t-div__center">
+        <Quiz id="solving-quiz-t-quiz" title="이 동물은 무엇일까요?" image="" />
+        <MultipleChoice id="solving-quiz-t-choice" isAnswer="true" :choice="choice" height="15vh" font="3em" />
+      </div>
+      <div class="solving-quiz-t-div solving-quiz-t-div__side">
+        <NextStepButton dark="true" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,6 +20,7 @@
 import Header from '@/components/common/Header.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import Quiz from '@/components/common/Quiz.vue';
+import NextStepButton from '@/components/common/NextStepButton.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 
 export default {
@@ -19,6 +29,7 @@ export default {
     Header,
     ProgressBar,
     Quiz,
+    NextStepButton,
     MultipleChoice,
   },
   data: function () {
@@ -38,13 +49,33 @@ export default {
   align-items: center;
   margin-bottom: -10%;
 }
+#solving-quiz-page-t-content {
+  display: flex;
+  width:100%;
+  height: 75%;
+  justify-content:center;
+  align-items: center; 
+}
 #solving-quiz-t-quiz {
-  height: 30%;
+  height: 50%;
   margin: 10px;
 }
 #solving-quiz-t-choice {
+  width: 70%;
+  height: 60%;
+  margin: 5px;
+}
+.solving-quiz-t-div {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+.solving-quiz-t-div__side {
+  width: 10%;
+}
+.solving-quiz-t-div__center {
   width: 80%;
-  height: auto;
-  margin: 10px;
 }
 </style>
