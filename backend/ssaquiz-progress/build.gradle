@@ -17,9 +17,13 @@ dependencies {
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+	compile 'com.googlecode.json-simple:json-simple:1.1.1'
+	compile group: 'org.mongodb', name: 'mongo-java-driver', version: '1.2.1'
 }
 
 test {
