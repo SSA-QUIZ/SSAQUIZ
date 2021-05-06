@@ -15,19 +15,21 @@
         ><NicknameButton :student=student :index=index /></div>
       </div>
     </div>
-    <button @click="clickStartButton">문제 시작</button>
+    <NextStepButton @click.native="clickStartButton"/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import NicknameButton from '@/components/common/NicknameButton.vue';
+import NextStepButton from '@/components/common/NextStepButton.vue';
 import axios from 'axios';
 
 export default {
   name: "LobbyPageT",
   components: {
-    NicknameButton
+    NicknameButton,
+    NextStepButton
   },
   data: function () {
     return {

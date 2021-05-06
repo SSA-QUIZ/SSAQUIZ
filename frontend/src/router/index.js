@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import WelcomePage from '@/views/WelcomePage.vue';
 import SolvingQuizPage from '@/views/SolvingQuizPage.vue';
+import SolvingQuizPageT from '@/views/SolvingQuizPageT.vue';
 import LobbyPageT from '@/views/LobbyPageT.vue';
 import LobbyPageS from '@/views/LobbyPageS.vue';
 import Login from '@/views/Login.vue';
@@ -99,6 +100,11 @@ const routes = [
     path: '/loading',
     name: 'LoadingPage',
     component: LoadingPage
+  },
+  {
+    path: '/solving-quiz-t',
+    name: 'SolvingQuizPageT',
+    component: SolvingQuizPageT
   },
 ]
 
