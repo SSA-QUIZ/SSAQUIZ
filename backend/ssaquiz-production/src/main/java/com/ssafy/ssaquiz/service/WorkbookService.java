@@ -180,7 +180,7 @@ public class WorkbookService {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
-        if (workbookDto == null || workbookDto.getId() == null) {
+        if (workbookDto == null || workbookDto.getId() == null || com.mongodb.ObjectId.isValid(workbookDto.getId()) == false) {
             result.data = "문제집 저장 실패 (null)";
             return result;
         }

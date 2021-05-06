@@ -6,6 +6,7 @@ import com.ssafy.ssaquiz.model.*;
 import com.ssafy.ssaquiz.service.S3Service;
 import com.ssafy.ssaquiz.service.WorkbookService;
 import io.swagger.annotations.ApiOperation;
+import com.mongodb.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,7 @@ public class ProduceController {
                               @RequestParam("scoreFactor") float scoreFactor, @RequestParam("type") String type) {
         BasicResponse result = new BasicResponse();
 
-        if (objectId == null) {
+        if (objectId == null || ObjectId.isValid(objectId) == false) {
             result.status = false;
             result.data = "문제집 조회 실패(null)";
             return result;
@@ -50,7 +51,7 @@ public class ProduceController {
     public BasicResponse findWorkbook(@PathVariable("objectId") String objectId) {
         BasicResponse result = new BasicResponse();
 
-        if (objectId == null) {
+        if (objectId == null || ObjectId.isValid(objectId) == false) {
             result.status = false;
             result.data = "문제집 조회 실패(null)";
             return result;
