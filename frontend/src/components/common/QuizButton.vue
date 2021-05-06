@@ -1,6 +1,6 @@
 <template>
   <button :style="style" class="quiz-button">
-    <div v-if="isAnswer=='true'" class="quiz-button-div">
+    <div v-if="answer" class="quiz-button-div">
       <span style="text-align: left;"><i :class="icon"></i></span>
       <span>{{ answer }}</span>
       <span></span>
@@ -24,7 +24,6 @@ export default {
     'icon',
     'margin',
     'answer',
-    'isAnswer'
   ],
   data: function () {
     return {
