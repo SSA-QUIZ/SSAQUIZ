@@ -7,7 +7,7 @@
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__center">
         <Quiz id="solving-quiz-t-quiz" title="이 동물은 무엇일까요?" image="" />
-        <MultipleChoice id="solving-quiz-t-choice" isAnswer="true" :choice="choice" height="15vh" font="3em" />
+        <MultipleChoice id="solving-quiz-t-choice" :choice="choice" height="15vh" font="3.5vw" />
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
         <NextStepButton dark="true" />
