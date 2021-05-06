@@ -16,7 +16,7 @@ export default {
 .step-button {
   position: absolute;
   z-index: 2;
-  right: 10%;
+  right: 5%;
   top: 43%;
 }
 
