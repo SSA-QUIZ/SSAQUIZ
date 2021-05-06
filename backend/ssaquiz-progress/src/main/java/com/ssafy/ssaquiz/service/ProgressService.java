@@ -58,13 +58,21 @@ public class ProgressService {
         return redisUtil.plusScore(key, nickname, score);
     }
 
-    public boolean grade(String key, String quizNum, int answer) {
+    public double getScore(String key, Object nickname) {
+        if (key == null || nickname == null) {
+            return -1.0;
+        }
+
+        return redisUtil.getScore(key, nickname);
+    }
+
+    public boolean grade(String key, String quizNum, String answer) {
         if (key == null || quizNum == null) {
             return false;
         }
 
-        int rightAnswer = (int) redisUtil.getHdata(key, quizNum);
-        if(answer == rightAnswer) {
+        String rightAnswer = (String) redisUtil.getHdata(key, quizNum);
+        if(answer.equals(rightAnswer)) {
             return true;
         }
 
@@ -76,8 +84,9 @@ public class ProgressService {
             return false;
         }
 
-        for (int i = 1; i <= answerList.size(); i++) {
-            redisUtil.setHdata(key, Integer.toString(i), answerList.get(i - 1).toString());
+        for (int i = 0; i < answerList.size(); i++) {
+            System.out.println(answerList.get(i).toString());
+            redisUtil.setHdata(key, Integer.toString(i), answerList.get(i).toString());
         }
 
         return true;
