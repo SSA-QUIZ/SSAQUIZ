@@ -55,7 +55,7 @@ public class UserService {
 
         if (loginRequest == null) {
             result.status = false;
-            result.data = "로그인 실패(null)";
+            result.data = "login Fail (loginRequest is null)";
             return result;
         }
 
@@ -79,7 +79,7 @@ public class UserService {
         jsonObject.put("imageUrl", user.get().getImageUrl());
 
         result.status = true;
-        result.data = "로그인 성공";
+        result.data = "login success";
         result.object = jsonObject;
         return result;
     }
@@ -89,13 +89,13 @@ public class UserService {
 
         if (signUpRequest == null) {
             result.status = false;
-            result.data = "회원가입 실패(null)";
+            result.data = "signup fail (signUpRequest is null)";
             return result;
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             result.status = false;
-            result.data = "회원가입 실패(이메일 중복)";
+            result.data = "signup fail (duplicate email)";
             return result;
         }
 
@@ -114,7 +114,7 @@ public class UserService {
                 .buildAndExpand(saveUser.getId()).toUri();
 
         result.status = true;
-        result.data = "회원가입 성공";
+        result.data = "signup success";
         return result;
     }
 
@@ -123,26 +123,26 @@ public class UserService {
 
         if(email == null) {
             result.status = false;
-            result.data = "로그아웃 실패(null)";
+            result.data = "logout fail (email is null)";
             return result;
         }
 
         if("".equals(email)) {
             result.status = false;
-            result.data = "로그아웃 실패(null string)";
+            result.data = "logout fail (email is null string)";
             return result;
         }
 
         if(redisUtil.getData(email) == null) {
             result.status = false;
-            result.data = "로그아웃 실패(존재하는 이메일 없음)";
+            result.data = "logout fail (email does not exist)";
             return result;
         }
 
         redisUtil.deleteData(email);
 
         result.status = true;
-        result.data = "로그아웃 성공";
+        result.data = "logout success";
         return result;
     }
 
@@ -151,14 +151,14 @@ public class UserService {
 
         if (inputFile == null || email == null) {
             result.status = false;
-            result.data = "회원정보 수정 실패(null)";
+            result.data = "modify fail (null)";
             return result;
         }
 
         Optional<User> user = userRepository.findByEmail(email);
         if(!user.isPresent()) {
             result.status = false;
-            result.data = "회원정보 수정 실패(존재하는 이메일 없음)";
+            result.data = "modify fail (email does not exist)";
             return result;
         }
 
@@ -178,7 +178,7 @@ public class UserService {
 
         userRepository.save(user.get());
         result.status = true;
-        result.data = "회원정보 수정 성공";
+        result.data = "modify success";
         result.object = jsonObject;
         return result;
     }
@@ -188,14 +188,14 @@ public class UserService {
 
         if (email == null) {
             result.status = false;
-            result.data = "회원정보 수정 실패(null)";
+            result.data = "modify fail (null)";
             return result;
         }
 
         Optional<User> user = userRepository.findByEmail(email);
         if(!user.isPresent()) {
             result.status = false;
-            result.data = "회원정보 수정 실패(존재하는 이메일 없음)";
+            result.data = "modify fail (email does not exist)";
             return result;
         }
 
@@ -209,7 +209,7 @@ public class UserService {
 
         userRepository.save(user.get());
         result.status = true;
-        result.data = "회원정보 수정 성공";
+        result.data = "modify success";
         return result;
     }
 
@@ -219,21 +219,21 @@ public class UserService {
 
         if (email == null) {
             result.status = false;
-            result.data = "회원탈퇴 실패(null)";
+            result.data = "withdrawal fail (null)";
             return result;
         }
 
         Optional<User> user = userRepository.findByEmail(email);
         if(!user.isPresent()) {
             result.status = false;
-            result.data = "회원탈퇴 실패(존재하는 이메일 없음)";
+            result.data = "withdrawal fail (email does not exist)";
             return result;
         }
 
         userRepository.deleteByEmail(email);
 
         result.status = true;
-        result.data = "회원 탈퇴 성공";
+        result.data = "withdrawal success";
         return result;
     }
 }
