@@ -4,6 +4,8 @@
     <ProgressBar index="1" all="12" />
     <Quiz id="solving-quiz-t-quiz" title="이 동물은 무엇일까요?" image="" />
     <MultipleChoice id="solving-quiz-t-choice" :choice="choice" height="18vh" />
+    <!-- <ShortAnswerT title="우리 팀 팀장의 이름은?" image="" /> -->
+    <NextStepButton dark="true"/>
   </div>
 </template>
 
@@ -12,6 +14,8 @@ import Header from '@/components/common/Header.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import Quiz from '@/components/common/Quiz.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
+// import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
+import NextStepButton from '@/components/common/NextStepButton.vue';
 
 export default {
   name: 'SolvingQuizPageT',
@@ -20,6 +24,8 @@ export default {
     ProgressBar,
     Quiz,
     MultipleChoice,
+    // ShortAnswerT,
+    NextStepButton,
   },
   data: function () {
     return {

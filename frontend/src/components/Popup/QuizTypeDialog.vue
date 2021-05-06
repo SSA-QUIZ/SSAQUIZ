@@ -9,8 +9,8 @@
         <div class="type-row">
           <QuizButton style="font-size: 40px;" margin="5px" answer="4지선다" width="48%" height="150px" color="#ffdc46"
             @click.native="addMultipleChoice" />
-          <QuizButton style="font-size: 40px;" margin="5px" answer="T/F" width="48%" height="150px" color="#ff85b1"
-            @click.native="addTrueFalse" />
+          <QuizButton style="font-size: 40px;" margin="5px" answer="단답형" width="48%" height="150px" color="#ff85b1"
+            @click.native="addShortAnswer" />
         </div>
         <div class="type-row">
           <QuizButton style="font-size: 40px;" margin="5px" answer="순서맞히기" width="48%" height="150px" color="#7cb1ff"

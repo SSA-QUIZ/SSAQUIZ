@@ -1,0 +1,44 @@
+<template>
+  <div id="short-answer-result">
+    <div class="row">
+      <span class="question">{{ title }}</span>
+    </div>
+    <div class="row">
+      <span class="answer">서울팀 장장주빈</span>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ShortAnswerResult",
+  props: [
+    "title"
+  ]
+}
+</script>
+
+<style>
+#short-answer-result {
+  width: 100%;
+  height: 55%;
+}
+
+#short-answer-result .row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#short-answer-result .row .question {
+  font-family: Jua;
+  font-size: 3rem;
+  margin-top: 2vw;
+}
+
+#short-answer-result .row .answer {
+  font-family: 'Noto Sans KR';
+  font-size: 5rem;
+  margin-top: 5vw;
+}
+</style>
