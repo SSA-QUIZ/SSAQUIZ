@@ -88,10 +88,9 @@ header {
 }
 
 #header-content-second {
-  width: 100px;
-  height: 100px;
-	font-size: 50px;
-	font-weight: 900;
+  width: 80px;
+  height: 80px;
+	font-size: 45px;
 	color: white;
 	background-color: #4f37de;
 	border-radius: 50%;
