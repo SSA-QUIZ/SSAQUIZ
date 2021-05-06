@@ -35,6 +35,9 @@ export default {
   created: function () {
     this.defaultIsStart();
   },
+  mounted: function () {
+    this.setUsername(this.user.nickname);
+  },
   computed: {
     ...mapState("PlayQuizStore", ["students", "isStart"])
   },
@@ -47,7 +50,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("PlayQuizStore", ["defaultIsStart"])
+    ...mapActions("PlayQuizStore", ["defaultIsStart", "setUsername"])
   },
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div id="multiple-choice">
     <div class="choice-row">
-      <QuizButton color="#ffdc46" icon="fas fa-cat" class="choice" />
-      <QuizButton color="#ff85b1" icon="fas fa-leaf" class="choice" />
+      <QuizButton @click.native="clickButton(1)" color="#ffdc46" icon="fas fa-cat" class="choice" />
+      <QuizButton @click.native="clickButton(2)" color="#ff85b1" icon="fas fa-leaf" class="choice" />
     </div>
     <div class="choice-row">
-      <QuizButton color="#7cb1ff" icon="fa fa-car" class="choice" />
-      <QuizButton color="#aaed81" icon="fas fa-pills" class="choice" />
+      <QuizButton @click.native="clickButton(3)" color="#7cb1ff" icon="fa fa-car" class="choice" />
+      <QuizButton @click.native="clickButton(4)" color="#aaed81" icon="fas fa-pills" class="choice" />
     </div>
   </div>
 </template>
@@ -20,7 +20,12 @@ export default {
   },
   props: [
     'choice'
-  ]
+  ],
+  methods: {
+    clickButton: function (idx) {
+      this.$emit('click-button', idx)
+    },
+  },
 }
 </script>
 <style>

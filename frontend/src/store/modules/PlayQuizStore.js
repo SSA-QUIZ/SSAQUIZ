@@ -11,6 +11,10 @@ const PlayQuizStore = {
     PIN: pin,
     students: [],
     isStart: false,
+    category: '',
+    totalNum: 0,
+    quizIndex: 1,
+    username: '',
   },
   getters: {},
   mutations: {
@@ -28,9 +32,24 @@ const PlayQuizStore = {
     },
     SET_ISSTART: function (state, value) {
       state.isStart = value;
-    }
+    },
+    SET_TOTALNUM: function (state, value) {
+      state.totalNum = value;
+    },
+    SET_CATEGORY: function (state, value) {
+      state.category = value;
+    },
+    SET_USERNAME: function (state, value) {
+      state.username = value;
+    },
   },
   actions: {
+    // sendAnswer: function ({ commit }, value) {
+    //   ws.send(`/quiz/room/sendAnswer/${pin}`)
+    // },
+    setUsername: function ({ commit }, value) {
+      commit('SET_USERNAME', value);
+    },
     defaultIsStart: function ({ commit }) {
       commit('SET_ISSTART', false);
     },
@@ -49,6 +68,10 @@ const PlayQuizStore = {
             commit('SET_ISSTART', true);
           } else if (type === "USERLIST") {
             commit('SET_STUDENTS', JSON.parse(msg.body).content);
+          } else if (type === "TOTALNUM") {
+            commit('SET_TOTALNUM', JSON.parse(msg.body).content);
+          } else if (type === "CATEGORY") {
+            commit('SET_CATEGORY', JSON.parse(msg.body).content);
           }
         })
         commit('SUBSCRIBE_QUIZ_ROOM', ws);
