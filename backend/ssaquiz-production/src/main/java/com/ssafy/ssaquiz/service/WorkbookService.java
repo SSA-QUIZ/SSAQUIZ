@@ -7,9 +7,9 @@ import com.ssafy.ssaquiz.model.Slide;
 import com.ssafy.ssaquiz.model.Workbook;
 import com.ssafy.ssaquiz.model.WorkbookRepository;
 import org.bson.types.ObjectId;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +19,9 @@ import java.util.List;
 public class WorkbookService {
     @Autowired
     WorkbookRepository workbookRepository;
+
+    @Autowired
+    private S3Service s3Service;
 
     public Workbook findWorkbook(String objectId) {
         return workbookRepository.findById(new ObjectId(objectId));
@@ -31,7 +34,7 @@ public class WorkbookService {
     }
 
     public WorkbookDto convertWorkbookDto(Workbook workbook) {
-        if(workbook == null) {
+        if (workbook == null) {
             return null;
         }
 
@@ -49,21 +52,21 @@ public class WorkbookService {
                                      String category, String question,
                                      String imgPath, String answer,
                                      List<String> orderedAnswer, List<String> answerList,
-                                     int time, int scoreFactor, int type) {
+                                     int time, float scoreFactor, String type) {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
-        if(workbook == null) {
+        if (workbook == null) {
             result.data = "슬라이드 저장 실패 (objectId에 일치하는 문제집이 없음)";
             return result;
         }
 
-        if("".equals(imgPath) || imgPath == null) {
+        if ("".equals(imgPath) || imgPath == null) {
             result.data = "슬라이드 저장 실패 (file 문제 발생)";
             return result;
         }
 
-        if(category == null || question == null || answer == null || orderedAnswer == null || answerList == null) {
+        if (category == null || question == null || answer == null || orderedAnswer == null || answerList == null) {
             result.data = "슬라이드 저장 실패 (null)";
             return result;
         }
@@ -87,7 +90,7 @@ public class WorkbookService {
     public BasicResponse insertWorkbook(long userId, String workbookTitle) {
         BasicResponse result = new BasicResponse();
 
-        if(workbookTitle == null) {
+        if (workbookTitle == null) {
             result.status = false;
             result.data = "문제집 저장 실패(null)";
             return result;
@@ -114,7 +117,7 @@ public class WorkbookService {
     public BasicResponse findIdAndTitleByWorkbookList(List<Workbook> workbookList) {
         BasicResponse result = new BasicResponse();
 
-        if(workbookList == null) {
+        if (workbookList == null) {
             result.status = false;
             result.data = "문제집 조회 실패(null)";
             return result;
@@ -136,7 +139,7 @@ public class WorkbookService {
                                         String category, String question,
                                         String imgPath, String answer,
                                         List<String> orderedAnswer, List<String> answerList,
-                                        int time, int scoreFactor, int type) {
+                                        int time, float scoreFactor, String type) {
 
         Slide slide = Slide.builder()
                 .category(category).question(question).imagePath(imgPath)
@@ -152,6 +155,51 @@ public class WorkbookService {
         workbookRepository.save(workbook);
 
         BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "문제집 저장 성공";
+        return result;
+    }
+
+    public BasicResponse insertImage(MultipartFile inputFile) {
+        BasicResponse result = new BasicResponse();
+        String imgPath = s3Service.upload(inputFile);
+
+        if (inputFile == null || "".equals(imgPath)) {
+            result.status = false;
+            result.data = "이미지 저장 실패(null)";
+            return result;
+        }
+
+        result.status = true;
+        result.data = "이미지 저장 성공";
+        result.object = imgPath;
+        return result;
+    }
+
+    public BasicResponse insertWorkbook(WorkbookDto workbookDto) {
+        BasicResponse result = new BasicResponse();
+        result.status = false;
+
+        if (workbookDto == null || workbookDto.getId() == null) {
+            result.data = "문제집 저장 실패 (null)";
+            return result;
+        }
+
+        Workbook workbookById = workbookRepository.findById(new ObjectId(workbookDto.getId()));
+        if(workbookById == null || workbookById.getUserId() != workbookDto.getUserId()) {
+            result.data = "문제집 저장 실패";
+            return result;
+        }
+
+        Workbook workbook = Workbook.builder()
+                .id(new ObjectId(workbookDto.getId()))
+                .userId(workbookDto.getUserId())
+                .workbookTitle(workbookDto.getWorkbookTitle())
+                .slideList(workbookDto.getSlideList())
+                .build();
+
+        workbookRepository.save(workbook);
+
         result.status = true;
         result.data = "문제집 저장 성공";
         return result;

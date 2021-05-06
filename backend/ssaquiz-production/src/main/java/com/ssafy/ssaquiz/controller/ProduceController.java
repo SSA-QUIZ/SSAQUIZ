@@ -1,12 +1,12 @@
 package com.ssafy.ssaquiz.controller;
 
 import com.ssafy.ssaquiz.dto.InsertWorkbookDto;
+import com.ssafy.ssaquiz.dto.WorkbookDto;
 import com.ssafy.ssaquiz.model.*;
 import com.ssafy.ssaquiz.service.S3Service;
 import com.ssafy.ssaquiz.service.WorkbookService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,10 +27,10 @@ public class ProduceController {
                               @RequestParam("question") String question, @RequestParam("file") MultipartFile inputFile,
                               @RequestParam("answer") String answer, @RequestParam("orderedAnswer") List<String> orderedAnswer,
                               @RequestParam("answerList") List<String> answerList, @RequestParam("time") int time,
-                              @RequestParam("scoreFactor") int scoreFactor, @RequestParam("type") int type) {
+                              @RequestParam("scoreFactor") float scoreFactor, @RequestParam("type") String type) {
         BasicResponse result = new BasicResponse();
 
-        if(objectId == null) {
+        if (objectId == null) {
             result.status = false;
             result.data = "문제집 조회 실패(null)";
             return result;
@@ -50,7 +50,7 @@ public class ProduceController {
     public BasicResponse findWorkbook(@PathVariable("objectId") String objectId) {
         BasicResponse result = new BasicResponse();
 
-        if(objectId == null) {
+        if (objectId == null) {
             result.status = false;
             result.data = "문제집 조회 실패(null)";
             return result;
@@ -76,5 +76,18 @@ public class ProduceController {
     public Object findAllWorkbook(@PathVariable("userId") long userId) {
         List<Workbook> workbookList = workbookService.findAllWorkbook(userId);
         return workbookService.findIdAndTitleByWorkbookList(workbookList);
+    }
+
+    @ApiOperation(value = "이미지 저장하기")
+    @PostMapping("/image")
+    public Object insertImage(@RequestParam("file") MultipartFile inputFile) {
+        return workbookService.insertImage(inputFile);
+    }
+
+    @ApiOperation(value = "문제집 저장하기",
+            notes = "[id] 6088e1e504228a182a4159e3, [userId] 0")
+    @PostMapping("/slide-all")
+    public Object insertWorkbook(@RequestBody WorkbookDto workbookDto) {
+        return workbookService.insertWorkbook(workbookDto);
     }
 }
