@@ -34,19 +34,16 @@
       </div>
       <div id="creator-page__settings">
         <span class="settings__title">문제 설정</span>
-        <span class="settings__subtitle">제한 시간</span>
-        <select name="timeLimit" id="time-limit">
-          <option value="10">10초</option>
-          <option value="15">15초</option>
-          <option value="20">20초</option>
-        </select>
-        <span class="settings__subtitle">점수</span>
-        <select name="scoreFactor" id="score-factor">
-          <option value="1">x1</option>
-          <option value="1.5">x1.5</option>
-          <option value="2">x2</option>
-          <option value="2.5">x2.5</option>
-        </select>
+        <Select 
+          :optionList="timeLimitList" 
+          :title="timeLimitTitle" 
+          :index="timeLimitIndex"
+          @select-option="val => timeLimitIndex = val" />
+        <Select 
+          :optionList="scoreFactorList"
+          :title="scoreFactorTitle"
+          :index="scoreFactorIndex"
+          @select-option="val => scoreFactorIndex = val" />
         <span class="settings__subtitle">추가 옵션</span>
         <div>
           <div class="settings__option">
@@ -79,22 +76,24 @@
 </template>
 
 <script>
-// import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
+import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
 import ShortAnswerCreator from '@/components/QuizCreator/ShortAnswerCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
+import Select from '@/components/common/Select.vue';
 import { mapState, mapActions } from 'vuex';
 // import axios from 'axios';
 
 export default {
   name: "CreatorPage",
   components: {
-    // MultipleChoiceCreator,
+    MultipleChoiceCreator,
     ShortAnswerCreator,
     QuizSlide,
     QuizTypeDialog,
-    Confirm
+    Confirm,
+    Select
   },
   data: function () {
     return {
@@ -102,6 +101,20 @@ export default {
       openExitConfirm: false,
       selectedSlide: 0,
       category: '',
+      timeLimitTitle: "제한 시간",
+      timeLimitList: [
+        {"name" :"10초", "value": 10},
+        {"name" :"15초", "value": 15},
+        {"name" :"20초", "value": 20},
+      ],
+      timeLimitIndex: 0,
+      scoreFactorTitle: "점수",
+      scoreFactorList: [
+        {"name" :"x1", "value": 1},
+        {"name" :"x1.5", "value": 1.5},
+        {"name" :"x2", "value": 2},
+      ],
+      scoreFactorIndex: 0,
     }
   },
   created: function () {
@@ -130,21 +143,20 @@ export default {
       this.$router.push({ name: "UserPage" });
     },
     save: function () {
+      console.log(this.timeLimitIndex, this.scoreFactorIndex)
     },
     setSettings: function (idx) {
       let val = this.quizData.slideList[idx];
       this.category = val.category;
-      let selectTime = document.getElementById('time-limit');
-      for (let i = 0; i < 3; i++) {
-        if (selectTime.options[i].value == val.time) {
-          selectTime.options[i].selected = true;
+      for (let i = 0; i < this.timeLimitList.length; i++) {
+        if (this.timeLimitList[i].value == val.time) {
+          this.timeLimitIndex = i;
           break;
         }
       }
-      let selectScoreFactor = document.getElementById('score-factor');
-      for (let i = 0; i < 4; i++) {
-        if (selectScoreFactor.options[i].value == val.scoreFactor) {
-          selectScoreFactor.options[i].selected = true;
+      for (let i = 0; i < this.scoreFactorList.length; i++) {
+        if (this.scoreFactorList[i].value == val.scoreFactor) {
+          this.scoreFactorIndex = i;
           break;
         }
       }
