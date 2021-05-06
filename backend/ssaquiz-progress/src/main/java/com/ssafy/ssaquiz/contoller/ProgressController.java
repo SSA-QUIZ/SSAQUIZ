@@ -1,11 +1,12 @@
 package com.ssafy.ssaquiz.contoller;
 
+import com.mongodb.ObjectId;
 import com.ssafy.ssaquiz.model.Message;
 import com.ssafy.ssaquiz.model.MessageType;
 import com.ssafy.ssaquiz.service.ProgressService;
 import io.swagger.annotations.ApiOperation;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -15,7 +16,6 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 // Controller의 메소드는 message handling methods
 // 한 Client에게서 message를 수신한 다음, 다른 Client에게 broadcast
@@ -102,15 +102,30 @@ public class ProgressController {
     public void sendAnswer(@DestinationVariable("pin") int pin, @Payload Message message) {
         System.out.println("sendAnswer()");
         System.out.println(message);
+        Object originContent = message.getContent();
 
-        boolean isCorrect = progressService.grade("answerList" + pin, message.getQuizNum(), (int) message.getContent());
+        boolean isCorrect = progressService.grade("answerList" + pin, message.getQuizNum(), (String) message.getContent());
 
         if (isCorrect) {
-            progressService.plusScore("userList" + pin, message.getSender(),10.0);
+            double CurrentScore = progressService.plusScore("userList" + pin, message.getSender(),10.0);
+            // 정오답 여부, 현재점수를 답을 제출한 사용자에게 알려주는 로직 추가하기
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("answer", true);
+            jsonObject.put("plusScore", 10);
+            jsonObject.put("CurrentScore", CurrentScore);
+            message.setContent(jsonObject);
+            simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getSender(), message);
+        } else{
+            // 정오답 여부, 현재점수를 답을 제출한 사용자에게 알려주는 로직 추가하기
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("answer", false);
+            jsonObject.put("plusScore", 0);
+            jsonObject.put("CurrentScore", progressService.getScore("userList" + pin, message.getSender()));
+            message.setContent(jsonObject);
+            simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getSender(), message);
         }
 
-        // 정오답 여부, 현재점수를 답을 제출한 사용자에게 알려주는 로직 추가하기
-
+        message.setContent(originContent);
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -138,7 +153,7 @@ public class ProgressController {
 
     @ApiOperation(value = "TEST")
     @PostMapping("/test")
-    public Set<ZSetOperations.TypedTuple<String>> test() {
-        return progressService.viewRanking("test", 0, 2);
+    public boolean test(@RequestParam String id) {
+        return ObjectId.isValid(id);
     }
 }
