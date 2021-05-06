@@ -1,6 +1,6 @@
 <template>
   <div id="short-answer">
-    <TextBox/>
+    <TextBox message="답안을 작성해주세요." @change-input="setAnswer"/>
     <div class="submit">
       <InputButton text="제출하기"/>
     </div>
@@ -15,6 +15,16 @@ export default {
   components: {
     TextBox,
     InputButton,
+  },
+  data: function () {
+    return {
+      answer: ''
+    }
+  },
+  methods: {
+    setAnswer: function (data) {
+      this.answer = data
+    }
   }
 }
 </script>
