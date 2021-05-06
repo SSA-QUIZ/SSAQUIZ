@@ -23,6 +23,52 @@ public class WorkbookService {
     @Autowired
     private S3Service s3Service;
 
+    public BasicResponse saveSlide(String objectId, String category,
+                                   String question, MultipartFile inputFile,
+                                   String answer, List<String> orderedAnswer,
+                                   List<String> answerList, int time,
+                                   float scoreFactor, String type) {
+        BasicResponse result = new BasicResponse();
+        result.status = false;
+
+        if (objectId == null) {
+            result.data = "slide save fail (objectId is null)";
+            return result;
+        }
+
+        if (ObjectId.isValid(objectId) == false) {
+            result.data = "slide save fail (objectId is not valid)";
+            return result;
+        }
+
+        Workbook workbook = findWorkbook(objectId);
+        String imgPath = s3Service.upload(inputFile);
+
+        return insertSlide(workbook, category, question, imgPath, answer,
+                orderedAnswer, answerList, time, scoreFactor, type);
+    }
+
+    public BasicResponse lookupWorkbook(String objectId) {
+        BasicResponse result = new BasicResponse();
+
+        if (objectId == null) {
+            result.status = false;
+            result.data = "workbook lookup fail (objectId is null)";
+            return result;
+        }
+
+        if (ObjectId.isValid(objectId) == false) {
+            result.data = "workbook lookup fail (objectId is not valid)";
+            return result;
+        }
+
+        result.status = true;
+        result.data = "workbook lookup success";
+        result.object = findWorkbookAndConvert(objectId);
+
+        return result;
+    }
+
     public Workbook findWorkbook(String objectId) {
         return workbookRepository.findById(new ObjectId(objectId));
     }
@@ -56,18 +102,13 @@ public class WorkbookService {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
-        if (workbook == null) {
-            result.data = "슬라이드 저장 실패 (objectId에 일치하는 문제집이 없음)";
+        if (workbook == null || imgPath == null || category == null || question == null || answer == null || orderedAnswer == null || answerList == null) {
+            result.data = "slide save fail (null)";
             return result;
         }
 
-        if ("".equals(imgPath) || imgPath == null) {
-            result.data = "슬라이드 저장 실패 (file 문제 발생)";
-            return result;
-        }
-
-        if (category == null || question == null || answer == null || orderedAnswer == null || answerList == null) {
-            result.data = "슬라이드 저장 실패 (null)";
+        if ("".equals(imgPath)) {
+            result.data = "slide save fail (file upload fail)";
             return result;
         }
 
@@ -83,7 +124,7 @@ public class WorkbookService {
         workbookRepository.save(workbook);
 
         result.status = true;
-        result.data = "슬라이드 저장 성공";
+        result.data = "slide save success";
         return result;
     }
 
@@ -92,7 +133,7 @@ public class WorkbookService {
 
         if (workbookTitle == null) {
             result.status = false;
-            result.data = "문제집 저장 실패(null)";
+            result.data = "workbook save fail (workbookTitle is null)";
             return result;
         }
 
@@ -105,7 +146,7 @@ public class WorkbookService {
         workbookRepository.save(workbook);
 
         result.status = true;
-        result.data = "문제집 저장 성공";
+        result.data = "workbook save success";
         result.object = convertWorkbookDto(workbook);
         return result;
     }
@@ -119,7 +160,7 @@ public class WorkbookService {
 
         if (workbookList == null) {
             result.status = false;
-            result.data = "문제집 조회 실패(null)";
+            result.data = "workbook lookup fail (workbookList is null)";
             return result;
         }
 
@@ -130,48 +171,28 @@ public class WorkbookService {
         Collections.reverse(CoverDtoList);
 
         result.status = true;
-        result.data = "문제집 조회 성공";
+        result.data = "workbook lookup success";
         result.object = CoverDtoList;
         return result;
     }
 
-    public BasicResponse insertWorkbook(String workbookTitle, long userId,
-                                        String category, String question,
-                                        String imgPath, String answer,
-                                        List<String> orderedAnswer, List<String> answerList,
-                                        int time, float scoreFactor, String type) {
-
-        Slide slide = Slide.builder()
-                .category(category).question(question).imagePath(imgPath)
-                .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
-                .time(time).scoreFactor(scoreFactor).type(type).build();
-
-        Workbook workbook = Workbook.builder()
-                .workbookTitle(workbookTitle)
-                .userId(userId)
-                .slideList(List.of(slide))
-                .build();
-
-        workbookRepository.save(workbook);
-
-        BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.data = "문제집 저장 성공";
-        return result;
-    }
-
     public BasicResponse insertImage(MultipartFile inputFile) {
-        BasicResponse result = new BasicResponse();
         String imgPath = s3Service.upload(inputFile);
+        BasicResponse result = new BasicResponse();
+        result.status = false;
 
-        if (inputFile == null || "".equals(imgPath)) {
-            result.status = false;
-            result.data = "이미지 저장 실패(null)";
+        if (inputFile == null) {
+            result.data = "file save fail (file is null)";
+            return result;
+        }
+
+        if ("".equals(imgPath)) {
+            result.data = "slide save fail (file upload fail)";
             return result;
         }
 
         result.status = true;
-        result.data = "이미지 저장 성공";
+        result.data = "slide save success";
         result.object = imgPath;
         return result;
     }
@@ -181,13 +202,18 @@ public class WorkbookService {
         result.status = false;
 
         if (workbookDto == null || workbookDto.getId() == null) {
-            result.data = "문제집 저장 실패 (null)";
+            result.data = "workbook save fail (null)";
+            return result;
+        }
+
+        if (ObjectId.isValid(workbookDto.getId()) == false) {
+            result.data = "workbook save fail (objectId is not valid)";
             return result;
         }
 
         Workbook workbookById = workbookRepository.findById(new ObjectId(workbookDto.getId()));
-        if(workbookById == null || workbookById.getUserId() != workbookDto.getUserId()) {
-            result.data = "문제집 저장 실패";
+        if (workbookById == null || workbookById.getUserId() != workbookDto.getUserId()) {
+            result.data = "workbook save fail";
             return result;
         }
 
@@ -201,7 +227,7 @@ public class WorkbookService {
         workbookRepository.save(workbook);
 
         result.status = true;
-        result.data = "문제집 저장 성공";
+        result.data = "workbook save success";
         return result;
     }
 }
