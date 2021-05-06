@@ -1,6 +1,6 @@
 package com.ssafy.ssaquiz.contoller;
 
-import com.mongodb.ObjectId;
+import org.bson.types.ObjectId;
 import com.ssafy.ssaquiz.model.Message;
 import com.ssafy.ssaquiz.model.MessageType;
 import com.ssafy.ssaquiz.service.ProgressService;
