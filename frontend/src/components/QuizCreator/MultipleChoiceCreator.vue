@@ -6,9 +6,12 @@
         :value="question" 
         @input="changeQuestion" 
         id="multiple-choice-creator__input-question"
-        >
-      <span v-if="image == ''"><i class="fas fa-camera camera-img"></i></span>
-      <span v-else id="image__span"><img :src="image" width="150px;" /></span>
+      >
+      <input type="file" name="file" class="image-input">
+      <span v-if="image == ''" class="image-upload-btn" onclick="document.all.file.click();">
+        <i class="fas fa-camera camera-img"></i>
+      </span>
+      <span v-else id="image__span"><img class="image image-input" :src="image" width="150px;" /></span>
     </div>
     <div>
       <div class="choice-row">
@@ -19,12 +22,13 @@
         <CreatorQuizButton :choice=choices[2] @change-choice="getChoice" index="3" height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
         <CreatorQuizButton :choice=choices[3] @change-choice="getChoice" index="4" height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import $ from 'jquery';
 import { mapActions, mapState } from 'vuex';
 import CreatorQuizButton from '@/components/QuizCreator/CreatorQuizButton.vue';
 
@@ -42,8 +46,30 @@ export default {
       choices: [
         "", "", "", ""
       ],
-      image: ""
+      defaultImg: "",
+      image: File
     }
+  },
+  mounted: function () {
+    $('.image-input').change(() => {
+      var newThis = document.getElementsByClassName('image-input')[0];
+
+      // 이미지 파일을 선택하고 img 태그에 넣는다.
+      $(newThis).parent().parent().find('.image');
+      this.image = newThis.files[0];
+
+      // 서버에 이미지 보내기
+      const formData = new FormData();
+      formData.append("file", this.image);
+      const headers = { "Content-Type": "multipart/form-data" };
+
+      axios.post("http://k4a304.p.ssafy.io/api-quiz/image", formData, headers)
+        .then(res => {
+          this.image = res.data.object;
+          this.setImage(this.image)
+        })
+        .catch(err => console.log(err))
+    });
   },
   created: function () {
     let data = this.quizData.slideList[this.slideIndex];
@@ -63,7 +89,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setMultipleChoice"]),
+    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setMultipleChoice", "setImageData"]),
     getChoice: function (idx, data) {
       this.choices[idx-1] = data;
       let val = [this.slideIndex, this.choices];
@@ -74,7 +100,10 @@ export default {
       let val = [this.slideIndex, this.question];
       this.setSlideQuestion(val);
     },
-
+    setImage(data) {
+      let val = [this.slideIndex, data]
+      this.setImageData(val);
+    }
   },
 }
 </script>
@@ -110,6 +139,12 @@ export default {
 
 #multiple-choice-creator__input-question:focus, #multiple-choice-creator__input-question:active {
 	outline: none;
+}
+
+input.image-input {
+  display: none;
+  cursor: pointer;
+  opacity: 0;
 }
 
 #image__span {

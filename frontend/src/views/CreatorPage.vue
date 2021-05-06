@@ -25,7 +25,7 @@
         </div>
       </div>
       <div id="creator-page__content">
-        <ShortAnswerCreator v-if="category === '단답형'"/>
+        <!-- <ShortAnswerCreator v-if="category === '단답형'"/> -->
         <MultipleChoiceCreator 
           :slideIndex="selectedSlide"
           v-if="category === '4지선다'"
@@ -79,8 +79,8 @@
 </template>
 
 <script>
-// import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
-import ShortAnswerCreator from '@/components/QuizCreator/ShortAnswerCreator.vue';
+import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
+// import ShortAnswerCreator from '@/components/QuizCreator/ShortAnswerCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
@@ -90,8 +90,8 @@ import { mapState, mapActions } from 'vuex';
 export default {
   name: "CreatorPage",
   components: {
-    // MultipleChoiceCreator,
-    ShortAnswerCreator,
+    MultipleChoiceCreator,
+    // ShortAnswerCreator,
     QuizSlide,
     QuizTypeDialog,
     Confirm

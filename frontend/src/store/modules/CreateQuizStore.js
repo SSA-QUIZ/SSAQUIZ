@@ -19,6 +19,9 @@ const CreateQuizStore = {
     SET_MULTIPLE_CHOICE: function (state, value) {
       state.quizData.slideList[value[0]].answerList = value[1];
     },
+    SET_IMAGE_DATA: function (state, value) {
+      state.quizData.slideList[value[0]].imagePath = value[1];
+    }
   },
   actions: {
     addQuiz: function ({ commit }, value) {
@@ -48,6 +51,9 @@ const CreateQuizStore = {
     },
     resetQuizData: function ({ commit }) {
       commit('SET_QUIZ_DATA', [])
+    },
+    setImageData: function ({ commit }, value) {
+      commit('SET_IMAGE_DATA', value)
     }
   }
 };
