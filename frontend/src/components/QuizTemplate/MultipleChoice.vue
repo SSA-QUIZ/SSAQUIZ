@@ -1,12 +1,12 @@
 <template>
   <div id="multiple-choice">
     <div class="choice-row">
-      <QuizButton :isAnswer="isAnswer" :answer="answer[0]" :height="height" :font="font" color="#ffdc46" icon="fas fa-cat" class="choice" />
-      <QuizButton :isAnswer="isAnswer" :answer="answer[1]" :height="height" :font="font" color="#ff85b1" icon="fas fa-leaf" class="choice" />
+      <QuizButton :answer="answer[0]" :height="height" :font="font" color="#ffdc46" icon="fas fa-cat" class="choice" />
+      <QuizButton :answer="answer[1]" :height="height" :font="font" color="#ff85b1" icon="fas fa-leaf" class="choice" />
     </div>
     <div class="choice-row">
-      <QuizButton :isAnswer="isAnswer" :answer="answer[2]" :height="height" :font="font" color="#7cb1ff" icon="fa fa-car" class="choice" />
-      <QuizButton :isAnswer="isAnswer" :answer="answer[3]" :height="height" :font="font" color="#aaed81" icon="fas fa-pills" class="choice" />
+      <QuizButton :answer="answer[2]" :height="height" :font="font" color="#7cb1ff" icon="fa fa-car" class="choice" />
+      <QuizButton :answer="answer[3]" :height="height" :font="font" color="#aaed81" icon="fas fa-pills" class="choice" />
     </div>
   </div>
 </template>
@@ -19,7 +19,6 @@ export default {
     QuizButton
   },
   props: [
-    'isAnswer',
     'choice',
     'height',
     'font'
@@ -30,7 +29,7 @@ export default {
     }
   },
   created: function () {
-    if (this.isAnswer === "true") this.answer = this.choice;
+    if (this.choice != undefined) this.answer = this.choice;
   }
 }
 </script>

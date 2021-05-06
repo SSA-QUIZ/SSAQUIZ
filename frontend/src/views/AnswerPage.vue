@@ -3,7 +3,7 @@
     <Header mode="off" />
     <ProgressBar index="2" all="12" />
     <Quiz title="이 동물은 무엇일까요?" image="@/assets/images/Default.png" id="quiz-div" />
-    <QuizButton color="#7cb1ff" icon="fa fa-car" isAnswer="true" answer="고래" height="20vh" id="answer-div" />
+    <QuizButton color="#7cb1ff" icon="fa fa-car" answer="고래" height="20vh" id="answer-div" />
     <NextStepButton dark="true" />
     <div style="height: 3%;"></div>
   </div>
