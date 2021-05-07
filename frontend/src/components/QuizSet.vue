@@ -24,8 +24,8 @@ export default {
 
 <style>
 #quiz-set {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   background-color: rgb(202, 202, 202);
   border-radius: 15px;
   margin: 1%;
@@ -34,7 +34,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
+  width: 90%;
   font-size: 3vh;
 }
 </style>
