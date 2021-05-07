@@ -1,7 +1,7 @@
 <template>
   <div class="quiz-slide">
     <p class="slide-number">{{ number }}</p>
-    <div class="quiz-img">
+    <div class="quiz-img" :class="{ 'quiz-img__selected' : isSelected}">
       <img v-if="slide.imagePath" :src="slide.imagePath">
       <img v-else src="@/assets/images/Default.png">
     </div>
@@ -11,7 +11,10 @@
 <script>
 export default {
   name: "QuizSlide",
-  props: ['number', 'slide'],
+  props: ['number',
+    'slide',
+    'isSelected'
+  ],
   data: function () {
     return {
     }
@@ -41,6 +44,11 @@ export default {
 
 .quiz-img img {
   width: 75%;
+}
+
+.quiz-img__selected {
+	border: 3px solid #E7527E;
+  border-radius: 5px;
 }
 
 .slide-number {
