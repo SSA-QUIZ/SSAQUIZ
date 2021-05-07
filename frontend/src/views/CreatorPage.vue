@@ -15,6 +15,7 @@
               :key="index"
               :number="index+1"
               :slide="slide"
+              :isSelected="isSelectedSlide[index]"
               @click.native="selectSlide(index)"
             />
           </template>
@@ -100,13 +101,11 @@ export default {
       selectedSlide: 0,
       category: '',
 
+      isSelectedSlide: [],
+
       scoreFactorIndex: 0,
       timeLimitIndex: 0,
       typeIndex: 0,
-
-      timeLimitTitle: "제한 시간",
-      scoreFactorTitle: "점수",
-      typeTitle: "추가 옵션",
 
       timeLimitList: [
         {"name" :"10초", "value": 10},
@@ -143,29 +142,21 @@ export default {
       "addQuiz", "getQuizData", "resetQuizData"
     ]),
     selectSlide: function (idx) {
+      let val = this.quizData.slideList[idx];
+      this.isSelectedSlide = 
+        Array.from({length: this.quizData.slideList.length}, () => false);
+      this.isSelectedSlide[idx] = true;
+      this.category = val.category;
+      this.timeLimitIndex = val.time;
+      this.scoreFactorIndex = val.scoreFactor;
+      this.typeIndex = val.type;
       this.selectedSlide = idx;
-      this.setSettings(idx);
     },
     exit: function () {
       this.$router.push({ name: "UserPage" });
     },
     save: function () {
       console.log(this.quizData)
-    },
-    setSettings: function (idx) {
-      let val = this.quizData.slideList[idx];
-      console.log(val)
-      this.category = val.category;
-      this.timeLimitIndex = val.time;
-      this.scoreFactorIndex = val.scoreFactor;
-      this.typeIndex = val.type;
-      // if (val.type == 0) {
-      //   document.getElementById('no-option').checked = true;
-      // } else if (val.type == 1) {
-      //   document.getElementById('FIFO').checked = true;
-      // } else {
-      //   document.getElementById('random-select').checked = true;
-      // }
     },
   },
 }
