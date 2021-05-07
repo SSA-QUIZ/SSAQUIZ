@@ -23,8 +23,7 @@ export default {
     'width',
     'height',
     'icon',
-    'margin',
-    'answer',
+    'margin', 
     'index',
     'slideIndex'
   ],
@@ -40,6 +39,16 @@ export default {
     choice: function () {
       return this.quizData["slideList"][this.slideIndex]["answerList"][this.index];
     },
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      if (this.quizData["slideList"][this.slideIndex]["answer"] === "") {
+        return;
+      }
+      else if (this.quizData["slideList"][this.slideIndex]["answer"] == this.index) {
+        document.getElementsByClassName("option-input")[parseInt(this.index)].checked = true;
+      }
+    })
   },
   created: function () {
     this.setStyle();
