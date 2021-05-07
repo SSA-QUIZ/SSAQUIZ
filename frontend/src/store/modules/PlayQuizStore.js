@@ -15,6 +15,11 @@ const PlayQuizStore = {
     totalNum: 0,
     quizIndex: 0,
     username: '',
+    isFin: false,
+    isSolved: false,
+    isCorrect: false,
+    isNext: false,
+    isEnd: false,
   },
   getters: {},
   mutations: {
@@ -45,8 +50,35 @@ const PlayQuizStore = {
     SEND_ANSWER: function (state, value) {
       state.stompClient = value;
     },
+    SET_ISFIN: function (state, value) {
+      state.isFin = value;
+    },
+    SET_ISSOLVED: function (state, value) {
+      state.isSolved = value;
+    },
+    SET_ISCORRECT: function (state, value) {
+      state.isCorrect = value;
+    },
+    SET_ISNEXT: function (state, value) {
+      state.isNext = value;
+    },
+    SET_ISEND: function (state, value) {
+      state.isEnd = value;
+    },
   },
   actions: {
+    setIsFin: function ({ commit }, value) {
+      commit("SET_ISFIN", value);
+    },
+    setIsSolved: function ({ commit }, value) {
+      commit("SET_ISSOLVED", value);
+    },
+    setIsCorrect: function ({ commit }, value) {
+      commit("SET_ISCORRECT", value);
+    },
+    setIsNext: function ({ commit }, value) {
+      commit("SET_ISNEXT", value);
+    },
     sendAnswer: function ({ commit }, value) {
       let sendAnswerMessage = {
         sender: value[1],
@@ -55,7 +87,8 @@ const PlayQuizStore = {
         quizNum: value[2],
       };
       ws.send(`/quiz/room/sendAnswer/${pin}`, {}, JSON. stringify(sendAnswerMessage));
-      commit('SEND_ANSWER', ws)
+      commit('SEND_ANSWER', ws);
+      commit('SET_ISSOLVED', true);
     },
     setUsername: function ({ commit }, value) {
       commit('SET_USERNAME', value);
@@ -65,6 +98,7 @@ const PlayQuizStore = {
     },
     setPINWS: function ({ commit }, value) {
       pin = value[0];
+      commit('SET_PINWS', pin);
       ws = Stomp.over(new SockJS("http://k4a304.p.ssafy.io/api-play/connect"));
       ws.connect({}, () => {
         const subscribeMessage = {
@@ -73,7 +107,6 @@ const PlayQuizStore = {
         }
         ws.send(`/quiz/room/enterUser/${value[0]}`, {}, JSON.stringify(subscribeMessage));
         ws.subscribe(`/pin/${value[0]}`, (msg) => {
-          console.log(msg.body)
           let type = JSON.parse(msg.body).type
           if (type === "START") {
             commit('SET_ISSTART', true);
@@ -83,10 +116,17 @@ const PlayQuizStore = {
             commit('SET_TOTALNUM', JSON.parse(msg.body).content);
           } else if (type === "CATEGORY") {
             commit('SET_CATEGORY', JSON.parse(msg.body).content);
+          } else if (type === "FINISH") {
+            commit('SET_ISFIN', true);
+          } else if (type === "NEXT") {
+            commit('SET_ISNEXT', true);
+          } else if (type === "END") {
+            commit('SET_ISEND', true);
           }
         })
         ws.subscribe(`/pin/${value[0]}/nickname/${value[1]}`, (msg) => {
-          console.log(msg.body);
+          let isCorrectAnswer = JSON.parse(msg.body).content.answer;
+          commit('SET_ISCORRECT', isCorrectAnswer);
         })
         commit('SUBSCRIBE_QUIZ_ROOM', ws);
         return 1

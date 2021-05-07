@@ -143,11 +143,11 @@ export default {
       this.flag = !this.flag;
     },
     // quizSet methods
-    startQuiz: function () {
+    startQuiz: function (value) {
       this.setIsStudent(false);
       this.setPINWS()
         .then(() => {
-          this.$router.push({name: "LobbyPageT", params: {"PIN": this.PIN}})
+          this.$router.push({name: "LobbyPageT", params: {"PIN": this.PIN, "quizId": value}})
         })
         .catch(err => console.log(err))
     },

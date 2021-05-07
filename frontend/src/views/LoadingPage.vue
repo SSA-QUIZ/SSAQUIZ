@@ -21,6 +21,7 @@ export default {
   },
   created: function () {
     if (this.isStudent === false) {
+      console.log(this.quizData.slideList[this.quizIndex])
       this.sendCategory(this.quizData.slideList[this.quizIndex].category);
     }
     this.second = 3;
