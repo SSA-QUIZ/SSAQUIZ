@@ -99,12 +99,12 @@ export default {
       let val = [this.slideIndex, idx-1];
       this.setAnswer(val);
     },
-    changeQuestion(e) {
+    changeQuestion: function (e) {
       this.question = e.target.value;
       let val = [this.slideIndex, this.question];
       this.setSlideQuestion(val);
     },
-    setImage(data) {
+    setImage: function (data) {
       let val = [this.slideIndex, data]
       this.setImageData(val);
     }

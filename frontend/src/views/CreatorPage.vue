@@ -34,31 +34,27 @@
       </div>
       <div id="creator-page__settings">
         <span class="settings__title">문제 설정</span>
-        <Select 
-          :optionList="timeLimitList" 
-          :title="timeLimitTitle" 
+        <span class="settings__subtitle">제한 시간</span>
+        <SelectBox
+          title="timeLimit"
+          :slideIndex="selectedSlide"
           :index="timeLimitIndex"
+          :optionList="timeLimitList" 
           @select-option="val => timeLimitIndex = val" />
-        <Select 
-          :optionList="scoreFactorList"
-          :title="scoreFactorTitle"
+        <span class="settings__subtitle">점수</span>
+        <SelectBox 
+          title="scoreFactor"
+          :slideIndex="selectedSlide"
           :index="scoreFactorIndex"
+          :optionList="scoreFactorList"
           @select-option="val => scoreFactorIndex = val" />
         <span class="settings__subtitle">추가 옵션</span>
-        <div>
-          <div class="settings__option">
-            <input type="radio" name="additionalOption" id="no-option" checked>
-            <label for="no-option">없음</label>
-          </div>
-          <div class="settings__option">
-            <input type="radio" name="additionalOption" id="FIFO">
-            <label for="FIFO">선착순</label>
-          </div>
-          <div class="settings__option">
-            <input type="radio" name="additionalOption" id="random-select">
-            <label for="random-select">랜덤뽑기</label>
-          </div>
-        </div>
+        <RadioBox 
+          title="type"
+          :slideIndex="selectedSlide"
+          :index="typeIndex"
+          :optionList="typeList"
+          @radio-option="val => typeIndex = val"/>
       </div>
     </div>
     <Confirm 
@@ -81,7 +77,8 @@ import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreato
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
-import Select from '@/components/common/Select.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
+import RadioBox from '@/components/common/RadioBox.vue';
 import { mapState, mapActions } from 'vuex';
 // import axios from 'axios';
 
@@ -93,7 +90,8 @@ export default {
     QuizSlide,
     QuizTypeDialog,
     Confirm,
-    Select
+    SelectBox,
+    RadioBox
   },
   data: function () {
     return {
@@ -101,20 +99,30 @@ export default {
       openExitConfirm: false,
       selectedSlide: 0,
       category: '',
+
+      scoreFactorIndex: 0,
+      timeLimitIndex: 0,
+      typeIndex: 0,
+
       timeLimitTitle: "제한 시간",
+      scoreFactorTitle: "점수",
+      typeTitle: "추가 옵션",
+
       timeLimitList: [
         {"name" :"10초", "value": 10},
         {"name" :"15초", "value": 15},
         {"name" :"20초", "value": 20},
       ],
-      timeLimitIndex: 0,
-      scoreFactorTitle: "점수",
       scoreFactorList: [
         {"name" :"x1", "value": 1},
         {"name" :"x1.5", "value": 1.5},
         {"name" :"x2", "value": 2},
       ],
-      scoreFactorIndex: 0,
+      typeList: [
+        {"id": "none" ,"name" :"없음"},
+        {"id": "FIFO" ,"name" :"선착순"},
+        {"id": "random" ,"name" :"랜덤뽑기"},
+      ],
     }
   },
   created: function () {
@@ -135,7 +143,6 @@ export default {
       "addQuiz", "getQuizData", "resetQuizData"
     ]),
     selectSlide: function (idx) {
-      console.log("slide 클릭할 때 : " + this.quizData.slideList.length)
       this.selectedSlide = idx;
       this.setSettings(idx);
     },
@@ -143,30 +150,22 @@ export default {
       this.$router.push({ name: "UserPage" });
     },
     save: function () {
-      console.log(this.timeLimitIndex, this.scoreFactorIndex)
+      console.log(this.quizData)
     },
     setSettings: function (idx) {
       let val = this.quizData.slideList[idx];
+      console.log(val)
       this.category = val.category;
-      for (let i = 0; i < this.timeLimitList.length; i++) {
-        if (this.timeLimitList[i].value == val.time) {
-          this.timeLimitIndex = i;
-          break;
-        }
-      }
-      for (let i = 0; i < this.scoreFactorList.length; i++) {
-        if (this.scoreFactorList[i].value == val.scoreFactor) {
-          this.scoreFactorIndex = i;
-          break;
-        }
-      }
-      if (val.type == 0) {
-        document.getElementById('no-option').checked = true;
-      } else if (val.type == 1) {
-        document.getElementById('FIFO').checked = true;
-      } else {
-        document.getElementById('random-select').checked = true;
-      }
+      this.timeLimitIndex = val.time;
+      this.scoreFactorIndex = val.scoreFactor;
+      this.typeIndex = val.type;
+      // if (val.type == 0) {
+      //   document.getElementById('no-option').checked = true;
+      // } else if (val.type == 1) {
+      //   document.getElementById('FIFO').checked = true;
+      // } else {
+      //   document.getElementById('random-select').checked = true;
+      // }
     },
   },
 }

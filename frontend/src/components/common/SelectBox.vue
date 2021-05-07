@@ -1,6 +1,5 @@
 <template>
   <div>
-    <span class="select-title">{{ title }}</span>
     <select :id="title" name="select-box" @click="selectOption">
       <option v-for="(option, idx) in optionList" :key="idx" :index="option.value">
         {{ option.name }}
@@ -10,12 +9,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
-  name: 'Select',
+  name: 'SelectBox',
   props: [
     'title',
+    'slideIndex',
+    'index',
     'optionList',
-    'index'
   ],
   watch: {
     index: function () {
@@ -24,9 +26,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions("CreateQuizStore", ["setOptions"]),
     selectOption: function () {
       let select = document.getElementById(`${this.title}`);
       this.$emit('select-option', select.selectedIndex);
+      let val = [this.title, this.slideIndex, select.selectedIndex];
+      this.setOptions(val);
     }
   }
 }
