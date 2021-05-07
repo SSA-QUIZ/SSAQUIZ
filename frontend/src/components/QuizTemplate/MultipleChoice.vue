@@ -1,12 +1,12 @@
 <template>
   <div id="multiple-choice">
     <div class="choice-row">
-      <QuizButton @click.native="clickButton(['0', username, quizIndex])" :answer="choice[0]" :height="height" color="#ffdc46" icon="fas fa-cat" class="choice" />
-      <QuizButton @click.native="clickButton(['1', username, quizIndex])" :answer="choice[1]" :height="height" color="#ff85b1" icon="fas fa-leaf" class="choice" />
+      <QuizButton @click.native="clickButton(['0', username, quizIndex])" :answer="choice[0]" :height="height" :font="font" color="#ffdc46" icon="fas fa-cat" class="choice" />
+      <QuizButton @click.native="clickButton(['1', username, quizIndex])" :answer="choice[1]" :height="height" :font="font" color="#ff85b1" icon="fas fa-leaf" class="choice" />
     </div>
     <div class="choice-row">
-      <QuizButton @click.native="clickButton(['2', username, quizIndex])" :answer="choice[2]" :height="height" color="#7cb1ff" icon="fa fa-car" class="choice" />
-      <QuizButton @click.native="clickButton(['3', username, quizIndex])" :answer="choice[3]" :height="height" color="#aaed81" icon="fas fa-pills" class="choice" />
+      <QuizButton @click.native="clickButton(['2', username, quizIndex])" :answer="choice[2]" :height="height" :font="font" color="#7cb1ff" icon="fa fa-car" class="choice" />
+      <QuizButton @click.native="clickButton(['3', username, quizIndex])" :answer="choice[3]" :height="height" :font="font" color="#aaed81" icon="fas fa-pills" class="choice" />
     </div>
   </div>
 </template>
@@ -21,8 +21,17 @@ export default {
   },
   props: [
     'choice',
-    'height'
+    'height',
+    'font'
   ],
+  data: function () {
+    return {
+      answer: ["", "", "", ""]
+    }
+  },
+  created: function () {
+    if (this.choice != undefined) this.answer = this.choice;
+  },
   computed: {
     ...mapState("PlayQuizStore", ["username", "quizIndex"]),
   },
@@ -38,23 +47,15 @@ export default {
 #multiple-choice {
 	display: flex;
 	flex-direction: column;
-  margin-top: 1.5vh;
-	padding: 3vh;
+  margin-top: 10px;
+  padding: 2.5%;
 }
 .choice-row {
 	display: flex;
 	width: 100%;
-	margin: 0.3% 0% 0.3% 0%;
 }
 .choice {
-	display: flex;
-	flex-grow: 1;
-	justify-content: center;
-	align-items: center;
 	height: 100%;
-	border-radius: 15px;
-	font-family: Jua;
-	font-size: 6rem;
   width: 48%;
 }
 
@@ -71,7 +72,6 @@ export default {
 	}
 	.choice {
     height: 100px;
-    font-size: 2rem;
     margin: 5px;
     width: 95%;
 	}

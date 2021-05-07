@@ -19,6 +19,17 @@ const CreateQuizStore = {
     SET_MULTIPLE_CHOICE: function (state, value) {
       state.quizData.slideList[value[0]].answerList = value[1];
     },
+    SET_IMAGE_DATA: function (state, value) {
+      state.quizData.slideList[value[0]].imagePath = value[1];
+    },
+    SET_OPTIONS: function (state, value) {
+      if (value[0] === "scoreFactor")
+        state.quizData.slideList[value[1]].scoreFactor = value[2];
+      else if (value[0] === "timeLimit")
+        state.quizData.slideList[value[1]].time = value[2];
+      else
+        state.quizData.slideList[value[1]].type = value[2];
+    }
   },
   actions: {
     addQuiz: function ({ commit }, value) {
@@ -48,6 +59,12 @@ const CreateQuizStore = {
     },
     resetQuizData: function ({ commit }) {
       commit('SET_QUIZ_DATA', [])
+    },
+    setImageData: function ({ commit }, value) {
+      commit('SET_IMAGE_DATA', value)
+    },
+    setOptions: function ({ commit }, value) {
+      commit('SET_OPTIONS', value)
     }
   }
 };

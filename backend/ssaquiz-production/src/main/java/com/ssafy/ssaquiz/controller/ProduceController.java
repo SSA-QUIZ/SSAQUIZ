@@ -27,19 +27,8 @@ public class ProduceController {
                               @RequestParam("question") String question, @RequestParam("file") MultipartFile inputFile,
                               @RequestParam("answer") String answer, @RequestParam("orderedAnswer") List<String> orderedAnswer,
                               @RequestParam("answerList") List<String> answerList, @RequestParam("time") int time,
-                              @RequestParam("scoreFactor") float scoreFactor, @RequestParam("type") String type) {
-        BasicResponse result = new BasicResponse();
-
-        if (objectId == null) {
-            result.status = false;
-            result.data = "문제집 조회 실패(null)";
-            return result;
-        }
-
-        Workbook workbook = workbookService.findWorkbook(objectId);
-        String imgPath = s3Service.upload(inputFile);
-
-        return workbookService.insertSlide(workbook, category, question, imgPath, answer,
+                              @RequestParam("scoreFactor") int scoreFactor, @RequestParam("type") int type) {
+        return workbookService.saveSlide(objectId, category, question, inputFile, answer,
                 orderedAnswer, answerList, time, scoreFactor, type);
     }
 
@@ -48,19 +37,7 @@ public class ProduceController {
     )
     @GetMapping("/workbook/{objectId}")
     public BasicResponse findWorkbook(@PathVariable("objectId") String objectId) {
-        BasicResponse result = new BasicResponse();
-
-        if (objectId == null) {
-            result.status = false;
-            result.data = "문제집 조회 실패(null)";
-            return result;
-        }
-
-        result.status = true;
-        result.data = "문제집 조회 성공";
-        result.object = workbookService.findWorkbookAndConvert(objectId);
-
-        return result;
+        return workbookService.lookupWorkbook(objectId);
     }
 
     @ApiOperation(value = "문제집 만들기")
@@ -89,5 +66,17 @@ public class ProduceController {
     @PostMapping("/slide-all")
     public Object insertWorkbook(@RequestBody WorkbookDto workbookDto) {
         return workbookService.insertWorkbook(workbookDto);
+    }
+
+    @ApiOperation(value = "문제집 삭제하기")
+    @DeleteMapping("/workbook/{objectId}/{userId}")
+    public Object deleteWorkbook(@PathVariable("objectId") String objectId, @PathVariable("userId") long userId) {
+        return workbookService.deleteWorkbook(objectId, userId);
+    }
+
+    @ApiOperation(value = "슬라이드 삭제하기")
+    @DeleteMapping("/workbook/{objectId}/{userId}/{slideIndex}")
+    public Object deleteSlide(@PathVariable("objectId") String objectId, @PathVariable("userId") long userId, @PathVariable("slideIndex") int slideIndex) {
+        return workbookService.deleteSlide(objectId, userId, slideIndex);
     }
 }

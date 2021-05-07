@@ -30,7 +30,9 @@ export default {
   ],
   data: function () {
     return {
-      second: this.time
+      solved: 0,
+      second: this.time,
+      timer: setInterval(() => this.countDown(), 1000)
     }
   },
   computed: {
@@ -49,9 +51,6 @@ export default {
       }
       this.second--;
     },
-    changeSecond: function () {
-      setInterval(() => this.countDown(), 1000);
-    }
   }
 }
 </script>
@@ -91,10 +90,9 @@ header {
 }
 
 #header-content-second {
-  width: 100px;
-  height: 100px;
-	font-size: 50px;
-	font-weight: 900;
+  width: 90px;
+  height: 90px;
+	font-size: 45px;
 	color: white;
 	background-color: #4f37de;
 	border-radius: 50%;

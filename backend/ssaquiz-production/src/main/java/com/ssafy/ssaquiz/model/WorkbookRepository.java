@@ -8,4 +8,5 @@ import java.util.List;
 public interface WorkbookRepository extends MongoRepository<Workbook, String> {
     Workbook findById(ObjectId id);
     List<Workbook> findByUserId(long userId);
+    long deleteByIdAndUserId(ObjectId id, long userId);
 }
