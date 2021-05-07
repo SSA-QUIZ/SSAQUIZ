@@ -67,4 +67,16 @@ public class ProduceController {
     public Object insertWorkbook(@RequestBody WorkbookDto workbookDto) {
         return workbookService.insertWorkbook(workbookDto);
     }
+
+    @ApiOperation(value = "문제집 삭제하기")
+    @DeleteMapping("/workbook/{objectId}/{userId}")
+    public Object deleteWorkbook(@PathVariable("objectId") String objectId, @PathVariable("userId") long userId) {
+        return workbookService.deleteWorkbook(objectId, userId);
+    }
+
+    @ApiOperation(value = "슬라이드 삭제하기")
+    @DeleteMapping("/workbook/{objectId}/{userId}/{slideIndex}")
+    public Object deleteSlide(@PathVariable("objectId") String objectId, @PathVariable("userId") long userId, @PathVariable("slideIndex") int slideIndex) {
+        return workbookService.deleteSlide(objectId, userId, slideIndex);
+    }
 }
