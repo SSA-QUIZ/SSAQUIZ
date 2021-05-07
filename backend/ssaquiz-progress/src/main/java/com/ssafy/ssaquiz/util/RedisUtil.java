@@ -40,6 +40,7 @@ public class RedisUtil {
     /**
      * redis Hash 구조 저장 및 조회를 위한 함수 3개
      */
+    // O (1)
     public void setHdata(String redisKey, String key, String value) {
         HashOperations<String, Object, Object> valueOperations = stringRedisTemplate.opsForHash();
         valueOperations.put(redisKey, key, value);
@@ -86,11 +87,13 @@ public class RedisUtil {
         }
     }
 
+    // O (log (N)) N은 정렬 된 집합의 요소 수
     public boolean addZdata(String key, String value, double score) {
         ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
         return valueOperations.add(key, value, score);
     }
 
+    // O (log (N) + M) N은 정렬 된 집합의 요소 수, M은 반환 된 요소 수
     public Set<ZSetOperations.TypedTuple<String>> getRanking(String key, long startIndex, long endIndex) {
         ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
         return valueOperations.reverseRangeWithScores(key, startIndex, endIndex);
