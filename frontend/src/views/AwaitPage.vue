@@ -23,8 +23,23 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: "AwaitPage"
+  name: "AwaitPage",
+  watch: {
+    isFin: function (newVal) {
+      if (newVal === true) {
+        if (this.isCorrect === true) {
+          this.$router.push({ name: "CorrectAnswer" });
+        } else if (this.isCorrect === false) {
+          this.$router.push({ name: "WrongAnswer" });
+        }
+      }
+    },
+  },
+  computed: {
+    ...mapState("PlayQuizStore", ["isFin", "isCorrect"])
+  },
 }
 </script>
 

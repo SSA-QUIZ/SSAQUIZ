@@ -15,6 +15,10 @@ const CreateQuizRoomStore = {
     quizData: Object,
     quizIndex: 0,
     solvedNum: 0,
+    isFin: false,
+    isInterim: false,
+    isNext: false,
+    isEnd: false,
   },
   getters: {},
   mutations: {
@@ -56,8 +60,53 @@ const CreateQuizRoomStore = {
     ADD_SOLVEDNUM: function (state) {
       state.solvedNum++;
     },
+    NEXT_QUIZ: function (state, value) {
+      state.stompClient = value;
+    },
+    SET_ISFIN: function (state, value) {
+      state.isFin = value;
+    },
+    SET_ISINTERIM: function (state, value) {
+      state.isInterim = value;
+    },
+    SET_ISNEXT: function (state, value) {
+      state.isNext = value;
+    },
+    SET_ISEND: function (state, value) {
+      state.isEnd = value;
+    },
   },
   actions: {
+    sendEndMessage: function ({ commit }) {
+      let sendEndMessage = {
+        type: "END"
+      };
+      ws.send(`/quiz/room/endQuiz/${pin}`, {}, JSON.stringify(sendEndMessage));
+      commit("SET_STOMP_CLIENT", ws);
+    },
+    sendFinMessage: function ({ commit }) {
+      let sendFinMessage = {
+        type: "FINISH"
+      };
+      ws.send(`/quiz/room/finishQuiz/${pin}`, {}, JSON.stringify(sendFinMessage));
+      commit("SET_STOMP_CLIENT", ws);
+    },
+    setIsInterim: function ({ commit }, value) {
+      commit("SET_ISINTERIM", value);
+    },
+    setIsNext: function ({ commit }, value) {
+      commit("SET_ISNEXT", value);
+    },
+    setIsFin: function ({ commit }, value) {
+      commit("SET_ISFIN", value);
+    },
+    nextQuiz: function ({ commit }) {
+      let nextQuizMessage = {
+        type: "NEXT"
+      };
+      ws.send(`/quiz/room/nextQuiz/${pin}`, {}, JSON.stringify(nextQuizMessage));
+      commit("SET_STOMP_CLIENT", ws);
+    },
     sendTotalNum: function ({ commit }, value) {
       let sendTotalNumMessage = {
         type: "TOTALNUM",
@@ -94,7 +143,6 @@ const CreateQuizRoomStore = {
           ws = Stomp.over(new SockJS("http://k4a304.p.ssafy.io/api-play/connect"));
           ws.connect({}, () => {
             ws.subscribe(`/pin/${pin}`, (msg) => {
-              console.log(msg.body)
               let type = JSON.parse(msg.body).type
               if (type === "JOIN") {
                 commit('ADD_STUDENTS', JSON.parse(msg.body).sender);
@@ -102,6 +150,12 @@ const CreateQuizRoomStore = {
                 commit('SET_ISSTART', true);
               } else if (type === "SUBMIT") {
                 commit('ADD_SOLVEDNUM');
+              } else if (type === "NEXT") {
+                commit('SET_ISNEXT', true);
+              } else if (type === "FINISH") {
+                commit('SET_ISFIN', true);
+              } else if (type === "END") {
+                commit("SET_ISEND", true);
               }
             })
             commit('SUBSCRIBE_QUIZ_ROOM', ws);

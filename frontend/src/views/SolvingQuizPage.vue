@@ -29,8 +29,20 @@ export default {
   methods: {
     ...mapActions("PlayQuizStore", ["sendAnswer"]),
   },
+  watch: {
+    isFin: function (newVal) {
+      if (newVal === true) {
+        this.$router.push({ name: "WrongAnswer" })
+      }
+    },
+    isSolved: function (newVal) {
+      if (newVal === true) {
+        this.$router.push({ name: "AwaitPage" })
+      }
+    }
+  },
   computed: {
-    ...mapState("PlayQuizStore", ["category", "totalNum", "quizIndex", "username"])
+    ...mapState("PlayQuizStore", ["category", "totalNum", "quizIndex", "username", "isFin", "isSolved"])
   },
 }
 </script>

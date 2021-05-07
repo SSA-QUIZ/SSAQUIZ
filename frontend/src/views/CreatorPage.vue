@@ -79,7 +79,7 @@
 </template>
 
 <script>
-// import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
+import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
 import ShortAnswerCreator from '@/components/QuizCreator/ShortAnswerCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
@@ -90,7 +90,7 @@ import { mapState, mapActions } from 'vuex';
 export default {
   name: "CreatorPage",
   components: {
-    // MultipleChoiceCreator,
+    MultipleChoiceCreator,
     ShortAnswerCreator,
     QuizSlide,
     QuizTypeDialog,

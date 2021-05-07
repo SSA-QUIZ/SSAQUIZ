@@ -6,7 +6,7 @@
       <h1 id="title">중간점검</h1>
       <!-- 점수판 -->
       <InterimScoreBoard/>
-      <NextStepButton/>
+      <NextStepButton @click.native="nextQuiz" />
       <h1 class="mention">문어님이 현재까지 3번 연속이나 답을 맞추셨어요!</h1>
       <!-- 배경의 고래 이미지 -->
       <img class="whale-img-1" src="@/assets/images/pinkWhale.png">
@@ -21,6 +21,7 @@ import Logo from '@/components/common/Logo.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
 import BubbleBG from '@/components/effects/BubbleBG.vue';
 import InterimScoreBoard from '@/components/Form/InterimScoreBoard.vue';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: "InterimScore",
   components: {
@@ -28,7 +29,24 @@ export default {
     NextStepButton,
     InterimScoreBoard,
     BubbleBG,
-  }
+  },
+  watch: {
+    isNext: function (newVal) {
+      if (newVal === true) {
+        this.setIsInterim(false);
+        this.setIsNext(false);
+        this.setIsFin(false);
+        this.setIsNext(false);
+        this.$router.push({name: "SolvingQuizPageT"});
+      }
+    },
+  },
+  computed: {
+    ...mapState("CreateQuizRoomStore", ["isNext"])
+  },
+  methods: {
+    ...mapActions("CreateQuizRoomStore", ["nextQuiz", "setIsInterim", "setIsNext", "setIsFin"])
+  },
 }
 </script>
 

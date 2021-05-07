@@ -45,7 +45,7 @@ export default {
     },
     countDown: function () {
       if (this.second == 0) {
-        return;
+        this.$emit('time-zero')
       }
       this.second--;
     },

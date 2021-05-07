@@ -34,6 +34,7 @@ export default {
   data: function () {
     return {
       PIN: this.$route.params.PIN,
+      quizId: this.$route.params.quizId,
     }
   },
   created: function () {
@@ -52,10 +53,9 @@ export default {
   methods: {
     ...mapActions("CreateQuizRoomStore", ["sendAnswerList", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
     clickStartButton: function () {
-      axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/6088fb4792ab8f759867aefe`)
+      axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/${this.quizId}`)
         .then(res => {
           this.setQuizData(res.data.object);
-          console.log(res.data.object)
           let answerList = [];
           res.data.object.slideList.forEach(slide => answerList.push(slide.answer))
           this.sendAnswerList(answerList);

@@ -11,6 +11,7 @@
 
 <script>
 import Header from '@/components/common/Header.vue';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'CorrectAnswer',
   components: {
@@ -20,8 +21,30 @@ export default {
     return {
       quizScore: 324
     }
-  }
-
+  },
+	watch: {
+		isNext: function (newVal) {
+			if (newVal === true) {
+				this.setIsFin(false);
+				this.setIsSolved(false);
+				this.setIsCorrect(false);
+				this.setIsNext(false);
+				this.$router.push({ name: "SolvingQuizPage" });
+			}
+		},
+		isEnd: function (newVal) {
+			if (newVal === true) {
+				console.log('아악')
+				this.$router.push({ name: "ResultPage" });
+			}
+		}
+	},
+	methods: {
+		...mapActions("PlayQuizStore", ["setIsFin", "setIsSolved", "setIsCorrect", "setIsNext"])
+	},
+	computed: {
+		...mapState("PlayQuizStore", ["isNext", "isEnd"])
+	}
 }
 </script>
 
