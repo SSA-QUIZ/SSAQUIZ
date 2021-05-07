@@ -1,6 +1,6 @@
 package com.ssafy.ssaquizauth.controller;
 
-import com.ssafy.ssaquizauth.Service.UserService;
+import com.ssafy.ssaquizauth.service.UserService;
 import com.ssafy.ssaquizauth.model.BasicResponse;
 import com.ssafy.ssaquizauth.payload.*;
 
