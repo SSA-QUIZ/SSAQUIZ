@@ -1,8 +1,15 @@
 <template>
-  <button class="quiz-button" :style="style">
-    <span v-if="icon"><i :class="icon"></i></span>
-    <span>{{ answer }}</span>
-    <span v-if="icon"></span>
+  <button :style="style" class="quiz-button">
+    <div v-if="answer" class="quiz-button-div">
+      <span style="text-align: left;"><i :class="icon"></i></span>
+      <span>{{ answer }}</span>
+      <span></span>
+    </div>
+    <div v-else class="quiz-button-div">
+      <span></span>
+      <span><i :class="icon"></i></span>
+      <span></span>
+    </div>
   </button>
 </template>
 
@@ -13,9 +20,10 @@ export default {
     'color',
     'width',
     'height',
+    'font',
     'icon',
     'margin',
-    'answer'
+    'answer',
   ],
   data: function () {
     return {
@@ -30,9 +38,8 @@ export default {
       if (this.color != undefined) this.style += "background-color: " + this.color + ";\n";
       if (this.width != undefined) this.style += "width: " + this.width + ";\n";
       if (this.height != undefined) this.style += "height: " + this.height + ";\n";
+      if (this.font != undefined) this.style += "font-size: " + this.font + ";\n";
       if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
-      if (this.answer != undefined && this.icon != undefined) 
-        this.style += "justify-content: space-between;\n";
     }
   }
 }
@@ -41,18 +48,26 @@ export default {
 <style scoped>
 .quiz-button {
 	display: flex;
-	flex-grow: 1;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
+  width: 100%;
 	height: 30vh;
 	margin: 0.3%;
 	border-radius: 15px;
 	font-family: Jua;
-	font-size: 4rem;
+	font-size: 60px;
   padding: 0 auto;
 }
-
+.quiz-button-div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  width: 100%;
+}
 i {
   margin: 30px;
+}
+span {
+  width: 33%;
 }
 </style>
