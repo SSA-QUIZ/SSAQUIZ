@@ -30,11 +30,9 @@ export default {
   data: function () {
     return {
       solved: 0,
-      second: this.time
+      second: this.time,
+      timer: setInterval(() => this.countDown(), 1000)
     }
-  },
-  created: function () {
-    this.changeSecond();
   },
   methods: {
     goWelcomePage: function () {
@@ -46,9 +44,6 @@ export default {
       }
       this.second--;
     },
-    changeSecond: function () {
-      setInterval(() => this.countDown(), 1000);
-    }
   }
 }
 </script>
@@ -88,8 +83,8 @@ header {
 }
 
 #header-content-second {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
 	font-size: 45px;
 	color: white;
 	background-color: #4f37de;

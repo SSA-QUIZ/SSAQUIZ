@@ -11,12 +11,8 @@ export default {
   data: function () {
     return {
       second: 3,
+      timer: setInterval(() => this.countDown(), 1000)
     }
-  },
-  created: function () {
-    console.log(this.second)
-    this.second = 3;
-    this.changeSecond();
   },
   methods: {
     countDown: function () {
@@ -25,15 +21,10 @@ export default {
         document.getElementById('loading-page-start').style.display = "block";
       }
       else if (this.second == 0) {
-        document.getElementById('loading-page-start').style.display = "none";
-        // 여기에서 퀴즈 진행 페이지로 넘어가면 됩니다!
         this.$router.push({ name: "SolvingQuizPage" })
       }
       this.second--;
     },
-    changeSecond: function () {
-      setInterval(() => this.countDown(), 1000);
-    }
   }
 }
 </script>
