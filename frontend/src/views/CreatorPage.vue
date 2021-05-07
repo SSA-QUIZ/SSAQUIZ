@@ -143,7 +143,7 @@ export default {
           return "none";
         else this.selectSlide(0);
       })
-      .catch(err=>console.log(err))
+      .catch(err => console.log(err))
   },
   computed: {
     ...mapState("CreateQuizStore", ['quizData']),
