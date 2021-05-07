@@ -8,7 +8,7 @@
     <div id="creator-page__body">
       <div id="creator-page__preview-wrap">
         <div id="creator-page__preview">
-          <template
+          <template 
             v-for="(slide, index) in quizData.slideList"
           >
             <QuizSlide
