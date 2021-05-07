@@ -33,7 +33,7 @@ public class ProduceController {
     }
 
     @ApiOperation(value = "문제집 조회하기",
-            notes = "[sample data] 6088e1e504228a182a4159e3, 6088fb4792ab8f759867aefe"
+            notes = "[sample data] 60950c5d9ea601323d76346f, 6093886dc3583527b674ca2e"
     )
     @GetMapping("/workbook/{objectId}")
     public BasicResponse findWorkbook(@PathVariable("objectId") String objectId) {
@@ -47,7 +47,7 @@ public class ProduceController {
     }
 
     @ApiOperation(value = "전체 문제집 조회하기",
-            notes = "[sample data] 1, 2"
+            notes = "[sample data] 8282"
     )
     @GetMapping("/workbook-all/{userId}")
     public Object findAllWorkbook(@PathVariable("userId") long userId) {
@@ -61,8 +61,7 @@ public class ProduceController {
         return workbookService.insertImage(inputFile);
     }
 
-    @ApiOperation(value = "문제집 저장하기",
-            notes = "[id] 6088e1e504228a182a4159e3, [userId] 0")
+    @ApiOperation(value = "문제집 저장하기")
     @PostMapping("/slide-all")
     public Object insertWorkbook(@RequestBody WorkbookDto workbookDto) {
         return workbookService.insertWorkbook(workbookDto);
