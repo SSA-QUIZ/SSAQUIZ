@@ -9,6 +9,7 @@ import com.ssafy.ssaquiz.model.WorkbookRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class WorkbookService {
                                    String question, MultipartFile inputFile,
                                    String answer, List<String> orderedAnswer,
                                    List<String> answerList, int time,
-                                   float scoreFactor, String type) {
+                                   int scoreFactor, int type) {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
@@ -98,7 +99,7 @@ public class WorkbookService {
                                      String category, String question,
                                      String imgPath, String answer,
                                      List<String> orderedAnswer, List<String> answerList,
-                                     int time, float scoreFactor, String type) {
+                                     int time, int scoreFactor, int type) {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
@@ -117,10 +118,7 @@ public class WorkbookService {
                 .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
                 .time(time).scoreFactor(scoreFactor).type(type).build();
 
-        List<Slide> slideList = workbook.getSlideList();
-        slideList.add(slide);
-        workbook.setSlideList(slideList);
-
+        workbook.getSlideList().add(slide);
         workbookRepository.save(workbook);
 
         result.status = true;
@@ -228,6 +226,61 @@ public class WorkbookService {
 
         result.status = true;
         result.data = "workbook save success";
+        return result;
+    }
+
+    @Transactional
+    public BasicResponse deleteWorkbook(String objectId, long userId) {
+        BasicResponse result = new BasicResponse();
+        result.status = false;
+        result.data = "workbook delete fail";
+
+        if (objectId == null) {
+            result.data = "workbook delete fail (objectId is null)";
+            return result;
+        }
+
+        if (ObjectId.isValid(objectId) == false) {
+            result.data = "workbook delete fail (objectId is not valid)";
+            return result;
+        }
+
+        long deleteCnt = workbookRepository.deleteByIdAndUserId(new ObjectId(objectId), userId);
+        if(deleteCnt != 0){
+            result.status = true;
+            result.data = "workbook delete success";
+            return result;
+        }
+
+        return result;
+    }
+
+    public BasicResponse deleteSlide(String objectId, long userId, int slideIndex) {
+        BasicResponse result = new BasicResponse();
+        result.status = false;
+        result.data = "slide delete fail";
+
+        if (objectId == null) {
+            result.data = "slide delete fail (objectId is null)";
+            return result;
+        }
+
+        if (ObjectId.isValid(objectId) == false) {
+            result.data = "slide delete fail (objectId is not valid)";
+            return result;
+        }
+
+        Workbook workbook = workbookRepository.findById(new ObjectId(objectId));
+        if(workbook == null || workbook.getUserId() != userId || workbook.getSlideList().size() <= slideIndex){
+            result.data = "slide delete fail";
+            return result;
+        }
+
+        workbook.getSlideList().remove(slideIndex);
+        workbookRepository.save(workbook);
+
+        result.status = true;
+        result.data = "slide delete success";
         return result;
     }
 }
