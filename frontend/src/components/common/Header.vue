@@ -38,9 +38,6 @@ export default {
   computed: {
     ...mapState("CreateQuizRoomStore", ["solvedNum"])
   },
-  created: function () {
-    this.changeSecond();
-  },
   methods: {
     goWelcomePage: function () {
       this.$router.push({ name: "WelcomePage" });

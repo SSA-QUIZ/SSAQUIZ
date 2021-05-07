@@ -25,8 +25,6 @@ export default {
       console.log(this.quizData.slideList[this.quizIndex])
       this.sendCategory(this.quizData.slideList[this.quizIndex].category);
     }
-    this.second = 3;
-    this.changeSecond();
   },
   methods: {
     ...mapActions("CreateQuizRoomStore", ["sendCategory"]),
