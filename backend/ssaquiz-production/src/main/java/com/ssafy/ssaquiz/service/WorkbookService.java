@@ -164,7 +164,12 @@ public class WorkbookService {
 
         List<CoverDto> CoverDtoList = new ArrayList<>();
         for (Workbook workbook : workbookList) {
-            CoverDtoList.add(CoverDto.builder().id(workbook.getId().toString()).title(workbook.getWorkbookTitle()).build());
+            if(workbook.getSlideList().size() == 0) {
+                CoverDtoList.add(CoverDto.builder().id(workbook.getId().toString()).title(workbook.getWorkbookTitle()).imagePath("").build());
+                continue;
+            }
+
+            CoverDtoList.add(CoverDto.builder().id(workbook.getId().toString()).title(workbook.getWorkbookTitle()).imagePath(workbook.getSlideList().get(0).getImagePath()).build());
         }
         Collections.reverse(CoverDtoList);
 
