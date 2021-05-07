@@ -127,13 +127,12 @@ export default {
   },
   created: function () {
     this.getQuizData(this.$route.params.workbookId)
-      .then(res=>{
-        console.log(res)
+      .then(() => {
         if (this.quizData.slideList.length == 0)
           return "none";
         else this.selectSlide(0);
       })
-      .catch(err=>console.log(err))
+      .catch(err => console.log(err))
   },
   computed: {
     ...mapState("CreateQuizStore", ['quizData']),
@@ -154,7 +153,7 @@ export default {
     },
     setSettings: function (idx) {
       let val = this.quizData.slideList[idx];
-      console.log(val)
+      // console.log(val)
       this.category = val.category;
       this.timeLimitIndex = val.time;
       this.scoreFactorIndex = val.scoreFactor;
