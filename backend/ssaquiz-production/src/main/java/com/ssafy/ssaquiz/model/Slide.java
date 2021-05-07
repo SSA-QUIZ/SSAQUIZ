@@ -20,6 +20,9 @@ public class Slide {
     private List<String> orderedAnswer = new ArrayList<>();
     private List<String> answerList = new ArrayList<>();
     private int time;
-    private float scoreFactor;
-    private String type;
+    private int scoreFactor;
+    private int type;
+//    private int time;
+//    private float scoreFactor;
+//    private String type;
 }
