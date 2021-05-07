@@ -2,10 +2,20 @@
   <button class="creator-quiz-button" :style="style">
     <span><i :class="icon"></i></span>
     <input :value="choice" @input="changeChoice" type="text" :placeholder=placeholder class="creator-quiz-button__input">
+    <!-- 라디오 버튼 -->
+    <div class="radio-box">
+      <input type="radio"
+        class="option-input radio" 
+        name="answer" 
+        @click="checkAnswer"
+      />
+    </div>
   </button>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'CreatorQuizButton',
   props: [
@@ -16,23 +26,34 @@ export default {
     'margin',
     'answer',
     'index',
-    'choice'
+    'slideIndex'
   ],
   data: function () {
     return {
       style: '',
       placeholder: '',
-      inputChoice: ''
+      inputChoice: '',
     }
+  },
+  computed: {
+    ...mapState("CreateQuizStore", ["quizData"]),
+    choice: function () {
+      return this.quizData["slideList"][this.slideIndex]["answerList"][this.index];
+    },
   },
   created: function () {
     this.setStyle();
-    this.placeholder = '선택지 ' + this.index;
+    this.placeholder = '선택지 ' + (this.index + 1);
   },
   methods: {
+    ...mapActions("CreateQuizStore", ["setAnswer", "setMultipleChoice"]),
+    checkAnswer: function () {
+      this.setAnswer([this.slideIndex, (this.index).toString()]);
+    },
     changeChoice: function (e) {
       this.inputChoice = e.target.value;
-      this.$emit('change-choice', this.index, this.inputChoice);
+      let val = [this.slideIndex, this.index, this.inputChoice];
+      this.setMultipleChoice(val);
     },
     setStyle: function () {
       if (this.color != undefined) this.style += "background-color: " + this.color + ";\n";
@@ -75,5 +96,90 @@ export default {
 
 i {
   margin: 30px;
+}
+
+/* 라디오 버튼 css */
+.radio-box {
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
+
+.radio-box .option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 13.33333px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  width: 50px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 5;
+}
+
+.radio-box .option-input:hover {
+  background: #9faab7;
+}
+
+.radio-box .option-input:checked {
+  background: #eb5b41;
+}
+
+.radio-box .option-input:checked::before {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 29px;
+  text-align: center;
+  line-height: 55px;
+}
+
+.radio-box .option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #ee7964;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+
+.radio-box .option-input.radio {
+  border-radius: 50%;
+}
+
+.radio-box .option-input.radio::after {
+  border-radius: 50%;
+}
+
+@keyframes click-wave {
+  0% {
+    height: 40px;
+    width: 40px;
+    opacity: 0.35;
+    position: relative;
+  }
+  100% {
+    height: 200px;
+    width: 200px;
+    margin-left: -80px;
+    margin-top: -80px;
+    opacity: 0;
+  }
 }
 </style>

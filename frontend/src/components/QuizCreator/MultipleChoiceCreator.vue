@@ -15,12 +15,12 @@
     </div>
     <div>
       <div class="choice-row">
-        <CreatorQuizButton :choice=choices[0] @change-choice="getChoice" index="1" height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
-        <CreatorQuizButton :choice=choices[1] @change-choice="getChoice" index="2" height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
+        <CreatorQuizButton :slideIndex=slideIndex :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
+        <CreatorQuizButton :slideIndex=slideIndex :index=1 height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
       </div>
       <div class="choice-row">
-        <CreatorQuizButton :choice=choices[2] @change-choice="getChoice" index="3" height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
-        <CreatorQuizButton :choice=choices[3] @change-choice="getChoice" index="4" height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
+        <CreatorQuizButton :slideIndex=slideIndex :index=2 height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
+        <CreatorQuizButton :slideIndex=slideIndex :index=3 height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
       </div>
     </div>
   </div>
@@ -43,9 +43,6 @@ export default {
   data: function () {
     return {
       question: "",
-      choices: [
-        "", "", "", ""
-      ],
       defaultImg: "",
       image: File
     }
@@ -89,12 +86,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setMultipleChoice", "setImageData"]),
-    getChoice: function (idx, data) {
-      this.choices[idx-1] = data;
-      let val = [this.slideIndex, this.choices];
-      this.setMultipleChoice(val);
-    },
+    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setImageData"]),
     changeQuestion: function (e) {
       this.question = e.target.value;
       let val = [this.slideIndex, this.question];
@@ -118,7 +110,7 @@ export default {
 
 #multiple-choice-creator__question-box {
   width: 100%;
-  height: 300px;
+  height: 55%;
   border-radius: 30px;
   background-color: #c4c4c4;
   display: flex;
