@@ -1,8 +1,7 @@
 <template>
   <div class="quiz-slide">
     <p class="slide-number">{{ number }}</p>
-    <div class="quiz-img">
-
+    <div class="quiz-img" :class="{ 'quiz-img__selected' : isSelected}">
     </div>
   </div>
 </template>
@@ -10,15 +9,11 @@
 <script>
 export default {
   name: "QuizSlide",
-  components: {
-
-  },
-  props: ['number', 'slide'],
-  data: function () {
-    return {
-
-    }
-  },
+  props: [
+    'number',
+    'slide',
+    'isSelected'
+  ],
 }
 </script>
 
@@ -42,7 +37,10 @@ export default {
 	padding-bottom: 56.26%;
   cursor: pointer;
 }
-
+.quiz-img__selected {
+	border: 3px solid #E7527E;
+  border-radius: 5px;
+}
 .slide-number {
   width: 38px;
   font-family: 'Nanum Pen Script', cursive;
