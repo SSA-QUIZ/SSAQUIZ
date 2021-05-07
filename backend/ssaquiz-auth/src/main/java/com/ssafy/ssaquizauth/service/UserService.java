@@ -1,4 +1,4 @@
-package com.ssafy.ssaquizauth.Service;
+package com.ssafy.ssaquizauth.service;
 
 import com.ssafy.ssaquizauth.model.AuthProvider;
 import com.ssafy.ssaquizauth.model.BasicResponse;

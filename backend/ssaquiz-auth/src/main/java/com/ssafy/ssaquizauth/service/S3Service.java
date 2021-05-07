@@ -1,4 +1,4 @@
-package com.ssafy.ssaquizauth.Service;
+package com.ssafy.ssaquizauth.service;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
