@@ -21,13 +21,13 @@
           <button @click="openDialog = true" style="font-size: 5vh; color: #4F37DE;"><i class="fa fa-plus-circle"></i></button>
         </div>
         <div id="quiz-set-list__list">
-          <template v-for="(quiz, index) in quizSetList">
+          <template v-for="(quiz, index) in quizList">
             <QuizSet 
               :key="index" 
               :quizTitle="quiz.title"
               @start-quiz="startQuiz(quiz.id)"
               @edit-quiz="editQuiz(quiz.id)"
-              @delete-quiz="deleteQuiz"
+              @delete-quiz="deleteQuiz(quiz.id)"
               class="quiz-set"
             />
           </template>
@@ -39,7 +39,7 @@
       :content="content"
       :emoticon="emoticon"
       @close="confirmFlag=false"
-      @accept="logout"
+      @accept="confirmAccept(type)"
     />
     <Alert
       :flag="flag"
@@ -64,7 +64,7 @@ import QuizSet from '@/components/QuizSet.vue';
 import Dialog from '@/components/Popup/Dialog';
 import Confirm from "@/components/Popup/Confirm.vue";
 import Alert from "@/components/Popup/Alert.vue";
-import axios from 'axios';
+// import axios from 'axios';
 
 export default {
   name: 'UserPage',
@@ -96,21 +96,19 @@ export default {
       alertMessage: '',
       color: '',
 
-      quizSetList:[],
       openDialog: false,
       quizTitle: '',
+      type: '',
+
+      workbookId: ''
     }
   },
   computed: {
-  ...mapState("CreateQuizRoomStore", ['PIN']),
+    ...mapState("CreateQuizRoomStore", ['PIN']),
+    ...mapState("UserStore", ['quizList', 'newQuizId']),
   },
   created: function () {
-    let id = localStorage.getItem('id');
-    axios.get("http://k4a304.p.ssafy.io/api-quiz/workbook-all/" + id)
-    .then(res => {
-      this.quizSetList = res.data.object;
-    })
-    .catch(err => { console.log(err); })
+    this.setQuizList(localStorage.getItem('id'));
   },
   mounted: function () {
     this.profileImg = localStorage.getItem('imageUrl');
@@ -123,14 +121,16 @@ export default {
   },
   methods: {
     ...mapActions("CreateQuizRoomStore", ["setPINWS", "sendAnswerList"]),
-    ...mapActions("CreateQuizStore", ["addQuiz", "getQuizData", "resetQuizData"]),
+    ...mapActions("CreateQuizStore", ["getQuizData", "resetQuizData"]),
     ...mapActions("CommonStore", ["setIsStudent"]),
+    ...mapActions("UserStore", ["setQuizList", "addQuiz", "removeQuiz"]),
     moveToUserInfo: function () {
       this.$router.push({ name: "UserInfo" });
     },
     logoutConfirm: function () {
-      this.content = "로그아웃 하시겠습니까?";
       this.emoticon = "😳";
+      this.type = "logout";
+      this.content = "로그아웃 하시겠습니까?";
       this.confirmFlag = true;
     },
     logout: function () {
@@ -151,23 +151,43 @@ export default {
         })
         .catch(err => console.log(err))
     },
-
     editQuiz: function (id) {
       this.$router.push({ name: "CreatorPage", params: {"workbookId" : id} });
     },
-    deleteQuiz: function () {
+    deleteQuiz: function (id) {
+      this.emoticon = "😲";
+      this.type = "delete";
+      this.content = "퀴즈를 삭제하시겠습니까?";
+      this.confirmFlag = true;
+      this.workbookId = id;
     },
     createQuiz: function () {
-      const params = {"userId": parseInt(localStorage.getItem('id')), "workbookTitle": this.quizTitle}
+      const params = {"userId": localStorage.getItem('id'), "workbookTitle": this.quizTitle}
       this.addQuiz(params)
         .then(() => {
-          this.$router.push({ name: "CreatorPage" })
+          this.$router.push({ name: "CreatorPage", params: {"workbookId" : this.newQuizId} })
         })
         .catch(err => console.log(err))
     },
     changeQuizTitle: function (data) {
       this.quizTitle = data
     },
+    confirmAccept: function (type) {
+      if (type === "logout") {
+        localStorage.clear();
+        this.$router.push({ name: "WelcomePage" });
+      } else if (type === "delete") {
+        let val = [this.workbookId, localStorage.getItem('id')]
+        this.removeQuiz(val)
+        .then(() => {
+          this.confirmFlag = false;
+          this.alertMessage = "퀴즈가 삭제되었습니다.";
+          this.color = "#454995";
+          this.flag = !this.flag;
+        })
+        .catch(err=>{console.log(err)});
+      }
+    }
   }
 }
 </script>
@@ -218,8 +238,7 @@ export default {
   justify-content: center;
   align-items: center;
   width:60%;
-  height: 600px;
-  min-height: 600px;
+  min-height: 100%;
 }
 
 #profile__info {
@@ -230,7 +249,6 @@ export default {
 #quiz-set-list__list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   width: 90%;
   height: 70%;
   border-radius: 15px;
@@ -248,8 +266,8 @@ export default {
 }
 
 .quiz-set {
-  width: 37%;
-  height: 35%;
+  width: 40%;
+  height: 38%;
   margin: 5%;
 }
 
