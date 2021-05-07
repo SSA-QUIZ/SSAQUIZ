@@ -34,7 +34,6 @@ export default {
 		},
 		isEnd: function (newVal) {
 			if (newVal === true) {
-				console.log('아악')
 				this.$router.push({ name: "ResultPage" });
 			}
 		}
