@@ -50,8 +50,8 @@ export default {
         "answer": "",
         "orderedAnswer": [],
         "answerList": ["", "", "", ""],
-        "time": 10,
-        "scoreFactor": 1,
+        "time": 0,
+        "scoreFactor": 0,
         "type": 0
       }
       this.addSlide(defaultValue);

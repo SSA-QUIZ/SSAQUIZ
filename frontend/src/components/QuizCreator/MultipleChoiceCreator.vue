@@ -94,13 +94,13 @@ export default {
       this.choices[idx-1] = data;
       let val = [this.slideIndex, this.choices];
       this.setMultipleChoice(val);
-   },
-    changeQuestion(e) {
+    },
+    changeQuestion: function (e) {
       this.question = e.target.value;
       let val = [this.slideIndex, this.question];
       this.setSlideQuestion(val);
     },
-    setImage(data) {
+    setImage: function (data) {
       let val = [this.slideIndex, data]
       this.setImageData(val);
     }
