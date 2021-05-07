@@ -27,7 +27,7 @@ public class ProduceController {
                               @RequestParam("question") String question, @RequestParam("file") MultipartFile inputFile,
                               @RequestParam("answer") String answer, @RequestParam("orderedAnswer") List<String> orderedAnswer,
                               @RequestParam("answerList") List<String> answerList, @RequestParam("time") int time,
-                              @RequestParam("scoreFactor") float scoreFactor, @RequestParam("type") String type) {
+                              @RequestParam("scoreFactor") int scoreFactor, @RequestParam("type") int type) {
         return workbookService.saveSlide(objectId, category, question, inputFile, answer,
                 orderedAnswer, answerList, time, scoreFactor, type);
     }
