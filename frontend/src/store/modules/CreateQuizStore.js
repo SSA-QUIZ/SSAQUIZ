@@ -5,7 +5,11 @@ const CreateQuizStore = {
   state: {
     quizData: {},
   },
-  getters: {},
+  getters: {
+    getData(state) {
+      return state.quizData;
+    }
+  },
   mutations: {
     SET_QUIZ_DATA: function (state, value) {
       state.quizData = value;
@@ -71,7 +75,7 @@ const CreateQuizStore = {
     },
     setOptions: function ({ commit }, value) {
       commit('SET_OPTIONS', value)
-    }
+    },
   }
 };
 

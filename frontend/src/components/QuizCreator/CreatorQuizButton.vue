@@ -135,7 +135,6 @@ i {
   margin-right: 0.5rem;
   outline: none;
   position: relative;
-  z-index: 5;
 }
 
 .radio-box .option-input:hover {
