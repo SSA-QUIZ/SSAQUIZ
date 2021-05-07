@@ -12,4 +12,6 @@ public class CoverDto {
     private String id;
 
     private String title;
+
+    private String imagePath;
 }
