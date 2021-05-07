@@ -15,6 +15,7 @@
               :key="index"
               :number="index+1"
               :slide="slide"
+              :isSelected="isSelectedSlide[index]"
               @click.native="selectSlide(index)"
             />
           </template>
@@ -68,6 +69,11 @@
       v-if="openQuizTypeDialog"
       @close="openQuizTypeDialog = false" 
     />
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color
+    />
   </div>
 </template>
 
@@ -77,10 +83,12 @@ import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreato
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
+import Alert from "@/components/Popup/Alert.vue";
 import SelectBox from '@/components/common/SelectBox.vue';
 import RadioBox from '@/components/common/RadioBox.vue';
+
 import { mapState, mapActions } from 'vuex';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
   name: "CreatorPage",
@@ -90,6 +98,7 @@ export default {
     QuizSlide,
     QuizTypeDialog,
     Confirm,
+    Alert,
     SelectBox,
     RadioBox
   },
@@ -100,13 +109,11 @@ export default {
       selectedSlide: 0,
       category: '',
 
+      isSelectedSlide: [],
+
       scoreFactorIndex: 0,
       timeLimitIndex: 0,
       typeIndex: 0,
-
-      timeLimitTitle: "제한 시간",
-      scoreFactorTitle: "점수",
-      typeTitle: "추가 옵션",
 
       timeLimitList: [
         {"name" :"10초", "value": 10},
@@ -123,6 +130,10 @@ export default {
         {"id": "FIFO" ,"name" :"선착순"},
         {"id": "random" ,"name" :"랜덤뽑기"},
       ],
+
+      flag: false,
+      alertMessage: '',
+      color: '',
     }
   },
   created: function () {
@@ -142,29 +153,34 @@ export default {
       "addQuiz", "getQuizData", "resetQuizData"
     ]),
     selectSlide: function (idx) {
+      let val = this.quizData.slideList[idx];
+      this.isSelectedSlide = 
+        Array.from({length: this.quizData.slideList.length}, () => false);
+      this.isSelectedSlide[idx] = true;
+      this.category = val.category;
+      this.timeLimitIndex = val.time;
+      this.scoreFactorIndex = val.scoreFactor;
+      this.typeIndex = val.type;
       this.selectedSlide = idx;
-      this.setSettings(idx);
     },
     exit: function () {
       this.$router.push({ name: "UserPage" });
     },
     save: function () {
-      console.log(this.quizData)
-    },
-    setSettings: function (idx) {
-      let val = this.quizData.slideList[idx];
-      // console.log(val)
-      this.category = val.category;
-      this.timeLimitIndex = val.time;
-      this.scoreFactorIndex = val.scoreFactor;
-      this.typeIndex = val.type;
-      // if (val.type == 0) {
-      //   document.getElementById('no-option').checked = true;
-      // } else if (val.type == 1) {
-      //   document.getElementById('FIFO').checked = true;
-      // } else {
-      //   document.getElementById('random-select').checked = true;
-      // }
+      let data = this.quizData;
+      axios.post("http://k4a304.p.ssafy.io/api-quiz/slide-all", data)
+        .then(res => {
+          console.log(res.data);
+          this.alertMessage = "퀴즈를 저장했습니다!";
+          this.color = "#454995";
+          this.flag = !this.flag;
+        })
+        .catch(err => {
+          console.log(err);
+          this.alertMessage = "퀴즈 저장에 실패했습니다. 다시 시도해주세요.";
+          this.color = "red";
+          this.flag = !this.flag;
+        })
     },
   },
 }
