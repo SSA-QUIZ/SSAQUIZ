@@ -17,7 +17,7 @@ const CreateQuizStore = {
       state.quizData.slideList.push(value);
     },
     SET_MULTIPLE_CHOICE: function (state, value) {
-      state.quizData.slideList[value[0]].answerList = value[1];
+      state.quizData.slideList[value[0]].answerList[value[1]] = value[2];
     },
     SET_ANSWER: function (state, value) {
       state.quizData.slideList[value[0]].answer = value[1];

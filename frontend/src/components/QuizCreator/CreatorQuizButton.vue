@@ -3,12 +3,10 @@
     <span><i :class="icon"></i></span>
     <input :value="choice" @input="changeChoice" type="text" :placeholder=placeholder class="creator-quiz-button__input">
     <!-- 라디오 버튼 -->
-    <div id="radio-box">
-      <input type="radio" 
+    <div class="radio-box">
+      <input type="radio"
         class="option-input radio" 
-        name="answer"
-        v-model="checked"
-        :value="index"
+        name="answer" 
         @click="checkAnswer"
       />
     </div>
@@ -16,6 +14,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: 'CreatorQuizButton',
   props: [
@@ -26,28 +26,34 @@ export default {
     'margin',
     'answer',
     'index',
-    'choice'
+    'slideIndex'
   ],
   data: function () {
     return {
       style: '',
       placeholder: '',
       inputChoice: '',
-
-      checked: '',
     }
+  },
+  computed: {
+    ...mapState("CreateQuizStore", ["quizData"]),
+    choice: function () {
+      return this.quizData["slideList"][this.slideIndex]["answerList"][this.index];
+    },
   },
   created: function () {
     this.setStyle();
-    this.placeholder = '선택지 ' + this.index;
+    this.placeholder = '선택지 ' + (this.index + 1);
   },
   methods: {
+    ...mapActions("CreateQuizStore", ["setAnswer", "setMultipleChoice"]),
     checkAnswer: function () {
-      this.$emit('check-answer', this.index);
+      this.setAnswer([this.slideIndex, (this.index).toString()]);
     },
     changeChoice: function (e) {
       this.inputChoice = e.target.value;
-      this.$emit('change-choice', this.index, this.inputChoice);
+      let val = [this.slideIndex, this.index, this.inputChoice];
+      this.setMultipleChoice(val);
     },
     setStyle: function () {
       if (this.color != undefined) this.style += "background-color: " + this.color + ";\n";
@@ -93,12 +99,12 @@ i {
 }
 
 /* 라디오 버튼 css */
-#radio-box {
+.radio-box {
   margin-right: 5%;
   margin-bottom: 5%;
 }
 
-#radio-box .option-input {
+.radio-box .option-input {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -123,15 +129,15 @@ i {
   z-index: 5;
 }
 
-#radio-box .option-input:hover {
+.radio-box .option-input:hover {
   background: #9faab7;
 }
 
-#radio-box .option-input:checked {
+.radio-box .option-input:checked {
   background: #eb5b41;
 }
 
-#radio-box .option-input:checked::before {
+.radio-box .option-input:checked::before {
   height: 50px;
   width: 50px;
   position: absolute;
@@ -142,7 +148,7 @@ i {
   line-height: 55px;
 }
 
-#radio-box .option-input:checked::after {
+.radio-box .option-input:checked::after {
   -webkit-animation: click-wave 0.65s;
   -moz-animation: click-wave 0.65s;
   animation: click-wave 0.65s;
@@ -153,11 +159,11 @@ i {
   z-index: 100;
 }
 
-#radio-box .option-input.radio {
+.radio-box .option-input.radio {
   border-radius: 50%;
 }
 
-#radio-box .option-input.radio::after {
+.radio-box .option-input.radio::after {
   border-radius: 50%;
 }
 
