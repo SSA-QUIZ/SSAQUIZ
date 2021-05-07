@@ -38,7 +38,7 @@ export default {
 		...mapActions("PlayQuizStore", ["setIsFin", "setIsSolved", "setIsCorrect", "setIsNext"])
 	},
 	computed: {
-		...mapState("PlayQuizStore", ["isNext"])
+		...mapState("PlayQuizStore", ["isNext", "isEnd"])
 	}
 }
 </script>
