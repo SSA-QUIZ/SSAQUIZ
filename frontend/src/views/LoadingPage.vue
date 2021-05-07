@@ -16,6 +16,10 @@ export default {
       timer: setInterval(() => this.countDown(), 1000)
     }
   },
+  beforeRouteLeave(to, from, next) {
+    clearInterval(this.timer);
+    next();
+  },
   computed: {
     ...mapState("CommonStore", ["isStudent"]),
     ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
