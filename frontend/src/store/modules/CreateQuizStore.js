@@ -17,7 +17,10 @@ const CreateQuizStore = {
       state.quizData.slideList.push(value);
     },
     SET_MULTIPLE_CHOICE: function (state, value) {
-      state.quizData.slideList[value[0]].answerList = value[1];
+      state.quizData.slideList[value[0]].answerList[value[1]] = value[2];
+    },
+    SET_ANSWER: function (state, value) {
+      state.quizData.slideList[value[0]].answer = value[1];
     },
     SET_IMAGE_DATA: function (state, value) {
       state.quizData.slideList[value[0]].imagePath = value[1];
@@ -56,6 +59,9 @@ const CreateQuizStore = {
     },
     setMultipleChoice: function ({ commit }, value) {
       commit('SET_MULTIPLE_CHOICE', value)
+    },
+    setAnswer: function ({ commit }, value) {
+      commit('SET_ANSWER', value)
     },
     resetQuizData: function ({ commit }) {
       commit('SET_QUIZ_DATA', [])
