@@ -69,6 +69,11 @@
       v-if="openQuizTypeDialog"
       @close="openQuizTypeDialog = false" 
     />
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color
+    />
   </div>
 </template>
 
@@ -78,10 +83,12 @@ import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreato
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
+import Alert from "@/components/Popup/Alert.vue";
 import SelectBox from '@/components/common/SelectBox.vue';
 import RadioBox from '@/components/common/RadioBox.vue';
+
 import { mapState, mapActions } from 'vuex';
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
   name: "CreatorPage",
@@ -91,6 +98,7 @@ export default {
     QuizSlide,
     QuizTypeDialog,
     Confirm,
+    Alert,
     SelectBox,
     RadioBox
   },
@@ -122,12 +130,15 @@ export default {
         {"id": "FIFO" ,"name" :"선착순"},
         {"id": "random" ,"name" :"랜덤뽑기"},
       ],
+
+      flag: false,
+      alertMessage: '',
+      color: '',
     }
   },
   created: function () {
     this.getQuizData(this.$route.params.workbookId)
-      .then(res=>{
-        console.log(res)
+      .then(() => {
         if (this.quizData.slideList.length == 0)
           return "none";
         else this.selectSlide(0);
@@ -156,7 +167,20 @@ export default {
       this.$router.push({ name: "UserPage" });
     },
     save: function () {
-      console.log(this.quizData)
+      let data = this.quizData;
+      axios.post("http://k4a304.p.ssafy.io/api-quiz/slide-all", data)
+        .then(res => {
+          console.log(res.data);
+          this.alertMessage = "퀴즈를 저장했습니다!";
+          this.color = "#454995";
+          this.flag = !this.flag;
+        })
+        .catch(err => {
+          console.log(err);
+          this.alertMessage = "퀴즈 저장에 실패했습니다. 다시 시도해주세요.";
+          this.color = "red";
+          this.flag = !this.flag;
+        })
     },
   },
 }
