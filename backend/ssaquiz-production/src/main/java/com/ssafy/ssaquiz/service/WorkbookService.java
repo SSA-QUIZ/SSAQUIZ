@@ -28,7 +28,7 @@ public class WorkbookService {
                                    String question, MultipartFile inputFile,
                                    String answer, List<String> orderedAnswer,
                                    List<String> answerList, int time,
-                                   float scoreFactor, String type) {
+                                   int scoreFactor, int type) {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
@@ -99,7 +99,7 @@ public class WorkbookService {
                                      String category, String question,
                                      String imgPath, String answer,
                                      List<String> orderedAnswer, List<String> answerList,
-                                     int time, float scoreFactor, String type) {
+                                     int time, int scoreFactor, int type) {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
@@ -118,10 +118,7 @@ public class WorkbookService {
                 .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
                 .time(time).scoreFactor(scoreFactor).type(type).build();
 
-        List<Slide> slideList = workbook.getSlideList();
-        slideList.add(slide);
-        workbook.setSlideList(slideList);
-
+        workbook.getSlideList().add(slide);
         workbookRepository.save(workbook);
 
         result.status = true;
