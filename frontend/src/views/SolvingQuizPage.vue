@@ -23,7 +23,7 @@ export default {
   },
   data: function () {
     return {
-      choice: ['문어', '복어', '오징어', '대게'],
+      choice: ["","","",""],
     }
   },
   methods: {
