@@ -25,6 +25,7 @@
             <QuizSet 
               :key="index" 
               :quizTitle="quiz.title"
+              :quizImage="quiz.imagePath"
               @start-quiz="startQuiz(quiz.id)"
               @edit-quiz="editQuiz(quiz.id)"
               @delete-quiz="deleteQuiz(quiz.id)"
