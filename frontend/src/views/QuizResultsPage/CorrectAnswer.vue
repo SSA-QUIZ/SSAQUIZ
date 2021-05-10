@@ -1,10 +1,10 @@
 <template>
   <div id="quiz-results-container--blue">
-    <Header mode="userInfo" nickname="[서울_3반_최나현]" score="354" />
+    <Header mode="userInfo" :nickname="username" :score="score" />
     <div id="quiz-results-content">
       <p id="title">대단해요!</p>
       <p id="emoticon">🥰</p>
-      <p>+ {{ quizScore }}🔥</p>
+      <p>+ {{ plusScore }}🔥</p>
     </div>
   </div>
 </template>
@@ -19,7 +19,6 @@ export default {
   },
   data: function () {
     return {
-      quizScore: 324
     }
   },
 	watch: {
@@ -42,7 +41,7 @@ export default {
 		...mapActions("PlayQuizStore", ["setIsFin", "setIsSolved", "setIsCorrect", "setIsNext"])
 	},
 	computed: {
-		...mapState("PlayQuizStore", ["isNext", "isEnd"])
+		...mapState("PlayQuizStore", ["isNext", "isEnd", "username", "score", "plusScore"])
 	}
 }
 </script>

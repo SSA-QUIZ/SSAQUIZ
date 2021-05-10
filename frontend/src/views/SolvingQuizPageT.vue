@@ -1,13 +1,13 @@
 <template>
   <div id="solving-quiz-page-t-container">
-    <Header @time-zero="sendFinMessage" mode="playQuiz" :time="quizData['slideList'][quizIndex]['time']" />
-    <ProgressBar index="1" all="12" />
+    <Header @time-zero="sendFinMessage" mode="playQuiz" :time="time" />
+    <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="solving-quiz-page-t-content">
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__center">
-        <Quiz id="solving-quiz-t-quiz" title="이 동물은 무엇일까요?" image="" />
-        <MultipleChoice id="solving-quiz-t-choice" :choice="choice" height="15vh" font="3.5vw" />
+        <Quiz id="solving-quiz-t-quiz" :title="question" image="" />
+        <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
         <!-- <ShortAnswerT title="우리 팀 팀장의 이름은?" image="" /> -->
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
@@ -38,7 +38,7 @@ export default {
   },
   data: function () {
     return {
-      choice: ['문어', '복어', '오징어', '대게'],
+      timeLimit: [10, 15, 20],
     }
   },
   watch: {
@@ -49,7 +49,16 @@ export default {
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex", "isFin"])
+    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex", "isFin"]),
+    choices: function () {
+      return this.quizData["slideList"][this.quizIndex]["answerList"];
+    },
+    question: function () {
+      return this.quizData["slideList"][this.quizIndex]["question"];
+    },
+    time: function () {
+      return this.timeLimit[this.quizData["slideList"][this.quizIndex]["time"]];
+    },
   },
   methods: {
     ...mapActions("CreateQuizRoomStore", ["sendFinMessage"])

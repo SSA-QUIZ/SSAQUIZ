@@ -1,5 +1,6 @@
 <template>
   <div id="await">
+    <BubbleBG/>
     <!-- 고래 배경 -->
     <div class="wheel">
       <img class="inner-wheel" src="@/assets/images/pinkWhale.png" alt="SSAQUIZ">
@@ -10,13 +11,18 @@
         <img src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
       </div>
       <div class="row">
-        <h1>남은시간</h1>
-      </div>
-      <div class="row">
-        <span class="text-2">5초</span>
-      </div>
-      <div class="row">
-        <h1 class="msg">잘 하고 있어요!</h1>
+        <div class="loading">
+          <div class="loading__letter"><img src="@/assets/images/잠.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/시.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/만.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/기.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/다.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/려.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/주.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/세.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/요.png"></div>
+          <div class="loading__letter"><img src="@/assets/images/shrimp2.png"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -24,8 +30,12 @@
 
 <script>
 import { mapState } from 'vuex'
+import BubbleBG from '@/components/effects/BubbleBG.vue';
 export default {
   name: "AwaitPage",
+  components: {
+    BubbleBG
+  },
   watch: {
     isFin: function (newVal) {
       if (newVal === true) {
@@ -77,6 +87,7 @@ export default {
   color: black;
   font-size: 65px;
   font-family: Jua;
+  margin-top: 150px;
 }
 
 #await .container span {
@@ -86,11 +97,67 @@ export default {
   margin-bottom: 7%;
 }
 
-#await .container .row .msg {
-  position: absolute;
-  bottom: 100px;
+/* 로딩텍스트 */
+
+.loading {
+  display: flex;
+  flex-direction: row;
+  margin-top: 200px;
 }
 
+.loading__letter {
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+
+.loading__letter > img {
+  width: 80px;
+  height: 80px;
+}
+
+
+.loading__letter:nth-child(2) {
+  animation-delay: .1s;	
+}
+.loading__letter:nth-child(3) {
+  animation-delay: .2s;
+}
+.loading__letter:nth-child(4) {
+  animation-delay: .3s;	
+}
+.loading__letter:nth-child(5) {
+  animation-delay: .4s;
+}
+.loading__letter:nth-child(6) {
+  animation-delay: .5s;	
+}
+.loading__letter:nth-child(7) {
+  animation-delay: .6s;
+}
+.loading__letter:nth-child(8) {
+  animation-delay: .8s;
+}
+.loading__letter:nth-child(9) {
+  animation-delay: 1s;
+}
+.loading__letter:nth-child(10) {
+  animation-delay: 1.2s;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0px)
+  }
+  40% {
+    transform: translateY(-40px);
+  }
+  80%,
+  100% {
+    transform: translateY(0px);
+  }
+}
 
 /* 고래 rotation 배경*/
 .wheel-con{
@@ -122,5 +189,37 @@ export default {
 @keyframes spin {
   50% { transform: rotate(180deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* 모바일 화면 */
+@media (max-width: 700px) {
+  .loading {
+    display: flex;
+    flex-direction: row;
+    margin-top: 70%;
+  }
+  .loading__letter > img {
+    width: 30px;
+    height: 30px;
+  }
+  .wheel{
+    position: absolute;
+    left:48%;
+    top: 15%;
+    display: block;
+    width: 40px;
+    height: 40px;
+    transform-origin: center 600%;
+    animation: spin 3s linear infinite;
+  }
+  .inner-wheel{
+    top: -70px;
+    left: -30px;
+    width: 150px;
+    height: 150px;
+
+    transform-origin: center center;
+    transform: scaleY(-1);
+  }
 }
 </style>
