@@ -46,7 +46,7 @@ const CreateQuizStore = {
   },
   actions: {
     getQuizData: async function ({ commit }, value) {
-      await axios.get("http://k4a304.p.ssafy.io/api-quiz/workbook/" + value)
+      await axios.get("https://k4a304.p.ssafy.io/api-quiz/workbook/" + value)
         .then(res => {
           commit('SET_QUIZ_DATA', res.data.object);
         })

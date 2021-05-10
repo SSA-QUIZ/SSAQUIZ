@@ -26,11 +26,8 @@ export default {
   ],
   data: function () {
     return {
-      answer: ["", "", "", ""]
+      //
     }
-  },
-  created: function () {
-    if (this.choice != undefined) this.answer = this.choice;
   },
   computed: {
     ...mapState("PlayQuizStore", ["username", "quizIndex"]),

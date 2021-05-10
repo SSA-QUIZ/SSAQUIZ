@@ -150,11 +150,11 @@ const CreateQuizRoomStore = {
       commit('SET_ISSTART', true);
     },
     setPINWS: async function ({ commit }) {
-      await axios.get("http://k4a304.p.ssafy.io/api-play/pin")
+      await axios.get("https://k4a304.p.ssafy.io/api-play/pin")
         .then(res => {
           pin = res.data.object;
           commit('SET_PINWS', pin);
-          ws = Stomp.over(new SockJS("http://k4a304.p.ssafy.io/api-play/connect"));
+          ws = Stomp.over(new SockJS("https://k4a304.p.ssafy.io/api-play/connect"));
           ws.connect({}, () => {
             ws.subscribe(`/pin/${pin}`, (msg) => {
               let type = JSON.parse(msg.body).type

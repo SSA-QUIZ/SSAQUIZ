@@ -146,7 +146,7 @@ export default {
           formData.append("name", this.nickname);
           formData.append("password", this.password);
 
-          axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify", formData, headers)
+          axios.post("https://k4a304.p.ssafy.io/api-auth/auth/modify", formData, headers)
           .then(res => console.log(res))
           .catch(err => console.log(err))
 
@@ -157,7 +157,7 @@ export default {
           formData.append("name", this.nickname);
           formData.append("password", this.password);
 
-          axios.post("http://k4a304.p.ssafy.io/api-auth/auth/modify-image", formData, headers)
+          axios.post("https://k4a304.p.ssafy.io/api-auth/auth/modify-image", formData, headers)
           .then(res => {
             localStorage.setItem("imageUrl", res.data.object.imageUrl)
           })
