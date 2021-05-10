@@ -49,7 +49,7 @@ export default {
     signup: function () {
       if (this.password === this.passwordConfirm) {     // 비밀번호 일치할 경우
         const data = { "email": this.email, "name": this.nickname, "password": this.password }
-        axios.post("http://k4a304.p.ssafy.io/api-auth/auth/signup", data)
+        axios.post("https://k4a304.p.ssafy.io/api-auth/auth/signup", data)
           .then(res => {
             console.log(res)
             if (res.data.status === true){
