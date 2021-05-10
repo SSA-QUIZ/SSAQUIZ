@@ -5,34 +5,38 @@
       <div>
         <div class="row">
           <img src="@/assets/images/gold.png" alt="gold"> 
-          <h1>문어</h1>
+          <h1>{{ scoreBoardData[0]["value"] }}</h1>
         </div>
-        <h1 class="score">1050점</h1>
+        <h1 class="score">{{ scoreBoardData[0]["score"] }}점</h1>
       </div>
       <!-- 은메달 -->
       <div>
         <div class="row">
           <img src="@/assets/images/silver.png" alt="gold"> 
-          <h1>오징어</h1>
+          <h1>{{ scoreBoardData[1]["value"] }}</h1>
         </div>
-        <h1 class="score">947점</h1>
+        <h1 class="score">{{ scoreBoardData[1]["score"] }}점</h1>
 
       </div>
       <!-- 동메달 -->
       <div>
         <div class="row">
           <img src="@/assets/images/bronze.png" alt="gold"> 
-          <h1>복어</h1>
+          <h1>{{ scoreBoardData[2]["value"] }}</h1>
         </div>
-        <h1 class="score">879점</h1>
+        <h1 class="score">{{ scoreBoardData[2]["score"] }}점</h1>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: "InterimScoreBoard"
+  name: "InterimScoreBoard",
+  computed: {
+    ...mapState("CreateQuizRoomStore", ["scoreBoardData"])
+  },
 }
 </script>
 

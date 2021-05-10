@@ -4,7 +4,6 @@ import com.ssafy.ssaquiz.model.Message;
 import com.ssafy.ssaquiz.service.ProgressService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-// Controller의 메소드는 message handling methods
-// 한 Client에게서 message를 수신한 다음, 다른 Client에게 broadcast
 @CrossOrigin(origins = {"*"})
 @RestController
 public class ProgressController {
@@ -56,10 +53,7 @@ public class ProgressController {
 
     @MessageMapping("/room/sendCategory/{pin}")
     public void sendCategory(@DestinationVariable("pin") int pin, @Payload Message message) {
-        System.out.println("sendCategory()");
-        System.out.println(message);
-
-        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+        progressService.sendCategory(pin, message);
     }
 
     @MessageMapping("/room/sendAnswer/{pin}")
@@ -87,12 +81,5 @@ public class ProgressController {
     @GetMapping("/pin")
     public Object makePin() {
         return progressService.makePin();
-    }
-
-    @ApiOperation(value = "TEST")
-    @PostMapping("/test")
-    public Set<ZSetOperations.TypedTuple<String>> test(@RequestParam String nickname) {
-        progressService.plusScore("test", nickname,10.0);
-        return progressService.viewRanking("test", 0, 2);
     }
 }

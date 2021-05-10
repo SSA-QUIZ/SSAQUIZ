@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: #f2f2f2; height: 100%; position: relative;">
-    <Header mode="userInfo" :nickname="username" score="950" />
+    <Header mode="userInfo" :nickname="username" :score="score" />
     <ProgressBar :index="quizIndex+1" :all="totalNum" />
     <MultipleChoice @click-button="sendAnswer" :choice="choice" v-show="category == '4지선다' || category == 'vote'" />
   </div>
@@ -42,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("PlayQuizStore", ["category", "totalNum", "quizIndex", "username", "isFin", "isSolved"])
+    ...mapState("PlayQuizStore", ["category", "totalNum", "quizIndex", "username", "score", "isFin", "isSolved"])
   },
 }
 </script>
