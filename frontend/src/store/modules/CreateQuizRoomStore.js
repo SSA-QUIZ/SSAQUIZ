@@ -19,6 +19,8 @@ const CreateQuizRoomStore = {
     isInterim: false,
     isNext: false,
     isEnd: false,
+    scoreBoardData: [],
+    resultData: [],
   },
   getters: {},
   mutations: {
@@ -60,6 +62,9 @@ const CreateQuizRoomStore = {
     ADD_SOLVEDNUM: function (state) {
       state.solvedNum++;
     },
+    DEFAULT_SOLVEDNUM: function (state) {
+      state.solvedNum = 0;
+    },
     NEXT_QUIZ: function (state, value) {
       state.stompClient = value;
     },
@@ -74,6 +79,12 @@ const CreateQuizRoomStore = {
     },
     SET_ISEND: function (state, value) {
       state.isEnd = value;
+    },
+    SET_SCOREBOARDDATA: function (state, value) {
+      state.scoreBoardData = value;
+    },
+    SET_RESULTDATA: function (state, value) {
+      state.resultData = value;
     },
   },
   actions: {
@@ -99,6 +110,9 @@ const CreateQuizRoomStore = {
     },
     setIsFin: function ({ commit }, value) {
       commit("SET_ISFIN", value);
+    },
+    setScoreBoardData: function ({ commit }, value) {
+      commit("SET_SCOREBOARDDATA", value);
     },
     nextQuiz: function ({ commit }) {
       let nextQuizMessage = {
@@ -151,10 +165,13 @@ const CreateQuizRoomStore = {
               } else if (type === "SUBMIT") {
                 commit('ADD_SOLVEDNUM');
               } else if (type === "NEXT") {
+                commit('DEFAULT_SOLVEDNUM');
                 commit('SET_ISNEXT', true);
               } else if (type === "FINISH") {
+                commit('SET_SCOREBOARDDATA', JSON.parse(msg.body).content);
                 commit('SET_ISFIN', true);
               } else if (type === "END") {
+                commit("SET_RESULTDATA", JSON.parse(msg.body).content);
                 commit("SET_ISEND", true);
               }
             })
