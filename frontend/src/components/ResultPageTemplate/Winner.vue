@@ -1,13 +1,17 @@
 <template>
   <div class="king-whale-container">
     <img class="king-whale" src="@/assets/images/kingWhale.png"/>
-    <h1>장장주빈</h1>
+    <h1>{{ resultData[0]["value"] }}</h1>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: "Winner"
+  name: "Winner",
+  computed: {
+    ...mapState("CreateQuizRoomStore", ["resultData"])
+  },
 }
 </script>
 

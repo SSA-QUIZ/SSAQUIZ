@@ -3,7 +3,7 @@
     <div class="podium-1">
       <div>
         <img class="crown" src="@/assets/images/bronzeCrown.png"/>
-        <span>JBJB</span>
+        <span>{{ resultData[2]["value"] }}</span>
       </div>
       <img class="podium-image" src="@/assets/images/bronzePodium.png"/>
     </div>
@@ -11,7 +11,7 @@
     <div class="podium-3">
       <div>
         <img class="crown" src="@/assets/images/goldCrown.png"/>
-        <span>장장주빈</span>
+        <span>{{ resultData[0]["value"] }}</span>
       </div>
       <img class="podium-image" src="@/assets/images/goldPodium.png"/>
     </div>
@@ -19,7 +19,7 @@
     <div class="podium-2">
       <div>
         <img class="crown" src="@/assets/images/silverCrown.png"/>
-        <span>폰주빈</span>
+        <span>{{ resultData[1]["value"] }}</span>
       </div>
       <img class="podium-image" src="@/assets/images/silverPodium.png"/>
     </div>
@@ -27,8 +27,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: "Podium"
+  name: "Podium",
+  computed: {
+    ...mapState("CreateQuizRoomStore", ["resultData"])
+  },
 }
 </script>
 

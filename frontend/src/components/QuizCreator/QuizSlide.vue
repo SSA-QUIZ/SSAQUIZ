@@ -2,7 +2,9 @@
   <div class="quiz-slide">
     <p class="slide-number">{{ number }}</p>
     <div class="quiz-img" :class="{ 'quiz-img__selected' : isSelected}">
-      <span v-if ="isSelected" @click="$emit('delete-slide')"><i class="fas fa-times"></i></span>
+      <span v-if ="isSelected" @click="$emit('delete-slide')">
+        <i class="fas fa-times"></i>
+      </span>
       <img v-if="slide.imagePath" :src="slide.imagePath">
       <img v-else src="@/assets/images/Default.png">
     </div>
@@ -46,6 +48,11 @@ export default {
 
 .quiz-img img {
   width: 75%;
+}
+
+.quiz-img__selected {
+	border: 3px solid #E7527E;
+  border-radius: 5px;
 }
 
 .slide-number {
