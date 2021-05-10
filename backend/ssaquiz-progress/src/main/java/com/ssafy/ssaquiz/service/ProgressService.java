@@ -64,10 +64,18 @@ public class ProgressService {
     }
 
     public void endQuiz(int pin, Message message) {
-        System.out.println("endQuiz()");
+        System.out.println("sendCategory()");
         System.out.println(message);
 
         message.setContent(viewRanking("userList" + pin, 0, 2));
+        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
+    public void sendCategory(int pin, Message message) {
+        System.out.println("endQuiz()");
+        System.out.println(message);
+
+        redisUtil.setData("time" + pin, Long.toString(System.currentTimeMillis() / 100));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -79,14 +87,15 @@ public class ProgressService {
         boolean isCorrect = grade("answerList" + pin, message.getQuizNum(), (String) message.getContent());
 
         if (isCorrect) {
-            double CurrentScore = plusScore("userList" + pin, message.getSender(),10.0);
+            long plusScore = 600 - ((System.currentTimeMillis() / 100) - Long.parseLong(redisUtil.getData("time")));
+            double CurrentScore = plusScore("userList" + pin, message.getSender(), plusScore);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("answer", true);
-            jsonObject.put("plusScore", 10);
+            jsonObject.put("plusScore", plusScore);
             jsonObject.put("CurrentScore", CurrentScore);
             message.setContent(jsonObject);
             simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getSender(), message);
-        } else{
+        } else {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("answer", false);
             jsonObject.put("plusScore", 0);
@@ -156,7 +165,7 @@ public class ProgressService {
         }
 
         String rightAnswer = (String) redisUtil.getHdata(key, quizNum);
-        if(answer.equals(rightAnswer)) {
+        if (answer.equals(rightAnswer)) {
             return true;
         }
 
