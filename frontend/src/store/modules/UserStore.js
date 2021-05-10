@@ -4,6 +4,7 @@ const UserStore = {
     namespaced: true,
     state: {
       quizList: [],
+      selectQuiz: {},
       newQuizId: '',
     },
     getters: {},
@@ -15,10 +16,13 @@ const UserStore = {
         state.quizList.splice(0, 0, value);
         state.newQuizId = value.id;
       },
+      SELECT_QUIZ: function (state, value) {
+        state.selectQuiz = value;
+      },
       DELETE_QUIZ: function (state, value) {
         let index = state.quizList.findIndex(function(item) {return item.id === value});
         state.quizList.splice(index, 1);
-      }
+      },
     },
     actions: {
       setQuizList: function ({ commit }, value) {
@@ -32,7 +36,14 @@ const UserStore = {
         await axios.post("http://k4a304.p.ssafy.io/api-quiz/workbook", value)
           .then(res => {
             commit('ADD_QUIZ', res.data.object);
-            return res.data.object.id;
+          })
+          .catch(err => console.log(err))
+      },
+      selectQuiz: function ({ commit }, value) {
+        axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/${value}`)
+          .then(res => {
+            console.log(res);
+            commit('SELECT_QUIZ', res.object);
           })
           .catch(err => console.log(err))
       },
@@ -43,7 +54,8 @@ const UserStore = {
             return res
           })
           .catch(err => console.log(err))
-      }
+      },
+
     }
   }
   

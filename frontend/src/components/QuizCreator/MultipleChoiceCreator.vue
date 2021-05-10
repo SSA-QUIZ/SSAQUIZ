@@ -67,13 +67,21 @@ export default {
         })
         .catch(err => console.log(err))
     });
-  },
-  created: function () {
+
+    
     let data = this.quizData.slideList[this.slideIndex];
+    console.log(data)
     this.choices = data.answerList;
     this.question = data.question;
     this.image = data.imagePath;
   },
+  // created: function () {
+  //   let data = this.quizData.slideList[this.slideIndex];
+  //   console.log(data)
+  //   this.choices = data.answerList;
+  //   this.question = data.question;
+  //   this.image = data.imagePath;
+  // },
   computed: {
     ...mapState("CreateQuizStore", ['quizData']),
   },
