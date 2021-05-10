@@ -16,6 +16,7 @@
               :number="index+1"
               :slide="slide"
               :isSelected="isSelectedSlide[index]"
+              @delete-slide="deleteSlide"
               @click.native="selectSlide(index)"
             />
           </template>
@@ -150,10 +151,11 @@ export default {
   },
   methods: {    
     ...mapActions("CreateQuizStore", [
-      "addQuiz", "getQuizData", "resetQuizData"
+      "addQuiz", "getQuizData", "resetQuizData", "removeSlide"
     ]),
     selectSlide: function (idx) {
       let val = this.quizData.slideList[idx];
+      console.log(val)
       this.isSelectedSlide = 
         Array.from({length: this.quizData.slideList.length}, () => false);
       this.isSelectedSlide[idx] = true;
@@ -162,6 +164,26 @@ export default {
       this.scoreFactorIndex = val.scoreFactor;
       this.typeIndex = val.type;
       this.selectedSlide = idx;
+    },
+    deleteSlide: function () {
+      console.log(this.selectedSlide)
+      this.removeSlide([this.$route.params.workbookId, localStorage.getItem('id'), this.selectedSlide])
+        .then(() => {
+          // if (this.selectedSlide == 0) {
+          //   if (this.quizData.length > 0) {
+          //     this.selectSlide(0);
+          //   }
+          //   else this.category = "none";
+          // }
+          // else {
+          //   this.selectedSlide--;
+          //   console.log(this.selectedSlide)
+          //   this.selectSlide(this.selectedSlide);
+          // }
+          this.selectedSlide--;
+          this.selectSlide(this.selectedSlide);
+        })
+        .catch((err) => {console.log(err);})
     },
     exit: function () {
       this.$router.push({ name: "UserPage" });

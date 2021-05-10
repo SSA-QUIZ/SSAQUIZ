@@ -1,7 +1,8 @@
 <template>
   <div class="quiz-slide">
     <p class="slide-number">{{ number }}</p>
-    <div class="quiz-img">
+    <div class="quiz-img" :class="{ 'quiz-img__selected' : isSelected}">
+      <span v-if ="isSelected" @click="$emit('delete-slide')"><i class="fas fa-times"></i></span>
       <img v-if="slide.imagePath" :src="slide.imagePath">
       <img v-else src="@/assets/images/Default.png">
     </div>
@@ -11,15 +12,14 @@
 <script>
 export default {
   name: "QuizSlide",
-  props: ['number', 'slide'],
-  data: function () {
-    return {
-    }
-  }
+  props: ['number',
+    'slide',
+    'isSelected'
+  ],
 }
 </script>
 
-<style>
+<style scoped>
 .quiz-slide {
   display: flex;
   width: 90%;
@@ -39,6 +39,11 @@ export default {
   cursor: pointer;
 }
 
+.quiz-img__selected {
+  border: 3px solid #e7527e;
+  border-radius: 10px;
+}
+
 .quiz-img img {
   width: 75%;
 }
@@ -48,5 +53,11 @@ export default {
   font-family: 'Nanum Pen Script', cursive;
   font-weight: bold;
   font-size: 38px;
+}
+
+span {
+  position: absolute;
+  right: 5%;
+  font-size: 30px;
 }
 </style>

@@ -36,6 +36,12 @@ const CreateQuizStore = {
         state.quizData.slideList[value[1]].time = value[2];
       else
         state.quizData.slideList[value[1]].type = value[2];
+    },
+    DELETE_SLIDE: function (state, value) {
+      console.log(state.quizData)
+      console.log(value)
+      state.quizData.slideList.splice(value, 1);
+      console.log(state.quizData);
     }
   },
   actions: {
@@ -67,6 +73,15 @@ const CreateQuizStore = {
     setOptions: function ({ commit }, value) {
       commit('SET_OPTIONS', value)
     },
+    removeSlide: async function ({ commit }, value) {
+      await axios.delete(`http://k4a304.p.ssafy.io/api-quiz/workbook/${value[0]}/${value[1]}/${value[2]}`)
+        .then(res => {
+          console.log(res);
+          commit('DELETE_SLIDE', value[2]);
+          return res
+        })
+        .catch(err => console.log(err))
+    }
   }
 };
 
