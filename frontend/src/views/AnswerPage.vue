@@ -1,9 +1,9 @@
 <template>
   <div id="answer-page-container">
     <Header mode="off" />
-    <ProgressBar index="2" all="12" />
-    <Quiz title="이 동물은 무엇일까요?" image="@/assets/images/Default.png" id="quiz-div" />
-    <QuizButton color="#7cb1ff" icon="fa fa-car" answer="고래" height="20vh" id="answer-div" />
+    <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
+    <Quiz :title="question" image="@/assets/images/Default.png" id="quiz-div" />
+    <QuizButton color="#7cb1ff" icon="fa fa-car" :answer="answer" height="20vh" id="answer-div" />
     <!-- <ShortAnswerResult title="우리 팀 팀장의 이름은?"/> -->
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     <div style="height: 3%;"></div>
@@ -47,7 +47,13 @@ export default {
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd"])
+    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd"]),
+    question: function () {
+      return this.quizData["slideList"][this.quizIndex]["question"];
+    },
+    answer: function () {
+      return this.quizData["slideList"][this.quizIndex]["answerList"][this.quizData["slideList"][this.quizIndex]["answer"]];
+    },
   },
   methods: {
     ...mapActions("CreateQuizRoomStore", ["setIsInterim", "setQuizIndex", "sendEndMessage"])

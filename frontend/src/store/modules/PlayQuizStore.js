@@ -15,11 +15,14 @@ const PlayQuizStore = {
     totalNum: 0,
     quizIndex: 0,
     username: '',
+    score: 0,
+    plusScore: 0,
     isFin: false,
     isSolved: false,
     isCorrect: false,
     isNext: false,
     isEnd: false,
+    resultData: [],
   },
   getters: {},
   mutations: {
@@ -64,6 +67,15 @@ const PlayQuizStore = {
     },
     SET_ISEND: function (state, value) {
       state.isEnd = value;
+    },
+    SET_RESULTDATA: function (state, value) {
+      state.resultData = value;
+    },
+    SET_SCORE: function (state, value) {
+      state.score = value;
+    },
+    SET_PLUSSCORE: function (state, value) {
+      state.plusScore = value;
     },
   },
   actions: {
@@ -121,12 +133,17 @@ const PlayQuizStore = {
           } else if (type === "NEXT") {
             commit('SET_ISNEXT', true);
           } else if (type === "END") {
+            commit('SET_RESULTDATA', JSON.parse(msg.body).content);
             commit('SET_ISEND', true);
           }
         })
         ws.subscribe(`/pin/${value[0]}/nickname/${value[1]}`, (msg) => {
           let isCorrectAnswer = JSON.parse(msg.body).content.answer;
+          let newScore = JSON.parse(msg.body).content.CurrentScore;
+          let plusScore = JSON.parse(msg.body).content.plusScore;
           commit('SET_ISCORRECT', isCorrectAnswer);
+          commit('SET_SCORE', newScore);
+          commit('SET_PLUSSCORE', plusScore);
         })
         commit('SUBSCRIBE_QUIZ_ROOM', ws);
         return 1
