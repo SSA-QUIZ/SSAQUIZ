@@ -3,7 +3,7 @@
     <p class="slide-number">{{ number }}</p>
     <div class="quiz-img">
       <img v-if="slide.imagePath" :src="slide.imagePath">
-      <img src="@/assets/images/Default.png">
+      <img v-else src="@/assets/images/Default.png">
     </div>
   </div>
 </template>

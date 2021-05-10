@@ -304,7 +304,6 @@ export default {
   position:absolute;
   top:70px;
   left:70px;
-  /* background:rgb(180, 179, 179); */
   width:55px;
   height:55px;
   border-radius:50%;
