@@ -142,7 +142,7 @@ export default {
         // url로부터 token 획득하기
         const token = url.slice(idx + 6);
         localStorage.setItem("token", token);
-        this.$router.push({ name: "WelcomePage" }).catch(() => {});
+        this.$router.push({ name: "UserPage" }).catch(() => {});
       }
     },
     logoutConfirm: function () {
