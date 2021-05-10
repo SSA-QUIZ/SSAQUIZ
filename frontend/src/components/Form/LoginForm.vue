@@ -43,7 +43,7 @@ export default {
     },
     login: function () {
       const data = {"email": this.email, "password": this.PW}
-      axios.post("http://k4a304.p.ssafy.io/api-auth/auth/login", data)
+      axios.post("https://k4a304.p.ssafy.io/api-auth/auth/login", data)
         .then(res => {
           if (res.data.status === true) {     //로그인 성공시
             localStorage.setItem('token',res.data.object.accessToken);
