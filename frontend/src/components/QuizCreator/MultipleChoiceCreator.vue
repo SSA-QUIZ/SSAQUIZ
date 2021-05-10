@@ -60,7 +60,7 @@ export default {
       formData.append("file", this.image);
       const headers = { "Content-Type": "multipart/form-data" };
 
-      axios.post("http://k4a304.p.ssafy.io/api-quiz/image", formData, headers)
+      axios.post("https://k4a304.p.ssafy.io/api-quiz/image", formData, headers)
         .then(res => {
           this.image = res.data.object;
           this.setImage(this.image)

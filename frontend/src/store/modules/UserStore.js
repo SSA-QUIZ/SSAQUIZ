@@ -22,14 +22,14 @@ const UserStore = {
     },
     actions: {
       setQuizList: function ({ commit }, value) {
-        axios.get("http://k4a304.p.ssafy.io/api-quiz/workbook-all/" + value)
+        axios.get("https://k4a304.p.ssafy.io/api-quiz/workbook-all/" + value)
         .then(res => {
           commit('SET_QUIZLIST', res.data.object);
         })
         .catch(err => { console.log(err); })
       },
       addQuiz: async function ({ commit }, value) {
-        await axios.post("http://k4a304.p.ssafy.io/api-quiz/workbook", value)
+        await axios.post("https://k4a304.p.ssafy.io/api-quiz/workbook", value)
           .then(res => {
             commit('ADD_QUIZ', res.data.object);
             return res.data.object.id;
@@ -37,7 +37,7 @@ const UserStore = {
           .catch(err => console.log(err))
       },
       removeQuiz: function ({ commit }, value) {
-        axios.delete(`http://k4a304.p.ssafy.io/api-quiz/workbook/${value[0]}/${value[1]}`)
+        axios.delete(`https://k4a304.p.ssafy.io/api-quiz/workbook/${value[0]}/${value[1]}`)
           .then(res => {
             commit('DELETE_QUIZ', value[0]);
             return res

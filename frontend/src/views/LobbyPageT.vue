@@ -53,7 +53,7 @@ export default {
   methods: {
     ...mapActions("CreateQuizRoomStore", ["sendAnswerList", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
     clickStartButton: function () {
-      axios.get(`http://k4a304.p.ssafy.io/api-quiz/workbook/${this.quizId}`)
+      axios.get(`https://k4a304.p.ssafy.io/api-quiz/workbook/${this.quizId}`)
         .then(res => {
           this.setQuizData(res.data.object);
           let answerList = [];

@@ -168,7 +168,7 @@ export default {
     },
     save: function () {
       let data = this.quizData;
-      axios.post("http://k4a304.p.ssafy.io/api-quiz/slide-all", data)
+      axios.post("https://k4a304.p.ssafy.io/api-quiz/slide-all", data)
         .then(res => {
           console.log(res.data);
           this.alertMessage = "퀴즈를 저장했습니다!";
