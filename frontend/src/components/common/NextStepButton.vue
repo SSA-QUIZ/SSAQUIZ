@@ -21,6 +21,11 @@ export default {
   z-index: 2;
 }
 
+.step-button:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.2);
+}
+
 @media (max-width: 1100px) {
   .step-button {
     position: absolute;
