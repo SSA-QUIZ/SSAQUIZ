@@ -27,7 +27,7 @@ export default {
     return {
       user: {
         nickname: this.$route.params.nickname,
-        color: '#D98EF8'
+        color: '#545DE3'
       },
       PIN: Number,
     }
@@ -43,7 +43,6 @@ export default {
   },
   watch: {
     isStart: function (val) {
-      console.log('isStart ',this.isStart)
       if (val === true) {
         this.$router.push({name: "LoadingPage"})
       }
