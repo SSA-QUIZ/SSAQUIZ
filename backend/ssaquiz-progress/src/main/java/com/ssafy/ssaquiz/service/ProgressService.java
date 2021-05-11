@@ -52,6 +52,12 @@ public class ProgressService {
             return;
         }
 
+        if (message.getSender().replaceAll(" ", "").length() == 0) {
+            message.setContent("join fail (blank character)");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
         if (registUser(USER_LIST + pin, message.getSender())) {
             message.setContent("join success");
             headerAccessor.getSessionAttributes().put("nickname", message.getSender());
