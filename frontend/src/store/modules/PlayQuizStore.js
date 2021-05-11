@@ -22,6 +22,7 @@ const PlayQuizStore = {
     isCorrect: false,
     isNext: false,
     isEnd: false,
+    isValidNickname: 0,
     resultData2: [],
   },
   getters: {},
@@ -80,8 +81,14 @@ const PlayQuizStore = {
     SET_PLUSSCORE: function (state, value) {
       state.plusScore = value;
     },
+    SET_ISVALIDNICKNAME: function (state, value) {
+      state.isValidNickname = value;
+    },
   },
   actions: {
+    setIsValidNickname: function ({ commit }, value) {
+      commit("SET_ISVALIDNICKNAME", value);
+    },
     setIsFin: function ({ commit }, value) {
       commit("SET_ISFIN", value);
     },
@@ -122,23 +129,34 @@ const PlayQuizStore = {
         }
         ws.send(`/quiz/room/enterUser/${value[0]}`, {}, JSON.stringify(subscribeMessage));
         ws.subscribe(`/pin/${value[0]}`, (msg) => {
-          let type = JSON.parse(msg.body).type
+          let type = JSON.parse(msg.body).type;
+          let content = JSON.parse(msg.body).content;
           if (type === "START") {
             commit('SET_ISSTART', true);
           } else if (type === "USERLIST") {
-            commit('SET_STUDENTS', JSON.parse(msg.body).content);
+            commit('SET_STUDENTS', content);
           } else if (type === "TOTALNUM") {
-            commit('SET_TOTALNUM', JSON.parse(msg.body).content);
+            commit('SET_TOTALNUM', content);
           } else if (type === "CATEGORY") {
-            commit('SET_CATEGORY', JSON.parse(msg.body).content);
+            commit('SET_CATEGORY', content);
           } else if (type === "FINISH") {
             commit('SET_ISFIN', true);
           } else if (type === "NEXT") {
             commit('ADD_QUIZINDEX');
             commit('SET_ISNEXT', true);
           } else if (type === "END") {
-            commit('SET_RESULTDATA', JSON.parse(msg.body).content);
+            commit('SET_RESULTDATA', content);
             commit('SET_ISEND', true);
+          } else if (type === "JOIN") {
+            if (content === "join fail (over length)") {
+              commit('SET_ISVALIDNICKNAME', 1);
+            } else if (content === "join fail (overlap)") {
+              commit('SET_ISVALIDNICKNAME', 2);
+            } else if (content === "join fail (null)") {
+              commit('SET_ISVALIDNICKNAME', 3);
+            } else {
+              commit('SET_ISVALIDNICKNAME', 4);
+            }
           }
         })
         ws.subscribe(`/pin/${value[0]}/nickname/${value[1]}`, (msg) => {
