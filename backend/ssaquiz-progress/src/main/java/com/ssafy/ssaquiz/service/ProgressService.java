@@ -53,7 +53,7 @@ public class ProgressService {
         }
 
         if (message.getSender().replaceAll(" ", "").length() == 0) {
-            message.setContent("join fail (blank character)");
+            message.setContent("join fail (space character)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
