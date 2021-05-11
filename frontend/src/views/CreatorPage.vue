@@ -136,6 +136,9 @@ export default {
       }
     }
   },
+  mounted: function () {
+    this.setSelectedSlideIndex(0);
+  },
   methods: {
     ...mapActions("CreateQuizStore", [
       "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide"

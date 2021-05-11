@@ -25,10 +25,17 @@ export default {
       this.getOption(this.selectedSlideIndex);
     },
     quizData: function () {
-      if (this.quizData.slideList != undefined && this.quizData.slideList.length > 0) {
-        this.getOption(0);
+      if (this.quizData.slideList != undefined) {
+        if (this.quizData.slideList.length > 0) {
+          this.getOption(0);
+        }
+        else {
+          document.getElementById(`${this.optionList[0].id}`).checked = true;
+        }
       }
     }
+  },
+  created: function () {
   },
   methods: {
     ...mapActions("CreateQuizStore", ["setOptions"]),
