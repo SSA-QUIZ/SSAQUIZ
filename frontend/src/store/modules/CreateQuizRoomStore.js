@@ -163,7 +163,7 @@ const CreateQuizRoomStore = {
       commit('SET_ISSTART', true);
     },
     setPINWS: async function ({ commit }) {
-      await axios.get("https://k4a304.p.ssafy.io/api-play/pin")
+      await axios.post("https://k4a304.p.ssafy.io/api-play/pin")
         .then(res => {
           pin = res.data.object;
           commit('SET_PINWS', pin);
@@ -171,7 +171,8 @@ const CreateQuizRoomStore = {
           ws.connect({}, () => {
             ws.subscribe(`/pin/${pin}`, (msg) => {
               let type = JSON.parse(msg.body).type
-              if (type === "JOIN") {
+              let content = JSON.parse(msg.body).content
+              if (type === "JOIN" && content === "join success") {
                 commit('ADD_STUDENTS', JSON.parse(msg.body).sender);
               } else if (type === "START") {
                 commit('SET_ISSTART', true);
