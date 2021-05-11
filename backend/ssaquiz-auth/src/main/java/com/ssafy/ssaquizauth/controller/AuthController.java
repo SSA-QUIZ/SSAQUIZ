@@ -21,13 +21,13 @@ public class AuthController {
 
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
-    public BasicResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public BasicResponse authenticateUser(@RequestBody LoginRequest loginRequest) {
         return userService.authenticateUser(loginRequest);
     }
 
     @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
-    public BasicResponse registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    public BasicResponse registerUser(@RequestBody SignUpRequest signUpRequest) {
         return userService.registerUser(signUpRequest);
     }
 
