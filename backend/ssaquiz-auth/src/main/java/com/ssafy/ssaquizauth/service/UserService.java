@@ -53,10 +53,21 @@ public class UserService {
 
     public BasicResponse authenticateUser(LoginRequest loginRequest) {
         BasicResponse result = new BasicResponse();
+        result.status = false;
 
-        if (loginRequest == null) {
-            result.status = false;
+        if (loginRequest == null || loginRequest.getEmail() == null || loginRequest.getPassword() == null) {
             result.data = "login Fail (loginRequest is null)";
+            return result;
+        }
+
+        Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
+        if (!user.isPresent()) {
+            result.data = "login Fail (email does not exist)";
+            return result;
+        }
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.get().getPassword())) {
+            result.data = "login Fail (password mismatch)";
             return result;
         }
 
@@ -68,7 +79,6 @@ public class UserService {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
         String token = tokenProvider.createToken(authentication);
         redisUtil.setDataExpire(loginRequest.getEmail(), "exist", tokenExpirationMsec);
 
@@ -88,9 +98,9 @@ public class UserService {
     public BasicResponse registerUser(SignUpRequest signUpRequest) {
         BasicResponse result = new BasicResponse();
 
-        if (signUpRequest == null) {
+        if (signUpRequest == null || signUpRequest.getEmail() == null || signUpRequest.getName() == null || signUpRequest.getPassword() == null) {
             result.status = false;
-            result.data = "signup fail (signUpRequest is null)";
+            result.data = "signup fail (null)";
             return result;
         }
 
