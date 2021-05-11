@@ -11,7 +11,7 @@
         <!-- <ShortAnswerT title="우리 팀 팀장의 이름은?" image="" /> -->
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
-        <NextStepButton @click.native="sendFinMessage" dark="true" />
+        <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
       </div>
     </div>
   </div>

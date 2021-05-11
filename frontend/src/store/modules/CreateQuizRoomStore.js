@@ -95,9 +95,10 @@ const CreateQuizRoomStore = {
       ws.send(`/quiz/room/endQuiz/${pin}`, {}, JSON.stringify(sendEndMessage));
       commit("SET_STOMP_CLIENT", ws);
     },
-    sendFinMessage: function ({ commit }) {
+    sendFinMessage: function ({ commit }, value) {
       let sendFinMessage = {
-        type: "FINISH"
+        type: "FINISH",
+        quizNum: value,
       };
       ws.send(`/quiz/room/finishQuiz/${pin}`, {}, JSON.stringify(sendFinMessage));
       commit("SET_STOMP_CLIENT", ws);
