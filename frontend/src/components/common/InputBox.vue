@@ -1,5 +1,5 @@
 <template>
-  <input :value="data" @input="onInput" class="input-box">
+  <input :value="data" @input="onInput" @keyup.enter="pressEnter" class="input-box">
 </template>
 
 <script>
@@ -14,6 +14,9 @@ export default {
 		onInput: function (e) {
 			this.data = e.target.value;
 			this.$emit('change-input', this.data)
+		},
+		pressEnter: function () {
+			this.$emit('press-enter')
 		}
 	}
 }
