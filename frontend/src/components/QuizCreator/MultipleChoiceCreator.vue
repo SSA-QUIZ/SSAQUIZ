@@ -15,12 +15,12 @@
     </div>
     <div>
       <div class="choice-row">
-        <CreatorQuizButton :slideIndex=slideIndex :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
-        <CreatorQuizButton :slideIndex=slideIndex :index=1 height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
+        <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
+        <CreatorQuizButton :index=1 height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
       </div>
       <div class="choice-row">
-        <CreatorQuizButton :slideIndex=slideIndex :index=2 height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
-        <CreatorQuizButton :slideIndex=slideIndex :index=3 height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
+        <CreatorQuizButton :index=2 height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
+        <CreatorQuizButton :index=3 height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
       </div>
     </div>
   </div>
@@ -67,30 +67,45 @@ export default {
         })
         .catch(err => console.log(err))
     });
-
     
-    let data = this.quizData.slideList[this.slideIndex];
-    console.log(data)
+    // let data = this.quizData.slideList[this.slideIndex];
+    // console.log('mounted', data)
+    // this.choices = data.answerList;
+    // this.question = data.question;
+    // this.image = data.imagePath;
+    console.log('mounted', this.selectedSlideIndex)
+  },
+  updated: function () {
+    let data = this.quizData.slideList[this.selectedSlideIndex];
     this.choices = data.answerList;
     this.question = data.question;
     this.image = data.imagePath;
+    console.log('updated', this.selectedSlideIndex)
   },
-  // created: function () {
-  //   let data = this.quizData.slideList[this.slideIndex];
-  //   console.log(data)
-  //   this.choices = data.answerList;
-  //   this.question = data.question;
-  //   this.image = data.imagePath;
-  // },
+  created: function () {
+    let data = this.quizData.slideList[this.selectedSlideIndex];
+    console.log('created', data)
+    this.choices = data.answerList;
+    this.question = data.question;
+    this.image = data.imagePath;
+    console.log(this.selectedSlideIndex)
+  },
   computed: {
-    ...mapState("CreateQuizStore", ['quizData']),
+    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
   },
   watch: {
-    slideIndex: function (newVal) {
-      let data = this.quizData.slideList[newVal];
-      this.question = data.question;
-      this.choices = data.answerList;
-      this.image = data.imagePath;
+    selectedSlideIndex: function () {
+      console.log(this.quizData.slideList)
+      if (this.quizData.slideList == undefined) {
+        console.log("없음")
+      } else {
+        let data = this.quizData.slideList[this.selectedSlideIndex];
+        console.log(data)
+        this.question = data.question;
+        this.choices = data.answerList;
+        this.image = data.imagePath;
+      }
+      
     }
   },
   methods: {

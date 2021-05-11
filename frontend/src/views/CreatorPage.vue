@@ -16,7 +16,7 @@
               :number="index+1"
               :slide="slide"
               :isSelected="isSelectedSlide[index]"
-              @delete-slide="deleteSlide"
+              @delete-slide="deleteSlide(index)"
               @click.native="selectSlide(index)"
             />
           </template>
@@ -28,35 +28,28 @@
       </div>
       <div id="creator-page__content">
         <!-- <ShortAnswerCreator v-if="category === '단답형'"/> -->
+        <div v-if ="quizDataLength === 0">슬라이드 없음</div>
         <MultipleChoiceCreator 
-          :slideIndex="selectedSlide"
-          v-if="category === '4지선다'"
+          v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'"
         />
-        <div v-else>슬라이드 없음</div>
       </div>
       <div id="creator-page__settings">
         <span class="settings__title">문제 설정</span>
         <span class="settings__subtitle">제한 시간</span>
         <SelectBox
-          title="timeLimit"
-          :slideIndex="selectedSlide"
-          :index="timeLimitIndex"
-          :optionList="timeLimitList" 
-          @select-option="val => timeLimitIndex = val" />
+          title="time"
+          :optionList="timeLimitList"
+          />
         <span class="settings__subtitle">점수</span>
         <SelectBox 
           title="scoreFactor"
-          :slideIndex="selectedSlide"
-          :index="scoreFactorIndex"
           :optionList="scoreFactorList"
-          @select-option="val => scoreFactorIndex = val" />
+           />
         <span class="settings__subtitle">추가 옵션</span>
         <RadioBox 
           title="type"
-          :slideIndex="selectedSlide"
-          :index="typeIndex"
           :optionList="typeList"
-          @radio-option="val => typeIndex = val"/>
+          />
       </div>
     </div>
     <Confirm 
@@ -107,15 +100,9 @@ export default {
     return {
       openQuizTypeDialog: false,
       openExitConfirm: false,
-      selectedSlide: 0,
-      category: '',
 
       isSelectedSlide: [],
-
-      scoreFactorIndex: 0,
-      timeLimitIndex: 0,
-      typeIndex: 0,
-
+      
       timeLimitList: [
         {"name" :"10초", "value": 10},
         {"name" :"15초", "value": 15},
@@ -137,51 +124,34 @@ export default {
       color: '',
     }
   },
-  created: function () {
-    this.getQuizData(this.$route.params.workbookId)
-      .then(() => {
-        if (this.quizData.slideList.length == 0)
-          return "none";
-        else this.selectSlide(0);
-      })
-      .catch(err => console.log(err))
-  },
   computed: {
-    ...mapState("CreateQuizStore", ['quizData']),
+    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+    quizDataLength: function () {
+      if (this.quizData.slideList == undefined) {
+        return 0;
+      }
+      else {
+        this.selectSlide(this.selectedSlideIndex);
+        return this.quizData.slideList.length;
+      }
+    }
   },
-  methods: {    
+  methods: {
     ...mapActions("CreateQuizStore", [
-      "addQuiz", "getQuizData", "resetQuizData", "removeSlide"
+      "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide"
     ]),
     selectSlide: function (idx) {
-      let val = this.quizData.slideList[idx];
-      console.log(val)
+      console.log(idx)
       this.isSelectedSlide = 
         Array.from({length: this.quizData.slideList.length}, () => false);
       this.isSelectedSlide[idx] = true;
-      this.category = val.category;
-      this.timeLimitIndex = val.time;
-      this.scoreFactorIndex = val.scoreFactor;
-      this.typeIndex = val.type;
-      this.selectedSlide = idx;
+      this.setSelectedSlideIndex(idx);
     },
-    deleteSlide: function () {
-      console.log(this.selectedSlide)
-      this.removeSlide([this.$route.params.workbookId, localStorage.getItem('id'), this.selectedSlide])
+    deleteSlide: function (idx) {
+      console.log(idx)
+      this.removeSlide([this.$route.params.workbookId, localStorage.getItem('id'), idx])
         .then(() => {
-          // if (this.selectedSlide == 0) {
-          //   if (this.quizData.length > 0) {
-          //     this.selectSlide(0);
-          //   }
-          //   else this.category = "none";
-          // }
-          // else {
-          //   this.selectedSlide--;
-          //   console.log(this.selectedSlide)
-          //   this.selectSlide(this.selectedSlide);
-          // }
-          this.selectedSlide--;
-          this.selectSlide(this.selectedSlide);
+          this.setSelectedSlideIndex(--idx);
         })
         .catch((err) => {console.log(err);})
     },

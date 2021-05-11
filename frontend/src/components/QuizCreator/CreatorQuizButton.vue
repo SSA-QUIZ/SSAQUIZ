@@ -25,7 +25,6 @@ export default {
     'icon',
     'margin', 
     'index',
-    'slideIndex'
   ],
   data: function () {
     return {
@@ -35,17 +34,17 @@ export default {
     }
   },
   computed: {
-    ...mapState("CreateQuizStore", ["quizData"]),
+    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
     choice: function () {
-      return this.quizData["slideList"][this.slideIndex]["answerList"][this.index];
+      return this.quizData["slideList"][this.selectedSlideIndex]["answerList"][this.index];
     },
   },
   mounted: function () {
     this.$nextTick(function () {
-      if (this.quizData["slideList"][this.slideIndex]["answer"] === "") {
+      if (this.quizData["slideList"][this.selectedSlideIndex]["answer"] === "") {
         return;
       }
-      else if (this.quizData["slideList"][this.slideIndex]["answer"] == this.index) {
+      else if (this.quizData["slideList"][this.selectedSlideIndex]["answer"] == this.index) {
         document.getElementsByClassName("option-input")[parseInt(this.index)].checked = true;
       }
     })
@@ -57,11 +56,11 @@ export default {
   methods: {
     ...mapActions("CreateQuizStore", ["setAnswer", "setMultipleChoice"]),
     checkAnswer: function () {
-      this.setAnswer([this.slideIndex, (this.index).toString()]);
+      this.setAnswer([this.selectedSlideIndex, (this.index).toString()]);
     },
     changeChoice: function (e) {
       this.inputChoice = e.target.value;
-      let val = [this.slideIndex, this.index, this.inputChoice];
+      let val = [this.selectedSlideIndex, this.index, this.inputChoice];
       this.setMultipleChoice(val);
     },
     setStyle: function () {

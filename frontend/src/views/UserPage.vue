@@ -170,6 +170,7 @@ export default {
         .catch(err => console.log(err))
     },
     editQuiz: function (id) {
+      this.getQuizData(id);
       this.$router.push({ name: "CreatorPage", params: {"workbookId" : id} });
     },
     deleteQuiz: function (id) {

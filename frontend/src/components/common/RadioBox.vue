@@ -9,27 +9,39 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'RadioBox',
   props: [
     'title',
-    'slideIndex',
-    'index',
     'optionList'
   ],
+  computed: {
+    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+  },
   watch: {
-    index: function () {
-      document.getElementById(`${this.optionList[this.index].id}`).checked = true;
+    selectedSlideIndex: function () {
+      this.getOption(this.selectedSlideIndex);
+    },
+    quizData: function () {
+      if (this.quizData.slideList != undefined && this.quizData.slideList.length > 0) {
+        this.getOption(0);
+      }
     }
   },
   methods: {
     ...mapActions("CreateQuizStore", ["setOptions"]),
-    selectOption: function (index) {
-      let val = [this.title, this.slideIndex, index];
+    selectOption: function (idx) {
+      let val = [this.title, this.selectedSlideIndex, idx];
+      console.log('radio', val);
       this.setOptions(val);
-      this.$emit("radio-option", index);
+      this.$emit("radio-option", idx);
+    },
+    getOption: function (idx) {
+      let index = this.quizData.slideList[idx][this.title];
+      console.log(index)
+      document.getElementById(`${this.optionList[index].id}`).checked = true;
     }
   }
 }
