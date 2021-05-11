@@ -25,8 +25,14 @@ export default {
       this.getOption(this.selectedSlideIndex);
     },
     quizData: function () {
-      if (this.quizData.slideList != undefined && this.quizData.slideList.length > 0) {
-        this.getOption(0);
+      if (this.quizData.slideList != undefined) {
+        if (this.quizData.slideList.length > 0) {
+          this.getOption(0);
+        }
+        else {
+          let select = document.getElementById(`${this.title}`);
+          select.options[0].selected = true;
+        }
       }
     }
   },
