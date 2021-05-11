@@ -195,8 +195,27 @@ public class ProgressService {
 
         BasicResponse result = new BasicResponse();
         result.status = true;
-        result.data = "PIN 생성 성공";
+        result.data = "PIN create success";
         result.object = pin;
+        return result;
+    }
+
+    public BasicResponse findPin(String pin) {
+        BasicResponse result = new BasicResponse();
+        result.status = false;
+        result.data = "PIN find fail";
+
+        if (pin == null) {
+            return result;
+        }
+
+        String exist = redisUtil.getData(pin);
+        if (exist == null) {
+            return result;
+        }
+
+        result.status = true;
+        result.data = "PIN find success";
         return result;
     }
 
