@@ -41,6 +41,9 @@ const PlayQuizStore = {
     SET_ISSTART: function (state, value) {
       state.isStart = value;
     },
+    ADD_QUIZINDEX: function (state) {
+      state.quizIndex++;
+    },
     SET_TOTALNUM: function (state, value) {
       state.totalNum = value;
     },
@@ -131,6 +134,7 @@ const PlayQuizStore = {
           } else if (type === "FINISH") {
             commit('SET_ISFIN', true);
           } else if (type === "NEXT") {
+            commit('ADD_QUIZINDEX');
             commit('SET_ISNEXT', true);
           } else if (type === "END") {
             commit('SET_RESULTDATA', JSON.parse(msg.body).content);
