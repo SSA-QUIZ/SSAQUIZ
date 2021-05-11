@@ -244,13 +244,13 @@ export default {
   align-items: center;
   width:60%;
   min-height: 100%;
-  z-index: 5;
+  /* z-index: 5; */
 }
 
 #profile__info {
   margin-left: 5%;
   font-size: 2vh;
-  z-index: 5;
+  /* z-index: 5; */
 }
 
 #profile__info button:hover {
