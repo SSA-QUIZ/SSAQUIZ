@@ -50,8 +50,8 @@ public class AuthController {
     }
 
     @ApiOperation(value = "회원탈퇴")
-    @DeleteMapping("/user")
-    public BasicResponse delete(@RequestBody String email) {
+    @DeleteMapping("/user/{email}")
+    public BasicResponse delete(@PathVariable("email") String email) {
         return userService.delete(email);
     }
 }
