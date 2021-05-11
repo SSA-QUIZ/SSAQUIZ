@@ -5,6 +5,17 @@ import Stomp from 'stompjs';
 var ws;
 var pin;
 
+var colorList = [
+  "#FFE059",
+  "#FF89B4",
+  "#ABD0F2",
+  "#D98EF8",
+  "#A1DBF3",
+  "#B9BDFD",
+  "#B6F1A1",
+  "#FFC178",
+];
+
 const CreateQuizRoomStore = {
   namespaced: true,
   state: {
@@ -34,7 +45,8 @@ const CreateQuizRoomStore = {
       state.stompClient = value;
     },
     ADD_STUDENTS: function (state, value) {
-      state.students.push({nickname: value, color: '#FFE059'});
+      let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
+      state.students.push({nickname: value, color: randomColor});
       let UserListMessage = {
         type: "USERLIST",
         content: state.students,
