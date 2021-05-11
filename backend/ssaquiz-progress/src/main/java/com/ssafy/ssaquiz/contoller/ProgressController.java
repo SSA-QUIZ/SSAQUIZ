@@ -74,8 +74,14 @@ public class ProgressController {
     }
 
     @ApiOperation(value = "PIN 생성하기")
-    @GetMapping("/pin")
+    @PostMapping("/pin")
     public Object makePin() {
         return progressService.makePin();
+    }
+
+    @ApiOperation(value = "PIN 조회하기")
+    @GetMapping("/pin/{pin}")
+    public Object findPin(@PathVariable String pin) {
+        return progressService.findPin(pin);
     }
 }
