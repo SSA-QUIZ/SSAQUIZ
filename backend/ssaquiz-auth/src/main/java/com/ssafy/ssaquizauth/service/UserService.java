@@ -1,5 +1,6 @@
 package com.ssafy.ssaquizauth.service;
 
+import com.ssafy.ssaquizauth.dto.UserDto;
 import com.ssafy.ssaquizauth.model.AuthProvider;
 import com.ssafy.ssaquizauth.model.BasicResponse;
 import com.ssafy.ssaquizauth.model.User;
@@ -183,26 +184,28 @@ public class UserService {
         return result;
     }
 
-    public BasicResponse modify(String name, String password, String email) {
+    public BasicResponse modify(UserDto userDto) {
         BasicResponse result = new BasicResponse();
 
-        if (email == null) {
+        if (userDto == null || userDto.getEmail() == null) {
             result.status = false;
             result.data = "modify fail (null)";
             return result;
         }
 
-        Optional<User> user = userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findByEmail(userDto.getEmail());
         if(!user.isPresent()) {
             result.status = false;
             result.data = "modify fail (email does not exist)";
             return result;
         }
 
+        String name = userDto.getName();
         if(name != null && !"".equals(name)){
             user.get().setName(name);
         }
 
+        String password = userDto.getPassword();
         if(password != null && !"".equals(password)) {
             user.get().setPassword(passwordEncoder.encode(password));
         }

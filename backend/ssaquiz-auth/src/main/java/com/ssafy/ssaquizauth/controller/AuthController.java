@@ -1,5 +1,6 @@
 package com.ssafy.ssaquizauth.controller;
 
+import com.ssafy.ssaquizauth.dto.UserDto;
 import com.ssafy.ssaquizauth.service.UserService;
 import com.ssafy.ssaquizauth.model.BasicResponse;
 import com.ssafy.ssaquizauth.payload.*;
@@ -37,20 +38,20 @@ public class AuthController {
     }
 
     @ApiOperation(value = "회원정보 수정 (사진포함)")
-    @PostMapping("/modify-image")
+    @PutMapping("/user-image")
     public BasicResponse modifyImage(@RequestParam("file") MultipartFile inputFile, @RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
         return userService.modifyImage(inputFile, name, password, email);
     }
 
     @ApiOperation(value = "회원정보 수정")
-    @PostMapping("/modify")
-    public BasicResponse modify(@RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
-        return userService.modify(name, password, email);
+    @PutMapping("/user")
+    public BasicResponse modify(@RequestBody UserDto userDto) {
+        return userService.modify(userDto);
     }
 
     @ApiOperation(value = "회원탈퇴")
-    @PostMapping("/withdrawal")
-    public BasicResponse delete(@RequestParam("email") String email) {
+    @DeleteMapping("/user")
+    public BasicResponse delete(@RequestBody String email) {
         return userService.delete(email);
     }
 }
