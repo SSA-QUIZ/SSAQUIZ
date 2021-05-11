@@ -36,8 +36,7 @@ export default {
         this.setIsInterim(false);
         this.setIsNext(false);
         this.setIsFin(false);
-        this.setIsNext(false);
-        this.$router.push({name: "SolvingQuizPageT"});
+        this.$router.push({name: "LoadingPage"});
       }
     },
   },

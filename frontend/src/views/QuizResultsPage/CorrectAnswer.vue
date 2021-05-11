@@ -28,7 +28,7 @@ export default {
 				this.setIsSolved(false);
 				this.setIsCorrect(false);
 				this.setIsNext(false);
-				this.$router.push({ name: "SolvingQuizPage" });
+				this.$router.push({ name: "LoadingPage" });
 			}
 		},
 		isEnd: function (newVal) {
