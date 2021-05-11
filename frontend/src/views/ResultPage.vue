@@ -87,7 +87,7 @@ export default {
 
 #result .logo {
   position: absolute;
-  width: 40vh;
+  width: 330px;
   height: 90px;
   animation: comeIn both .2s ease 5.5s;
 }
