@@ -19,19 +19,23 @@ export default {
   ],
   computed: {
     ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+    quizDataLength: function () {
+      if (this.quizData.slideList == undefined) {
+        return 0;
+      }
+      return this.quizData.slideList.length;
+    }
   },
   watch: {
     selectedSlideIndex: function () {
       this.getOption(this.selectedSlideIndex);
     },
-    quizData: function () {
-      if (this.quizData.slideList != undefined) {
-        if (this.quizData.slideList.length > 0) {
-          this.getOption(0);
-        }
-        else {
-          document.getElementById(`${this.optionList[0].id}`).checked = true;
-        }
+    quizDataLength: function () {
+      if (this.quizDataLength == 0) {
+        document.getElementById(`${this.optionList[0].id}`).checked = true;
+      }
+      else {
+        this.getOption(this.selectedSlideIndex);
       }
     }
   },
@@ -41,13 +45,11 @@ export default {
     ...mapActions("CreateQuizStore", ["setOptions"]),
     selectOption: function (idx) {
       let val = [this.title, this.selectedSlideIndex, idx];
-      console.log('radio', val);
       this.setOptions(val);
       this.$emit("radio-option", idx);
     },
     getOption: function (idx) {
       let index = this.quizData.slideList[idx][this.title];
-      console.log(index)
       document.getElementById(`${this.optionList[index].id}`).checked = true;
     }
   }
