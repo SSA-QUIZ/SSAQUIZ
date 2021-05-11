@@ -1,5 +1,6 @@
 <template>
   <div id="user-page-container">
+    <!-- <WaveBG /> -->
     <Header mode="off" />
     <div id="user-page-content">
       <div id="profile">
@@ -60,16 +61,17 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+// import WaveBG from '@/components/effects/WaveBG.vue';
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
 import Dialog from '@/components/Popup/Dialog';
 import Confirm from "@/components/Popup/Confirm.vue";
 import Alert from "@/components/Popup/Alert.vue";
-// import axios from 'axios';
 
 export default {
   name: 'UserPage',
   components: {
+    // WaveBG,
     Header,
     QuizSet,
     Confirm,
@@ -198,6 +200,7 @@ export default {
 #user-page-container {
   background-color: #CFE1F6;
   height: 100%;
+  overflow: hidden;
 }
 
 #user-page-content {
@@ -241,11 +244,18 @@ export default {
   align-items: center;
   width:60%;
   min-height: 100%;
+  z-index: 5;
 }
 
 #profile__info {
   margin-left: 5%;
   font-size: 2vh;
+  z-index: 5;
+}
+
+#profile__info button:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.2);
 }
 
 #quiz-set-list__list {
@@ -265,6 +275,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1%;
+}
+
+#quiz-set-list__title button:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.2);
 }
 
 .quiz-set {
