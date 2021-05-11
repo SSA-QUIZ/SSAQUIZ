@@ -3,7 +3,7 @@
     <div class="podium-1">
       <div>
         <img class="crown" src="@/assets/images/bronzeCrown.png"/>
-        <span>{{ silver }}</span>
+        <span>{{ bronze }}</span>
       </div>
       <img class="podium-image" src="@/assets/images/bronzePodium.png"/>
     </div>
@@ -19,7 +19,7 @@
     <div class="podium-2">
       <div>
         <img class="crown" src="@/assets/images/silverCrown.png"/>
-        <span>{{ bronze }}</span>
+        <span>{{ silver }}</span>
       </div>
       <img class="podium-image" src="@/assets/images/silverPodium.png"/>
     </div>
@@ -30,26 +30,37 @@
 import { mapState } from 'vuex'
 export default {
   name: "Podium",
+  mounted: function () {
+    console.log(mapState)
+  },
   computed: {
+    ...mapState("CommonStore", ["isStudent"]),
     ...mapState("CreateQuizRoomStore", ["resultData"]),
-
+    ...mapState("PlayQuizStore", ["resultData2"]),
+    rankData: function () {
+      if (this.isStudent === true) {
+        return this.resultData2
+      } else {
+        return this.resultData
+      }
+    },
     gold: function () {
-      if (this.resultData.length === 0) {
+      if (this.rankData.length === 0) {
         return ''
       } else {
-        return this.resultData[0]["value"]
+        return this.rankData[0]["value"]
       }
     },
     silver: function () {
-      if (this.resultData.length === 2) {
-        return this.resultData[1]["value"]
+      if (this.rankData.length >= 2) {
+        return this.rankData[1]["value"]
       } else {
         return ''
       }
     },
     bronze: function () {
-      if (this.resultData.length === 3) {
-        return this.resultData[1]["value"]
+      if (this.rankData.length === 3) {
+        return this.rankData[2]["value"]
       } else {
         return ''
       }

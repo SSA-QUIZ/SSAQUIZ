@@ -22,7 +22,7 @@ const PlayQuizStore = {
     isCorrect: false,
     isNext: false,
     isEnd: false,
-    resultData: [],
+    resultData2: [],
   },
   getters: {},
   mutations: {
@@ -72,7 +72,7 @@ const PlayQuizStore = {
       state.isEnd = value;
     },
     SET_RESULTDATA: function (state, value) {
-      state.resultData = value;
+      state.resultData2 = value;
     },
     SET_SCORE: function (state, value) {
       state.score = value;
