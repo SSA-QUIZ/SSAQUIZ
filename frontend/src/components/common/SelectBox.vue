@@ -19,20 +19,24 @@ export default {
   ],
   computed: {
     ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+    quizDataLength: function () {
+      if (this.quizData.slideList === undefined) {
+        return 0;
+      }
+      return this.quizData.slideList.length;
+    }
   },
   watch: {
     selectedSlideIndex: function () {
       this.getOption(this.selectedSlideIndex);
     },
-    quizData: function () {
-      if (this.quizData.slideList != undefined) {
-        if (this.quizData.slideList.length > 0) {
-          this.getOption(0);
-        }
-        else {
-          let select = document.getElementById(`${this.title}`);
-          select.options[0].selected = true;
-        }
+    quizDataLength: function () {
+      if (this.quizData.slideList.length == 0) {
+        let select = document.getElementById(`${this.title}`);
+        select.options[0].selected = true;
+      }
+      else {
+        this.getOption(this.selectedSlideIndex);
       }
     }
   },
@@ -42,13 +46,11 @@ export default {
       let select = document.getElementById(`${this.title}`);
       this.$emit('select-option', select.selectedIndex);
       let val = [this.title, this.selectedSlideIndex, select.selectedIndex];
-      console.log('select', val)
       this.setOptions(val);
     },
     getOption: function (idx) {
       let select = document.getElementById(`${this.title}`);
       let index = this.quizData.slideList[idx][this.title];
-      console.log(index)
       select.options[index].selected = true;
     }
   }
