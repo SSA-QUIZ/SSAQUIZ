@@ -1,7 +1,7 @@
 <template>
   <div class="king-whale-container">
     <img class="king-whale" src="@/assets/images/kingWhale.png"/>
-    <h1>{{ resultData[0]["value"] }}</h1>
+    <h1>{{ winner }}</h1>
   </div>
 </template>
 
@@ -10,7 +10,15 @@ import { mapState } from 'vuex'
 export default {
   name: "Winner",
   computed: {
-    ...mapState("CreateQuizRoomStore", ["resultData"])
+    ...mapState("CreateQuizRoomStore", ["resultData"]),
+
+    winner: function () {
+      if (this.resultData.length === 0) {
+        return ''
+      } else {
+        return this.resultData[0]["value"]
+      }
+    }
   },
 }
 </script>
