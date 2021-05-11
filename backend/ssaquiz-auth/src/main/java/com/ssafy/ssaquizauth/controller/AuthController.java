@@ -54,4 +54,10 @@ public class AuthController {
     public BasicResponse delete(@PathVariable("email") String email) {
         return userService.delete(email);
     }
+
+    @ApiOperation(value = "회원정보 조회")
+    @PostMapping("/user")
+    public BasicResponse find(@RequestBody String token) {
+        return userService.find(token);
+    }
 }

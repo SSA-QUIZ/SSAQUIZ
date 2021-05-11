@@ -122,19 +122,19 @@ public class UserService {
     public BasicResponse logout(String email) {
         BasicResponse result = new BasicResponse();
 
-        if(email == null) {
+        if (email == null) {
             result.status = false;
             result.data = "logout fail (email is null)";
             return result;
         }
 
-        if("".equals(email)) {
+        if ("".equals(email)) {
             result.status = false;
             result.data = "logout fail (email is null string)";
             return result;
         }
 
-        if(redisUtil.getData(email) == null) {
+        if (redisUtil.getData(email) == null) {
             result.status = false;
             result.data = "logout fail (email does not exist)";
             return result;
@@ -157,7 +157,7 @@ public class UserService {
         }
 
         Optional<User> user = userRepository.findByEmail(email);
-        if(!user.isPresent()) {
+        if (!user.isPresent()) {
             result.status = false;
             result.data = "modify fail (email does not exist)";
             return result;
@@ -166,11 +166,11 @@ public class UserService {
         String imgPath = s3Service.upload(inputFile);
         user.get().setImageUrl(imgPath);
 
-        if(name != null && !"".equals(name)){
+        if (name != null && !"".equals(name)) {
             user.get().setName(name);
         }
 
-        if(password != null && !"".equals(password)) {
+        if (password != null && !"".equals(password)) {
             user.get().setPassword(passwordEncoder.encode(password));
         }
 
@@ -194,19 +194,19 @@ public class UserService {
         }
 
         Optional<User> user = userRepository.findByEmail(userDto.getEmail());
-        if(!user.isPresent()) {
+        if (!user.isPresent()) {
             result.status = false;
             result.data = "modify fail (email does not exist)";
             return result;
         }
 
         String name = userDto.getName();
-        if(name != null && !"".equals(name)){
+        if (name != null && !"".equals(name)) {
             user.get().setName(name);
         }
 
         String password = userDto.getPassword();
-        if(password != null && !"".equals(password)) {
+        if (password != null && !"".equals(password)) {
             user.get().setPassword(passwordEncoder.encode(password));
         }
 
@@ -227,7 +227,7 @@ public class UserService {
         }
 
         Optional<User> user = userRepository.findByEmail(email);
-        if(!user.isPresent()) {
+        if (!user.isPresent()) {
             result.status = false;
             result.data = "withdrawal fail (email does not exist)";
             return result;
@@ -237,6 +237,40 @@ public class UserService {
 
         result.status = true;
         result.data = "withdrawal success";
+        return result;
+    }
+
+    public BasicResponse find(String token) {
+        BasicResponse result = new BasicResponse();
+        result.status = false;
+        result.data = "find fail";
+
+        if (token == null) {
+            result.data = "find fail (token is null)";
+            return result;
+        }
+
+        String email = redisUtil.getData(token);
+        if (email == null) {
+            result.data = "find fail (email does not exist)";
+            return result;
+        }
+
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("accessToken", token);
+            jsonObject.put("id", user.get().getId());
+            jsonObject.put("nickname", user.get().getName());
+            jsonObject.put("email", user.get().getEmail());
+            jsonObject.put("imageUrl", user.get().getImageUrl());
+
+            result.status = true;
+            result.data = "find suceess";
+            result.object = jsonObject;
+            return result;
+        }
+
         return result;
     }
 }

@@ -4,7 +4,9 @@ import com.ssafy.ssaquizauth.config.AppProperties;
 import com.ssafy.ssaquizauth.exception.BadRequestException;
 import com.ssafy.ssaquizauth.security.TokenProvider;
 import com.ssafy.ssaquizauth.util.CookieUtils;
+import com.ssafy.ssaquizauth.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
+    @Value("${app.auth.tokenExpirationMsec}")
+    private long tokenExpirationMsec;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     OAuth2AuthenticationSuccessHandler(TokenProvider tokenProvider, AppProperties appProperties,
@@ -61,6 +68,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
         String token = tokenProvider.createToken(authentication);
+
+        // 소셜 로그인시 Redis에 데이터 넣기
+        redisUtil.setDataExpire(token, authentication.getName(), tokenExpirationMsec);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)
