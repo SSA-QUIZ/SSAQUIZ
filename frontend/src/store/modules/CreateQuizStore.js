@@ -4,11 +4,7 @@ const CreateQuizStore = {
   namespaced: true,
   state: {
     quizData: {},
-  },
-  getters: {
-    getData(state) {
-      return state.quizData;
-    }
+    selectedSlideIndex: 0
   },
   mutations: {
     SET_QUIZ_DATA: function (state, value) {
@@ -32,7 +28,7 @@ const CreateQuizStore = {
     SET_OPTIONS: function (state, value) {
       if (value[0] === "scoreFactor")
         state.quizData.slideList[value[1]].scoreFactor = value[2];
-      else if (value[0] === "timeLimit")
+      else if (value[0] === "time")
         state.quizData.slideList[value[1]].time = value[2];
       else
         state.quizData.slideList[value[1]].type = value[2];
@@ -42,11 +38,14 @@ const CreateQuizStore = {
       console.log(value)
       state.quizData.slideList.splice(value, 1);
       console.log(state.quizData);
+    },
+    SET_SELECTED_SLIDE_INDEX: function (state, value) {
+      state.selectedSlideIndex = value;
     }
   },
   actions: {
-    getQuizData: async function ({ commit }, value) {
-      await axios.get("https://k4a304.p.ssafy.io/api-quiz/workbook/" + value)
+    getQuizData: function ({ commit }, value) {
+      axios.get("https://k4a304.p.ssafy.io/api-quiz/workbook/" + value)
         .then(res => {
           commit('SET_QUIZ_DATA', res.data.object);
         })
@@ -74,13 +73,20 @@ const CreateQuizStore = {
       commit('SET_OPTIONS', value)
     },
     removeSlide: async function ({ commit }, value) {
-      await axios.delete(`http://k4a304.p.ssafy.io/api-quiz/workbook/${value[0]}/${value[1]}/${value[2]}`)
+      await axios.delete(`https://k4a304.p.ssafy.io/api-quiz/workbook/${value[0]}/${value[1]}/${value[2]}`)
         .then(res => {
           console.log(res);
           commit('DELETE_SLIDE', value[2]);
           return res
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err);
+          commit('DELETE_SLIDE', value[2]);
+        })
+    },
+    setSelectedSlideIndex: function ({ commit }, value) {
+      console.log('index', value);
+      commit('SET_SELECTED_SLIDE_INDEX', value);
     }
   }
 };

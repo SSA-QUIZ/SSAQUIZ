@@ -12,12 +12,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: "QuizSlide",
   props: ['number',
     'slide',
     'isSelected'
   ],
+  computed: {
+    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+  },
 }
 </script>
 

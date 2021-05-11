@@ -9,20 +9,25 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'SelectBox',
   props: [
     'title',
-    'slideIndex',
-    'index',
     'optionList',
   ],
+  computed: {
+    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+  },
   watch: {
-    index: function () {
-      let select = document.getElementById(`${this.title}`);
-      select.options[this.index].selected = true;
+    selectedSlideIndex: function () {
+      this.getOption(this.selectedSlideIndex);
+    },
+    quizData: function () {
+      if (this.quizData.slideList != undefined && this.quizData.slideList.length > 0) {
+        this.getOption(0);
+      }
     }
   },
   methods: {
@@ -30,8 +35,15 @@ export default {
     selectOption: function () {
       let select = document.getElementById(`${this.title}`);
       this.$emit('select-option', select.selectedIndex);
-      let val = [this.title, this.slideIndex, select.selectedIndex];
+      let val = [this.title, this.selectedSlideIndex, select.selectedIndex];
+      console.log('select', val)
       this.setOptions(val);
+    },
+    getOption: function (idx) {
+      let select = document.getElementById(`${this.title}`);
+      let index = this.quizData.slideList[idx][this.title];
+      console.log(index)
+      select.options[index].selected = true;
     }
   }
 }
