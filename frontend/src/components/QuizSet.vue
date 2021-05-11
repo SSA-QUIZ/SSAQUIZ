@@ -54,6 +54,11 @@ export default {
   font-size: 3vh;
 }
 
+.quiz-set__buttons button:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.1);
+}
+
 /* hover css */
 .image-hover-container 
 {

@@ -7,11 +7,14 @@
         id="multiple-choice-creator__input-question"
       >
       <input type="file" name="file" class="image-input">
+      <!-- 이미지 등록 안했을 때 -->
       <span v-if="image == ''" class="image-upload-btn" onclick="document.all.file.click();">
         <i class="fas fa-camera camera-img"></i>
       </span>
+      <!-- 이미지 등록했을 때 -->
       <span v-else id="image__span"><img class="image image-input" :src="image" width="150px;" /></span>
     </div>
+    
     <div>
       <div class="choice-row">
         <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
@@ -142,6 +145,12 @@ input.image-input {
 .camera-img {
   text-align: center;
   font-size: 100px;
+}
+
+.camera-img:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .choice-row {
