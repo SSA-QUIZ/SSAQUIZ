@@ -28,7 +28,7 @@
       </div>
       <div id="creator-page__content">
         <!-- <ShortAnswerCreator v-if="category === '단답형'"/> -->
-        <div v-if ="quizDataLength === 0">슬라이드 없음</div>
+        <TextDiv message="지금 바로 퀴즈를 만들어보세요!" v-if ="quizDataLength === 0" />
         <MultipleChoiceCreator 
           v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'"
         />
@@ -80,6 +80,7 @@ import Confirm from '@/components/Popup/Confirm.vue';
 import Alert from "@/components/Popup/Alert.vue";
 import SelectBox from '@/components/common/SelectBox.vue';
 import RadioBox from '@/components/common/RadioBox.vue';
+import TextDiv from '@/components/common/TextDiv.vue';
 
 import { mapState, mapActions } from 'vuex';
 import axios from 'axios';
@@ -94,7 +95,8 @@ export default {
     Confirm,
     Alert,
     SelectBox,
-    RadioBox
+    RadioBox,
+    TextDiv
   },
   data: function () {
     return {
@@ -127,7 +129,7 @@ export default {
   computed: {
     ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
     quizDataLength: function () {
-      if (this.quizData.slideList == undefined) {
+      if (this.quizData.slideList === undefined) {
         return 0;
       }
       else {
@@ -144,19 +146,14 @@ export default {
       "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide"
     ]),
     selectSlide: function (idx) {
-      console.log(idx)
       this.isSelectedSlide = 
         Array.from({length: this.quizData.slideList.length}, () => false);
       this.isSelectedSlide[idx] = true;
+      if (idx == this.quizData.slideList.length && idx != 0) idx--;
       this.setSelectedSlideIndex(idx);
     },
     deleteSlide: function (idx) {
-      console.log(idx)
-      this.removeSlide([this.$route.params.workbookId, localStorage.getItem('id'), idx])
-        .then(() => {
-          this.setSelectedSlideIndex(--idx);
-        })
-        .catch((err) => {console.log(err);})
+      this.removeSlide(idx);
     },
     exit: function () {
       this.$router.push({ name: "UserPage" });

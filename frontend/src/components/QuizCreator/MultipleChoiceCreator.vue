@@ -4,15 +4,17 @@
       <input type="text" 
         placeholder="문제를 입력해주세요." 
         :value="question" 
-        @input="changeQuestion" 
         id="multiple-choice-creator__input-question"
       >
       <input type="file" name="file" class="image-input">
+      <!-- 이미지 등록 안했을 때 -->
       <span v-if="image == ''" class="image-upload-btn" onclick="document.all.file.click();">
         <i class="fas fa-camera camera-img"></i>
       </span>
+      <!-- 이미지 등록했을 때 -->
       <span v-else id="image__span"><img class="image image-input" :src="image" width="150px;" /></span>
     </div>
+    
     <div>
       <div class="choice-row">
         <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
@@ -42,7 +44,6 @@ export default {
   },
   data: function () {
     return {
-      question: "",
       defaultImg: "",
       image: File
     }
@@ -67,56 +68,29 @@ export default {
         })
         .catch(err => console.log(err))
     });
-    
-    // let data = this.quizData.slideList[this.slideIndex];
-    // console.log('mounted', data)
-    // this.choices = data.answerList;
-    // this.question = data.question;
-    // this.image = data.imagePath;
-    console.log('mounted', this.selectedSlideIndex)
   },
   updated: function () {
     let data = this.quizData.slideList[this.selectedSlideIndex];
     this.choices = data.answerList;
-    this.question = data.question;
     this.image = data.imagePath;
-    console.log('updated', this.selectedSlideIndex)
+    this.setSlideQuestion([this.selectedSlideIndex, this.question]);
   },
   created: function () {
     let data = this.quizData.slideList[this.selectedSlideIndex];
-    console.log('created', data)
     this.choices = data.answerList;
-    this.question = data.question;
     this.image = data.imagePath;
-    console.log(this.selectedSlideIndex)
+    this.setSlideQuestion([this.selectedSlideIndex, this.question]);
   },
   computed: {
     ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
-  },
-  watch: {
-    selectedSlideIndex: function () {
-      console.log(this.quizData.slideList)
-      if (this.quizData.slideList == undefined) {
-        console.log("없음")
-      } else {
-        let data = this.quizData.slideList[this.selectedSlideIndex];
-        console.log(data)
-        this.question = data.question;
-        this.choices = data.answerList;
-        this.image = data.imagePath;
-      }
-      
-    }
+    question: function () {
+      return this.quizData["slideList"][this.selectedSlideIndex]["question"];
+    },
   },
   methods: {
     ...mapActions("CreateQuizStore", ["setSlideQuestion", "setImageData"]),
-    changeQuestion: function (e) {
-      this.question = e.target.value;
-      let val = [this.slideIndex, this.question];
-      this.setSlideQuestion(val);
-    },
     setImage: function (data) {
-      let val = [this.slideIndex, data]
+      let val = [this.selectedSlideIndex, data]
       this.setImageData(val);
     }
   },
@@ -171,6 +145,12 @@ input.image-input {
 .camera-img {
   text-align: center;
   font-size: 100px;
+}
+
+.camera-img:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .choice-row {
