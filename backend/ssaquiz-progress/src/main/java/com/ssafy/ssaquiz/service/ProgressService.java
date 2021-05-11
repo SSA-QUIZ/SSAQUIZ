@@ -7,6 +7,7 @@ import com.ssafy.ssaquiz.util.RedisUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -21,25 +22,51 @@ public class ProgressService {
     private RedisUtil redisUtil;
 
     @Autowired
-    SimpMessagingTemplate simpMessagingTemplate;
+    private SimpMessagingTemplate simpMessagingTemplate;
+
+    @Value("${prefix.userList}")
+    private String USER_LIST;
+
+    @Value("${prefix.answerList}")
+    private String ANSWER_LIST;
+
+    @Value("${prefix.time}")
+    private String TIME;
+
+    @Value("${prefix.question}")
+    private String QUESTION;
 
     public void enterUser(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
         System.out.println("enterUser()");
         System.out.println(message);
 
-        if (message.getType() == MessageType.JOIN) {
-            if (registUser("userList" + pin, message.getSender())) {
-                message.setContent("닉네임 등록 성공");
-            } else {
-                message.setContent("닉네임 등록 실패");
-            }
+        if (message == null || message.getSender() == null) {
+            message.setContent("join fail (null)");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
         }
 
-        if (message.getType() == MessageType.LEAVE) {
-
+        if (message.getSender().length() > 15) {
+            message.setContent("join fail (over length)");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
         }
 
-        headerAccessor.getSessionAttributes().put("nickname", message.getSender());
+        if (registUser(USER_LIST + pin, message.getSender())) {
+            message.setContent("join success");
+            headerAccessor.getSessionAttributes().put("nickname", message.getSender());
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
+        message.setContent("join fail (overlap)");
+        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
+    public void outsideUser(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
+        System.out.println("outsideUser()");
+        System.out.println(message);
+
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -47,11 +74,19 @@ public class ProgressService {
         System.out.println("startQuiz()");
         System.out.println(message);
 
-        if (setAnswerList("answerList" + pin, (ArrayList) message.getContent())) {
-            message.setContent("퀴즈 시작 성공");
-        } else {
-            message.setContent("퀴즈 시작 실패");
+        if (message == null || message.getContent() == null) {
+            message.setContent("start fail (null)");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
         }
+
+        if (setAnswerList(ANSWER_LIST + pin, (ArrayList) message.getContent())) {
+            message.setContent("start success");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
+        message.setContent("start fail");
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -59,7 +94,20 @@ public class ProgressService {
         System.out.println("finishQuiz()");
         System.out.println(message);
 
-        message.setContent(viewRanking("userList" + pin, 0, 2));
+        if (message == null || message.getQuizNum() == null) {
+            message.setContent("finish fail (null)");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
+        message.setContent(redisUtil.getRanking(QUESTION + message.getQuizNum() + pin, 0, 2));
+        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
+    public void nextQuiz(int pin, Message message) {
+        System.out.println("nextQuiz()");
+        System.out.println(message);
+
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -67,7 +115,7 @@ public class ProgressService {
         System.out.println("sendCategory()");
         System.out.println(message);
 
-        message.setContent(viewRanking("userList" + pin, 0, 2));
+        message.setContent(viewRanking(USER_LIST + pin, 0, 2));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -75,36 +123,62 @@ public class ProgressService {
         System.out.println("endQuiz()");
         System.out.println(message);
 
-        redisUtil.setData("time" + pin, Long.toString(System.currentTimeMillis() / 100));
+        redisUtil.setData(TIME + pin, Long.toString(System.currentTimeMillis() / 100));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     public void sendAnswer(int pin, Message message) {
         System.out.println("sendAnswer()");
         System.out.println(message);
-        Object originContent = message.getContent();
 
-        boolean isCorrect = grade("answerList" + pin, message.getQuizNum(), (String) message.getContent());
+        if (message == null || message.getContent() == null || message.getSender() == null || message.getQuizNum() == null) {
+            message.setContent("submit fail (null)");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
+        Object originContent = message.getContent();
+        boolean isCorrect = grade(ANSWER_LIST + pin, message.getQuizNum(), (String) message.getContent());
 
         if (isCorrect) {
-            long plusScore = 600 - ((System.currentTimeMillis() / 100) - Long.parseLong(redisUtil.getData("time")));
-            double CurrentScore = plusScore("userList" + pin, message.getSender(), plusScore);
+            long plusScore = 600 - ((System.currentTimeMillis() / 100) - Long.parseLong(redisUtil.getData(TIME + pin)));
+            redisUtil.addZdata(QUESTION + message.getQuizNum() + pin, message.getSender(), plusScore);
+            double CurrentScore = plusScore(USER_LIST + pin, message.getSender(), plusScore);
+
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("answer", true);
             jsonObject.put("plusScore", plusScore);
             jsonObject.put("CurrentScore", CurrentScore);
+
             message.setContent(jsonObject);
             simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getSender(), message);
-        } else {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("answer", false);
-            jsonObject.put("plusScore", 0);
-            jsonObject.put("CurrentScore", getScore("userList" + pin, message.getSender()));
-            message.setContent(jsonObject);
-            simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getSender(), message);
+            message.setContent(originContent);
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
         }
 
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("answer", false);
+        jsonObject.put("plusScore", 0);
+        jsonObject.put("CurrentScore", getScore(USER_LIST + pin, message.getSender()));
+
+        message.setContent(jsonObject);
+        simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getSender(), message);
         message.setContent(originContent);
+        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
+    public void sendUserList(int pin, Message message) {
+        System.out.println("sendUserList()");
+        System.out.println(message);
+
+        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
+    public void sendTotalNum(int pin, Message message) {
+        System.out.println("sendTotalNum()");
+        System.out.println(message);
+
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -117,8 +191,7 @@ public class ProgressService {
             exist = redisUtil.getData(pin);
         }
 
-        // redisUtil.setData(pin, "exist");
-        redisUtil.setDataExpire(pin, "exist", 10L);
+        redisUtil.setData(pin, "exist");
 
         BasicResponse result = new BasicResponse();
         result.status = true;

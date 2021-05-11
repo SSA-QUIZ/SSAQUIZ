@@ -28,6 +28,11 @@ public class ProgressController {
         progressService.enterUser(pin, message, headerAccessor);
     }
 
+    @MessageMapping("/room/outsideUser/{pin}")
+    public void outsideUser(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
+        progressService.outsideUser(pin, message, headerAccessor);
+    }
+
     @MessageMapping("/room/startQuiz/{pin}")
     public void startQuiz(@DestinationVariable("pin") int pin, @Payload Message message) {
         progressService.startQuiz(pin, message);
@@ -40,10 +45,7 @@ public class ProgressController {
 
     @MessageMapping("/room/nextQuiz/{pin}")
     public void nextQuiz(@DestinationVariable("pin") int pin, @Payload Message message) {
-        System.out.println("nextQuiz()");
-        System.out.println(message);
-
-        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+        progressService.nextQuiz(pin, message);
     }
 
     @MessageMapping("/room/endQuiz/{pin}")
@@ -63,18 +65,12 @@ public class ProgressController {
 
     @MessageMapping("/room/sendUserList/{pin}")
     public void sendUserList(@DestinationVariable("pin") int pin, @Payload Message message) {
-        System.out.println("sendUserList()");
-        System.out.println(message);
-
-        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+        progressService.sendUserList(pin, message);
     }
 
     @MessageMapping("/room/sendTotalNum/{pin}")
     public void sendTotalNum(@DestinationVariable("pin") int pin, @Payload Message message) {
-        System.out.println("sendTotalNum()");
-        System.out.println(message);
-
-        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+        progressService.sendTotalNum(pin, message);
     }
 
     @ApiOperation(value = "PIN 생성하기")
