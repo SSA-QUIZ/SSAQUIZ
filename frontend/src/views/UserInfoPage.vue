@@ -117,10 +117,15 @@ export default {
     },
 
     signout: function () {
-
-      
-      // 회원 탈퇴 기능 넣기
-
+      const email = localStorage.getItem("email");
+      axios.delete(`https://k4a304.p.ssafy.io/api-auth/auth/user/${email}`)
+        .then(res => {
+          console.log(res);
+          localStorage.clear();
+          this.$router.push({name: "WelcomePage"});
+          this.confirmFlag = false;
+        })
+        .catch(err => console.log(err))
     },
 
     // 취소 함수
@@ -130,36 +135,41 @@ export default {
 
     // 변경 함수
     update: function () {
-      const formData = new FormData();
-      const headers = { "Content-Type": "multipart/form-data" };
-
       if (this.password.length !== 0 && this.password !== this.passwordConfirm){
         this.alertMessage = "비밀번호가 일치하지 않습니다! 다시 입력해주세요!";
         this.color = "red";
         this.flag = !this.flag;
-
       } else {
 
         if (this.imgData.name == 'File') {
           // 1. 사진을 바꾸지 않을 때
-          formData.append("email", localStorage.getItem('email'));
-          formData.append("name", this.nickname);
-          formData.append("password", this.password);
+          const data = { "email": localStorage.getItem('email'), "name": this.nickname, "password": this.password }
 
-          axios.post("https://k4a304.p.ssafy.io/api-auth/auth/modify", formData, headers)
-          .then(res => console.log(res))
+          axios.put("https://k4a304.p.ssafy.io/api-auth/auth/user", data)
+          .then(res => {
+            console.log(res);
+            if (this.nickname.length !== 0) {
+              localStorage.setItem("nickname", this.nickname);
+            }
+          })
           .catch(err => console.log(err))
 
         } else {  
           // 2. 사진을 바꿀 때
+          const formData = new FormData();
+          const headers = { "Content-Type": "multipart/form-data" };
+
           formData.append("file", this.imgData);
           formData.append("email", localStorage.getItem('email'));
           formData.append("name", this.nickname);
           formData.append("password", this.password);
 
-          axios.post("https://k4a304.p.ssafy.io/api-auth/auth/modify-image", formData, headers)
+          axios.put("https://k4a304.p.ssafy.io/api-auth/auth/user-image", formData, headers)
           .then(res => {
             localStorage.setItem("imageUrl", res.data.object.imageUrl)
+            if (this.nickname.length !== 0) {
+              localStorage.setItem("nickname", this.nickname);
+            }
           })
           .catch(err => console.log(err))
         }

@@ -4,6 +4,10 @@
     <img class="whale" src="@/assets/images/WelcomPage-icon.png"/>
     <div class="text">1등은 누구일까요?!</div>
     <img class="logo" src="@/assets/images/resultLogo.png"/>
+    <div @click="moveToUserPage" class="router-image">
+      <img src="@/assets/images/shrimp2.png"/>
+      <span>메인 페이지로 GO!</span>
+    </div>
     <Podium/>
     <Winner/>
   </div>
@@ -17,11 +21,16 @@ export default {
   components: {
     Podium,
     Winner,
+  },
+  methods: {
+    moveToUserPage: function () {
+      this.$router.push({ name: "WelcomePage" });
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 /* 결과 페이지 css */
 
 #result {
@@ -92,6 +101,35 @@ export default {
   animation: comeIn both .2s ease 5.5s;
 }
 
+/* 유저 정보 페이지로 이동 */
+
+#result .router-image {
+  position: absolute;
+  left: 3%;
+  top: 2%;
+  width: 10%;
+  height: 15%;
+  z-index: 5;
+  cursor: pointer;
+
+  animation: shaking infinite, router-effect .3s ease both 8.5s;
+	animation-duration: 1.8s;
+	animation-timing-function: linear;
+}
+
+#result .router-image:hover {
+  animation-play-state: paused;
+}
+
+#result .router-image img {
+  display: block;
+  height: 80%;
+}
+
+#result .router-image span {
+  font-family: Jua;
+  font-size: 1.5rem;
+}
 
 /* 애니메이션 효과 */
 
@@ -157,4 +195,25 @@ export default {
     top: 2%;
   }
 }
+
+/* 유저 페이지로 이동하는 아이콘의 이벤트 */
+
+@keyframes router-effect {
+  0% {
+   opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shaking {
+	3%, 98% { transform: translate(0px); }
+	16% { transform: translate(10px); }
+	33% { transform: translate(-10px); }
+	50% { transform: translate(6px); }
+	67% { transform: translate(-6px); }
+	83% { transform: translate(3px); }
+}
+
 </style>
