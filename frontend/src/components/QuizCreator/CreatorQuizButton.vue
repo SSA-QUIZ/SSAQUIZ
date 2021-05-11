@@ -6,7 +6,7 @@
     <div class="radio-box">
       <input type="radio"
         class="option-input radio" 
-        name="answer" 
+        name="answer"
         @click="checkAnswer"
       />
     </div>
@@ -39,6 +39,12 @@ export default {
       return this.quizData["slideList"][this.selectedSlideIndex]["answerList"][this.index];
     },
   },
+  watch: {
+    selectedSlideIndex: function () {
+      let index = this.quizData["slideList"][this.selectedSlideIndex]["answer"];
+      document.getElementsByClassName("option-input")[parseInt(index)].checked = true;
+    }
+  },
   mounted: function () {
     this.$nextTick(function () {
       if (this.quizData["slideList"][this.selectedSlideIndex]["answer"] === "") {
@@ -57,6 +63,9 @@ export default {
     ...mapActions("CreateQuizStore", ["setAnswer", "setMultipleChoice"]),
     checkAnswer: function () {
       this.setAnswer([this.selectedSlideIndex, (this.index).toString()]);
+    },
+    getAnswer: function () {
+      
     },
     changeChoice: function (e) {
       this.inputChoice = e.target.value;

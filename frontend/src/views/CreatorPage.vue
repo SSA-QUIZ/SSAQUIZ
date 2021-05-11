@@ -28,7 +28,6 @@
       </div>
       <div id="creator-page__content">
         <!-- <ShortAnswerCreator v-if="category === '단답형'"/> -->
-        <!-- <div v-if ="quizDataLength === 0">슬라이드 없음</div> -->
         <TextDiv message="지금 바로 퀴즈를 만들어보세요!" v-if ="quizDataLength === 0" />
         <MultipleChoiceCreator 
           v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'"
