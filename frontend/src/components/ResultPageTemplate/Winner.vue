@@ -10,13 +10,21 @@ import { mapState } from 'vuex'
 export default {
   name: "Winner",
   computed: {
+    ...mapState("CommonStore", ["isStudent"]),
     ...mapState("CreateQuizRoomStore", ["resultData"]),
-
+    ...mapState("PlayQuizStore", ["resultData2"]),
+    rankData: function () {
+      if (this.isStudent === true) {
+        return this.resultData2
+      } else {
+        return this.resultData
+      }
+    },
     winner: function () {
-      if (this.resultData.length === 0) {
+      if (this.rankData.length === 0) {
         return ''
       } else {
-        return this.resultData[0]["value"]
+        return this.rankData[0]["value"]
       }
     }
   },
