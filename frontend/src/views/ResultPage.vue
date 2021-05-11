@@ -4,8 +4,8 @@
     <img class="whale" src="@/assets/images/WelcomPage-icon.png"/>
     <div class="text">1등은 누구일까요?!</div>
     <img class="logo" src="@/assets/images/resultLogo.png"/>
-    <Podium/>
-    <Winner/>
+    <Podium />
+    <Winner />
   </div>
 </template>
 
