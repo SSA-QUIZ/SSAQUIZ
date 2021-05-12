@@ -3,7 +3,8 @@
     <div id="multiple-choice-creator__question-box">
       <input type="text" 
         placeholder="문제를 입력해주세요." 
-        :value="question" 
+        :value="question"
+        @input="changeQuestion" 
         id="multiple-choice-creator__input-question"
       >
       <input type="file" name="file" class="image-input">
@@ -45,7 +46,8 @@ export default {
   data: function () {
     return {
       defaultImg: "",
-      image: File
+      image: File,
+      inputQuestion: "",
     }
   },
   mounted: function () {
@@ -71,13 +73,11 @@ export default {
   },
   updated: function () {
     let data = this.quizData.slideList[this.selectedSlideIndex];
-    this.choices = data.answerList;
     this.image = data.imagePath;
     this.setSlideQuestion([this.selectedSlideIndex, this.question]);
   },
   created: function () {
     let data = this.quizData.slideList[this.selectedSlideIndex];
-    this.choices = data.answerList;
     this.image = data.imagePath;
     this.setSlideQuestion([this.selectedSlideIndex, this.question]);
   },
@@ -92,7 +92,12 @@ export default {
     setImage: function (data) {
       let val = [this.selectedSlideIndex, data]
       this.setImageData(val);
-    }
+    },
+    changeQuestion: function (e) {
+      this.inputQuestion = e.target.value;
+      let val = [this.selectedSlideIndex, this.inputQuestion];
+      this.setSlideQuestion(val);
+    },
   },
 }
 </script>
