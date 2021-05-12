@@ -2,7 +2,8 @@
   <div style="background-color: #f2f2f2; height: 100%; position: relative;">
     <Header mode="userInfo" :nickname="username" :score="score" />
     <ProgressBar :index="quizIndex+1" :all="totalNum" />
-    <MultipleChoice @click-button="sendAnswer" :choice="choice" v-show="category == '4지선다' || category == 'vote'" />
+    <MultipleChoice @click-button="sendAnswer" :choice="choice" v-if="category == '4지선다' || category == 'vote'" />
+    <ShortAnswer @click-button="sendAnswer" />
   </div>
 </template>
 
@@ -11,7 +12,7 @@ import { mapActions, mapState } from 'vuex';
 import Header from '@/components/common/Header.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
-// import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';   
+import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';   
 
 export default {
   name: 'SolvingQuizPage',
@@ -19,7 +20,7 @@ export default {
     Header,
     ProgressBar,
     MultipleChoice,
-    // ShortAnswer
+    ShortAnswer
   },
   data: function () {
     return {
