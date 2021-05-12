@@ -16,8 +16,8 @@
           </li>
           <li>
             <div id="nickname-form">
-              <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" @press-enter="connectQuiz" />
-              <InputButton @click.native="connectQuiz" text="퀴즈 풀러가기" />
+              <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" @press-enter="checkNickname" />
+              <InputButton @click.native="checkNickname" text="퀴즈 풀러가기" />
             </div>
           </li>
         </ul>
@@ -108,8 +108,17 @@ export default {
     moveToNickname: function () {
       document.getElementById("pos2").checked = true;
     },
+    checkNickname: function () {
+      var nicknameRegExp = /^[_a-zA-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{2,15}$/;
+      if (!nicknameRegExp.test(this.nickname)) {
+        this.alertMessage = "닉네임은 영문 대소문자, 한글, 숫자, '_'로 이루어진 2~15글자로 작성해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else {
+        this.connectQuiz();
+      }
+    },
     connectQuiz: function () {
-      console.log(this.PIN + " " + this.nickname + " websocket 연결")
       this.setPINWS([this.PIN, this.nickname]);
     },
     // 구글 로그인 token
