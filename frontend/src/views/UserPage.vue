@@ -61,7 +61,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import axios from "axios";
 // import WaveBG from '@/components/effects/WaveBG.vue';
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
