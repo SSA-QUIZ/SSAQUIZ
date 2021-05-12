@@ -145,10 +145,10 @@ export default {
             localStorage.setItem('email', res.data.object.email);
             localStorage.setItem('imageUrl', res.data.object.imageUrl);
             localStorage.setItem('id', res.data.object.id);
+
+            this.$router.push({ name: "UserPage" });
           })
           .catch(err => console.log(err));
-
-        this.$router.push({ name: "UserPage" }).catch(() => {});
       }
     },
   },
