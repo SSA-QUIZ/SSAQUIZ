@@ -130,9 +130,17 @@ export default {
         }
         localStorage.setItem("token", token);
         // 서버에 token 보내기
-        // const data = { "token": token }
-        const headers = { 'Content-Type': 'text/plain' };
-        axios.post('https://k4a304.p.ssafy.io/api-auth/auth/user', token, headers)
+        
+        var config = {
+          method: 'post',
+          url: 'https://k4a304.p.ssafy.io/api-auth/auth/user',
+          headers: { 
+            'Content-Type': 'text/plain'
+          },
+          data : token
+        };
+        // const headers = { 'Content-Type': 'text/plain' };
+        axios(config)
           .then(res => {
             console.log(token);
             console.log(res);
