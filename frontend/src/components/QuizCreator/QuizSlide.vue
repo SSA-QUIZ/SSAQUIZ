@@ -1,18 +1,26 @@
 <template>
   <div class="quiz-slide">
     <p class="slide-number">{{ number }}</p>
-    <div class="quiz-img" :class="{ 'quiz-img__selected' : isSelected}">
+    <div v-if="slide.imagePath" class="quiz-img" :style="{ 'background-image' : 'url(' + slide.imagePath + ')', 'background-size' : 'cover' }" :class="{ 'quiz-img__selected' : isSelected}">
       <span v-if ="isSelected" @click="$emit('delete-slide')">
         <i class="fas fa-times"></i>
       </span>
-      <img v-if="slide.imagePath" :src="slide.imagePath">
-      <img v-else src="@/assets/images/Default.png">
+      <!-- <img v-if="slide.imagePath" :src="slide.imagePath"> -->
+      <!-- <img v-else src="@/assets/images/Default.png"> -->
+    </div>
+    <div v-else class="quiz-img" :style="{ 'background-image' : `url(${defaultImage})`, 'background-size' : 'cover' }" :class="{ 'quiz-img__selected' : isSelected}">
+      <span v-if ="isSelected" @click="$emit('delete-slide')">
+        <i class="fas fa-times"></i>
+      </span>
+      <!-- <img v-if="slide.imagePath" :src="slide.imagePath"> -->
+      <!-- <img v-else src="@/assets/images/Default.png"> -->
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import defaultImage from '@/assets/images/DefaultSlideImg.png'
 
 export default {
   name: "QuizSlide",
@@ -20,6 +28,11 @@ export default {
     'slide',
     'isSelected'
   ],
+  data: function () {
+    return {
+      defaultImage: defaultImage,
+    }
+  },
   computed: {
     ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
   },
@@ -53,6 +66,7 @@ export default {
 
 .quiz-img img {
   width: 75%;
+  /* background-size: cover; */
 }
 
 .quiz-img__selected {
