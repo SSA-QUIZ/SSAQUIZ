@@ -111,6 +111,7 @@ export default {
     ...mapState("UserStore", ['quizList', 'newQuizId']),
   },
   created: function () {
+    console.log(localStorage.getItem('id'));
     this.setQuizList(localStorage.getItem('id'));
   },
   mounted: function () {
