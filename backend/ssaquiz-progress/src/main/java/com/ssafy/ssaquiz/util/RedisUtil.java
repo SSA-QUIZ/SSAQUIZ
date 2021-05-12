@@ -56,6 +56,11 @@ public class RedisUtil {
         return valueOperations.get(redisKey, key);
     }
 
+    public long getHsize(String redisKey) {
+        HashOperations<String, Object, Object> valueOperations = stringRedisTemplate.opsForHash();
+        return valueOperations.size(redisKey);
+    }
+
     /**
      * redis List 구조 저장 및 조회를 위한 함수
      */
