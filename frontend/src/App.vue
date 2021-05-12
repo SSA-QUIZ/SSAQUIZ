@@ -9,9 +9,8 @@ import '@/assets/style.css';
 
 export default {
   name: "App",
-
-  components: {},
-
-  data: () => ({}),
+  created: function () {
+    window.addEventListener('beforeunload', localStorage.clear());
+  }
 };
 </script>
