@@ -116,7 +116,8 @@ export default {
 }
 
 .QR-code {
-  width: 100%;
+  width: 85%;
+  margin-top: 10%;
 }
 
 #lobby-page--teacher__nickname {
