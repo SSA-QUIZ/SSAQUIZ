@@ -23,8 +23,8 @@ import java.util.Optional;
 
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
-    @Value("${app.auth.tokenExpirationMsec}")
-    private long tokenExpirationMsec;
+    @Value("${app.auth.tokenExpirationSec}")
+    private long tokenExpirationSec;
 
     @Autowired
     private UserRepository userRepository;
@@ -50,7 +50,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
         // 소셜 로그인시 Redis에 데이터 넣기
-        redisUtil.setDataExpire(oAuth2UserInfo.getEmail(), "exist", tokenExpirationMsec);
+        redisUtil.setDataExpire(oAuth2UserInfo.getEmail(), "exist", tokenExpirationSec);
 
         if(StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
         	System.out.println("StringUtils.isEmpty");
