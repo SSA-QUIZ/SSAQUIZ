@@ -24,6 +24,7 @@ const PlayQuizStore = {
     isEnd: false,
     isValidNickname: 0,
     resultData2: [],
+    answerData: {}
   },
   getters: {},
   mutations: {
@@ -84,6 +85,9 @@ const PlayQuizStore = {
     SET_ISVALIDNICKNAME: function (state, value) {
       state.isValidNickname = value;
     },
+    SET_ANSWER_DATA: function (state, value) {
+      state.answerData = value;
+    }
   },
   actions: {
     setIsValidNickname: function ({ commit }, value) {
@@ -171,6 +175,9 @@ const PlayQuizStore = {
         return 1
       })
     },
+    setAnswerData: function ({ commit }, value) {
+      commit('SET_ANSWER_DATA', value);
+    }
   }
 };
 

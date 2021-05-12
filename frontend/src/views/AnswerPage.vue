@@ -3,7 +3,7 @@
     <Header mode="off" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <Quiz :title="question" image="@/assets/images/Default.png" id="quiz-div" />
-    <QuizButton color="#7cb1ff" icon="fa fa-car" :answer="answer" height="20vh" id="answer-div" />
+    <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" id="answer-div" />
     <!-- <ShortAnswerResult title="우리 팀 팀장의 이름은?"/> -->
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     <div style="height: 3%;"></div>
@@ -27,6 +27,28 @@ export default {
     QuizButton,
     // ShortAnswerResult,
     NextStepButton,
+  },
+  data: function () {
+    return {
+      answerStyle: [
+        {
+          "icon": "fas fa-cat",
+          "color": "#ffdc46"
+        },
+        {
+          "icon": "fas fa-leaf",
+          "color": "#ff85b1"
+        },
+        {
+          "icon": "fa fa-car",
+          "color": "#7cb1ff"
+        },
+        {
+          "icon": "fas fa-pills",
+          "color": "#aaed81"
+        }
+      ]
+    }
   },
   watch: {
     isEnd: function (newVal) {
@@ -54,6 +76,9 @@ export default {
     answer: function () {
       return this.quizData["slideList"][this.quizIndex]["answerList"][this.quizData["slideList"][this.quizIndex]["answer"]];
     },
+    index: function () {
+      return parseInt(this.quizData["slideList"][this.quizIndex]["answer"]);
+    }
   },
   methods: {
     ...mapActions("CreateQuizRoomStore", ["setIsInterim", "setQuizIndex", "sendEndMessage"])
