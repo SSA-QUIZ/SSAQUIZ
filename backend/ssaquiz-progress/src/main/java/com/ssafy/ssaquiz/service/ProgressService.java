@@ -6,12 +6,16 @@ import com.ssafy.ssaquiz.model.MessageType;
 import com.ssafy.ssaquiz.util.RedisUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -35,6 +39,8 @@ public class ProgressService {
 
     @Value("${prefix.question}")
     private String QUESTION;
+
+    private static final Logger logger = LoggerFactory.getLogger(ProgressService.class);
 
     public void enterUser(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
         System.out.println("enterUser()");
@@ -60,7 +66,8 @@ public class ProgressService {
 
         if (registUser(USER_LIST + pin, message.getSender())) {
             message.setContent("join success");
-            headerAccessor.getSessionAttributes().put("nickname", message.getSender());
+            headerAccessor.getSessionAttributes().put("pin", pin);
+            headerAccessor.getSessionAttributes().put("student", message.getSender());
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
@@ -76,7 +83,7 @@ public class ProgressService {
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
-    public void startQuiz(int pin, Message message) {
+    public void startQuiz(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
         System.out.println("startQuiz()");
         System.out.println(message);
 
@@ -87,6 +94,8 @@ public class ProgressService {
         }
 
         if (setAnswerList(ANSWER_LIST + pin, (ArrayList) message.getContent())) {
+            headerAccessor.getSessionAttributes().put("pin", pin);
+            headerAccessor.getSessionAttributes().put("teacher", "true");
             message.setContent("start success");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
@@ -186,6 +195,32 @@ public class ProgressService {
         System.out.println(message);
 
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
+    public void disconnect(SessionDisconnectEvent event) {
+        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+        int pin = (int) headerAccessor.getSessionAttributes().get("pin");
+        String nickname = (String) headerAccessor.getSessionAttributes().get("student");
+        String teacher = (String) headerAccessor.getSessionAttributes().get("teacher");
+
+        if(teacher != null) {
+            logger.info("teacher disconnection");
+
+            Message message = new Message();
+            message.setType(MessageType.LEAVE);
+            message.setContent("teacher disconnection");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+        }
+
+        if(nickname != null) {
+            logger.info("student disconnection (" + nickname + ")");
+
+            Message message = new Message();
+            message.setType(MessageType.LEAVE);
+            message.setSender(nickname);
+            message.setContent("student disconnection");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+        }
     }
 
     public BasicResponse makePin() {

@@ -12,8 +12,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-
 @CrossOrigin(origins = {"*"})
 @RestController
 public class ProgressController {
@@ -34,8 +32,8 @@ public class ProgressController {
     }
 
     @MessageMapping("/room/startQuiz/{pin}")
-    public void startQuiz(@DestinationVariable("pin") int pin, @Payload Message message) {
-        progressService.startQuiz(pin, message);
+    public void startQuiz(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
+        progressService.startQuiz(pin, message, headerAccessor);
     }
 
     @MessageMapping("/room/finishQuiz/{pin}")
