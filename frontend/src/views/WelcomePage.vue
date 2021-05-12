@@ -122,17 +122,18 @@ export default {
 
         // url로부터 token 획득하기
         var token = url.slice(idx + 6);
-        console.log(token)
+        console.log(token);
         var last_char = token.slice(token.length - 1, token.length);
         if (last_char === "#") {
           token = token.slice(0, token.length - 1);
-          console.log(token)
+          // console.log(token);
         }
         localStorage.setItem("token", token);
         // 서버에 token 보내기
         const data = { "token": token }
         axios.post('https://k4a304.p.ssafy.io/api-auth/auth/user', data)
           .then(res => {
+            console.log(token);
             console.log(res);
           })
           .catch(err => console.log(err));
