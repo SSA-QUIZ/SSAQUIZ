@@ -74,12 +74,10 @@ export default {
   updated: function () {
     let data = this.quizData.slideList[this.selectedSlideIndex];
     this.image = data.imagePath;
-    this.setSlideQuestion([this.selectedSlideIndex, this.question]);
   },
   created: function () {
     let data = this.quizData.slideList[this.selectedSlideIndex];
     this.image = data.imagePath;
-    this.setSlideQuestion([this.selectedSlideIndex, this.question]);
   },
   computed: {
     ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),

@@ -2,7 +2,7 @@
   <div id="short-answer">
     <TextBox message="답안을 작성해주세요." @change-input="setAnswer"/>
     <div class="submit">
-      <InputButton text="제출하기"/>
+      <InputButton @click.native="clickButton([answer, username, quizIndex]);" text="제출하기"/>
     </div>
   </div>
 </template>
@@ -10,6 +10,7 @@
 <script>
 import TextBox from '@/components/Form/TextBox.vue';
 import InputButton from '@/components/common/InputButton.vue';
+import { mapState } from 'vuex';
 export default {
   name: "ShortAnswer",
   components: {
@@ -24,8 +25,14 @@ export default {
   methods: {
     setAnswer: function (data) {
       this.answer = data
-    }
-  }
+    },
+    clickButton: function (data) {
+      this.$emit('click-button', data);
+    },
+  },
+  computed: {
+    ...mapState("PlayQuizStore", ["username", "quizIndex"]),
+  },
 }
 </script>
 
