@@ -116,16 +116,20 @@ export default {
     getToken() {
       const url = window.location.href;
       const idx = url.indexOf("token=");
-      console.log(idx);
       if (idx != -1) {
         // google 계정으로 로그인했다는 사실 저장(회원정보 수정 할 수 없도록.)
         localStorage.setItem("googleLogin", true);
 
         // url로부터 token 획득하기
-        const token = url.slice(idx + 6);
-        console.log(url)
-        console.log(token)
-        localStorage.setItem("token", token);
+        var token = url.slice(idx + 6);
+        var last_char = token.slice(token.length-2,token.length-1);
+        console.log("마지막 인덱스는");
+        console.log(last_char);
+        if (last_char === "#") {
+          localStorage.setItem("token", token.slice(0, token.length-1));
+        } else {
+          localStorage.setItem("token", token);
+        }
         this.$router.push({ name: "UserPage" }).catch(() => {});
       }
     },
