@@ -122,9 +122,11 @@ export default {
 
         // url로부터 token 획득하기
         var token = url.slice(idx + 6);
+        console.log(token)
         var last_char = token.slice(token.length-1,token.length);
         if (last_char === "#") {
           token = token.slice(0, token.length-2);
+          console.log(token)
         }
         localStorage.setItem("token", token);
         // 서버에 token 보내기
