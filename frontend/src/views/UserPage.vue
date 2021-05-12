@@ -112,18 +112,7 @@ export default {
     ...mapState("UserStore", ['quizList', 'newQuizId']),
   },
   created: function () {
-    // google Login 여부에 따라 !
-    if (localStorage.getItem('googleLogin') === true) {
-      const token = localStorage.getItem('token');
-      const data = {"token": token}
-      axios.post('https://k4a304.p.ssafy.io/api-auth/auth/user', data)
-        .then(res=> {
-          console.log(res)
-        })
-        .catch(err => console.log(err))
-    } else {
-      this.setQuizList(localStorage.getItem('id'));
-    }
+    this.setQuizList(localStorage.getItem('id'));
   },
   mounted: function () {
     this.profileImg = localStorage.getItem('imageUrl');
