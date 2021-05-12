@@ -7,7 +7,7 @@
       <!-- 점수판 -->
       <InterimScoreBoard/>
       <NextStepButton @click.native="nextQuiz" />
-      <h1 class="mention">문어님이 현재까지 3번 연속이나 답을 맞추셨어요!</h1>
+      <!-- <h1 class="mention">문어님이 현재까지 3번 연속이나 답을 맞추셨어요!</h1> -->
       <!-- 배경의 고래 이미지 -->
       <img class="whale-img-1" src="@/assets/images/pinkWhale.png">
       <img class="whale-img-2" src="@/assets/images/purpleWhale.png">
