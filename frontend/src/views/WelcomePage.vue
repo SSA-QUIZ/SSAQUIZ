@@ -135,9 +135,7 @@ export default {
           })
           .catch(err => console.log(err));
 
-
-
-        // this.$router.push({ name: "UserPage" }).catch(() => {});
+        this.$router.push({ name: "UserPage" }).catch(() => {});
       }
     },
   },
