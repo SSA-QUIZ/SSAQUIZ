@@ -1,6 +1,6 @@
 <template>
   <div id="solving-quiz-page-t-container">
-    <Header @time-zero="sendFinMessage" mode="playQuiz" :time="time" />
+    <Header @time-zero="sendFinMessage(quizIndex)" mode="playQuiz" :time="time" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="solving-quiz-page-t-content">
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
