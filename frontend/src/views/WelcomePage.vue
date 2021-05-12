@@ -122,11 +122,11 @@ export default {
 
         // url로부터 token 획득하기
         var token = url.slice(idx + 6);
-        var last_char = token.slice(token.length-2,token.length-1);
+        var last_char = token.slice(token.length-1,token.length);
         console.log("마지막 인덱스는");
         console.log(last_char);
         if (last_char === "#") {
-          localStorage.setItem("token", token.slice(0, token.length-1));
+          localStorage.setItem("token", token.slice(0, token.length-2));
         } else {
           localStorage.setItem("token", token);
         }
