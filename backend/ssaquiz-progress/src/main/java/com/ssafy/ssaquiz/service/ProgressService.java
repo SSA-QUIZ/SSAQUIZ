@@ -132,6 +132,12 @@ public class ProgressService {
 
         message.setContent(viewRanking(USER_LIST + pin, 0, 2));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+
+        int questionCnt = (int) redisUtil.getHsize(ANSWER_LIST + pin);
+        for (int i = 0; i < questionCnt; i++) {
+            redisUtil.deleteZdata(QUESTION + i + pin, 0, -1);
+        }
+        redisUtil.deleteZdata(USER_LIST + pin, 0, -1);
     }
 
     public void sendCategory(int pin, Message message) {
@@ -203,7 +209,7 @@ public class ProgressService {
         String nickname = (String) headerAccessor.getSessionAttributes().get("student");
         String teacher = (String) headerAccessor.getSessionAttributes().get("teacher");
 
-        if(teacher != null) {
+        if (teacher != null) {
             logger.info("teacher disconnection");
 
             Message message = new Message();
@@ -212,7 +218,7 @@ public class ProgressService {
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
         }
 
-        if(nickname != null) {
+        if (nickname != null) {
             logger.info("student disconnection (" + nickname + ")");
 
             Message message = new Message();
