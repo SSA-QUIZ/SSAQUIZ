@@ -29,6 +29,7 @@ const CreateQuizRoomStore = {
     isFin: false,
     isInterim: false,
     isNext: false,
+    category: '',
     isEnd: false,
     scoreBoardData: [],
     resultData: [],
@@ -64,6 +65,9 @@ const CreateQuizRoomStore = {
     },
     SET_QUIZINDEX: function (state) {
       state.quizIndex++;
+    },
+    SET_CATEGORY: function (state, value) {
+      state.category = value;
     },
     SEND_CATEGORY: function (state, value) {
       state.stompClient = value;
@@ -148,6 +152,7 @@ const CreateQuizRoomStore = {
         content: value
       };
       ws.send(`/quiz/room/sendCategory/${pin}`, {}, JSON.stringify(sendCategoryMessage));
+      commit('SET_CATEGORY', value);
       commit('SEND_CATEGORY', ws);
     },
     setQuizIndex: function ({ commit }) {

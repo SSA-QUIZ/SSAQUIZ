@@ -53,7 +53,22 @@ export default {
         "time": 0,
         "scoreFactor": 0,
         "type": 0
-      }
+      };
+      this.addSlide(defaultValue);
+      this.$emit('close');
+    },
+    addShortAnswer: function () {
+      let defaultValue = {
+        "category": "단답형",
+        "question": "",
+        "imagePath": "",
+        "answer": "",
+        "orderedAnswer": [],
+        "answerList": ["", "", "", ""],
+        "time": 0,
+        "scoreFactor": 0,
+        "type": 0
+      };
       this.addSlide(defaultValue);
       this.$emit('close');
     },

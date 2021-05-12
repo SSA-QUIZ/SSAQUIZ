@@ -2,9 +2,11 @@
   <div id="answer-page-container">
     <Header mode="off" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
-    <Quiz :title="question" image="@/assets/images/Default.png" id="quiz-div" />
-    <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" id="answer-div" />
-    <!-- <ShortAnswerResult title="우리 팀 팀장의 이름은?"/> -->
+    <template v-if="category==='4지선다'" >
+      <Quiz :title="question" image="@/assets/images/Default.png" id="quiz-div" />
+      <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" id="answer-div" />
+    </template>
+    <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     <div style="height: 3%;"></div>
   </div>
@@ -16,6 +18,7 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import Quiz from '@/components/common/Quiz.vue';
 import QuizButton from '@/components/common/QuizButton.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
+import ShortAnswerResult from '@/components/QuizTemplate/ShortAnswerResult'
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -25,7 +28,7 @@ export default {
     ProgressBar,
     Quiz,
     QuizButton,
-    // ShortAnswerResult,
+    ShortAnswerResult,
     NextStepButton,
   },
   data: function () {
@@ -69,7 +72,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd"]),
+    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd", "category"]),
     question: function () {
       return this.quizData["slideList"][this.quizIndex]["question"];
     },
