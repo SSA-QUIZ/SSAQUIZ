@@ -126,11 +126,10 @@ export default {
         var last_char = token.slice(token.length - 1, token.length);
         if (last_char === "#") {
           token = token.slice(0, token.length - 1);
-          // console.log(token);
         }
         localStorage.setItem("token", token);
+
         // 서버에 token 보내기
-        
         var config = {
           method: 'post',
           url: 'https://k4a304.p.ssafy.io/api-auth/auth/user',
@@ -139,11 +138,13 @@ export default {
           },
           data : token
         };
-        // const headers = { 'Content-Type': 'text/plain' };
         axios(config)
           .then(res => {
-            console.log(token);
-            console.log(res);
+            localStorage.setItem('token', res.data.object.accessToken);
+            localStorage.setItem('nickname', res.data.object.nickname);
+            localStorage.setItem('email', res.data.object.email);
+            localStorage.setItem('imageUrl', res.data.object.imageUrl);
+            localStorage.setItem('id', res.data.object.id);
           })
           .catch(err => console.log(err));
 
