@@ -3,7 +3,7 @@
     <Header mode="userInfo" :nickname="username" :score="score" />
     <ProgressBar :index="quizIndex+1" :all="totalNum" />
     <MultipleChoice @click-button="sendAnswer" :choice="choice" v-if="category == '4지선다' || category == 'vote'" />
-    <ShortAnswer @click-button="sendAnswer" />
+    <ShortAnswer v-else-if="category==='단답형'" @click-button="sendAnswer" />
   </div>
 </template>
 
