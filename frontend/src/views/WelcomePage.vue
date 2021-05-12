@@ -131,7 +131,8 @@ export default {
         localStorage.setItem("token", token);
         // 서버에 token 보내기
         // const data = { "token": token }
-        axios.post('https://k4a304.p.ssafy.io/api-auth/auth/user', token)
+        const headers = { 'Content-Type': 'text/plain' };
+        axios.post('https://k4a304.p.ssafy.io/api-auth/auth/user', token, headers)
           .then(res => {
             console.log(token);
             console.log(res);
