@@ -1,7 +1,7 @@
 <template>
   <div id="answer-page-container">
     <Header mode="off" />
-    <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
+    <ProgressBar :index="1" :all="2" />
     <div id="answer-page-content">
         <template v-if="category==='4지선다'" >
         <Quiz :title="question" image="@/assets/images/Default.png" class="quiz-div" />
@@ -13,6 +13,7 @@
         <Ordering class="answer-page-content__ordering" />
         </template>
     </div>
+
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     <div style="height: 3%;"></div>
   </div>
@@ -24,20 +25,20 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import Quiz from '@/components/common/Quiz.vue';
 import QuizButton from '@/components/common/QuizButton.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
-import ShortAnswerResult from '@/components/QuizTemplate/ShortAnswerResult.vue';
-import Ordering from '@/components/QuizTemplate/Ordering.vue';
+import ShortAnswerResult from '@/components/QuizTemplate/ShortAnswerResult.vue'
+import Ordering from '@/components/QuizTemplate/Ordering.vue'
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: 'AnswerPage',
+  name: 'Test',
   components: {
     Header,
     ProgressBar,
     Quiz,
     QuizButton,
     ShortAnswerResult,
-    Ordering,
     NextStepButton,
+    Ordering
   },
   data: function () {
     return {
@@ -89,11 +90,22 @@ export default {
   align-items: center;
   margin-bottom: -10%;
 }
-#quiz-div {
+.quiz-div {
   height: 60%;
 }
-#answer-div {
+.answer-div {
   width: 95%;
   height: auto;
+}
+.answer-page-content__ordering {
+  display: flex;
+  height: 100%;
+}
+#answer-page-content {
+  display: flex;
+  flex-flow: column;
+  width: 85%;
+  margin: 1% 2.5%;
+  height: 70%;
 }
 </style>

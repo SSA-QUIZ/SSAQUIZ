@@ -72,6 +72,21 @@ export default {
       this.addSlide(defaultValue);
       this.$emit('close');
     },
+    addOrder: function () {
+      let defaultValue = {
+        "category": "순서맞히기",
+        "question": "",
+        "imagePath": "",
+        "answer": "",
+        "orderedAnswer": [],
+        "answerList": ["", "", "", ""],
+        "time": 0,
+        "scoreFactor": 0,
+        "type": 0
+      };
+      this.addSlide(defaultValue);
+      this.$emit('close');
+    }
 
   }
 }

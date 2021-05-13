@@ -1,30 +1,45 @@
 <template>
   <div id="ordering-container">
-    <template v-for="(answer, index) in answerData">
-      <QuizButton  
-        mode="ordering" 
+    <template v-for="index in 4">
+      <CreatorOrderingButton 
+        v-if="mode === 'create'"
         :key="index"
-        :answer="answerData[index].answer" 
-        :icon="answerData[index].icon"
-        :color="answerData[index].color"
+        :index="index"
+      />
+      <OrderingButton
+        v-else
+        mode="ordering"
+        :key="index"
+        :index="index"
+        :buttonId="buttonId + index"
       />
     </template>
   </div>
 </template>
 
 <script>
-import QuizButton from '@/components/common/QuizButton.vue';
+import OrderingButton from '@/components/common/OrderingButton.vue';
+import CreatorOrderingButton from '@/components/QuizCreator/CreatorOrderingButton.vue';
+import { mapState } from 'vuex';
 
 export default {
-  name: 'Ordering',
+  name: "Ordering",
   components: {
-    QuizButton
+    OrderingButton,
+    CreatorOrderingButton
   },
-  props: ['answerData'],
+  props: ['mode'],
   data: function () {
     return {
+      buttonId: ''
     }
-  }
+  },
+  created: function () {
+    this.buttonId = 'button'
+  },
+  computed: {
+    ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex"]),
+  },
 }
 </script>
 
@@ -32,5 +47,6 @@ export default {
 #ordering-container {
   display: flex;
   width: 100%;
+  height: 98%;
 }
 </style>

@@ -4,7 +4,25 @@ const CreateQuizStore = {
   namespaced: true,
   state: {
     quizData: {},
-    selectedSlideIndex: 0
+    selectedSlideIndex: 0,
+    answerStyle: [
+      {
+        "icon": "fas fa-cat",
+        "color": "#ffdc46"
+      },
+      {
+        "icon": "fas fa-leaf",
+        "color": "#ff85b1"
+      },
+      {
+        "icon": "fa fa-car",
+        "color": "#7cb1ff"
+      },
+      {
+        "icon": "fas fa-pills",
+        "color": "#aaed81"
+      }
+    ]
   },
   mutations: {
     SET_QUIZ_DATA: function (state, value) {
