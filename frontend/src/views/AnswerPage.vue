@@ -4,21 +4,20 @@
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="answer-page-content">
       <template v-if="category==='4지선다'" >
-        <Quiz :title="question" image="@/assets/images/Default.png" class="quiz-div" />
-        <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" class="answer-div" />
+        <Quiz :title="question" image="@/assets/images/Default.png" />
+        <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" />
       </template>
       <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
       <template v-else-if="category==='순서맞히기'">
-        <Quiz title="하이" image="@/assets/images/Default.png" class="quiz-div" />
-        <Ordering class="answer-page-content__ordering" />
+        <Quiz title="하이" image="@/assets/images/Default.png" style="height: 70%" />
+        <Ordering mode="answer" style="height: 60%;" />
       </template>
       <template v-else-if="category==='TF'">
-        <Quiz :title="question" image="@/assets/images/Default.png" class="quiz-div" />
-        <TrueFalseButton width="90%" height="20vh" :mode="answer==='0' ? 'True' : 'False'" />
+        <Quiz :title="question" image="@/assets/images/Default.png" />
+        <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'" />
       </template>
     </div>
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
-    <div style="height: 3%;"></div>
   </div>
 </template>
 
@@ -63,7 +62,6 @@ export default {
         } else {
           this.$router.push({name: "InterimScorePage"});
         }
-        
       }
     },
   },
@@ -93,13 +91,15 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin-bottom: -10%;
 }
-.quiz-div {
-  height: 60%;
+/* .quiz-div {
+  height: 50%;
 }
 .answer-div {
   width: 95%;
   height: auto;
+} */
+.answer-page-content__ordering {
+  height: 30%;
 }
 </style>
