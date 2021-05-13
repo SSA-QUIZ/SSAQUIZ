@@ -6,9 +6,11 @@
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__center">
-        <Quiz id="solving-quiz-t-quiz" :title="question" image="" />
-        <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
-        <!-- <ShortAnswerT title="우리 팀 팀장의 이름은?" image="" /> -->
+        <template v-if="category==='4지선다'" >
+          <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath" />
+          <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
+        </template>
+        <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath" />
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
         <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
@@ -24,7 +26,7 @@ import Quiz from '@/components/common/Quiz.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import { mapActions, mapState } from 'vuex';
-// import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
+import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
 
 export default {
   name: 'SolvingQuizPageT',
@@ -34,7 +36,7 @@ export default {
     Quiz,
     NextStepButton,
     MultipleChoice,
-    // ShortAnswerT,
+    ShortAnswerT,
   },
   data: function () {
     return {
@@ -49,12 +51,15 @@ export default {
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex", "isFin"]),
+    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex", "isFin", "category"]),
     choices: function () {
       return this.quizData["slideList"][this.quizIndex]["answerList"];
     },
     question: function () {
       return this.quizData["slideList"][this.quizIndex]["question"];
+    },
+    imagePath: function () {
+      return this.quizData["slideList"][this.quizIndex]["imagePath"];
     },
     time: function () {
       return this.timeLimit[this.quizData["slideList"][this.quizIndex]["time"]];
