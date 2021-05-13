@@ -2,8 +2,9 @@
   <div style="background-color: #f2f2f2; height: 100%; position: relative;">
     <Header mode="userInfo" :nickname="username" :score="score" />
     <ProgressBar :index="quizIndex+1" :all="totalNum" />
-    <MultipleChoice @click-button="sendAnswer" :choice="choice" v-show="category == '4지선다' || category == 'vote'" />
     <!-- <OrderingFrame v-show="category == '순서맞히기'" /> -->
+    <MultipleChoice @click-button="sendAnswer" :choice="choice" v-if="category == '4지선다' || category == 'vote'" />
+    <ShortAnswer v-else-if="category==='단답형'" @click-button="sendAnswer" />
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 // import OrderingFrame from '../components/QuizTemplate/OrderingFrame.vue';
 // import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';   
+import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';   
 
 export default {
   name: 'SolvingQuizPage',
@@ -23,6 +25,7 @@ export default {
     MultipleChoice,
     // OrderingFrame,
     // ShortAnswer
+    ShortAnswer
   },
   data: function () {
     return {
