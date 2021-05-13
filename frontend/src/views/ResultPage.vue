@@ -16,14 +16,23 @@
 <script>
 import Podium from "@/components/ResultPageTemplate/Podium.vue";
 import Winner from "@/components/ResultPageTemplate/Winner.vue";
+import { mapState } from 'vuex';
 export default {
   name: "ResultPage",
   components: {
     Podium,
     Winner,
   },
+  computed: {
+    ...mapState("CommonStore", ["isStudent"]),
+  },
   methods: {
     moveToUserPage: function () {
+      if (this.isStudent === true) {
+        // 학생 웹소켓 끊기
+      } else if (this.Student === false) {
+        // 선생님 웹소켓 끊기
+      }
       this.$router.push({ name: "WelcomePage" });
     }
   }

@@ -102,8 +102,15 @@ const CreateQuizRoomStore = {
     SET_RESULTDATA: function (state, value) {
       state.resultData = value;
     },
+    DISCONNECT_WS: function (state, value) {
+      state.stompClient = value;
+    }
   },
   actions: {
+    disconnect_ws: function ({ commit }) {
+      ws.disconnect(() => {}, {});
+      commit("DISCONNECT_WS", ws);
+    },
     sendEndMessage: function ({ commit }) {
       let sendEndMessage = {
         type: "END"
