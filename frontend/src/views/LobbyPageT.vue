@@ -9,10 +9,10 @@
         <img class="QR-code" src="@/assets/images/QRcode.png" alt="QRcode">
       </div>
       <div id="lobby-page--teacher__nickname">
-        <div
+        <template
           v-for="(student, index) in students"
-          :key="index"
-        ><NicknameButton :student=student :index=index /></div>
+          
+        ><NicknameButton :key="index" :student=student :index=index /></template>
       </div>
     </div>
     <NextStepButton @click.native="clickStartButton"/>
@@ -129,8 +129,10 @@ export default {
   border-radius: 20px;
   background-color: #FFFFFF;
   overflow: auto;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  display: table-cell;
+  text-align: center;
+  /* flex-flow: row wrap; */
+  /* justify-content: center; */
+  /* align-items: baseline; */
 }
 </style>
