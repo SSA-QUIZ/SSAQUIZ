@@ -26,9 +26,8 @@ public class WorkbookService {
 
     public BasicResponse saveSlide(String objectId, String category,
                                    String question, MultipartFile inputFile,
-                                   String answer, List<String> orderedAnswer,
-                                   List<String> answerList, int time,
-                                   int scoreFactor, int type) {
+                                   String answer, List<String> answerList,
+                                   int time, int scoreFactor, int type) {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
@@ -46,7 +45,7 @@ public class WorkbookService {
         String imgPath = s3Service.upload(inputFile);
 
         return insertSlide(workbook, category, question, imgPath, answer,
-                orderedAnswer, answerList, time, scoreFactor, type);
+                answerList, time, scoreFactor, type);
     }
 
     public BasicResponse lookupWorkbook(String objectId) {
@@ -98,12 +97,12 @@ public class WorkbookService {
     public BasicResponse insertSlide(Workbook workbook,
                                      String category, String question,
                                      String imgPath, String answer,
-                                     List<String> orderedAnswer, List<String> answerList,
+                                     List<String> answerList,
                                      int time, int scoreFactor, int type) {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
-        if (workbook == null || imgPath == null || category == null || question == null || answer == null || orderedAnswer == null || answerList == null) {
+        if (workbook == null || imgPath == null || category == null || question == null || answer == null|| answerList == null) {
             result.data = "slide save fail (null)";
             return result;
         }
@@ -115,7 +114,7 @@ public class WorkbookService {
 
         Slide slide = Slide.builder()
                 .category(category).question(question).imagePath(imgPath)
-                .answer(answer).orderedAnswer(orderedAnswer).answerList(answerList)
+                .answer(answer).answerList(answerList)
                 .time(time).scoreFactor(scoreFactor).type(type).build();
 
         workbook.getSlideList().add(slide);

@@ -15,6 +15,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.ArrayList;
@@ -33,6 +34,12 @@ public class ProgressService {
 
     @Value("${prefix.answerList}")
     private String ANSWER_LIST;
+
+    @Value("${prefix.multiplyList}")
+    private String MULTIPLY_LIST;
+
+    @Value("${prefix.answerCnt}")
+    private String ANSWER_CNT;
 
     @Value("${prefix.time}")
     private String TIME;
@@ -93,7 +100,12 @@ public class ProgressService {
             return;
         }
 
-        if (setAnswerList(ANSWER_LIST + pin, (ArrayList) message.getContent())) {
+        ArrayList list = (ArrayList) message.getContent();
+        ArrayList answerList = (ArrayList) list.get(0);
+        ArrayList multiplyList = (ArrayList) list.get(1);
+
+        if (setAnswerList(ANSWER_LIST + pin, answerList) && setMultiplyList(MULTIPLY_LIST + pin, multiplyList)) {
+            redisUtil.setData(ANSWER_CNT + pin, Integer.toString(answerList.size()));
             headerAccessor.getSessionAttributes().put("pin", pin);
             headerAccessor.getSessionAttributes().put("teacher", "true");
             message.setContent("start success");
@@ -133,11 +145,17 @@ public class ProgressService {
         message.setContent(viewRanking(USER_LIST + pin, 0, 2));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
 
-        int questionCnt = (int) redisUtil.getHsize(ANSWER_LIST + pin);
+        deleteInRedis(pin);
+    }
+
+    @Transactional
+    public void deleteInRedis(int pin) {
+        int questionCnt = Integer.parseInt(redisUtil.getData(ANSWER_CNT + pin));
         for (int i = 0; i < questionCnt; i++) {
             redisUtil.deleteZdata(QUESTION + i + pin, 0, -1);
         }
         redisUtil.deleteZdata(USER_LIST + pin, 0, -1);
+        redisUtil.deleteData(Integer.toString(pin));
     }
 
     public void sendCategory(int pin, Message message) {
@@ -148,6 +166,7 @@ public class ProgressService {
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
+    @Transactional
     public void sendAnswer(int pin, Message message) {
         System.out.println("sendAnswer()");
         System.out.println(message);
@@ -162,7 +181,9 @@ public class ProgressService {
         boolean isCorrect = grade(ANSWER_LIST + pin, message.getQuizNum(), (String) message.getContent());
 
         if (isCorrect) {
-            long plusScore = 600 - ((System.currentTimeMillis() / 100) - Long.parseLong(redisUtil.getData(TIME + pin)));
+            long score = 600 - ((System.currentTimeMillis() / 100) - Long.parseLong(redisUtil.getData(TIME + pin)));
+            double multiplyNum = Double.parseDouble((String) redisUtil.getHdata(MULTIPLY_LIST + pin, message.getQuizNum()));
+            long plusScore = Math.round(score * multiplyNum);
             redisUtil.addZdata(QUESTION + message.getQuizNum() + pin, message.getSender(), plusScore);
             double CurrentScore = plusScore(USER_LIST + pin, message.getSender(), plusScore);
 
@@ -318,6 +339,18 @@ public class ProgressService {
 
         for (int i = 0; i < answerList.size(); i++) {
             redisUtil.setHdata(key, Integer.toString(i), answerList.get(i).toString());
+        }
+
+        return true;
+    }
+
+    public boolean setMultiplyList(String key, ArrayList multiplyList) {
+        if (key == null || multiplyList == null) {
+            return false;
+        }
+
+        for (int i = 0; i < multiplyList.size(); i++) {
+            redisUtil.setHdata(key, Integer.toString(i), multiplyList.get(i).toString());
         }
 
         return true;

@@ -3,7 +3,6 @@ package com.ssafy.ssaquiz.controller;
 import com.ssafy.ssaquiz.dto.InsertWorkbookDto;
 import com.ssafy.ssaquiz.dto.WorkbookDto;
 import com.ssafy.ssaquiz.model.*;
-import com.ssafy.ssaquiz.service.S3Service;
 import com.ssafy.ssaquiz.service.WorkbookService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +17,15 @@ public class ProduceController {
     @Autowired
     WorkbookService workbookService;
 
-    @Autowired
-    private S3Service s3Service;
-
     @ApiOperation(value = "슬라이드 저장하기")
     @PostMapping("/slide")
     public Object insertSlide(@RequestParam("objectId") String objectId, @RequestParam("category") String category,
                               @RequestParam("question") String question, @RequestParam("file") MultipartFile inputFile,
-                              @RequestParam("answer") String answer, @RequestParam("orderedAnswer") List<String> orderedAnswer,
-                              @RequestParam("answerList") List<String> answerList, @RequestParam("time") int time,
-                              @RequestParam("scoreFactor") int scoreFactor, @RequestParam("type") int type) {
+                              @RequestParam("answer") String answer, @RequestParam("answerList") List<String> answerList,
+                              @RequestParam("time") int time, @RequestParam("scoreFactor") int scoreFactor,
+                              @RequestParam("type") int type) {
         return workbookService.saveSlide(objectId, category, question, inputFile, answer,
-                orderedAnswer, answerList, time, scoreFactor, type);
+                answerList, time, scoreFactor, type);
     }
 
     @ApiOperation(value = "문제집 조회하기",
