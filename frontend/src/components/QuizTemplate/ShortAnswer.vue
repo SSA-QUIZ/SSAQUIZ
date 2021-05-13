@@ -46,8 +46,8 @@ export default {
 }
 
 #short-answer .submit {
-  display: flex;
-  justify-content: end;
+  display: flex-end;
+  /* justify-content: end; */
 
   position: absolute;
   bottom: 8%;
@@ -57,8 +57,8 @@ export default {
 @media (max-width: 480px) {
 
   #short-answer .submit {
-    display: flex;
-    justify-content: end;
+    display: flex-end;
+    /* justify-content: end; */
     position: absolute;
     top: 48%;
     left: 9%;
