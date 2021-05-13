@@ -29,9 +29,8 @@
       <div id="creator-page__content">
         <TextDiv message="지금 바로 퀴즈를 만들어보세요!" v-if ="quizDataLength === 0" />
         <ShortAnswerCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '단답형'"/>
-        <MultipleChoiceCreator 
-          v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'"
-        />
+        <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" />
+        <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞히기'" />
       </div>
       <div id="creator-page__settings">
         <span class="settings__title">문제 설정</span>
@@ -74,6 +73,7 @@
 <script>
 import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
 import ShortAnswerCreator from '@/components/QuizCreator/ShortAnswerCreator.vue';
+import OrderingCreator from '@/components/QuizCreator/OrderingCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
@@ -90,6 +90,7 @@ export default {
   components: {
     MultipleChoiceCreator,
     ShortAnswerCreator,
+    OrderingCreator,
     QuizSlide,
     QuizTypeDialog,
     Confirm,

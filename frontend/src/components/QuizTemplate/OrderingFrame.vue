@@ -1,7 +1,7 @@
 <template>
   <div id="ordering-frame-container">
     <template v-for="index in 4">
-      <QuizButton  
+      <OrderingButton  
         mode="orderingFrame" 
         :key="index"
         :index="index"
@@ -13,19 +13,19 @@
 </template>
 
 <script>
-import QuizButton from '@/components/common/QuizButton.vue';
+import OrderingButton from '@/components/common/OrderingButton.vue';
 
 export default {
-  name: 'OrderingFrame',
+  name: "OrderingFrame",
   components: {
-    QuizButton
+    OrderingButton
   },
 }
 </script>
 
 <style>
 #ordering-frame-container {
-  display: flex;
   width: 100%;
+  height: 98%;
 }
 </style>

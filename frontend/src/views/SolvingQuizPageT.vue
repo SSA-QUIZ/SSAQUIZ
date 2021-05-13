@@ -7,10 +7,14 @@
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__center">
         <template v-if="category==='4지선다'" >
-          <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath" />
+          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath" />
           <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
         </template>
         <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath" />
+        <template v-if="category==='순서맞히기'" >
+          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath" />
+          <Ordering class="solving-quiz-page-content__ordering" />
+        </template>
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
         <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
@@ -27,6 +31,7 @@ import NextStepButton from '@/components/common/NextStepButton.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import { mapActions, mapState } from 'vuex';
 import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
+import Ordering from '@/components/QuizTemplate/Ordering.vue';
 
 export default {
   name: 'SolvingQuizPageT',
@@ -37,6 +42,7 @@ export default {
     NextStepButton,
     MultipleChoice,
     ShortAnswerT,
+    Ordering
   },
   data: function () {
     return {
@@ -87,7 +93,7 @@ export default {
   justify-content:center;
   align-items: center; 
 }
-#solving-quiz-t-quiz {
+.solving-quiz-t-quiz {
   height: 50%;
   margin: 10px;
 }
@@ -108,5 +114,10 @@ export default {
 }
 .solving-quiz-t-div__center {
   width: 80%;
+  margin-bottom: 30px;
+}
+.solving-quiz-t-content__ordering {
+  display: flex;
+  height: 100%;
 }
 </style>
