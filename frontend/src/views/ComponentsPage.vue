@@ -29,6 +29,8 @@
     <div id="component-title">Ordering</div>
     <Ordering :answerData="answerData" />
     <OrderingFrame />
+    <TrueFalseButton mode="True" width="50%" height="10%" fontSize="100px" color="#7CB1FF" class="choice" />
+    <TrueFalseButton mode="False" width="50%" height="10%" fontSize="100px" color="#FF85B1" class="choice" />
   </div>
 </template>
 
@@ -39,6 +41,7 @@ import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Header from '@/components/common/Header.vue';
 import Ordering from '@/components/QuizTemplate/Ordering.vue';
 import OrderingFrame from '@/components/QuizTemplate/OrderingFrame.vue';
+import TrueFalseButton from '@/components/QuizCreator/TrueFalseButton.vue';
 
 export default {
   name: 'ComponentsPage',
@@ -48,7 +51,8 @@ export default {
     QuizTypeDialog,
     Header,
     Ordering,
-    OrderingFrame
+    OrderingFrame,
+    TrueFalseButton,
   },
   data: function () {
     return {

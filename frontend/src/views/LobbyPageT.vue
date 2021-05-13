@@ -9,10 +9,10 @@
         <img class="QR-code" src="@/assets/images/QRcode.png" alt="QRcode">
       </div>
       <div id="lobby-page--teacher__nickname">
-        <div
+        <template
           v-for="(student, index) in students"
-          :key="index"
-        ><NicknameButton :student=student :index=index /></div>
+          
+        ><NicknameButton :key="index" :student=student :index=index /></template>
       </div>
     </div>
     <NextStepButton @click.native="clickStartButton"/>
@@ -51,14 +51,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["sendAnswerList", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
+    ...mapActions("CreateQuizRoomStore", ["sendStartMessage", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
     clickStartButton: function () {
       axios.get(`https://k4a304.p.ssafy.io/api-quiz/workbook/${this.quizId}`)
         .then(res => {
           this.setQuizData(res.data.object);
           let answerList = [];
-          res.data.object.slideList.forEach(slide => answerList.push(slide.answer))
-          this.sendAnswerList(answerList);
+          let scoreFactorList = [];
+          let originalScoreFactorList = [1, 1.5, 2];
+          res.data.object.slideList.forEach(slide => answerList.push(slide.answer));
+          res.data.object.slideList.forEach(slide => scoreFactorList.push(originalScoreFactorList[slide.scoreFactor]));
+          this.sendStartMessage([answerList, scoreFactorList]);
           this.sendTotalNum(res.data.object.slideList.length);
           this.startQuiz();
         })
@@ -129,8 +132,10 @@ export default {
   border-radius: 20px;
   background-color: #FFFFFF;
   overflow: auto;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  display: table-cell;
+  text-align: center;
+  /* flex-flow: row wrap; */
+  /* justify-content: center; */
+  /* align-items: baseline; */
 }
 </style>

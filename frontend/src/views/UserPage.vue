@@ -123,7 +123,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["setPINWS", "sendAnswerList"]),
+    ...mapActions("CreateQuizRoomStore", ["setPINWS"]),
     ...mapActions("CreateQuizStore", ["getQuizData", "resetQuizData"]),
     ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("UserStore", ["setQuizList", "addQuiz", "removeQuiz"]),
@@ -169,6 +169,7 @@ export default {
       const params = {"userId": localStorage.getItem('id'), "workbookTitle": this.quizTitle}
       this.addQuiz(params)
         .then(() => {
+          this.getQuizData(this.newQuizId);
           this.$router.push({ name: "CreatorPage", params: {"workbookId" : this.newQuizId} })
         })
         .catch(err => console.log(err))
