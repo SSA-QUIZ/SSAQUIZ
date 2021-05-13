@@ -7,6 +7,10 @@
       <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" id="answer-div" />
     </template>
     <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
+    <template v-else-if="category==='TF'">
+      <Quiz :title="question" image="@/assets/images/Default.png" id="quiz-div" />
+      <TrueFalseButton width="90%" height="20vh" :mode="answer==='0' ? 'True' : 'False'" />
+    </template>
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     <div style="height: 3%;"></div>
   </div>
@@ -18,7 +22,8 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import Quiz from '@/components/common/Quiz.vue';
 import QuizButton from '@/components/common/QuizButton.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
-import ShortAnswerResult from '@/components/QuizTemplate/ShortAnswerResult'
+import ShortAnswerResult from '@/components/QuizTemplate/ShortAnswerResult';
+import TrueFalseButton from '@/components/QuizCreator/TrueFalseButton';
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -30,6 +35,7 @@ export default {
     QuizButton,
     ShortAnswerResult,
     NextStepButton,
+    TrueFalseButton,
   },
   data: function () {
     return {
