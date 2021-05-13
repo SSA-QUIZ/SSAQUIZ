@@ -1,7 +1,7 @@
 <template>
   <div id="tf-choice">
-    <TrueFalseButton mode="True" width="50%" height=height fontSize="100px" color="#7CB1FF" class="tf"/>
-    <TrueFalseButton mode="False" width="50%" height=height fontSize="100px" color="#ff85b1" class="tf"/>
+    <TrueFalseButton mode="True" width="50%" height=height fontSize="100px" class="tf"/>
+    <TrueFalseButton mode="False" width="50%" height=height fontSize="100px" class="tf"/>
   </div>
 </template>
 
