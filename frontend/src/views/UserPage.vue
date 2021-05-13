@@ -1,6 +1,7 @@
 <template>
   <div id="user-page-container">
-    <!-- <WaveBG /> -->
+    <WaveBG />
+    <FishEffect/>
     <Header mode="off" />
     <div id="user-page-content">
       <div id="profile">
@@ -61,7 +62,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-// import WaveBG from '@/components/effects/WaveBG.vue';
+import WaveBG from '@/components/effects/WaveBG.vue';
+import FishEffect from '@/components/effects/FishEffect.vue';
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
 import Dialog from '@/components/Popup/Dialog';
@@ -71,7 +73,9 @@ import Alert from "@/components/Popup/Alert.vue";
 export default {
   name: 'UserPage',
   components: {
-    // WaveBG,
+    WaveBG,
+    FishEffect,
+
     Header,
     QuizSet,
     Confirm,
@@ -207,6 +211,7 @@ export default {
 #user-page-content {
   display: flex;
   height: 87.5%;
+  z-index: 1;
 }
 
 #user-page-content > #profile {
@@ -245,13 +250,13 @@ export default {
   align-items: center;
   width:60%;
   min-height: 100%;
-  /* z-index: 5; */
+  z-index: 1;
 }
 
 #profile__info {
   margin-left: 5%;
   font-size: 2vh;
-  /* z-index: 5; */
+  z-index: 1;
 }
 
 #profile__info button:hover {

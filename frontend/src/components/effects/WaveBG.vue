@@ -21,6 +21,7 @@ export default {
   top:0;
   left:0;
   background-color: #a4caf7;
+  /* z-index: -1; */
 }
 
 /* .circle {
