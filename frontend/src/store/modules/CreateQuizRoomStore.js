@@ -200,12 +200,12 @@ const CreateQuizRoomStore = {
         })
         .catch(err => console.log(err))
     },
-    sendAnswerList: function ({ commit }, value) {
-      const sendAnswerListMessage = {
+    sendStartMessage: function ({ commit }, value) {
+      const sendStartMessage = {
         type: 'START',
-        content: value,
+        content: value, // [[정답리스트], [scoreFactor]]
       };
-      ws.send(`/quiz/room/startQuiz/${pin}`, {}, JSON.stringify(sendAnswerListMessage))
+      ws.send(`/quiz/room/startQuiz/${pin}`, {}, JSON.stringify(sendStartMessage))
       commit('SEND_ANSWERLIST', ws);
     },
   }
