@@ -5,7 +5,7 @@
     <!-- <OrderingFrame v-show="category == '순서맞히기'" /> -->
     <MultipleChoice @click-button="sendAnswer" :choice="choice" v-if="category == '4지선다' || category == 'vote'" />
     <ShortAnswer v-else-if="category==='단답형'" @click-button="sendAnswer" />
-    <TFChoice v-else-if="category==='TF'" :height="100"/>
+    <TFChoice v-else-if="category==='TF'" :height="75"/>
   </div>
 </template>
 
