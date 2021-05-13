@@ -5,6 +5,8 @@
         v-if="mode === 'create'"
         :key="index"
         :index="index"
+        :currentIdx="currentIdx"
+        @click-button="setOrderingAnswer([index, currentIdx]); changeCurrentIdx();"
       />
       <OrderingButton
         v-else
@@ -20,7 +22,7 @@
 <script>
 import OrderingButton from '@/components/common/OrderingButton.vue';
 import CreatorOrderingButton from '@/components/QuizCreator/CreatorOrderingButton.vue';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: "Ordering",
@@ -28,10 +30,10 @@ export default {
     OrderingButton,
     CreatorOrderingButton
   },
-  props: ['mode'],
+  props: ['mode', 'currentIdx'],
   data: function () {
     return {
-      buttonId: ''
+      buttonId: '',
     }
   },
   created: function () {
@@ -39,6 +41,12 @@ export default {
   },
   computed: {
     ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex"]),
+  },
+  methods: {
+    ...mapActions("CreateQuizStore", ["setOrderingAnswer"]),
+    changeCurrentIdx: function () {
+      this.$emit('change-current-idx');
+    },
   },
 }
 </script>

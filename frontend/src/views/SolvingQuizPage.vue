@@ -9,6 +9,7 @@
         <OrderingFrame class="solving-quiz-page-content__ordering" />
         <Ordering class="solving-quiz-page-content__ordering" />
       </template>
+      <TFChoice v-else-if="category==='TF'" :height="75" @click-button="sendAnswer" />
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@ import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';
 import Ordering from '../components/QuizTemplate/Ordering.vue';
 import OrderingFrame from '../components/QuizTemplate/OrderingFrame.vue';
+import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
 
 export default {
   name: 'SolvingQuizPage',
@@ -31,6 +33,7 @@ export default {
     ShortAnswer,
     Ordering,
     OrderingFrame,
+    TFChoice
   },
   data: function () {
     return {
