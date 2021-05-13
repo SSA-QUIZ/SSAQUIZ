@@ -123,7 +123,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["setPINWS", "sendAnswerList"]),
+    ...mapActions("CreateQuizRoomStore", ["setPINWS"]),
     ...mapActions("CreateQuizStore", ["getQuizData", "resetQuizData"]),
     ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("UserStore", ["setQuizList", "addQuiz", "removeQuiz"]),

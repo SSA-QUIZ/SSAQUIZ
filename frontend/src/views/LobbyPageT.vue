@@ -51,14 +51,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["sendAnswerList", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
+    ...mapActions("CreateQuizRoomStore", ["sendStartMessage", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
     clickStartButton: function () {
       axios.get(`https://k4a304.p.ssafy.io/api-quiz/workbook/${this.quizId}`)
         .then(res => {
           this.setQuizData(res.data.object);
           let answerList = [];
-          res.data.object.slideList.forEach(slide => answerList.push(slide.answer))
-          this.sendAnswerList(answerList);
+          let scoreFactorList = [];
+          let originalScoreFactorList = [1, 1.5, 2];
+          res.data.object.slideList.forEach(slide => answerList.push(slide.answer));
+          res.data.object.slideList.forEach(slide => scoreFactorList.push(originalScoreFactorList[slide.scoreFactor]));
+          this.sendStartMessage([answerList, scoreFactorList]);
           this.sendTotalNum(res.data.object.slideList.length);
           this.startQuiz();
         })
