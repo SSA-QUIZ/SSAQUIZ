@@ -17,8 +17,9 @@
     </div>
     
     <div id="ordering-creator__ordering">
-      <Ordering mode="create" />
+      <Ordering mode="create" :currentIdx="currentIdx" @change-current-idx="changeCurrentIdx" />
     </div>
+    <InputButton text="정답 초기화" @click.native="resetOrderingAnswer(); currentIdx=1;" />
   </div>
 </template>
 
@@ -27,16 +28,19 @@ import axios from 'axios';
 import $ from 'jquery';
 import { mapState, mapActions } from 'vuex';
 import Ordering from '@/components/QuizTemplate/Ordering.vue';
+import InputButton from '@/components/common/InputButton.vue';
 
 export default {
   name: "OrderingCreator",
   components: {
-    Ordering
+    Ordering,
+    InputButton
   },
   data: function () {
     return {
       inputQuestion: '',
       image: File,
+      currentIdx: 1,
     }
   },
   mounted: function () {
@@ -75,7 +79,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setAnswer", "setImageData"]),
+    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setAnswer", "setImageData", "resetOrderingAnswer"]),
     setImage: function (data) {
       let val = [this.selectedSlideIndex, data]
       this.setImageData(val);
@@ -84,6 +88,9 @@ export default {
       this.inputQuestion = e.target.value;
       let val = [this.selectedSlideIndex, this.inputQuestion];
       this.setSlideQuestion(val);
+    },
+    changeCurrentIdx: function () {
+      this.currentIdx++;
     },
   }
 }

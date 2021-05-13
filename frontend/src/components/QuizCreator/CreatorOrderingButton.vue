@@ -4,7 +4,7 @@
       <div class="creator-ordering-button">
         <p class="creator-ordering-button__icon"><i :class="answerStyle[index-1].icon"></i></p>
         <input :value="choice" @input="changeChoice" type="text" :placeholder=placeholder class="creator-ordering-button__input">
-        <p class="creator-ordering-button__index"></p>
+        <p @click="clickButton" class="creator-ordering-button__index">{{ answerText === '0' ? '' : answerText }}</p>
       </div>
     </template>
   </button>
@@ -19,19 +19,28 @@ export default {
     'mode',
     'index',
     'answer',
-    'buttonId'
+    'buttonId',
+    'currentIdx'
+
   ],
   data: function () {
     return {
       placeholder: '',
       inputChoice: '',
-      style: ''
+      style: '',
+      clicked: false,
+      typed: false,
     }
   },
   computed: {
     ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex", "answerStyle"]),
     choice: function () {
+      this.typed;
       return this.quizData["slideList"][this.selectedSlideIndex]["answerList"][this.index-1];
+    },
+    answerText: function () {
+      this.clicked;
+      return this.quizData["slideList"][this.selectedSlideIndex]["answer"].charAt(this.index-1);
     },
   },
   created: function () {
@@ -41,9 +50,16 @@ export default {
   methods: {
     ...mapActions("CreateQuizStore", ["setAnswer", "setMultipleChoice"]),
     changeChoice: function (e) {
+      this.typed = !this.typed;
       this.inputChoice = e.target.value;
       let val = [this.selectedSlideIndex, this.index-1, this.inputChoice];
       this.setMultipleChoice(val);
+    },
+    clickButton: function () {
+      if (this.currentIdx <= 4 && this.answerText === '0') {
+        this.clicked = !this.clicked;
+        this.$emit('click-button');
+      }
     },
   }
 }
