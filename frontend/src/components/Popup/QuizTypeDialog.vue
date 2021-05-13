@@ -15,7 +15,7 @@
         <div class="type-row">
           <QuizButton style="font-size: 40px;" margin="5px" answer="순서맞히기" width="48%" height="150px" color="#7cb1ff"
             @click.native="addOrder" />
-          <QuizButton style="font-size: 40px;" margin="5px" answer="투표" width="48%" height="150px" color="#aaed81" 
+          <QuizButton style="font-size: 40px;" margin="5px" answer="TF" width="48%" height="150px" color="#aaed81" 
             @click.native="addVote" />
         </div>
       </div>
@@ -65,6 +65,21 @@ export default {
         "answer": "",
         "orderedAnswer": [],
         "answerList": ["", "", "", ""],
+        "time": 0,
+        "scoreFactor": 0,
+        "type": 0
+      };
+      this.addSlide(defaultValue);
+      this.$emit('close');
+    },
+    addVote: function () {
+      let defaultValue = {
+        "category": "TF",
+        "question": "",
+        "imagePath": "",
+        "answer": "",
+        "orderedAnswer": [],
+        "answerList": ["True", "False"],
         "time": 0,
         "scoreFactor": 0,
         "type": 0

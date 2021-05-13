@@ -32,6 +32,7 @@
         <MultipleChoiceCreator 
           v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'"
         />
+        <TFCreator v-else-if="quizData.slideList[selectedSlideIndex].category === 'TF'"/>
       </div>
       <div id="creator-page__settings">
         <span class="settings__title">문제 설정</span>
@@ -74,6 +75,7 @@
 <script>
 import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
 import ShortAnswerCreator from '@/components/QuizCreator/ShortAnswerCreator.vue';
+import TFCreator from '@/components/QuizCreator/TFCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
@@ -90,6 +92,7 @@ export default {
   components: {
     MultipleChoiceCreator,
     ShortAnswerCreator,
+    TFCreator,
     QuizSlide,
     QuizTypeDialog,
     Confirm,
