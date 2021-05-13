@@ -1,7 +1,8 @@
 <template>
   <button class="creator-quiz-button" :style="style">
     <span><i :class="icon"></i></span>
-    <input :value="choice" @input="changeChoice" type="text" :placeholder=placeholder class="creator-quiz-button__input">
+    <span v-if="quiz==='TF'" class="creator-quiz-button__input">{{ msg }}</span>
+    <input v-else :value="choice" @input="changeChoice" type="text" :placeholder=placeholder class="creator-quiz-button__input">
     <!-- 라디오 버튼 -->
     <div class="radio-box">
       <input type="radio"
@@ -25,6 +26,8 @@ export default {
     'icon',
     'margin', 
     'index',
+    'quiz',
+    'msg'
   ],
   data: function () {
     return {
@@ -41,8 +44,12 @@ export default {
   },
   watch: {
     selectedSlideIndex: function () {
-      let index = this.quizData["slideList"][this.selectedSlideIndex]["answer"];
-      document.getElementsByClassName("option-input")[parseInt(index)].checked = true;
+      let answerIndex = this.quizData["slideList"][this.selectedSlideIndex]["answer"];
+      if (this.index === parseInt(answerIndex)) {
+        document.getElementsByClassName("option-input")[this.index].checked = true;
+      } else {
+        document.getElementsByClassName("option-input")[this.index].checked = false;
+      }
     }
   },
   mounted: function () {
