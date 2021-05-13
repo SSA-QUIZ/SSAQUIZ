@@ -3,6 +3,7 @@
     <Header mode="userInfo" :nickname="username" :score="score" />
     <ProgressBar :index="quizIndex+1" :all="totalNum" />
     <MultipleChoice @click-button="sendAnswer" :choice="choice" v-show="category == '4지선다' || category == 'vote'" />
+    <!-- <OrderingFrame v-show="category == '순서맞히기'" /> -->
   </div>
 </template>
 
@@ -11,6 +12,7 @@ import { mapActions, mapState } from 'vuex';
 import Header from '@/components/common/Header.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
+// import OrderingFrame from '../components/QuizTemplate/OrderingFrame.vue';
 // import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';   
 
 export default {
@@ -19,6 +21,7 @@ export default {
     Header,
     ProgressBar,
     MultipleChoice,
+    // OrderingFrame,
     // ShortAnswer
   },
   data: function () {
