@@ -1,5 +1,5 @@
 <template>
-  <button :id="buttonId" class="ordering-button" :style="style">
+  <button class="ordering-button" :style="style">
     <template v-if="mode == 'ordering'">
       <div class="ordering-button">
         <p class="ordering-button__icon"><i :class="answerStyle[index-1].icon"></i></p>
@@ -24,12 +24,9 @@ export default {
     'mode',
     'index',
     'answer',
-    'buttonId'
   ],
   data: function () {
     return {
-      placeholder: '',
-      inputChoice: '',
       style: ''
     }
   },
@@ -37,11 +34,12 @@ export default {
     ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
     ...mapState("CreateQuizStore", ["answerStyle"]),
     choice: function () {
+      console.log(this.quizData["slideList"][this.quizIndex])
       return this.quizData["slideList"][this.quizIndex]["answerList"][this.index-1];
     },
   },
   created: function () {
-    this.placeholder = '선택지' + this.index;
+    console.log(this.index)
     this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
   }
 }
