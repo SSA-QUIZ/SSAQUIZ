@@ -75,7 +75,7 @@ export default {
         "category": "순서맞히기",
         "question": "",
         "imagePath": "",
-        "answer": "",
+        "answer": "0000",
         "answerList": ["", "", "", ""],
         "time": 0,
         "scoreFactor": 0,
