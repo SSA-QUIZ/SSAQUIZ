@@ -44,8 +44,12 @@ export default {
   },
   watch: {
     selectedSlideIndex: function () {
-      let index = this.quizData["slideList"][this.selectedSlideIndex]["answer"];
-      document.getElementsByClassName("option-input")[parseInt(index)].checked = true;
+      let answerIndex = this.quizData["slideList"][this.selectedSlideIndex]["answer"];
+      if (this.index === parseInt(answerIndex)) {
+        document.getElementsByClassName("option-input")[this.index].checked = true;
+      } else {
+        document.getElementsByClassName("option-input")[this.index].checked = false;
+      }
     }
   },
   mounted: function () {
