@@ -56,7 +56,15 @@ const CreateQuizStore = {
     },
     SET_SELECTED_SLIDE_INDEX: function (state, value) {
       state.selectedSlideIndex = value;
-    }
+    },
+    SET_ORDERINGANSWER: function (state, value) {
+      let target = state.quizData["slideList"][state.selectedSlideIndex]["answer"];
+      target = target.substr(0, value[0]-1) + value[1].toString() + target.substr(value[0]);
+      state.quizData["slideList"][state.selectedSlideIndex]["answer"] = target;      
+    },
+    RESET_ORDERINGANSWER: function (state) {
+      state.quizData["slideList"][state.selectedSlideIndex]["answer"] = "0000";
+    },
   },
   actions: {
     getQuizData: function ({ commit }, value) {
@@ -89,19 +97,15 @@ const CreateQuizStore = {
     },
     removeSlide: function ({ commit }, value) {
       commit('DELETE_SLIDE', value);
-      // await axios.delete(`https://k4a304.p.ssafy.io/api-quiz/workbook/${value[0]}/${value[1]}/${value[2]}`)
-      //   .then(res => {
-      //     console.log(res);
-      //     commit('DELETE_SLIDE', value[2]);
-      //     return res
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //     commit('DELETE_SLIDE', value[2]);
-      //   })
     },
     setSelectedSlideIndex: function ({ commit }, value) {
       commit('SET_SELECTED_SLIDE_INDEX', value);
+    },
+    setOrderingAnswer: function ({ commit }, value) {
+      commit('SET_ORDERINGANSWER', value);
+    },
+    resetOrderingAnswer: function ({ commit }) {
+      commit('RESET_ORDERINGANSWER');
     }
   }
 };

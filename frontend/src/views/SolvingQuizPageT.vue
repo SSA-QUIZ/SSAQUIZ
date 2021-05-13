@@ -15,6 +15,10 @@
           <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath" />
           <Ordering class="solving-quiz-page-content__ordering" />
         </template>
+        <template v-else-if="category==='TF'" >
+          <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath" />
+          <TFChoice id="solving-quiz-t-tf" :height="100"/>
+        </template>
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__side">
         <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
@@ -32,6 +36,8 @@ import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import { mapActions, mapState } from 'vuex';
 import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
 import Ordering from '@/components/QuizTemplate/Ordering.vue';
+import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
+
 
 export default {
   name: 'SolvingQuizPageT',
@@ -42,7 +48,8 @@ export default {
     NextStepButton,
     MultipleChoice,
     ShortAnswerT,
-    Ordering
+    Ordering,
+    TFChoice
   },
   data: function () {
     return {
@@ -102,6 +109,15 @@ export default {
   height: 60%;
   margin: 5px;
 }
+
+#solving-quiz-t-tf {
+  width: 70%;
+  height: 60%;
+  margin: 5px;
+
+  display: flex;
+}
+
 .solving-quiz-t-div {
   height: 100%;
   display: flex;

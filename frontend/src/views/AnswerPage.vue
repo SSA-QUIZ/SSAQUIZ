@@ -3,15 +3,19 @@
     <Header mode="off" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="answer-page-content">
-        <template v-if="category==='4지선다'" >
+      <template v-if="category==='4지선다'" >
         <Quiz :title="question" image="@/assets/images/Default.png" class="quiz-div" />
         <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" class="answer-div" />
-        </template>
-        <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
-        <template v-else-if="category==='순서맞히기'">
+      </template>
+      <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
+      <template v-else-if="category==='순서맞히기'">
         <Quiz title="하이" image="@/assets/images/Default.png" class="quiz-div" />
         <Ordering class="answer-page-content__ordering" />
-        </template>
+      </template>
+      <template v-else-if="category==='TF'">
+        <Quiz :title="question" image="@/assets/images/Default.png" class="quiz-div" />
+        <TrueFalseButton width="90%" height="20vh" :mode="answer==='0' ? 'True' : 'False'" />
+      </template>
     </div>
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     <div style="height: 3%;"></div>
@@ -26,6 +30,7 @@ import QuizButton from '@/components/common/QuizButton.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
 import ShortAnswerResult from '@/components/QuizTemplate/ShortAnswerResult.vue';
 import Ordering from '@/components/QuizTemplate/Ordering.vue';
+import TrueFalseButton from '@/components/QuizCreator/TrueFalseButton.vue';
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -38,6 +43,7 @@ export default {
     ShortAnswerResult,
     Ordering,
     NextStepButton,
+    TrueFalseButton,
   },
   data: function () {
     return {
@@ -89,10 +95,10 @@ export default {
   align-items: center;
   margin-bottom: -10%;
 }
-#quiz-div {
+.quiz-div {
   height: 60%;
 }
-#answer-div {
+.answer-div {
   width: 95%;
   height: auto;
 }
