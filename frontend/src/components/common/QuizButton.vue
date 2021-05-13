@@ -1,15 +1,29 @@
 <template>
   <button :style="style" class="quiz-button">
-    <div v-if="answer" class="quiz-button-div">
-      <span style="text-align: left;"><i :class="icon"></i></span>
-      <span>{{ answer }}</span>
-      <span></span>
-    </div>
-    <div v-else class="quiz-button-div">
-      <span></span>
-      <span><i :class="icon"></i></span>
-      <span></span>
-    </div>
+    <template v-if="mode == 'ordering'">
+      <div class="quiz-button-ordering">
+        <p style="font-size: 5rem;"><i :class="icon"></i></p>
+        <p>{{ answer }}</p>
+      </div>
+    </template>
+    <template v-else-if="mode == 'orderingFrame'">
+      <div class="quiz-button-ordering-frame">
+        <p style="font-size: 5rem;">{{ index }}</p>
+        <p>{{ answer }}</p>
+      </div>
+    </template>
+    <template v-else>
+      <div v-if="answer" class="quiz-button-div">
+        <span style="text-align: left;"><i :class="icon"></i></span>
+        <span>{{ answer }}</span>
+        <span></span>
+      </div>
+      <div v-else class="quiz-button-div">
+        <span></span>
+        <span><i :class="icon"></i></span>
+        <span></span>
+      </div>
+    </template>
   </button>
 </template>
 
@@ -24,6 +38,8 @@ export default {
     'icon',
     'margin',
     'answer',
+    'mode',
+    'index'
   ],
   data: function () {
     return {
@@ -63,6 +79,14 @@ export default {
 	justify-content: space-between;
 	align-items: center;
   width: 100%;
+}
+.quiz-button-ordering, .quiz-button-ordering-frame {
+	justify-content: center;
+  width: 100%;
+}
+.quiz-button-ordering-frame {
+	color: gray;
+  font-size: 2.5rem;
 }
 i {
   margin: 30px;
