@@ -1,5 +1,6 @@
 <template>
   <div id="lobby-page--teacher">
+    <button @click="disconnect_ws">테스트</button>
     <div id="lobby-page--teacher__header">
       <img class="ssaquiz-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
     </div>
@@ -51,7 +52,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["sendStartMessage", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
+    ...mapActions("CreateQuizRoomStore", ["disconnect_ws","sendStartMessage", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
     clickStartButton: function () {
       axios.get(`https://k4a304.p.ssafy.io/api-quiz/workbook/${this.quizId}`)
         .then(res => {
