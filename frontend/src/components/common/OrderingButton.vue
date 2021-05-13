@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: "OrderingButton",
@@ -34,22 +34,15 @@ export default {
     }
   },
   computed: {
-    ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex", "answerStyle"]),
+    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
+    ...mapState("CreateQuizStore", ["answerStyle"]),
     choice: function () {
-      return this.quizData["slideList"][this.selectedSlideIndex]["answerList"][this.index-1];
+      return this.quizData["slideList"][this.quizIndex]["answerList"][this.index-1];
     },
   },
   created: function () {
     this.placeholder = '선택지' + this.index;
     this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
-  },
-  methods: {
-    ...mapActions("CreateQuizStore", ["setAnswer", "setMultipleChoice"]),
-    changeChoice: function (e) {
-      this.inputChoice = e.target.value;
-      let val = [this.selectedSlideIndex, this.index-1, this.inputChoice];
-      this.setMultipleChoice(val);
-    },
   }
 }
 </script>
