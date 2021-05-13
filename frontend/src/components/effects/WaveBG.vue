@@ -21,19 +21,7 @@ export default {
   top:0;
   left:0;
   background-color: #a4caf7;
-  /* z-index: -1; */
 }
-
-/* .circle {
-  position: relative;
-  overflow: hidden;
-  width: 180px;
-  height: 180px;
-  border-radius: 100%;
-  background: transparant;
-  box-shadow: #E94E3D;
-  z-index:99;  
-} */
 
 .ocean:before,
 .ocean:after {
@@ -42,7 +30,7 @@ export default {
   left: 50%;
   min-width: 300vw;
   min-height: 300vw;
-  background-color: #CFE1F6;
+  background-color: #e3f0ff;
   
   animation-name: rotate;
   animation-iteration-count: infinite;

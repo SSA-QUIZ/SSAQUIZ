@@ -1,16 +1,6 @@
 <template>
   <div id="fish-effect">
-    <div class="ground">
-    </div>
-
-    <div class="first-circle circle">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <div class="ground"></div>
     <img class="fishy" src="@/assets/images/yellowWhale.png">
   </div>
 </template>
@@ -26,62 +16,26 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
-  height: 60%;
+  width: 50%;
+  height: 40%;
 
   overflow: hidden;
   background: transparent;
 
   position: absolute;
-  bottom: -230px;
-  
+  bottom: 0px;
 }
 .ground {
   position: absolute;
-  
   background: #a4caf7;
-  top: calc(50%);
+  bottom: 0px;
   width: 40%;
-  height: 10.5%;
+  height: 17%;
   z-index: 2;
   overflow: hidden;
 }
-.circle {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-}
-.circle div {
-  position: absolute;
-  box-shadow: 0 0 10px #00B4DB;
-  border-radius: 50%;
-  animation: bounce 3s linear infinite;
-  animation-delay: .5s;
-}
-.first-circle div:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.first-circle div:nth-child(3) {
-    animation-delay: .4s;
-}
-
-.first-circle div:nth-child(4) {
-    animation-delay: .8s;
-}
-
-.first-circle div:nth-child(5) {
-    animation-delay: 1.6s;
-}
-
-.first-circle div:nth-child(6) {
-    animation-delay: 2.2s;
-}
-
 .fishy {
-  position: absolute;
+  position: relative;
   z-index: 1;
   top: calc(50% + 50px);
   transform: rotate(-90deg);
@@ -89,7 +43,6 @@ export default {
 
   width: 200px;
   height: 200px;
-  overflow: hidden;
 }
 
 
