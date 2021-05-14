@@ -8,7 +8,7 @@
     </template>
     <template v-else>
       <div class="ordering-button__frame">
-        <p style="font-size: 5rem;">{{ index }}</p>
+        <p style="font-size: 5rem;">{{ index+1 }}</p>
       </div>
     </template>
   </button>
@@ -51,11 +51,18 @@ export default {
   computed: {
     ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
     choice: function () {
-      console.log(this.quizData["slideList"][this.quizIndex])
       return this.quizData["slideList"][this.quizIndex]["answerList"][this.index-1];
     },
   },
   mounted: function () {
+    if (this.mode === 'ordering' || this.mode === 'solving') {
+      this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
+    }
+    else {
+      this.style = 'background-color: #cfcfcf';
+    }
+  },
+  updated: function () {
     if (this.mode === 'ordering' || this.mode === 'solving') {
       this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
     }
