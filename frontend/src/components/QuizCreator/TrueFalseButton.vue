@@ -1,11 +1,11 @@
 <template>
   <button :style="style" class="quiz-button">
-    <div v-if="mode == 'True'"  class="quiz-button-div">
+    <template v-if="mode == 'True'">
       <p :style="fontStyle" class="quiz-button__tf">O</p>
-    </div>
-    <div v-else-if="mode == 'False'"  class="quiz-button-div">
+    </template>
+    <template v-else-if="mode == 'False'">
       <p :style="fontStyle" class="quiz-button__tf">X</p>
-    </div>
+    </template>
   </button>
 </template>
 
@@ -59,7 +59,7 @@ export default {
 	justify-content: center;
 	align-items: center;
   width: 100%;
-	height: 20vh;
+	/* height: 20vh; */
 	margin: 0.3%;
 	border-radius: 15px;
 	font-family: Jua;
@@ -69,11 +69,5 @@ export default {
 .quiz-button__tf {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
-}
-.quiz-button-div {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-  width: 100%;
 }
 </style>

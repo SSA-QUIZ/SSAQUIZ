@@ -144,8 +144,10 @@ export default {
   },
   mounted: function () {
     this.setSelectedSlideIndex(0);
+    this.setIsStudent(false);
   },
   methods: {
+    ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("CreateQuizStore", [
       "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide"
     ]),
