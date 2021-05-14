@@ -134,8 +134,5 @@ export default {
   overflow: auto;
   display: table-cell;
   text-align: center;
-  /* flex-flow: row wrap; */
-  /* justify-content: center; */
-  /* align-items: baseline; */
 }
 </style>
