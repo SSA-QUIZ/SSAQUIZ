@@ -263,6 +263,8 @@ public class ProgressService {
             message.setSender(nickname);
             message.setContent("student disconnection");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+
+            redisUtil.deleteZdataMember(USER_LIST + pin, (String) headerAccessor.getSessionAttributes().get("student"));
         }
     }
 
