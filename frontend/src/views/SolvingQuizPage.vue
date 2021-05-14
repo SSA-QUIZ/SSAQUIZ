@@ -1,18 +1,18 @@
 <template>
   <div style="background-color: #f2f2f2; height: 100%; position: relative;">
     <Header mode="userInfo" :nickname="username" :score="score" />
-    <ProgressBar :index="quizIndex+1" :all="totalNum" />
+    <ProgressBar :index="1" :all="12" />
     <div id="solving-quiz-page-content">
       <MultipleChoice @click-button="sendAnswer" :choice="choice" v-if="category == '4지선다' || category == 'vote'" />
       <ShortAnswer v-else-if="category==='단답형'" @click-button="sendAnswer" />
-      <template v-else-if="category==='순서맞히기'">
-        <div class="solving-quiz-page__button">
-          <button id="reset-button" @click="resetOrdering">초기화</button>
-        </div>
-        <OrderingFrame class="solving-quiz-page-content__ordering" />
-        <Ordering mode="solving" class="solving-quiz-page-content__ordering" />
-      </template>
       <TFChoice v-else-if="category==='TF'" :height="75" @click-button="sendAnswer" />
+      <OrderingAnswer v-else-if="category==='순서맞히기'" @click-button="sendAnswer" />
+        <!-- <OrderingFrame class="solving-quiz-page-content__ordering" />
+        <Ordering mode="solving" class="solving-quiz-page-content__ordering" />
+        <div class="solving-quiz-page__button">
+          <button class="solving-quiz-page__ordering__button" style="background-color: #c3356a;" @click="resetOrdering">초기화</button>
+          <button class="solving-quiz-page__ordering__button" @click="sendAnswer">제출</button>
+        </div> -->
     </div>
   </div>
 </template>
@@ -23,8 +23,9 @@ import Header from '@/components/common/Header.vue';
 import ProgressBar from '@/components/common/ProgressBar.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';
-import Ordering from '../components/QuizTemplate/Ordering.vue';
-import OrderingFrame from '../components/QuizTemplate/OrderingFrame.vue';
+import OrderingAnswer from '@/components/QuizTemplate/OrderingAnswer.vue';
+// import Ordering from '../components/QuizTemplate/Ordering.vue';
+// import OrderingFrame from '../components/QuizTemplate/OrderingFrame.vue';
 import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
 
 export default {
@@ -34,8 +35,7 @@ export default {
     ProgressBar,
     MultipleChoice,
     ShortAnswer,
-    Ordering,
-    OrderingFrame,
+    OrderingAnswer,
     TFChoice
   },
   data: function () {
@@ -45,14 +45,11 @@ export default {
   },
   methods: {
     ...mapActions("PlayQuizStore", ["sendAnswer"]),
-    resetOrdering: function () {
-
-    }
   },
   watch: {
     isFin: function (newVal) {
       if (newVal === true) {
-        this.$router.push({ name: "WrongAnswer" })
+        // this.$router.push({ name: "WrongAnswer" })
       }
     },
     isSolved: function (newVal) {
@@ -75,22 +72,23 @@ export default {
   margin: 1% 2.5%;
   height: 70%;
 }
-#reset-button {
-  width: 100px;
-  height: 50px;
+.solving-quiz-page__ordering__button {
+  width: 120px;
+  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 35px;
   font-family: Jua;
   color: white;
   background-color: #454995;
   border-radius: 10px;
+  margin-right: 0.3%;
 }
 .solving-quiz-page__button {
   display: flex;
   justify-content: flex-end;
-  margin: 0 5px 10px 0px;
+  margin: 1.5% 0 0 0;
 }
 .solving-quiz-page-content__ordering {
   height: 100%;

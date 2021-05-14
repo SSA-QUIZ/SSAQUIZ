@@ -23,6 +23,7 @@
           mode="solving"
           :key="index"
           :index="index"
+          @click.native="clickAnswer(index)"
         />
         <OrderingButton
           v-else
@@ -70,6 +71,9 @@ export default {
     changeCurrentIdx: function () {
       this.$emit('change-current-idx');
     },
+    clickAnswer: function (idx) {
+      this.$emit('click-answer', idx);
+    }
   },
 }
 </script>
