@@ -4,16 +4,16 @@
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="answer-page-content">
       <template v-if="category==='4지선다'" >
-        <Quiz :title="question" :image="imagePath" style="height: 70%" />
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 70%" />
         <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" />
       </template>
       <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
       <template v-else-if="category==='순서맞히기'">
-        <Quiz title="하이" :image="imagePath" style="height: 50%" />
+        <Quiz title="하이" :image="imagePath !== '' ? imagePath : 'default'" style="height: 50%" />
         <Ordering mode="answer" style="height: 45%;" />
       </template>
       <template v-else-if="category==='TF'">
-        <Quiz :title="question" :image="imagePath" style="height: 75%" />
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 75%" />
         <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
       </template>
     </div>
