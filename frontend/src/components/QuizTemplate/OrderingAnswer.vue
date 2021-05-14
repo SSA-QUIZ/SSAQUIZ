@@ -1,6 +1,6 @@
 <template>
   <div>
-    <OrderingFrame class="solving-quiz-page-content__ordering" :orderingIndex="answerArray" />
+    <OrderingFrame class="solving-quiz-page-content__ordering" :solvingArray="solvingArray" />
     <Ordering mode="solving" class="solving-quiz-page-content__ordering" @click-answer="setAnswer" />
     <div class="solving-quiz-page__button">
       <button class="solving-quiz-page__ordering__button" style="background-color: #c3356a;" @click="resetAnswer">초기화</button>
@@ -24,6 +24,7 @@ export default {
     return {
       index: 0,
       answerArray: [0, 0, 0, 0],
+      solvingArray: [0, 0, 0, 0],
     }
   },
   computed: {
@@ -37,11 +38,14 @@ export default {
     resetAnswer: function () {
       this.index = 0;
       this.answerArray = [0, 0, 0, 0];
+      this.solvingArray = [0, 0, 0, 0];
     },
     setAnswer: function (val) {
       if (this.answerArray[val-1] === 0 && this.index < 4) {
+        this.solvingArray[this.index] = val;
         this.answerArray[val-1] = ++this.index;
       }
+      console.log(this.solvingArray)
     },
     clickButton: function (data) {
       if (this.isStudent) {

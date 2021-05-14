@@ -9,7 +9,7 @@
     </template> -->
     <template v-for="index in 4">
       <OrderingButton
-        v-if="orderingIndex[index-1] == 0"
+        v-if="solvingArray[index-1] == 0"
         mode="orderingFrame"
         :key="index"
         :index="index"
@@ -32,16 +32,26 @@ export default {
   components: {
     OrderingButton
   },
-  props: ['selectedIndex', 'orderingIndex'],
+  props: {
+    selectedIndex: {
+      type: Number,
+    },
+    solvingArray: {
+      type: Array,
+    },
+  },
   computed: {
     temp: function () {
-      console.log(this.orderingIndex);
-      return this.orderingIndex;
+      console.log(this.solvingArray);
+      return this.solvingArray;
     }
   },
   watch: {
-    temp: function () {
-      console.log(this.temp)
+    solvingArray: {
+      deep: true,
+      handler(newVal) {
+        console.log(newVal);
+      }
     }
   },
 }
