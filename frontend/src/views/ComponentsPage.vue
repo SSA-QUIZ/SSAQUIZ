@@ -27,8 +27,8 @@
     <div id="component-title">Header</div>
     <Header mode="playQuiz" second="30" />
     <div id="component-title">Ordering</div>
-    <Ordering :answerData="answerData" />
-    <OrderingFrame />
+    <Ordering style="width: 100%; height:30%;" />
+    <OrderingFrame style="width: 100%; height:30%;" />
     <TrueFalseButton mode="True" width="50%" height="10%" fontSize="100px" color="#7CB1FF" class="choice" />
     <TrueFalseButton mode="False" width="50%" height="10%" fontSize="100px" color="#FF85B1" class="choice" />
   </div>

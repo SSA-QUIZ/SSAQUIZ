@@ -5,8 +5,6 @@
         mode="orderingFrame" 
         :key="index"
         :index="index"
-        answer="끌어서 놓으세요" 
-        color="#cfcfcf"
       />
     </template>
   </div>
@@ -25,6 +23,7 @@ export default {
 
 <style>
 #ordering-frame-container {
+  display: flex;
   width: 100%;
   height: 98%;
 }

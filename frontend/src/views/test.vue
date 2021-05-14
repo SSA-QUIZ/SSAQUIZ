@@ -1,18 +1,15 @@
 <template>
   <div style="background-color: #f2f2f2; height: 100%; position: relative;">
     <Header mode="userInfo" :nickname="username" :score="score" />
-    <ProgressBar :index="quizIndex+1" :all="totalNum" />
+    <ProgressBar :index="2" :all="12" />
     <div id="solving-quiz-page-content">
       <MultipleChoice @click-button="sendAnswer" :choice="choice" v-if="category == '4지선다' || category == 'vote'" />
       <ShortAnswer v-else-if="category==='단답형'" @click-button="sendAnswer" />
-      <template v-else-if="category==='순서맞히기'">
-        <div class="solving-quiz-page__button">
-          <button id="reset-button" @click="resetOrdering">초기화</button>
-        </div>
-        <OrderingFrame class="solving-quiz-page-content__ordering" />
-        <Ordering mode="solving" class="solving-quiz-page-content__ordering" />
-      </template>
       <TFChoice v-else-if="category==='TF'" :height="75" @click-button="sendAnswer" />
+      <template>
+        <OrderingFrame class="solving-quiz-page-content__ordering" />
+        <Ordering mode="ordering" class="solving-quiz-page-content__ordering" />
+      </template>
     </div>
   </div>
 </template>
@@ -28,7 +25,7 @@ import OrderingFrame from '../components/QuizTemplate/OrderingFrame.vue';
 import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
 
 export default {
-  name: 'SolvingQuizPage',
+  name: 'Test',
   components: {
     Header,
     ProgressBar,
@@ -45,9 +42,6 @@ export default {
   },
   methods: {
     ...mapActions("PlayQuizStore", ["sendAnswer"]),
-    resetOrdering: function () {
-
-    }
   },
   watch: {
     isFin: function (newVal) {
@@ -74,23 +68,6 @@ export default {
 	width: 95%;
   margin: 1% 2.5%;
   height: 70%;
-}
-#reset-button {
-  width: 100px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  font-family: Jua;
-  color: white;
-  background-color: #454995;
-  border-radius: 10px;
-}
-.solving-quiz-page__button {
-  display: flex;
-  justify-content: flex-end;
-  margin: 0 5px 10px 0px;
 }
 .solving-quiz-page-content__ordering {
   height: 100%;
