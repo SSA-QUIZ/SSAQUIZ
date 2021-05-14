@@ -4,17 +4,17 @@
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="answer-page-content">
       <template v-if="category==='4지선다'" >
-        <Quiz :title="question" image="@/assets/images/Default.png" />
+        <Quiz :title="question" image="@/assets/images/Default.png" style="height: 70%" />
         <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" />
       </template>
       <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
       <template v-else-if="category==='순서맞히기'">
-        <Quiz title="하이" image="@/assets/images/Default.png" style="height: 70%" />
-        <Ordering mode="answer" style="height: 60%;" />
+        <Quiz title="하이" image="@/assets/images/Default.png" style="height: 50%" />
+        <Ordering mode="answer" style="height: 45%;" />
       </template>
       <template v-else-if="category==='TF'">
-        <Quiz :title="question" image="@/assets/images/Default.png" />
-        <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'" />
+        <Quiz :title="question" image="@/assets/images/Default.png" style="height: 75%" />
+        <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
       </template>
     </div>
     <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
@@ -84,13 +84,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #answer-page-container {
   background-color: #F2F2F2;
   height: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+#answer-page-content {
+  width: 80%;
+  height: 100%;
 }
 /* .quiz-div {
   height: 50%;
@@ -99,7 +103,7 @@ export default {
   width: 95%;
   height: auto;
 } */
-.answer-page-content__ordering {
+/* .answer-page-content__ordering {
   height: 30%;
-}
+} */
 </style>
