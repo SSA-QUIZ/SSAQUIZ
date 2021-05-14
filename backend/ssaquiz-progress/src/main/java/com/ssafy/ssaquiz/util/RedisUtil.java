@@ -118,4 +118,9 @@ public class RedisUtil {
         ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
         return valueOperations.removeRange(key, startIndex, endIndex);
     }
+
+    public Long deleteZdataMember(String key, Object member) {
+        ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
+        return valueOperations.remove(key, member);
+    }
 }
