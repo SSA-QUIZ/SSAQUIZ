@@ -1,7 +1,7 @@
 <template>
   <div id="short-answer-t">
     <div class="row">
-      <img v-if="img==='default'" src="../../assets/images/Default.png" />
+      <img v-if="image==='default'" src="../../assets/images/Default.png" />
       <img v-else :src="image" />
     </div>
     <div class="row">
