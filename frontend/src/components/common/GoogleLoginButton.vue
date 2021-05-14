@@ -5,7 +5,7 @@
         <img src='https://developers.google.com/identity/images/g-logo.png'>
       </div>
       <span class='text-container'>
-        <span>Login with Google</span>
+        <span>Google 계정으로 로그인</span>
       </span>
     </div>
   </div>
@@ -20,7 +20,7 @@ export default {
 <style scoped>
 .g-sign-in-button {
     text-align: start;
-    margin: 10px;
+    margin: 5px;
     display: inline-block;
     max-width: 100%;
     width: 300px;
@@ -72,10 +72,10 @@ export default {
     border: none;
     display: inline-block;
     text-align: center;
-    width: 200px;
+    width: 230px;
 }
 
 .g-sign-in-button .text-container span{
-  margin-left: 10px;
+  margin-left: 20px;
 }
 </style>
