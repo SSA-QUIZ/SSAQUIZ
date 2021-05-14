@@ -1,6 +1,6 @@
 <template>
   <div>
-    <OrderingFrame class="solving-quiz-page-content__ordering" :orderingIndex="orderingIndexArray" />
+    <OrderingFrame class="solving-quiz-page-content__ordering" :orderingIndex="answerArray" />
     <Ordering mode="solving" class="solving-quiz-page-content__ordering" @click-answer="setAnswer" />
     <div class="solving-quiz-page__button">
       <button class="solving-quiz-page__ordering__button" style="background-color: #c3356a;" @click="resetAnswer">초기화</button>
@@ -23,29 +23,25 @@ export default {
   data: function () {
     return {
       index: 0,
-      answer: "0000",
-      selected: [false, false, false, false],
-      orderingIndexArray: [0, 0, 0, 0],
+      answerArray: [0, 0, 0, 0],
     }
   },
   computed: {
     ...mapState("CommonStore", ["isStudent"]),
     ...mapState("PlayQuizStore", ["username", "quizIndex"]),
+    answer: function () {
+      return this.answerArray.join('');
+    }
   },
   methods: {
     resetAnswer: function () {
       this.index = 0;
-      this.answer = "0000";
-      this.selected = [false, false, false, false];
-      this.orderingIndexArray = [0, 0, 0, 0];
+      this.answerArray = [0, 0, 0, 0];
     },
     setAnswer: function (val) {
-      if (this.index == 4 || this.selected[val-1]) return;
-      let changedAnswer = this.answer.substr(0, this.index) + val + this.answer.substr(this.index+1);
-      this.answer = changedAnswer;
-      this.selected[val-1] = true;
-      this.orderingIndexArray[this.index++] = val;
-      console.log(this.answer, this.selected, this.orderingIndexArray)
+      if (this.answerArray[val-1] === 0 && this.index < 4) {
+        this.answerArray[val-1] = ++this.index;
+      }
     },
     clickButton: function (data) {
       if (this.isStudent) {
