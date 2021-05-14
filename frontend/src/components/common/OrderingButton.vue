@@ -55,7 +55,7 @@ export default {
       return this.quizData["slideList"][this.quizIndex]["answerList"][this.index-1];
     },
   },
-  created: function () {
+  mounted: function () {
     if (this.mode === 'ordering' || this.mode === 'solving') {
       this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
     }

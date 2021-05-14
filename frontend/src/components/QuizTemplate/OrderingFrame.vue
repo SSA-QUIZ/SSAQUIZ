@@ -1,8 +1,22 @@
 <template>
   <div id="ordering-frame-container">
-    <template v-for="index in 4">
+    <!-- <template v-for="index in 4">
       <OrderingButton  
         mode="orderingFrame" 
+        :key="index"
+        :index="index"
+      />
+    </template> -->
+    <template v-for="index in 4">
+      <OrderingButton
+        v-if="orderingIndex[index-1] == 0"
+        mode="orderingFrame"
+        :key="index"
+        :index="index"
+      />
+      <OrderingButton
+        v-else
+        mode="solving" 
         :key="index"
         :index="index"
       />
@@ -18,7 +32,20 @@ export default {
   components: {
     OrderingButton
   },
+  props: ['selectedIndex', 'orderingIndex'],
+  computed: {
+    temp: function () {
+      console.log(this.orderingIndex);
+      return this.orderingIndex;
+    }
+  },
+  watch: {
+    temp: function () {
+      console.log(this.temp)
+    }
+  },
 }
+
 </script>
 
 <style>
