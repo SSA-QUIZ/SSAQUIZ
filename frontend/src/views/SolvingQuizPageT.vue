@@ -8,16 +8,16 @@
       </div>
       <div class="solving-quiz-t-div solving-quiz-t-div__center">
         <template v-if="category==='4지선다'" >
-          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath" />
+          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
           <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
         </template>
-        <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath" />
+        <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
         <template v-if="category==='순서맞히기'" >
-          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath" />
+          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
           <Ordering class="solving-quiz-page-content__ordering" />
         </template>
         <template v-else-if="category==='TF'" >
-          <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath" />
+          <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
           <TFChoice id="solving-quiz-t-tf" :height="100" />
         </template>
       </div>
