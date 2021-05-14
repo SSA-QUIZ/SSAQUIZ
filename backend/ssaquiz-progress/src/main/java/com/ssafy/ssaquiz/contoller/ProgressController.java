@@ -21,9 +21,14 @@ public class ProgressController {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("/room/teacher/{pin}")
-    public void getTeacherPin(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
-        progressService.getTeacherPin(pin, message, headerAccessor);
+    @MessageMapping("/room/enterTeacher/{pin}")
+    public void enterTeacher(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
+        progressService.enterTeacher(pin, message, headerAccessor);
+    }
+
+    @MessageMapping("/room/exitTeacher/{pin}")
+    public void exitTeacher(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
+        progressService.exitTeacher(pin, message, headerAccessor);
     }
 
     @MessageMapping("/room/enterUser/{pin}")
@@ -31,9 +36,9 @@ public class ProgressController {
         progressService.enterUser(pin, message, headerAccessor);
     }
 
-    @MessageMapping("/room/outsideUser/{pin}")
+    @MessageMapping("/room/exitUser/{pin}")
     public void outsideUser(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
-        progressService.outsideUser(pin, message);
+        progressService.exitUser(pin, message);
     }
 
     @MessageMapping("/room/startQuiz/{pin}")
