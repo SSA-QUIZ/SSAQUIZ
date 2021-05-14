@@ -5,8 +5,7 @@
     <div class="text">1등은 누구일까요?!</div>
     <img class="logo" src="@/assets/images/resultLogo.png"/>
     <div @click="moveToUserPage" class="router-image">
-      <img src="@/assets/images/shrimp2.png"/>
-      <span>메인 페이지로 GO!</span>
+      <img src="@/assets/images/shrimp.png"/>
     </div>
     <Podium/>
     <Winner/>
@@ -126,10 +125,6 @@ export default {
   height: 80%;
 }
 
-#result .router-image span {
-  font-family: Jua;
-  font-size: 1.5rem;
-}
 
 /* 애니메이션 효과 */
 
