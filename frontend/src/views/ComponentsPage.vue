@@ -26,11 +26,13 @@
     />
     <div id="component-title">Header</div>
     <Header mode="playQuiz" second="30" />
-    <div id="component-title">Ordering</div>
+    <GoogleLoginButton/>
+    <!-- <div id="component-title">Ordering</div>
     <Ordering :answerData="answerData" />
     <OrderingFrame />
     <TrueFalseButton mode="True" width="50%" height="10%" fontSize="100px" color="#7CB1FF" class="choice" />
-    <TrueFalseButton mode="False" width="50%" height="10%" fontSize="100px" color="#FF85B1" class="choice" />
+    <TrueFalseButton mode="False" width="50%" height="10%" fontSize="100px" color="#FF85B1" class="choice" /> -->
+    
   </div>
 </template>
 
@@ -39,9 +41,10 @@ import Confirm from '@/components/Popup/Confirm.vue';
 import Dialog from '@/components/Popup/Dialog.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Header from '@/components/common/Header.vue';
-import Ordering from '@/components/QuizTemplate/Ordering.vue';
-import OrderingFrame from '@/components/QuizTemplate/OrderingFrame.vue';
-import TrueFalseButton from '@/components/QuizCreator/TrueFalseButton.vue';
+// import Ordering from '@/components/QuizTemplate/Ordering.vue';
+// import OrderingFrame from '@/components/QuizTemplate/OrderingFrame.vue';
+// import TrueFalseButton from '@/components/QuizCreator/TrueFalseButton.vue';
+import GoogleLoginButton from '@/components/common/GoogleLoginButton.vue';
 
 export default {
   name: 'ComponentsPage',
@@ -50,9 +53,10 @@ export default {
     Dialog,
     QuizTypeDialog,
     Header,
-    Ordering,
-    OrderingFrame,
-    TrueFalseButton,
+    // Ordering,
+    // OrderingFrame,
+    // TrueFalseButton,
+    GoogleLoginButton
   },
   data: function () {
     return {
