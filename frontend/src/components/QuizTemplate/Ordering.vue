@@ -19,6 +19,12 @@
           @click-button="setOrderingAnswer([index, currentIdx]); changeCurrentIdx();"
         />
         <OrderingButton
+          v-else-if="mode === 'solving'"
+          mode="solving"
+          :key="index"
+          :index="index"
+        />
+        <OrderingButton
           v-else
           mode="ordering"
           :key="index"
@@ -73,5 +79,6 @@ export default {
   display: flex;
   width: 100%;
   height: 98%;
+  margin-top: 20px;
 }
 </style>
