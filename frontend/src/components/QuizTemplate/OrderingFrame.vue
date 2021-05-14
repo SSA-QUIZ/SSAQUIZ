@@ -1,15 +1,8 @@
 <template>
   <div id="ordering-frame-container">
-    <!-- <template v-for="index in 4">
-      <OrderingButton  
-        mode="orderingFrame" 
-        :key="index"
-        :index="index"
-      />
-    </template> -->
-    <template v-for="index in 4">
+    <template v-for="(i, index) in solvingString">
       <OrderingButton
-        v-if="solvingArray[index-1] == 0"
+        v-if="i == '0'"
         mode="orderingFrame"
         :key="index"
         :index="index"
@@ -18,7 +11,7 @@
         v-else
         mode="solving" 
         :key="index"
-        :index="index"
+        :index="i"
       />
     </template>
   </div>
@@ -36,23 +29,9 @@ export default {
     selectedIndex: {
       type: Number,
     },
-    solvingArray: {
-      type: Array,
+    solvingString: {
+      type: String,
     },
-  },
-  computed: {
-    temp: function () {
-      console.log(this.solvingArray);
-      return this.solvingArray;
-    }
-  },
-  watch: {
-    solvingArray: {
-      deep: true,
-      handler(newVal) {
-        console.log(newVal);
-      }
-    }
   },
 }
 
