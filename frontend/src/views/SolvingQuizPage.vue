@@ -54,7 +54,7 @@ export default {
     },
     isSolved: function (newVal) {
       if (newVal === true) {
-        this.$router.push({ name: "AwaitPage" })
+        // this.$router.push({ name: "AwaitPage" })
       }
     }
   },
