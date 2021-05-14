@@ -62,6 +62,8 @@ public class ProgressService {
         logger.info("exitTeacher()");
         logger.info(message.toString());
 
+        message.setType(MessageType.LEAVE);
+        message.setContent("teacher disconnecting");
         headerAccessor.getSessionAttributes().remove("teacher");
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
@@ -282,11 +284,11 @@ public class ProgressService {
 
         // teacher disconnect (quiz end)
         if ("".equals(teacher)) {
-            logger.info("teacher disconnecting");
+            logger.info("teacher disconnected");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
-            message.setContent("teacher disconnecting");
+            message.setContent("teacher disconnected");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
