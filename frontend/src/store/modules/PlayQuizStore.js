@@ -23,6 +23,7 @@ const PlayQuizStore = {
     isNext: false,
     isEnd: false,
     isConnected: false,
+    teacherDisconnected: false,
     isValidNickname: 0,
     resultData2: [],
     answerData: {}
@@ -95,6 +96,9 @@ const PlayQuizStore = {
     SET_ISCONNECTED: function (state, value) {
       state.isConnected = value;
     },
+    SET_TEACHER_DISCONNECTED: function (state, value) {
+      state.teacherDisconnected = value;
+    },
   },
   actions: {
     setIsValidNickname: function ({ commit }, value) {
@@ -158,6 +162,8 @@ const PlayQuizStore = {
           } else if (type === "END") {
             commit('SET_RESULTDATA', content);
             commit('SET_ISEND', true);
+          } else if (type === "LEAVE" || content === "teacher disconnected") {
+            commit('SET_TEACHER_DISCONNECTED', true);
           } else if (type === "JOIN") {
             if (content === "join fail (over length)") {
               commit('SET_ISVALIDNICKNAME', 1);
