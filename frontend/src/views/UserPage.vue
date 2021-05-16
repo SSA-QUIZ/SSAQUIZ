@@ -131,7 +131,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["setPINWS"]),
+    ...mapActions("CreateQuizRoomStore", ["setPINWS", "setDefaultData"]),
     ...mapActions("CreateQuizStore", ["getQuizData", "resetQuizData"]),
     ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("UserStore", ["setQuizList", "addQuiz", "removeQuiz"]),
@@ -155,6 +155,7 @@ export default {
     },
     // quizSet methods
     startQuiz: function (value) {
+      this.setDefaultData();
       this.setIsStudent(false);
       this.setPINWS()
         .then(() => {
