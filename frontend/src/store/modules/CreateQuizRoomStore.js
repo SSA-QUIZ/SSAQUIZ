@@ -201,6 +201,10 @@ const CreateQuizRoomStore = {
                 commit("SET_ISEND", true);
               }
             })
+            let sendEnterTeacherMessage = {
+              type: "TEACHER",
+            };
+            ws.send(`/quiz/room/enterTeacher/${pin}`, {}, JSON.stringify(sendEnterTeacherMessage));
             commit('SUBSCRIBE_QUIZ_ROOM', ws);
           })
           commit('SET_STOMP_CLIENT', ws);
