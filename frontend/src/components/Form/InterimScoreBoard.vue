@@ -1,31 +1,18 @@
 <template>
   <div id="board">
     <div class="scores">
-      <!-- 금메달 -->
-      <div>
-        <div class="row">
-          <img src="@/assets/images/gold.png" alt="gold"> 
-          <h1>{{ scoreBoardData[0]["value"] }}</h1>
+      <template v-for="(student, index) in scoreBoardData">
+        <div :key="index">
+          <div class="row">
+            <img v-if="index===0" src="@/assets/images/gold.png" alt="gold"> 
+            <img v-else-if="index===1" src="@/assets/images/gold.png" alt="silver"> 
+            <img v-else-if="index===2" src="@/assets/images/gold.png" alt="bronze"> 
+            <h1>{{ scoreBoardData[index]["value"] }}</h1>
+          </div>
+          <h1 class="score">{{ scoreBoardData[index]["score"] }}점</h1>
         </div>
-        <h1 class="score">{{ scoreBoardData[0]["score"] }}점</h1>
-      </div>
-      <!-- 은메달 -->
-      <div>
-        <div class="row">
-          <img src="@/assets/images/silver.png" alt="gold"> 
-          <h1>{{ scoreBoardData[1]["value"] }}</h1>
-        </div>
-        <h1 class="score">{{ scoreBoardData[1]["score"] }}점</h1>
 
-      </div>
-      <!-- 동메달 -->
-      <div>
-        <div class="row">
-          <img src="@/assets/images/bronze.png" alt="gold"> 
-          <h1>{{ scoreBoardData[2]["value"] }}</h1>
-        </div>
-        <h1 class="score">{{ scoreBoardData[2]["score"] }}점</h1>
-      </div>
+      </template>
     </div>
   </div>
 </template>

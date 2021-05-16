@@ -29,6 +29,7 @@ const CreateQuizRoomStore = {
     isFin: false,
     isInterim: false,
     isNext: false,
+    category: '',
     isEnd: false,
     scoreBoardData: [],
     resultData: [],
@@ -65,6 +66,9 @@ const CreateQuizRoomStore = {
     SET_QUIZINDEX: function (state) {
       state.quizIndex++;
     },
+    SET_CATEGORY: function (state, value) {
+      state.category = value;
+    },
     SEND_CATEGORY: function (state, value) {
       state.stompClient = value;
     },
@@ -98,8 +102,15 @@ const CreateQuizRoomStore = {
     SET_RESULTDATA: function (state, value) {
       state.resultData = value;
     },
+    DISCONNECT_WS: function (state, value) {
+      state.stompClient = value;
+    }
   },
   actions: {
+    disconnect_ws: function ({ commit }) {
+      ws.disconnect(() => {}, {});
+      commit("DISCONNECT_WS", ws);
+    },
     sendEndMessage: function ({ commit }) {
       let sendEndMessage = {
         type: "END"
@@ -148,6 +159,7 @@ const CreateQuizRoomStore = {
         content: value
       };
       ws.send(`/quiz/room/sendCategory/${pin}`, {}, JSON.stringify(sendCategoryMessage));
+      commit('SET_CATEGORY', value);
       commit('SEND_CATEGORY', ws);
     },
     setQuizIndex: function ({ commit }) {
@@ -189,18 +201,22 @@ const CreateQuizRoomStore = {
                 commit("SET_ISEND", true);
               }
             })
+            let sendEnterTeacherMessage = {
+              type: "TEACHER",
+            };
+            ws.send(`/quiz/room/enterTeacher/${pin}`, {}, JSON.stringify(sendEnterTeacherMessage));
             commit('SUBSCRIBE_QUIZ_ROOM', ws);
           })
           commit('SET_STOMP_CLIENT', ws);
         })
         .catch(err => console.log(err))
     },
-    sendAnswerList: function ({ commit }, value) {
-      const sendAnswerListMessage = {
+    sendStartMessage: function ({ commit }, value) {
+      const sendStartMessage = {
         type: 'START',
-        content: value,
+        content: value, // [[정답리스트], [scoreFactor]]
       };
-      ws.send(`/quiz/room/startQuiz/${pin}`, {}, JSON.stringify(sendAnswerListMessage))
+      ws.send(`/quiz/room/startQuiz/${pin}`, {}, JSON.stringify(sendStartMessage))
       commit('SEND_ANSWERLIST', ws);
     },
   }

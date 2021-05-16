@@ -17,12 +17,8 @@ public class Slide {
     private String question;
     private String imagePath;
     private String answer;
-    private List<String> orderedAnswer = new ArrayList<>();
     private List<String> answerList = new ArrayList<>();
     private int time;
     private int scoreFactor;
     private int type;
-//    private int time;
-//    private float scoreFactor;
-//    private String type;
 }

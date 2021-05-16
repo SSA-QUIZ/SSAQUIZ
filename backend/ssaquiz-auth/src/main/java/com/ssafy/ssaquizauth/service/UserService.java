@@ -39,8 +39,8 @@ public class UserService {
     @Autowired
     private RedisUtil redisUtil;
 
-    @Value("${app.auth.tokenExpirationMsec}")
-    private long tokenExpirationMsec;
+    @Value("${app.auth.tokenExpirationSec}")
+    private long tokenExpirationSec;
 
     @Value("${file.defaultImagePath}")
     private String DEFAULT_IMAGE_PATH;
@@ -80,7 +80,7 @@ public class UserService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = tokenProvider.createToken(authentication);
-        redisUtil.setDataExpire(loginRequest.getEmail(), "exist", tokenExpirationMsec);
+        redisUtil.setDataExpire(loginRequest.getEmail(), "exist", tokenExpirationSec);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("accessToken", token);

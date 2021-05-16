@@ -16,8 +16,8 @@
           </li>
           <li>
             <div id="nickname-form">
-              <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" @press-enter="checkNickname" />
-              <InputButton @click.native="checkNickname" text="퀴즈 풀러가기" />
+              <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" @press-enter="connectQuiz" />
+              <InputButton @click.native="connectQuiz" text="퀴즈 풀러가기" />
             </div>
           </li>
         </ul>
@@ -47,7 +47,7 @@ export default {
   },
   data: function () {
     return {
-      PIN: Number,
+      PIN: '',
       nickname: String,
       flag: false,
       color: '',
@@ -89,18 +89,24 @@ export default {
       this.PIN = data;
     },
     checkPIN: function () {
-      axios.get(`https://k4a304.p.ssafy.io/api-play/pin/${this.PIN}`)
-        .then(res => {
-          let msg = res.data.data;
-          if (msg === "PIN find success") {
-            this.moveToNickname();
-          } else if (msg === "PIN find fail") {
-            this.alertMessage = "PIN을 확인해주세요.";
-            this.color = "red";
-            this.flag = !this.flag;
-          }
-        })
-        .catch(err => console.log(err))
+      if (this.PIN === '') {
+        this.alertMessage = "PIN을 확인해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else {
+        axios.get(`https://k4a304.p.ssafy.io/api-play/pin/${this.PIN}`)
+          .then(res => {
+            let msg = res.data.data;
+            if (msg === "PIN find success") {
+              this.moveToNickname();
+            } else if (msg === "PIN find fail") {
+              this.alertMessage = "PIN을 확인해주세요.";
+              this.color = "red";
+              this.flag = !this.flag;
+            }
+          })
+          .catch(err => console.log(err))
+      }
     },
     changeNickname: function (data) {
       this.nickname = data;
@@ -108,34 +114,47 @@ export default {
     moveToNickname: function () {
       document.getElementById("pos2").checked = true;
     },
-    checkNickname: function () {
-      var nicknameRegExp = /^[_a-zA-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{2,15}$/;
-      if (!nicknameRegExp.test(this.nickname)) {
-        this.alertMessage = "닉네임은 영문 대소문자, 한글, 숫자, '_'로 이루어진 2~15글자로 작성해주세요.";
-        this.color = "red";
-        this.flag = !this.flag;
-      } else {
-        this.connectQuiz();
-      }
-    },
     connectQuiz: function () {
+      console.log(this.PIN + " " + this.nickname + " websocket 연결")
       this.setPINWS([this.PIN, this.nickname]);
     },
     // 구글 로그인 token
     getToken() {
       const url = window.location.href;
       const idx = url.indexOf("token=");
-      console.log(idx);
       if (idx != -1) {
         // google 계정으로 로그인했다는 사실 저장(회원정보 수정 할 수 없도록.)
         localStorage.setItem("googleLogin", true);
 
         // url로부터 token 획득하기
-        const token = url.slice(idx + 6);
-        console.log(url)
-        console.log(token)
+        var token = url.slice(idx + 6);
+        console.log(token);
+        var last_char = token.slice(token.length - 1, token.length);
+        if (last_char === "#") {
+          token = token.slice(0, token.length - 1);
+        }
         localStorage.setItem("token", token);
-        this.$router.push({ name: "UserPage" }).catch(() => {});
+
+        // 서버에 token 보내기
+        var config = {
+          method: 'post',
+          url: 'https://k4a304.p.ssafy.io/api-auth/auth/user',
+          headers: { 
+            'Content-Type': 'text/plain'
+          },
+          data : token
+        };
+        axios(config)
+          .then(res => {
+            localStorage.setItem('token', res.data.object.accessToken);
+            localStorage.setItem('nickname', res.data.object.nickname);
+            localStorage.setItem('email', res.data.object.email);
+            localStorage.setItem('imageUrl', res.data.object.imageUrl);
+            localStorage.setItem('id', res.data.object.id);
+
+            this.$router.push({ name: "UserPage" });
+          })
+          .catch(err => console.log(err));
       }
     },
   },

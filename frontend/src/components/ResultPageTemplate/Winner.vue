@@ -38,7 +38,13 @@ export default {
   height: 100%;
   justify-content: center;
   align-items: center;
+  
+  background-color: rgba(51, 51, 51, 0.5);
   z-index: 3;
+}
+#result .king-whale-container {
+  animation: winner-effect .3s ease both 5.5s;
+  animation-delay: 9.5s;
 }
 
 #result .king-whale-container .king-whale {
@@ -54,8 +60,8 @@ export default {
 #result .king-whale-container h1 {
   position: absolute;
   bottom: 21vh;
-  font-family: 'Nanum Pen Script', cursive;
-  font-size: 9vh;
+  font-family:Jua;
+  font-size: 4rem;
   z-index: 4;
 
   animation: winner-effect .3s ease both 5.5s;
@@ -64,12 +70,12 @@ export default {
 
 /* 모바일 크기별 글씨 크기 변화 */
 
-@media ( max-width: 600px ) {
+@media ( max-width: 700px ) {
   #result .king-whale-container h1 {
     position: absolute;
-    bottom: 28vh;
-    font-family: 'Nanum Pen Script', cursive;
-    font-size: 9vh;
+    bottom: 27vh;
+    font-family: Jua;
+    font-size: 3rem;
     z-index: 4;
 
     animation: winner-effect .3s ease both 5.5s;
@@ -77,12 +83,13 @@ export default {
   }
 }
 
-@media ( max-width: 480px ) {
+
+@media ( max-width: 500px ) {
   #result .king-whale-container h1 {
     position: absolute;
-    bottom: 30vh;
-    font-family: 'Nanum Pen Script', cursive;
-    font-size: 9vh;
+    bottom: 33vh;
+    font-family: Jua;
+    font-size: 2rem;
     z-index: 4;
   }
 }

@@ -5,8 +5,7 @@
     <div class="text">1등은 누구일까요?!</div>
     <img class="logo" src="@/assets/images/resultLogo.png"/>
     <div @click="moveToUserPage" class="router-image">
-      <img src="@/assets/images/shrimp2.png"/>
-      <span>메인 페이지로 GO!</span>
+      <img src="@/assets/images/shrimp.png"/>
     </div>
     <Podium/>
     <Winner/>
@@ -16,14 +15,23 @@
 <script>
 import Podium from "@/components/ResultPageTemplate/Podium.vue";
 import Winner from "@/components/ResultPageTemplate/Winner.vue";
+import { mapState } from 'vuex';
 export default {
   name: "ResultPage",
   components: {
     Podium,
     Winner,
   },
+  computed: {
+    ...mapState("CommonStore", ["isStudent"]),
+  },
   methods: {
     moveToUserPage: function () {
+      if (this.isStudent === true) {
+        // 학생 웹소켓 끊기
+      } else if (this.Student === false) {
+        // 선생님 웹소켓 끊기
+      }
       this.$router.push({ name: "WelcomePage" });
     }
   }
@@ -126,10 +134,6 @@ export default {
   height: 80%;
 }
 
-#result .router-image span {
-  font-family: Jua;
-  font-size: 1.5rem;
-}
 
 /* 애니메이션 효과 */
 
