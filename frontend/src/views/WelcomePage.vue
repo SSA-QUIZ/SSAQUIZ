@@ -47,7 +47,7 @@ export default {
   },
   data: function () {
     return {
-      PIN: Number,
+      PIN: '',
       nickname: String,
       flag: false,
       color: '',
@@ -89,18 +89,24 @@ export default {
       this.PIN = data;
     },
     checkPIN: function () {
-      axios.get(`https://k4a304.p.ssafy.io/api-play/pin/${this.PIN}`)
-        .then(res => {
-          let msg = res.data.data;
-          if (msg === "PIN find success") {
-            this.moveToNickname();
-          } else if (msg === "PIN find fail") {
-            this.alertMessage = "PIN을 확인해주세요.";
-            this.color = "red";
-            this.flag = !this.flag;
-          }
-        })
-        .catch(err => console.log(err))
+      if (this.PIN === '') {
+        this.alertMessage = "PIN을 확인해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else {
+        axios.get(`https://k4a304.p.ssafy.io/api-play/pin/${this.PIN}`)
+          .then(res => {
+            let msg = res.data.data;
+            if (msg === "PIN find success") {
+              this.moveToNickname();
+            } else if (msg === "PIN find fail") {
+              this.alertMessage = "PIN을 확인해주세요.";
+              this.color = "red";
+              this.flag = !this.flag;
+            }
+          })
+          .catch(err => console.log(err))
+      }
     },
     changeNickname: function (data) {
       this.nickname = data;
