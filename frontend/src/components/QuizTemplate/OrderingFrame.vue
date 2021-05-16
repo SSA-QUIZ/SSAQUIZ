@@ -1,12 +1,17 @@
 <template>
   <div id="ordering-frame-container">
-    <template v-for="index in 4">
-      <OrderingButton  
-        mode="orderingFrame" 
+    <template v-for="(i, index) in solvingString">
+      <OrderingButton
+        v-if="i == '0'"
+        mode="orderingFrame"
         :key="index"
         :index="index"
-        answer="끌어서 놓으세요" 
-        color="#cfcfcf"
+      />
+      <OrderingButton
+        v-else
+        mode="solving" 
+        :key="index"
+        :index="i"
       />
     </template>
   </div>
@@ -20,11 +25,21 @@ export default {
   components: {
     OrderingButton
   },
+  props: {
+    selectedIndex: {
+      type: Number,
+    },
+    solvingString: {
+      type: String,
+    },
+  },
 }
+
 </script>
 
 <style>
 #ordering-frame-container {
+  display: flex;
   width: 100%;
   height: 98%;
 }
