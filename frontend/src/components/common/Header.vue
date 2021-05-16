@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div style="width: 30%;">
+    <div style="width: 30%; z-index: 1;">
       <img width="100%" src="@/assets/images/SSAQUIZ.png" @click="goWelcomePage" style="cursor: pointer;">
     </div>
     <div class="header-content" v-if="mode == 'userInfo'">
@@ -63,6 +63,7 @@ header {
 	align-items: center;
   margin-bottom: -2%;
 	padding: 0vh 3vh 0vh 3vh;
+  z-index: 1;
 }
 .header-content {
   width: 70%;

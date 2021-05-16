@@ -70,6 +70,20 @@ export default {
       this.addSlide(defaultValue);
       this.$emit('close');
     },
+    addOrder: function () {
+      let defaultValue = {
+        "category": "순서맞히기",
+        "question": "",
+        "imagePath": "",
+        "answer": "0000",
+        "answerList": ["", "", "", ""],
+        "time": 0,
+        "scoreFactor": 0,
+        "type": 0
+      };
+      this.addSlide(defaultValue);
+      this.$emit('close');
+    },
     addVote: function () {
       let defaultValue = {
         "category": "TF",

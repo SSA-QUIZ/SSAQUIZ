@@ -1,18 +1,6 @@
 <template>
   <button :style="style" class="quiz-button">
-    <template v-if="mode == 'ordering'">
-      <div class="quiz-button-ordering">
-        <p style="font-size: 5rem;"><i :class="icon"></i></p>
-        <p>{{ answer }}</p>
-      </div>
-    </template>
-    <template v-else-if="mode == 'orderingFrame'">
-      <div class="quiz-button-ordering-frame">
-        <p style="font-size: 5rem;">{{ index }}</p>
-        <p>{{ answer }}</p>
-      </div>
-    </template>
-    <template v-else>
+    <template>
       <div v-if="answer" class="quiz-button-div">
         <span style="text-align: left;"><i :class="icon"></i></span>
         <span>{{ answer }}</span>

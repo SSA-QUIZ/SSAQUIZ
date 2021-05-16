@@ -29,9 +29,8 @@
       <div id="creator-page__content">
         <TextDiv message="지금 바로 퀴즈를 만들어보세요!" v-if ="quizDataLength === 0" />
         <ShortAnswerCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '단답형'"/>
-        <MultipleChoiceCreator 
-          v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'"
-        />
+        <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" />
+        <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞히기'" />
         <TFCreator v-else-if="quizData.slideList[selectedSlideIndex].category === 'TF'"/>
       </div>
       <div id="creator-page__settings">
@@ -75,6 +74,7 @@
 <script>
 import MultipleChoiceCreator from '@/components/QuizCreator/MultipleChoiceCreator.vue';
 import ShortAnswerCreator from '@/components/QuizCreator/ShortAnswerCreator.vue';
+import OrderingCreator from '@/components/QuizCreator/OrderingCreator.vue';
 import TFCreator from '@/components/QuizCreator/TFCreator.vue';
 import QuizSlide from '@/components/QuizCreator/QuizSlide.vue';
 import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
@@ -92,6 +92,7 @@ export default {
   components: {
     MultipleChoiceCreator,
     ShortAnswerCreator,
+    OrderingCreator,
     TFCreator,
     QuizSlide,
     QuizTypeDialog,
@@ -143,8 +144,10 @@ export default {
   },
   mounted: function () {
     this.setSelectedSlideIndex(0);
+    this.setIsStudent(false);
   },
   methods: {
+    ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("CreateQuizStore", [
       "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide"
     ]),

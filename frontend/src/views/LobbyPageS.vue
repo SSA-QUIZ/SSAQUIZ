@@ -6,10 +6,8 @@
         :index="0"
       />
       <div id="lobby-page--student__nickname">
-        <div
-          v-for="(student, index) in students"
-          :key="index"
-        ><NicknameButton :student="student" :index="index+1" /></div>
+        <template
+          v-for="(student, index) in students"><NicknameButton :key="index" :student="student" :index="index+1" /></template>
       </div>
     </div>
 </template>
@@ -77,9 +75,8 @@ export default {
   border-radius: 20px;
   background-color: #FFFFFF;
   overflow: auto;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  display: table-cell;
+  text-align: center;
   margin-top: 10px;
 }
 
