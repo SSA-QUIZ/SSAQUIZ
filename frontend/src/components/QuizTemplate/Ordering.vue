@@ -19,6 +19,13 @@
           @click-button="setOrderingAnswer([index, currentIdx]); changeCurrentIdx();"
         />
         <OrderingButton
+          v-else-if="mode === 'solving'"
+          mode="solving"
+          :key="index"
+          :index="index"
+          @click.native="clickAnswer(index)"
+        />
+        <OrderingButton
           v-else
           mode="ordering"
           :key="index"
@@ -64,6 +71,9 @@ export default {
     changeCurrentIdx: function () {
       this.$emit('change-current-idx');
     },
+    clickAnswer: function (idx) {
+      this.$emit('click-answer', idx);
+    }
   },
 }
 </script>
@@ -73,5 +83,6 @@ export default {
   display: flex;
   width: 100%;
   height: 98%;
+  margin-top: 20px;
 }
 </style>

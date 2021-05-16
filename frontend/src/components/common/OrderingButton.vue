@@ -1,15 +1,14 @@
 <template>
   <button class="ordering-button" :style="style">
-    <template v-if="mode == 'ordering'">
+    <template v-if="mode === 'ordering' || mode === 'solving'">
       <div class="ordering-button">
         <p class="ordering-button__icon"><i :class="answerStyle[index-1].icon"></i></p>
-        <p class="ordering-button__input">{{ choice }}</p>
+        <p class="ordering-button__input" v-if="mode == 'ordering'">{{ choice }}</p>
       </div>
     </template>
-    <template v-else-if="mode == 'orderingFrame'">
+    <template v-else>
       <div class="ordering-button__frame">
-        <p style="font-size: 5rem;">{{ index }}</p>
-        <p>{{ answer }}</p>
+        <p style="font-size: 5rem;">{{ index+1 }}</p>
       </div>
     </template>
   </button>
@@ -27,20 +26,49 @@ export default {
   ],
   data: function () {
     return {
-      style: ''
+      style: '',
+      temp: ["채원", "성진", "주빈", "나현"],
+      answerStyle: [
+        {
+          "icon": "fas fa-cat",
+          "color": "#ffdc46"
+        },
+        {
+          "icon": "fas fa-leaf",
+          "color": "#ff85b1"
+        },
+        {
+          "icon": "fa fa-car",
+          "color": "#7cb1ff"
+        },
+        {
+          "icon": "fas fa-pills",
+          "color": "#aaed81"
+        }
+      ]
     }
   },
   computed: {
     ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
-    ...mapState("CreateQuizStore", ["answerStyle"]),
     choice: function () {
-      console.log(this.quizData["slideList"][this.quizIndex])
       return this.quizData["slideList"][this.quizIndex]["answerList"][this.index-1];
     },
   },
-  created: function () {
-    console.log(this.index)
-    this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
+  mounted: function () {
+    if (this.mode === 'ordering' || this.mode === 'solving') {
+      this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
+    }
+    else {
+      this.style = 'background-color: #cfcfcf';
+    }
+  },
+  updated: function () {
+    if (this.mode === 'ordering' || this.mode === 'solving') {
+      this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
+    }
+    else {
+      this.style = 'background-color: #cfcfcf';
+    }
   }
 }
 </script>
