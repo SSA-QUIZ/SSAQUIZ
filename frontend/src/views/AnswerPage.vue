@@ -3,25 +3,20 @@
     <Header mode="off" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="answer-page-content">
-      <div class="answer-page-content__side"></div>
-      <div class="answer-page-content__center">
-        <template v-if="category==='4지선다'" >
-          <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 70%" />
-          <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" />
-        </template>
-        <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
-        <template v-else-if="category==='순서맞히기'">
-          <Quiz title="하이" :image="imagePath !== '' ? imagePath : 'default'" style="height: 60%" />
-          <Ordering mode="answer" style="height: 35%; margin-top: 20px;" />
-        </template>
-        <template v-else-if="category==='TF'">
-          <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 75%" />
-          <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
-        </template>
-      </div>
-      <div class="answer-page-content__side">
-        <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
-      </div>
+      <template v-if="category==='4지선다'" >
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 70%" />
+        <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" />
+      </template>
+      <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
+      <template v-else-if="category==='순서맞히기'">
+        <Quiz title="하이" :image="imagePath !== '' ? imagePath : 'default'" style="height: 60%" />
+        <Ordering mode="answer" style="height: 35%; margin-top: 20px;" />
+      </template>
+      <template v-else-if="category==='TF'">
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 75%" />
+        <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
+      </template>
+      <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     </div>
   </div>
 </template>
@@ -101,28 +96,7 @@ export default {
   align-items: center;
 }
 #answer-page-content {
-  width: 100%;
+  width: 75%;
   height: 100%;
-  display: flex;
 }
-.answer-page-content__side {
-  width: 10%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-.answer-page-content__center {
-  width: 80%;
-}
-
-/* .quiz-div {
-  height: 50%;
-}
-.answer-div {
-  width: 95%;
-  height: auto;
-} */
-/* .answer-page-content__ordering {
-  height: 30%;
-} */
 </style>
