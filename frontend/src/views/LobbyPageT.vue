@@ -12,11 +12,12 @@
       <div id="lobby-page--teacher__nickname">
         <template
           v-for="(student, index) in students"
-          
         ><NicknameButton :key="index" :student=student :index=index /></template>
       </div>
+      <div id="lobby-page--teacher__button">
+        <NextStepButton @click.native="clickStartButton"/>
+      </div>
     </div>
-    <NextStepButton @click.native="clickStartButton"/>
   </div>
 </template>
 
@@ -96,7 +97,17 @@ export default {
 }
 
 #lobby-page--teacher__body {
+  width: 100%;
   display: flex;
+  justify-content: center;
+  margin-left: 13%;
+}
+
+#lobby-page--teacher__button {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #lobby-page--teacher__info {
@@ -135,5 +146,19 @@ export default {
   overflow: auto;
   display: table-cell;
   text-align: center;
+}
+
+@media(max-width: 1200px) {
+  #lobby-page--teacher__nickname {
+    width: 400px;
+    height: 300px;
+  }
+  #lobby-page--teacher__button {
+    width: 150px;
+    height: 280px;
+  }
+  #lobby-page--teacher__info {
+    width: 200px;
+  }
 }
 </style>
