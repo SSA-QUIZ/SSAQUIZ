@@ -9,15 +9,15 @@
       </template>
       <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
       <template v-else-if="category==='순서맞히기'">
-        <Quiz title="하이" :image="imagePath !== '' ? imagePath : 'default'" style="height: 50%" />
-        <Ordering mode="answer" style="height: 45%;" />
+        <Quiz title="하이" :image="imagePath !== '' ? imagePath : 'default'" style="height: 60%" />
+        <Ordering mode="answer" style="height: 35%; margin-top: 20px;" />
       </template>
       <template v-else-if="category==='TF'">
         <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 75%" />
         <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
       </template>
+      <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     </div>
-    <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
   </div>
 </template>
 
@@ -96,17 +96,7 @@ export default {
   align-items: center;
 }
 #answer-page-content {
-  width: 80%;
+  width: 75%;
   height: 100%;
 }
-/* .quiz-div {
-  height: 50%;
-}
-.answer-div {
-  width: 95%;
-  height: auto;
-} */
-/* .answer-page-content__ordering {
-  height: 30%;
-} */
 </style>
