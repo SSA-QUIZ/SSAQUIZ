@@ -1,6 +1,7 @@
 <template>
   <div id="user-page-container">
-    <!-- <WaveBG /> -->
+    <WaveBG />
+    <FishEffect/>
     <Header mode="off" />
     <div id="user-page-content">
       <div id="profile">
@@ -10,8 +11,12 @@
         <div id="profile__info">
           <div style="font-size: 5vh; font-weight: 900; font-family: Jua;">
             {{ nickname }}
-            <button v-if="googleLogin==='false'" style="font-size: 3vh; color: gray;" @click="moveToUserInfo"><i class="fas fa-pen"></i></button>
-            <button style="font-size: 3.5vh; color: gray; margin-left: 10px; margin-top: 3px;" @click="logoutConfirm"><i class="fas fa-sign-out-alt"></i></button>
+            <button v-if="googleLogin==='false'" style="font-size: 3vh; color: gray;" @click="moveToUserInfo">
+              <i class="material-icons">settings</i>
+            </button>
+            <button style="font-size: 3.5vh; color: gray; margin-left: 10px; margin-top: 3px;" @click="logoutConfirm">
+              <i class="material-icons">power_settings_new</i>
+            </button>
           </div>
           <div><u>{{ email }}</u></div>
         </div>
@@ -19,7 +24,7 @@
       <div id="quiz-set-list">
         <div id="quiz-set-list__title">
           <span style="font-size: 4vh; font-family: Jua;">{{ nickname }}님의 퀴즈</span>
-          <button @click="openDialog = true" style="font-size: 5vh; color: #4F37DE;"><i class="fa fa-plus-circle"></i></button>
+          <button @click="openDialog = true" style="font-size: 5vh; color: #4F37DE;"><i class="material-icons">add</i></button>
         </div>
         <div id="quiz-set-list__list">
           <template v-for="(quiz, index) in quizList">
@@ -61,7 +66,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-// import WaveBG from '@/components/effects/WaveBG.vue';
+import WaveBG from '@/components/effects/WaveBG.vue';
+import FishEffect from '@/components/effects/FishEffect.vue';
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
 import Dialog from '@/components/Popup/Dialog';
@@ -71,7 +77,9 @@ import Alert from "@/components/Popup/Alert.vue";
 export default {
   name: 'UserPage',
   components: {
-    // WaveBG,
+    WaveBG,
+    FishEffect,
+
     Header,
     QuizSet,
     Confirm,
@@ -123,7 +131,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["setPINWS"]),
+    ...mapActions("CreateQuizRoomStore", ["setPINWS", "setDefaultData"]),
     ...mapActions("CreateQuizStore", ["getQuizData", "resetQuizData"]),
     ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("UserStore", ["setQuizList", "addQuiz", "removeQuiz"]),
@@ -147,6 +155,7 @@ export default {
     },
     // quizSet methods
     startQuiz: function (value) {
+      this.setDefaultData();
       this.setIsStudent(false);
       this.setPINWS()
         .then(() => {
@@ -207,6 +216,7 @@ export default {
 #user-page-content {
   display: flex;
   height: 87.5%;
+  z-index: 1;
 }
 
 #user-page-content > #profile {
@@ -245,13 +255,13 @@ export default {
   align-items: center;
   width:60%;
   min-height: 100%;
-  /* z-index: 5; */
+  z-index: 1;
 }
 
 #profile__info {
   margin-left: 5%;
   font-size: 2vh;
-  /* z-index: 5; */
+  z-index: 1;
 }
 
 #profile__info button:hover {
@@ -301,6 +311,79 @@ export default {
   border-radius: 15px;
   background-clip: padding-box;
   border : 8px solid transparent;
+}
+
+/* 아이콘 */
+
+i.material-icons {
+    font-size: 2rem;
+		color: white;
+		position: relative;
+		border-radius: 50%;
+		padding: 5px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+		transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+i.material-icons:after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		border: solid 2px;
+		transform: scale(0.8);
+		position: absolute;
+		top: -1px;
+		left: 0px;
+		border-radius: 50%;
+		transition: all 0.2s ease;
+}
+
+i.material-icons:hover:after {
+		transform: scale(1);
+}
+
+i.material-icons:nth-of-type(1) {
+		background-color: #88b2b9;
+}
+
+i.material-icons:nth-of-type(1):hover {
+		color: #88b2b9;
+}
+
+i.material-icons:nth-of-type(1):after {
+		border-color: #88b2b9;
+}
+
+i.material-icons:hover {
+		background-color: transparent;
+		transform: rotate(90deg);
+		cursor: pointer;
+		box-shadow: none;
+}
+
+#quiz-set-list__title > button > i.material-icons {
+  font-size: 3.4rem;
+}
+
+#quiz-set-list__title > button > i.material-icons:nth-of-type(1) {
+		background-color: #d59acb;
+}
+
+#quiz-set-list__title > button > i.material-icons:nth-of-type(1):hover {
+		color: #d59acb;
+    background-color: transparent;
+}
+
+#quiz-set-list__title > button > i.material-icons:nth-of-type(1):after {
+		border-color: #d59acb;
+}
+
+@media (max-width:601px) {
+	i.material-icons {
+		padding:10px;
+		margin:5px;
+		font-size:1.8rem;
+	}
 }
 
 </style>

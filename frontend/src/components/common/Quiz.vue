@@ -1,7 +1,8 @@
 <template>
   <div id="quiz-container">
     <div class="quiz-content">
-      <img src="../../assets/images/Default.png" style="max-width:25%; margin-bottom: 2%;"/>
+      <img v-if="image==='default'" src="../../assets/images/Default.png" style="max-width:25%; margin-bottom: 2%;"/>
+      <img v-else :src="image" style="max-width:25%; margin-bottom: 2%;"/>
       <span>{{ title }}</span>
     </div>  
   </div>

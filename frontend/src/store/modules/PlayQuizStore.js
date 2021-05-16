@@ -22,6 +22,7 @@ const PlayQuizStore = {
     isCorrect: false,
     isNext: false,
     isEnd: false,
+    isConnected: false,
     isValidNickname: 0,
     resultData2: [],
     answerData: {}
@@ -87,7 +88,13 @@ const PlayQuizStore = {
     },
     SET_ANSWER_DATA: function (state, value) {
       state.answerData = value;
-    }
+    },
+    DISCONNECT_WS: function (state, value) {
+      state.stompClient = value;
+    },
+    SET_ISCONNECTED: function (state, value) {
+      state.isConnected = value;
+    },
   },
   actions: {
     setIsValidNickname: function ({ commit }, value) {
@@ -156,7 +163,7 @@ const PlayQuizStore = {
               commit('SET_ISVALIDNICKNAME', 1);
             } else if (content === "join fail (overlap)") {
               commit('SET_ISVALIDNICKNAME', 2);
-            } else if (content === "join fail (null)") {
+            } else if (content === "join fail (null)" || content === "join fail (space character)") {
               commit('SET_ISVALIDNICKNAME', 3);
             } else {
               commit('SET_ISVALIDNICKNAME', 4);
@@ -177,6 +184,10 @@ const PlayQuizStore = {
     },
     setAnswerData: function ({ commit }, value) {
       commit('SET_ANSWER_DATA', value);
+    },
+    disconnectWS: function ({ commit }) {
+      ws.disconnect();
+      commit('DISCONNECT_WS', ws);
     }
   }
 };

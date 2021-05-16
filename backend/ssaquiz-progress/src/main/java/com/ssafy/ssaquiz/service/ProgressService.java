@@ -49,9 +49,28 @@ public class ProgressService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProgressService.class);
 
+    public void enterTeacher(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
+        logger.info("enterTeacher()");
+        logger.info(message.toString());
+
+        headerAccessor.getSessionAttributes().put("pin", pin);
+        headerAccessor.getSessionAttributes().put("teacher", "true");
+        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
+    public void exitTeacher(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
+        logger.info("exitTeacher()");
+        logger.info(message.toString());
+
+        message.setType(MessageType.LEAVE);
+        message.setContent("teacher disconnecting");
+        headerAccessor.getSessionAttributes().remove("teacher");
+        simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+    }
+
     public void enterUser(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
-        System.out.println("enterUser()");
-        System.out.println(message);
+        logger.info("enterUser()");
+        logger.info(message.toString());
 
         if (message == null || message.getSender() == null) {
             message.setContent("join fail (null)");
@@ -65,7 +84,7 @@ public class ProgressService {
             return;
         }
 
-        if (message.getSender().replaceAll(" ", "").length() == 0) {
+        if ("".equals(message.getSender()) || message.getSender().replaceAll(" ", "").length() == 0) {
             message.setContent("join fail (space character)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
@@ -83,16 +102,16 @@ public class ProgressService {
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
-    public void outsideUser(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
-        System.out.println("outsideUser()");
-        System.out.println(message);
+    public void exitUser(int pin, Message message) {
+        logger.info("outsideUser()");
+        logger.info(message.toString());
 
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
-    public void startQuiz(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
-        System.out.println("startQuiz()");
-        System.out.println(message);
+    public void startQuiz(int pin, Message message) {
+        logger.info("startQuiz()");
+        logger.info(message.toString());
 
         if (message == null || message.getContent() == null) {
             message.setContent("start fail (null)");
@@ -106,8 +125,6 @@ public class ProgressService {
 
         if (setAnswerList(ANSWER_LIST + pin, answerList) && setMultiplyList(MULTIPLY_LIST + pin, multiplyList)) {
             redisUtil.setData(ANSWER_CNT + pin, Integer.toString(answerList.size()));
-            headerAccessor.getSessionAttributes().put("pin", pin);
-            headerAccessor.getSessionAttributes().put("teacher", "true");
             message.setContent("start success");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
@@ -118,8 +135,8 @@ public class ProgressService {
     }
 
     public void finishQuiz(int pin, Message message) {
-        System.out.println("finishQuiz()");
-        System.out.println(message);
+        logger.info("finishQuiz()");
+        logger.info(message.toString());
 
         if (message == null || message.getQuizNum() == null) {
             message.setContent("finish fail (null)");
@@ -132,15 +149,15 @@ public class ProgressService {
     }
 
     public void nextQuiz(int pin, Message message) {
-        System.out.println("nextQuiz()");
-        System.out.println(message);
+        logger.info("nextQuiz()");
+        logger.info(message.toString());
 
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     public void endQuiz(int pin, Message message) {
-        System.out.println("sendCategory()");
-        System.out.println(message);
+        logger.info("sendCategory()");
+        logger.info(message.toString());
 
         message.setContent(viewRanking(USER_LIST + pin, 0, 2));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
@@ -159,8 +176,8 @@ public class ProgressService {
     }
 
     public void sendCategory(int pin, Message message) {
-        System.out.println("endQuiz()");
-        System.out.println(message);
+        logger.info("endQuiz()");
+        logger.info(message.toString());
 
         redisUtil.setData(TIME + pin, Long.toString(System.currentTimeMillis() / 100));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
@@ -168,8 +185,8 @@ public class ProgressService {
 
     @Transactional
     public void sendAnswer(int pin, Message message) {
-        System.out.println("sendAnswer()");
-        System.out.println(message);
+        logger.info("sendAnswer()");
+        logger.info(message.toString());
 
         if (message == null || message.getContent() == null || message.getSender() == null || message.getQuizNum() == null) {
             message.setContent("submit fail (null)");
@@ -211,42 +228,83 @@ public class ProgressService {
     }
 
     public void sendUserList(int pin, Message message) {
-        System.out.println("sendUserList()");
-        System.out.println(message);
+        logger.info("sendUserList()");
+        logger.info(message.toString());
 
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     public void sendTotalNum(int pin, Message message) {
-        System.out.println("sendTotalNum()");
-        System.out.println(message);
+        logger.info("sendTotalNum()");
+        logger.info(message.toString());
 
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     public void disconnect(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        int pin = (int) headerAccessor.getSessionAttributes().get("pin");
-        String nickname = (String) headerAccessor.getSessionAttributes().get("student");
-        String teacher = (String) headerAccessor.getSessionAttributes().get("teacher");
-
-        if (teacher != null) {
-            logger.info("teacher disconnection");
-
-            Message message = new Message();
-            message.setType(MessageType.LEAVE);
-            message.setContent("teacher disconnection");
-            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+        int pin = -1;
+        if (headerAccessor.getSessionAttributes().get("pin") != null) {
+            pin = (int) headerAccessor.getSessionAttributes().get("pin");
+        }
+        String nickname = "";
+        if (headerAccessor.getSessionAttributes().get("student") != null) {
+            nickname = (String) headerAccessor.getSessionAttributes().get("student");
+        }
+        String teacher = "";
+        if (headerAccessor.getSessionAttributes().get("teacher") != null) {
+            teacher = (String) headerAccessor.getSessionAttributes().get("teacher");
         }
 
-        if (nickname != null) {
-            logger.info("student disconnection (" + nickname + ")");
+        // student disconnect (teacher exist)
+        if (!"".equals(teacher) && teacher != null && pin != -1 && !"".equals(nickname) && nickname != null) {
+            logger.info("student disconnected (" + nickname + ")");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
             message.setSender(nickname);
-            message.setContent("student disconnection");
+            message.setContent("student disconnected");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+
+            redisUtil.deleteZdataMember(USER_LIST + pin, (String) headerAccessor.getSessionAttributes().get("student"));
+            return;
+        }
+
+        // student disconnect (teacher not exist)
+        if ("".equals(teacher) && pin != -1 && !"".equals(nickname) && nickname != null) {
+            logger.info("student disconnected (" + nickname + ")");
+
+            Message message = new Message();
+            message.setType(MessageType.LEAVE);
+            message.setSender(nickname);
+            message.setContent("student disconnected");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
+        // teacher disconnect (quiz end)
+        if ("".equals(teacher)) {
+            logger.info("teacher disconnected");
+
+            Message message = new Message();
+            message.setType(MessageType.LEAVE);
+            message.setContent("teacher disconnected");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
+        // teacher disconnect (quiz ongoing)
+        if (pin != -1 && !"".equals(teacher) && teacher != null) {
+            logger.info("teacher disconnected");
+
+            Message message = new Message();
+            message.setType(MessageType.LEAVE);
+            message.setContent("teacher disconnected");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+
+            headerAccessor.getSessionAttributes().remove("teacher");
+            deleteInRedis(pin);
+            return;
         }
     }
 

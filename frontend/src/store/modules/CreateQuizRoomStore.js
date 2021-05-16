@@ -36,6 +36,21 @@ const CreateQuizRoomStore = {
   },
   getters: {},
   mutations: {
+    SET_DEFAULT_DATA: function (state) {
+      pin = "";
+      state.students = [];
+      state.isStart = false;
+      state.quizData = Object;
+      state.quizIndex = 0;
+      state.solvedNum = 0;
+      state.isFin = false;
+      state.isInterim = false;
+      state.isNext = false;
+      state.category = '';
+      state.isEnd = false;
+      state.scoreBoardData = [];
+      state.resultData = [];
+    },
     SET_PINWS: function (state, value) {
       state.PIN = value;
     },
@@ -107,6 +122,9 @@ const CreateQuizRoomStore = {
     }
   },
   actions: {
+    setDefaultData: function ({ commit }) {
+      commit('SET_DEFAULT_DATA');
+    },
     disconnect_ws: function ({ commit }) {
       ws.disconnect(() => {}, {});
       commit("DISCONNECT_WS", ws);
@@ -201,6 +219,10 @@ const CreateQuizRoomStore = {
                 commit("SET_ISEND", true);
               }
             })
+            let sendEnterTeacherMessage = {
+              type: "TEACHER",
+            };
+            ws.send(`/quiz/room/enterTeacher/${pin}`, {}, JSON.stringify(sendEnterTeacherMessage));
             commit('SUBSCRIBE_QUIZ_ROOM', ws);
           })
           commit('SET_STOMP_CLIENT', ws);
