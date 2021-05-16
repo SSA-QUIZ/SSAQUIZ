@@ -35,5 +35,4 @@ img {
     height: 70px;
   }
 }
-
 </style>
