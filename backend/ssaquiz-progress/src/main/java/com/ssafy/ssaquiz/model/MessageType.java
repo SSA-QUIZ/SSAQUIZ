@@ -10,5 +10,6 @@ public enum MessageType {
     CATEGORY,
     SUBMIT,
     USERLIST,
-    TOTALNUM
+    TOTALNUM,
+    TEACHER
 }

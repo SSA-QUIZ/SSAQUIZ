@@ -33,8 +33,8 @@ export default {
     ...mapState("PlayQuizStore", ["username", "quizIndex"]),
   },
   methods: {
-    clickButton: function (idx) {
-      this.$emit('click-button', idx)
+    clickButton: function (data) {
+      this.$emit('click-button', data);
     },
   },
 }

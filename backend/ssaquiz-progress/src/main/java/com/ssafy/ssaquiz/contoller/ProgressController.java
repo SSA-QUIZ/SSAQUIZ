@@ -12,8 +12,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-
 @CrossOrigin(origins = {"*"})
 @RestController
 public class ProgressController {
@@ -23,18 +21,28 @@ public class ProgressController {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
+    @MessageMapping("/room/enterTeacher/{pin}")
+    public void enterTeacher(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
+        progressService.enterTeacher(pin, message, headerAccessor);
+    }
+
+    @MessageMapping("/room/exitTeacher/{pin}")
+    public void exitTeacher(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
+        progressService.exitTeacher(pin, message, headerAccessor);
+    }
+
     @MessageMapping("/room/enterUser/{pin}")
     public void enterUser(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
         progressService.enterUser(pin, message, headerAccessor);
     }
 
-    @MessageMapping("/room/outsideUser/{pin}")
+    @MessageMapping("/room/exitUser/{pin}")
     public void outsideUser(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
-        progressService.outsideUser(pin, message, headerAccessor);
+        progressService.exitUser(pin, message);
     }
 
     @MessageMapping("/room/startQuiz/{pin}")
-    public void startQuiz(@DestinationVariable("pin") int pin, @Payload Message message) {
+    public void startQuiz(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
         progressService.startQuiz(pin, message);
     }
 
