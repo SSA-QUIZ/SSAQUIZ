@@ -5,7 +5,7 @@
         <img src='https://developers.google.com/identity/images/g-logo.png'>
       </div>
       <span class='text-container'>
-        <span>Google 계정으로 로그인</span>
+        <span>구글 계정으로 로그인</span>
       </span>
     </div>
   </div>
@@ -63,10 +63,8 @@ export default {
 }
 
 .g-sign-in-button .text-container {
-    font-family: Roboto,arial,sans-serif;
-    font-weight: 500;
-    letter-spacing: .21px;
-    font-size: 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: bold;
     line-height: 48px;
     vertical-align: top;
     border: none;

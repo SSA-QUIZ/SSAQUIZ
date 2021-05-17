@@ -5,7 +5,7 @@
     <InputButton @click.native="login" text="로그인 하기" />
     <GoogleLoginButton  @click.native="googleLogin"/>
     <br />
-    <router-link class="hyper-link" to="">퀴즈를 풀러 오셨어요?</router-link>
+    <router-link class="hyper-link" to="/">퀴즈를 풀러 오셨어요?</router-link>
     <br />
     <a class="hyper-link" @click="moveToSignup">아직 저희 회원이 아니신가요?</a>
   </div>
@@ -48,6 +48,7 @@ export default {
       const data = {"email": this.email, "password": this.PW}
       axios.post("https://k4a304.p.ssafy.io/api-auth/auth/login", data)
         .then(res => {
+          console.log(res)
           if (res.data.status === true) {     //로그인 성공시
             localStorage.setItem('token',res.data.object.accessToken);
             localStorage.setItem('nickname', res.data.object.nickname);
@@ -57,15 +58,16 @@ export default {
             localStorage.setItem('id', res.data.object.id);
 
             this.$router.push({ name: "UserPage" });
-          } else {
-            // DB에 유저 정부가 없을 때
-            this.$emit("login-fail", "execution");
+          } else if (res.data.status === false && res.data.data === 'login Fail (loginRequest is null)') {
+            this.$emit("login-fail", "loginRequest is null");
+          } else if (res.data.status === false && res.data.data === 'login Fail (email does not exist)') {
+            this.$emit("login-fail", "email does not exist");
+          } else if (res.data.status === false && res.data.data === 'login Fail (password mismatch)'){
+            this.$emit("login-fail", "password mismatch");
           }
         })
         .catch(err => {
-          // 유효하지 않은 아이디/비밀번호일 때
           console.log(err)
-          this.$emit("login-fail", "invalid");
         })
     },
     // google login
@@ -87,5 +89,6 @@ export default {
   font-family: "Noto Sans KR", sans-serif;
   color: grey;
   margin: 5px 0 0 0;
+  text-decoration: underline;
 }
 </style>

@@ -27,7 +27,7 @@
         </div>
       </div>
       <div id="creator-page__content">
-        <TextDiv message="지금 바로 퀴즈를 만들어보세요!" v-if ="quizDataLength === 0" />
+        <TextDiv message="슬라이드를 추가해보세요!" v-if ="quizDataLength === 0" />
         <ShortAnswerCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '단답형'"/>
         <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" />
         <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞히기'" />
@@ -54,7 +54,7 @@
     </div>
     <Confirm 
       emoticon="🤔"
-      content="작업한 내용이 저장되지 않았습니다.<br>정말로 나가시겠습니까?" 
+      content="작업한 내용이 저장되지 않습니다.<br>정말로 나가시겠습니까?" 
       @close="openExitConfirm = false" 
       @accept="openExitConfirm = false; exit();"
       v-if="openExitConfirm" 
