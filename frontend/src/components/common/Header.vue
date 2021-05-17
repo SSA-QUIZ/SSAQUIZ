@@ -88,9 +88,9 @@ img:hover {
 #header-content-score {
 	font-size: 3.5vh;
 	font-weight: 900;
-	color: rgb(255, 255, 255);
-	background-color: rgb(170, 170, 170);
-	border-radius: 15px;
+	color: rgb(129, 129, 129);
+	background-color: #e2e2e2;
+	border-radius: 20px;
   margin-right: 3%;
 	padding: 1vh 3vh 1vh 3vh;
 }

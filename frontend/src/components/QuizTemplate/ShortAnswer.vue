@@ -54,7 +54,10 @@ export default {
   right: 5%;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 700px) {
+  #short-answer {
+    width: 100%;
+  }
 
   #short-answer .submit {
     display: flex-end;

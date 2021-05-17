@@ -98,7 +98,7 @@ export default {
   overflow: auto;
   display: table-cell;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0 30px 0;
 }
 
 ::-webkit-scrollbar { width: 30px; }
