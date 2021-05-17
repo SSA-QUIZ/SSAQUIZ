@@ -44,6 +44,7 @@ const PlayQuizStore = {
       state.isSolved = false;
       state.isCorrect = false;
       state.isNext = false;
+      state.isEnd = false;
       state.isConnected = false;
       state.teacherDisconnected = false;
       state.isValidNickname = 0;
