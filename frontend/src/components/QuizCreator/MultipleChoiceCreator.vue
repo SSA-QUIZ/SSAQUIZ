@@ -128,9 +128,9 @@ export default {
   width: 100%;
   height: 55%;
   border-radius: 30px;
-  background-color: #c4c4c4;
+  background-color: #d8d8d8;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 #text-container {
@@ -154,6 +154,8 @@ export default {
   margin-bottom: 10px;
   text-align: center;
   resize: none;
+  /* border: 2px solid black;
+  border-radius: 10%; */
 }
 
 .multiple-choice-creator__input-question:focus, 
@@ -172,6 +174,10 @@ input.image-input {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+#image__span > img {
+  border-radius: 10%;
 }
 
 /* hover시 이미지 변경 가능 */
