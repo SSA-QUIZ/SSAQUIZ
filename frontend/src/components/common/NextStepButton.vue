@@ -17,6 +17,7 @@ export default {
   position: absolute;
   top: 50%;
   right: 5%;
+  z-index: 2;
 }
 
 .step-button:hover {

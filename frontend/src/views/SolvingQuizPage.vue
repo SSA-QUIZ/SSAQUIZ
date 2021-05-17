@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: #f2f2f2; height: 100%; position: relative;">
     <Header mode="userInfo" :nickname="username" :score="score" />
-    <ProgressBar :index="1" :all="12" />
+    <ProgressBar :index="quizIndex+1" :all="totalNum" />
     <div id="solving-quiz-page-content">
       <MultipleChoice @click-button="sendAnswer" :choice="choice" v-if="category == '4지선다' || category == 'vote'" />
       <ShortAnswer v-else-if="category==='단답형'" @click-button="sendAnswer" />
