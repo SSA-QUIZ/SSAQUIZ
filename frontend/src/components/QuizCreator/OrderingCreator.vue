@@ -15,11 +15,12 @@
       <!-- 이미지 등록했을 때 -->
       <span v-else id="image__span"><img class="image image-input" :src="image" width="150px;" /></span>
     </div>
-    
+    <div class="ordering-creator__button">
+      <button class="ordering-creator__ordering__button" @click="resetOrderingAnswer(); currentIdx=1;">초기화</button>
+    </div>
     <div id="ordering-creator__ordering">
       <Ordering mode="create" :currentIdx="currentIdx" @change-current-idx="changeCurrentIdx" />
     </div>
-    <InputButton text="정답 초기화" @click.native="resetOrderingAnswer(); currentIdx=1;" />
   </div>
 </template>
 
@@ -28,13 +29,11 @@ import axios from 'axios';
 import $ from 'jquery';
 import { mapState, mapActions } from 'vuex';
 import Ordering from '@/components/QuizTemplate/Ordering.vue';
-import InputButton from '@/components/common/InputButton.vue';
 
 export default {
   name: "OrderingCreator",
   components: {
     Ordering,
-    InputButton
   },
   data: function () {
     return {
@@ -131,7 +130,9 @@ export default {
 
 #ordering-creator__ordering {
   width: 100%;
-  height: 43%;
+  height: 50%;
+  margin-top: -1.5%;
+  margin-bottom: 2%;
 }
 
 input.image-input {
@@ -161,5 +162,24 @@ input.image-input {
 	display: flex;
 	width: 100%;
 	margin: 1% 0% 0% 0%;
+}
+
+.ordering-creator__ordering__button {
+  width: 80px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  font-family: Jua;
+  color: white;
+  background-color: #c3356a;
+  border-radius: 10px;
+  margin-right: 0.3%;
+}
+.ordering-creator__button {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1.5% 0 0 0;
 }
 </style>
