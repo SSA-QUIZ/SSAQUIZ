@@ -1,5 +1,6 @@
 <template>
   <div id="user-info">
+    <div class="stars"></div>
     <Logo/>
     <div id="content">
       <div class="form">
@@ -355,4 +356,5 @@ input.file-input {
   filter: alpha(opacity=0);
   height:100%;
 }
+
 </style>

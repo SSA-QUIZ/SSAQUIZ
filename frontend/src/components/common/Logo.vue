@@ -26,4 +26,9 @@ export default {
   width: 15%;
   cursor : pointer;
 }
+
+#logo img:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.1);
+}
 </style>
