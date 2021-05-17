@@ -1,19 +1,22 @@
 <template>
   <div id="short-answer-creator">
     <div id="short-answer-creator__question-box">
-      <input type="text" 
-        placeholder="문제를 입력해주세요."
-        :value="question"
-        @input="changeQuestion"
-        id="short-answer-creator__input-question"
-      >
       <input type="file" name="file" class="image-input">
       <!-- 이미지 등록 안했을 때 -->
       <span v-if="image == ''" class="image-upload-btn" onclick="document.all.file.click();">
         <i class="fas fa-camera camera-img"></i>
       </span>
       <!-- 이미지 등록했을 때 -->
-      <span v-else id="image__span"><img class="image image-input" :src="image" width="150px;" /></span>
+      <span v-else id="image__span"><img class="image image-input" :src="image" width="260px;" /></span>
+
+      <div id="text-container">
+        <textarea 
+          placeholder="문제를 입력해주세요."
+          :value="question"
+          @input="changeQuestion" 
+          class="multiple-choice-creator__input-question"
+        ></textarea>
+      </div>
     </div>
     <div id="short-answer-creator__answer-box">
       <span>정답</span>
@@ -107,7 +110,6 @@ export default {
   border-radius: 30px;
   background-color: #c4c4c4;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

@@ -1,21 +1,27 @@
 <template>
   <div id="multiple-choice-creator">
     <div id="multiple-choice-creator__question-box">
-      <input type="text" 
-        placeholder="문제를 입력해주세요." 
-        :value="question"
-        @input="changeQuestion" 
-        id="multiple-choice-creator__input-question"
-      >
       <input type="file" name="file" class="image-input">
       <!-- 이미지 등록 안했을 때 -->
       <span v-if="image == ''" class="image-upload-btn" onclick="document.all.file.click();">
         <i class="fas fa-camera camera-img"></i>
       </span>
       <!-- 이미지 등록했을 때 -->
-      <span v-else id="image__span"><img class="image image-input" :src="image" width="150px;" /></span>
+      <span v-else id="image__span" class="tooltip" onclick="document.all.file.click();">
+        <img class="image image-input" :src="image" width="260px;" />
+        <span class="tooltip-text">이미지 변경하기</span>
+      </span>
+
+      <div id="text-container">
+        <textarea 
+          rows="1"
+          placeholder="문제를 입력해주세요."
+          :value="question"
+          @input="changeQuestion" 
+          class="multiple-choice-creator__input-question"
+        ></textarea>
+      </div>
     </div>
-    
     <div>
       <div class="choice-row">
         <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
@@ -70,6 +76,17 @@ export default {
         })
         .catch(err => console.log(err))
     });
+
+    // text area 글자수 제한
+    $(document).ready(function () {
+      $("textarea").keyup(function () {
+        var content = $(this).val();
+        if (content.length > 80){
+          $(this).val(content.substring(0, 80));
+          this.question.substring(0,80);
+        }
+      })
+    })
   },
   updated: function () {
     let data = this.quizData.slideList[this.selectedSlideIndex];
@@ -114,22 +131,34 @@ export default {
   border-radius: 30px;
   background-color: #c4c4c4;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+#text-container {
+  height: 260px;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-#multiple-choice-creator__input-question {
+#text-container textarea {
+  overflow: hidden;
+}
+
+#text-container .multiple-choice-creator__input-question {
   font-family: 'Nanum Pen Script', cursive;
   font-weight: bold;
   font-size: 38px;
-  height: 40px;
+  height: 50%;
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   text-align: center;
+  resize: none;
 }
 
-#multiple-choice-creator__input-question:focus, #multiple-choice-creator__input-question:active {
+.multiple-choice-creator__input-question:focus, 
+.multiple-choice-creator__input-question:active {
 	outline: none;
 }
 
@@ -143,6 +172,28 @@ input.image-input {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+/* hover시 이미지 변경 가능 */
+.tooltip {
+  display: inline-block;
+  font-weight: bold;
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+  max-width: 200px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 1em;
+  color: white;
+}
+
+.tooltip:hover .tooltip-text {
+  display: block;
 }
 
 .camera-img {
@@ -161,5 +212,6 @@ input.image-input {
 	width: 100%;
 	margin: 1% 0% 0% 0%;
 }
+
 
 </style>
