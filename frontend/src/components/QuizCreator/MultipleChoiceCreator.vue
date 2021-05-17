@@ -14,7 +14,6 @@
 
       <div id="text-container">
         <textarea 
-          rows="1"
           placeholder="문제를 입력해주세요."
           :value="question"
           @input="changeQuestion" 

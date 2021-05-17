@@ -7,7 +7,10 @@
         <i class="fas fa-camera camera-img"></i>
       </span>
       <!-- 이미지 등록했을 때 -->
-      <span v-else id="image__span"><img class="image image-input" :src="image" width="260px;" /></span>
+      <span v-else id="image__span" class="tooltip" onclick="document.all.file.click();">
+        <img class="image image-input" :src="image" width="260px;" />
+        <span class="tooltip-text">이미지 변경하기</span>
+      </span>
 
       <div id="text-container">
         <textarea 
@@ -138,6 +141,27 @@ input.image-input {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* hover시 이미지 변경 가능 */
+.tooltip {
+  display: inline-block;
+  font-weight: bold;
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+  max-width: 200px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 1em;
+  color: white;
+}
+
+.tooltip:hover .tooltip-text {
+  display: block;
 }
 
 .camera-img {
