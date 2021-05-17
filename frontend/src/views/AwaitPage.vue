@@ -25,16 +25,31 @@
         </div>
       </div>
     </div>
+  <Alert
+    :flag="flag"
+    :alertMessage=alertMessage
+    :color=color    
+  />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import BubbleBG from '@/components/effects/BubbleBG.vue';
+import Alert from '@/components/Popup/Alert.vue';
+
 export default {
   name: "AwaitPage",
   components: {
-    BubbleBG
+    BubbleBG,
+    Alert
+  },
+  data: function () {
+    return {
+      flag: false,
+      alertMessage: '',
+      color: '',
+    }
   },
   watch: {
     isFin: function (newVal) {
@@ -46,9 +61,23 @@ export default {
         }
       }
     },
+    teacherDisconnected: function (newVal) {
+      if (newVal === true) {
+        this.alertMessage = "퀴즈가 종료되었습니다. 잠시 후 메인페이지로 이동합니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+        setTimeout (() =>   {
+          this.disconnectWS(); 
+          this.$router.push({name: "WelcomePage"});
+        }, 2500);
+      }
+    },
+  },
+  methods: {
+    ...mapActions("PlayQuizStore", ["disconnectWS"]),
   },
   computed: {
-    ...mapState("PlayQuizStore", ["isFin", "isCorrect"])
+    ...mapState("PlayQuizStore", ["isFin", "isCorrect", "teacherDisconnected"])
   },
 }
 </script>
