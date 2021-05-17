@@ -30,6 +30,26 @@ const PlayQuizStore = {
   },
   getters: {},
   mutations: {
+    SET_DEFAULT_DATA_STUDENT: function (state) {
+      pin = "",
+      state.students = [];
+      state.isStart = false;
+      state.category = '';
+      state.totalNum = 0;
+      state.quizIndex = 0;
+      state.username = '';
+      state.score = 0;
+      state.plusScore = 0;
+      state.isFin = false;
+      state.isSolved = false;
+      state.isCorrect = false;
+      state.isNext = false;
+      state.isConnected = false;
+      state.teacherDisconnected = false;
+      state.isValidNickname = 0;
+      state.resultData2 = [];
+      state.answerData = {};
+    },
     SET_PINWS: function (state, value) {
       state.PIN = value;
     },
@@ -101,6 +121,9 @@ const PlayQuizStore = {
     },
   },
   actions: {
+    setDefaultDataStudent: function ({ commit }) {
+      commit('SET_DEFAULT_DATA_STUDENT');
+    },
     setIsValidNickname: function ({ commit }, value) {
       commit("SET_ISVALIDNICKNAME", value);
     },

@@ -125,9 +125,16 @@ const CreateQuizRoomStore = {
     setDefaultData: function ({ commit }) {
       commit('SET_DEFAULT_DATA');
     },
-    disconnect_ws: function ({ commit }) {
+    disconnectTeacherWS: function ({ commit }) {
       ws.disconnect(() => {}, {});
       commit("DISCONNECT_WS", ws);
+    },
+    sendExitTeacherMessage({ commit }) {
+      let sendExitTeacherMessage = {
+        type: "LEAVE",
+      };
+      ws.send(`/quiz/room/exitTeacher/${pin}`, {}, JSON.stringify(sendExitTeacherMessage));
+      commit('SET_STOMP_CLIENT', ws);
     },
     sendEndMessage: function ({ commit }) {
       let sendEndMessage = {
@@ -217,6 +224,9 @@ const CreateQuizRoomStore = {
               } else if (type === "END") {
                 commit("SET_RESULTDATA", JSON.parse(msg.body).content);
                 commit("SET_ISEND", true);
+              } else if (type === "LEAVE" && content === "teacher disconnecting") {
+                ws.disconnect(() => {}, {});
+                commit("DISCONNECT_WS", ws);
               }
             })
             let sendEnterTeacherMessage = {
