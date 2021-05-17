@@ -263,7 +263,7 @@ public class ProgressService {
 
         // student disconnect (teacher exist)
         if (!"".equals(teacher) && teacher != null && pin != -1 && !"".equals(nickname) && nickname != null) {
-            logger.info("student disconnected (" + nickname + ")");
+            logger.info("student disconnected (teacher exist)(" + nickname + ")");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
@@ -277,7 +277,7 @@ public class ProgressService {
 
         // student disconnect (teacher not exist)
         if ("".equals(teacher) && pin != -1 && !"".equals(nickname) && nickname != null) {
-            logger.info("student disconnected (" + nickname + ")");
+            logger.info("student disconnected (teacher not exist)(" + nickname + ")");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
@@ -288,7 +288,7 @@ public class ProgressService {
         }
 
         // student disconnect (nickname overlap)
-        if ("".equals(nickname)) {
+        if ("".equals(nickname) && redisUtil.getZCnt(USER_LIST + pin) != 0) {
             logger.info("student disconnected (overlap)");
 
             Message message = new Message();
@@ -300,7 +300,7 @@ public class ProgressService {
 
         // teacher disconnect (quiz end)
         if ("".equals(teacher)) {
-            logger.info("teacher disconnected");
+            logger.info("teacher disconnected (quiz end)");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
@@ -311,7 +311,7 @@ public class ProgressService {
 
         // teacher disconnect (quiz ongoing)
         if (pin != -1 && !"".equals(teacher) && teacher != null) {
-            logger.info("teacher disconnected");
+            logger.info("teacher disconnected (quiz ongoing)");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
