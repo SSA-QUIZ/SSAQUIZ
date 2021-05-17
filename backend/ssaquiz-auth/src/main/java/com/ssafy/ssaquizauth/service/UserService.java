@@ -55,7 +55,7 @@ public class UserService {
         BasicResponse result = new BasicResponse();
         result.status = false;
 
-        if (loginRequest == null || loginRequest.getEmail() == null || loginRequest.getPassword() == null) {
+        if (loginRequest == null || loginRequest.getEmail() == null || loginRequest.getPassword() == null || "".equals(loginRequest.getEmail()) || "".equals(loginRequest.getPassword())) {
             result.data = "login Fail (loginRequest is null)";
             return result;
         }
