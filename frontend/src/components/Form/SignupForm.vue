@@ -50,31 +50,41 @@ export default {
       if (!emailRegExp.test(this.email)) {
         this.$emit("signup-result", "email-fail");
       } else {
-        this.checkPassword();
+        this.checkNickname();
       }
     },
     checkPassword: function () {
-        var num = this.password.search(/[0-9]/g);
-        var eng = this.password.search(/[a-z]/ig);
-        var spe = this.password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-
-        if (this.password.length < 8 || this.password.length > 20) {
-          this.$emit("signup-result", "password-fail-1");
-        }
-        if (this.password.search(/₩s/) != -1) {
-          this.$emit("signup-result", "password-fail-2");
-        }
-        if (num < 0 || eng < 0 || spe < 0 ) {
-          this.$emit("signup-result", "password-fail-3");
-        }
-        if (this.password !== this.passwordConfirm) {
-          this.$emit("signup-result", "password-fail-4");
-        }
-        this.signup();
+      var num = this.password.search(/[0-9]/g);
+      var eng = this.password.search(/[a-z]/ig);
+      var spe = this.password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+      if (this.password.length < 8 || this.password.length > 20) {
+        this.$emit("signup-result", "password-fail-1");
+        return false;
+      }
+      if (this.password.search(/₩s/) != -1) {
+        this.$emit("signup-result", "password-fail-2");
+        return false;
+      }
+      if (num < 0 || eng < 0 || spe < 0 ) {
+        this.$emit("signup-result", "password-fail-3");
+        return false;
+      }
+      if (this.password !== this.passwordConfirm) {
+        this.$emit("signup-result", "password-fail-4");
+        return false;
+      }
+      this.signup();  
+    },
+    checkNickname: function () {
+      var nicknameRegExp = /^[_a-zA-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{2,15}$/;
+      if (!nicknameRegExp.test(this.nickname)) {
+        this.$emit("signup-result", "nickname-fail");
+      } else {
+        this.checkPassword();
+      }
     },
     // 회원가입 요청
     signup: function () {
-      this.checkPassword(); 
       if (this.password === this.passwordConfirm) {     // 비밀번호 일치할 경우
         const data = { "email": this.email, "name": this.nickname, "password": this.password }
         axios.post("https://k4a304.p.ssafy.io/api-auth/auth/signup", data)
@@ -87,6 +97,10 @@ export default {
               this.passwordConfirm = "";
               this.$emit("signup-result", "success");
               this.$emit("move-to-login");
+            } else {
+              if (res.data.data === "signup fail (duplicate email)") {
+                this.$emit("signup-result", "duplicate-email");
+              }
             }
           })
           .catch(err => { 
@@ -113,5 +127,6 @@ export default {
   font-family: "Noto Sans KR", sans-serif;
   color: grey;
   margin: 5px 0 0 0;
+  text-decoration: underline;
 }
 </style>
