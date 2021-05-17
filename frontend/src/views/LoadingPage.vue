@@ -2,19 +2,42 @@
   <div id="loading-page-container">
     <div id="loading-page-timer" class="loding-page__animation">{{ second }}</div>
     <div id="loading-page-start" class="loding-page__animation" style="display: none;">start!</div>
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color    
+    />
   </div>
 </template>
 
 <script>
+import Alert from '@/components/Popup/Alert.vue';
 import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'LoadingPage',
+  components: {
+    Alert,
+  },
   data: function () {
     return {
       second: 3,
       timer: setInterval(() => this.countDown(), 1000)
     }
+  },
+  watch: {
+    teacherDisconnected: function (newVal) {
+      if (newVal === true) {
+        clearInterval(this.timer);
+        this.alertMessage = "퀴즈가 종료되었습니다. 잠시 후 메인페이지로 이동합니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+        setTimeout (() =>   {
+          this.disconnectWS(); 
+          this.$router.push({name: "WelcomePage"});
+        }, 2500);
+      }
+    },
   },
   beforeRouteLeave(to, from, next) {
     clearInterval(this.timer);
@@ -23,14 +46,15 @@ export default {
   computed: {
     ...mapState("CommonStore", ["isStudent"]),
     ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
+    ...mapState("PlayQuizStore", ["teacherDisconnected"]),
   },
   created: function () {
     if (this.isStudent === false) {
-      console.log(this.quizData.slideList[this.quizIndex])
       this.sendCategory(this.quizData.slideList[this.quizIndex].category);
     }
   },
   methods: {
+    ...mapActions("PlayQuizStore", ["disconnectWS"]),
     ...mapActions("CreateQuizRoomStore", ["sendCategory"]),
     countDown: function () {
       if (this.second == 1) {

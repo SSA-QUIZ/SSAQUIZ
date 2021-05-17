@@ -8,6 +8,11 @@
       <TFChoice v-else-if="category==='TF'" :height="75" @click-button="sendAnswer" />
       <OrderingAnswer v-else-if="category==='순서맞히기'" @click-button="sendAnswer" />
     </div>
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color    
+    />
   </div>
 </template>
 
@@ -19,6 +24,7 @@ import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import ShortAnswer from '@/components/QuizTemplate/ShortAnswer.vue';
 import OrderingAnswer from '@/components/QuizTemplate/OrderingAnswer.vue';
 import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
+import Alert from '@/components/Popup/Alert.vue';
 
 export default {
   name: 'SolvingQuizPage',
@@ -28,15 +34,19 @@ export default {
     MultipleChoice,
     ShortAnswer,
     OrderingAnswer,
-    TFChoice
+    TFChoice,
+    Alert
   },
   data: function () {
     return {
       choice: ["", "", "", ""],
+      flag: false,
+      alertMessage: '',
+      color: '',
     }
   },
   methods: {
-    ...mapActions("PlayQuizStore", ["sendAnswer"]),
+    ...mapActions("PlayQuizStore", ["sendAnswer", "disconnectWS"]),
   },
   watch: {
     isFin: function (newVal) {
@@ -48,10 +58,21 @@ export default {
       if (newVal === true) {
         this.$router.push({ name: "AwaitPage" })
       }
-    }
+    },
+    teacherDisconnected: function (newVal) {
+      if (newVal === true) {
+        this.alertMessage = "퀴즈가 종료되었습니다. 잠시 후 메인페이지로 이동합니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+        setTimeout (() =>   {
+          this.disconnectWS(); 
+          this.$router.push({name: "WelcomePage"});
+        }, 2500);
+      }
+    },
   },
   computed: {
-    ...mapState("PlayQuizStore", ["category", "totalNum", "quizIndex", "username", "score", "isFin", "isSolved"])
+    ...mapState("PlayQuizStore", ["category", "totalNum", "quizIndex", "username", "score", "isFin", "isSolved", "teacherDisconnected"])
   },
 }
 </script>
