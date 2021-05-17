@@ -56,7 +56,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #solving-quiz-page-content {
   display: flex;
   flex-flow: column;
