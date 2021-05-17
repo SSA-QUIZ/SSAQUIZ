@@ -6,10 +6,10 @@
         <!------ 프로필 이미지 ------>
         <div class="profile">
           <div class="img-wrapper">
-            <img class="image file-input" :src="defaultImg">
+            <img class="image file-input" :src="defaultImg" onclick="document.all.file.click();">
             <input type="file" name="file" class="file-input">
             <div class="hover"></div>
-            <div class="image-upload-btn" onclick="document.all.file.click();">
+            <div class="image-upload-btn">
               <span draggable="false"><i class="far fa-file-image"></i></span>
             </div>
           </div>
@@ -168,16 +168,17 @@ export default {
 
           axios.put("https://k4a304.p.ssafy.io/api-auth/auth/user-image", formData, headers)
           .then(res => {
-            localStorage.setItem("imageUrl", res.data.object.imageUrl)
+            localStorage.setItem("imageUrl", res.data.object.imageUrl);
+            this.$router.push({ name: "UserPage", params: { modify: "success", img: localStorage.getItem("imageUrl") } });
             // if (this.nickname.length !== 0) {
-            //   localStorage.setItem("nickname", this.nickname);
+              //   localStorage.setItem("nickname", this.nickname);
             // }
           })
           .catch(err => console.log(err))
         }
         this.password = "";
         this.passwordConfirm = "";
-        this.$router.push({ name: "UserPage", params: { modify: "success", img: localStorage.getItem("imageUrl") } });
+        
       }
     }
   }
