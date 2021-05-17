@@ -151,7 +151,7 @@ export default {
   z-index: 5;
   cursor: pointer;
 
-  animation: shaking infinite, router-effect .3s ease both 8.5s;
+  animation: shaking infinite, router-effect .3s ease both 10.5s;
 	animation-duration: 1.8s;
 	animation-timing-function: linear;
 }
