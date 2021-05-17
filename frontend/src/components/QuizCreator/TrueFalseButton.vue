@@ -1,25 +1,18 @@
 <template>
   <button :style="style" class="quiz-button">
-    <template>
-      <div v-if="answer" class="quiz-button-div">
-        <span style="text-align: left;"><i :class="icon"></i></span>
-        <span>{{ answer }}</span>
-        <span></span>
-      </div>
-      <div v-else class="quiz-button-div">
-        <span></span>
-        <span><i :class="icon"></i></span>
-        <span></span>
-      </div>
+    <template v-if="mode == 'True'">
+      <p :style="fontStyle" class="quiz-button__tf">O</p>
+    </template>
+    <template v-else-if="mode == 'False'">
+      <p :style="fontStyle" class="quiz-button__tf">X</p>
     </template>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'QuizButton',
+  name: 'TrueFalseButton',
   props: [
-    'color',
     'width',
     'height',
     'font',
@@ -27,24 +20,35 @@ export default {
     'margin',
     'answer',
     'mode',
-    'index'
+    'index',
+    'fontSize'
   ],
   data: function () {
     return {
       style: '',
+      fontStyle: '',
     }
   },
   created: function () {
     this.setStyle();
+    this.setFontStyle();
   },
   methods: {
     setStyle: function () {
+      if (this.mode === "True") {
+        this.style += "background-color: #7CB1FF;"
+      } else {
+        this.style += "background-color: #ff85b1;"
+      }
       if (this.color != undefined) this.style += "background-color: " + this.color + ";\n";
       if (this.width != undefined) this.style += "width: " + this.width + ";\n";
-      if (this.height != undefined) this.style += "height: " + this.height + ";\n";
+      if (this.height != undefined) this.style += "height: " + this.height + "%;\n";
       if (this.font != undefined) this.style += "font-size: " + this.font + ";\n";
       if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
-    }
+    },
+    setFontStyle: function () {
+      if (this.fontSize != undefined) this.fontStyle += "font-size: " + this.fontSize + ";\n";
+    },
   }
 }
 </script>
@@ -52,34 +56,18 @@ export default {
 <style scoped>
 .quiz-button {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
   width: 100%;
-	height: 30vh;
+	/* height: 20vh; */
 	margin: 0.3%;
 	border-radius: 15px;
 	font-family: Jua;
 	font-size: 60px;
   padding: 0 auto;
 }
-.quiz-button-div {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-  width: 100%;
-}
-.quiz-button-ordering, .quiz-button-ordering-frame {
-	justify-content: center;
-  width: 100%;
-}
-.quiz-button-ordering-frame {
-	color: gray;
-  font-size: 2.5rem;
-}
-i {
-  margin: 30px;
-}
-span {
-  width: 33%;
+.quiz-button__tf {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
 }
 </style>

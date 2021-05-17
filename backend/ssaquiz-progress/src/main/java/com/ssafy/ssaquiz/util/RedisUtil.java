@@ -56,6 +56,11 @@ public class RedisUtil {
         return valueOperations.get(redisKey, key);
     }
 
+    public long getHsize(String redisKey) {
+        HashOperations<String, Object, Object> valueOperations = stringRedisTemplate.opsForHash();
+        return valueOperations.size(redisKey);
+    }
+
     /**
      * redis List 구조 저장 및 조회를 위한 함수
      */
@@ -112,5 +117,10 @@ public class RedisUtil {
     public Long deleteZdata(String key, long startIndex, long endIndex) {
         ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
         return valueOperations.removeRange(key, startIndex, endIndex);
+    }
+
+    public Long deleteZdataMember(String key, Object member) {
+        ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
+        return valueOperations.remove(key, member);
     }
 }

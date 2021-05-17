@@ -1,18 +1,23 @@
 <template>
   <div id="solving-quiz-page-t-container">
-    <Header @time-zero="sendFinMessage" mode="playQuiz" :time="time" />
+    <button @click="disconnect_ws">테스트</button>
+    <Header @time-zero="sendFinMessage(quizIndex)" mode="playQuiz" :time="time" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="solving-quiz-page-t-content">
-      <div class="solving-quiz-t-div solving-quiz-t-div__side">
-      </div>
-      <div class="solving-quiz-t-div solving-quiz-t-div__center">
-        <Quiz id="solving-quiz-t-quiz" :title="question" image="" />
+      <template v-if="category==='4지선다'" >
+        <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
         <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
-        <!-- <ShortAnswerT title="우리 팀 팀장의 이름은?" image="" /> -->
-      </div>
-      <div class="solving-quiz-t-div solving-quiz-t-div__side">
-        <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
-      </div>
+      </template>
+      <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+      <template v-if="category==='순서맞히기'" >
+        <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <Ordering class="solving-quiz-page-content__ordering" />
+      </template>
+      <template v-else-if="category==='TF'" >
+        <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <TFChoice id="solving-quiz-t-tf" :height="100" />
+      </template>
+      <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
     </div>
   </div>
 </template>
@@ -24,7 +29,10 @@ import Quiz from '@/components/common/Quiz.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import { mapActions, mapState } from 'vuex';
-// import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
+import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
+import Ordering from '@/components/QuizTemplate/Ordering.vue';
+import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
+
 
 export default {
   name: 'SolvingQuizPageT',
@@ -34,7 +42,9 @@ export default {
     Quiz,
     NextStepButton,
     MultipleChoice,
-    // ShortAnswerT,
+    ShortAnswerT,
+    Ordering,
+    TFChoice
   },
   data: function () {
     return {
@@ -49,19 +59,22 @@ export default {
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex", "isFin"]),
+    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex", "isFin", "category"]),
     choices: function () {
       return this.quizData["slideList"][this.quizIndex]["answerList"];
     },
     question: function () {
       return this.quizData["slideList"][this.quizIndex]["question"];
     },
+    imagePath: function () {
+      return this.quizData["slideList"][this.quizIndex]["imagePath"];
+    },
     time: function () {
       return this.timeLimit[this.quizData["slideList"][this.quizIndex]["time"]];
     },
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["sendFinMessage"])
+    ...mapActions("CreateQuizRoomStore", ["disconnect_ws", "sendFinMessage"])
   },
 }
 </script>
@@ -77,12 +90,13 @@ export default {
 }
 #solving-quiz-page-t-content {
   display: flex;
-  width:100%;
+  flex-flow: column;
+  width:80%;
   height: 75%;
   justify-content:center;
   align-items: center; 
 }
-#solving-quiz-t-quiz {
+.solving-quiz-t-quiz {
   height: 50%;
   margin: 10px;
 }
@@ -91,17 +105,11 @@ export default {
   height: 60%;
   margin: 5px;
 }
-.solving-quiz-t-div {
-  height: 100%;
+
+#solving-quiz-t-tf {
+  width: 70%;
+  height: 60%;
+  margin: 5px;
   display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-}
-.solving-quiz-t-div__side {
-  width: 10%;
-}
-.solving-quiz-t-div__center {
-  width: 80%;
 }
 </style>

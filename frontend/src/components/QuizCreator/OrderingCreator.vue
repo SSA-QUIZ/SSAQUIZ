@@ -1,11 +1,11 @@
 <template>
-  <div id="multiple-choice-creator">
-    <div id="multiple-choice-creator__question-box">
+    <div id="ordering-creator">
+    <div id="ordering-creator__question-box">
       <input type="text" 
         placeholder="문제를 입력해주세요." 
         :value="question"
         @input="changeQuestion" 
-        id="multiple-choice-creator__input-question"
+        id="ordering-creator__input-question"
       >
       <input type="file" name="file" class="image-input">
       <!-- 이미지 등록 안했을 때 -->
@@ -16,38 +16,31 @@
       <span v-else id="image__span"><img class="image image-input" :src="image" width="150px;" /></span>
     </div>
     
-    <div>
-      <div class="choice-row">
-        <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
-        <CreatorQuizButton :index=1 height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
-      </div>
-      <div class="choice-row">
-        <CreatorQuizButton :index=2 height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
-        <CreatorQuizButton :index=3 height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
-      </div>
+    <div id="ordering-creator__ordering">
+      <Ordering mode="create" :currentIdx="currentIdx" @change-current-idx="changeCurrentIdx" />
     </div>
+    <InputButton text="정답 초기화" @click.native="resetOrderingAnswer(); currentIdx=1;" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import $ from 'jquery';
-import { mapActions, mapState } from 'vuex';
-import CreatorQuizButton from '@/components/QuizCreator/CreatorQuizButton.vue';
+import { mapState, mapActions } from 'vuex';
+import Ordering from '@/components/QuizTemplate/Ordering.vue';
+import InputButton from '@/components/common/InputButton.vue';
 
 export default {
-  name: "MultipleChoiceCreator",
-  props: [
-    "slideIndex"
-  ],
+  name: "OrderingCreator",
   components: {
-    CreatorQuizButton
+    Ordering,
+    InputButton
   },
   data: function () {
     return {
-      defaultImg: "",
+      inputQuestion: '',
       image: File,
-      inputQuestion: "",
+      currentIdx: 1,
     }
   },
   mounted: function () {
@@ -80,13 +73,13 @@ export default {
     this.image = data.imagePath;
   },
   computed: {
-    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+    ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex"]),
     question: function () {
       return this.quizData["slideList"][this.selectedSlideIndex]["question"];
     },
   },
   methods: {
-    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setImageData"]),
+    ...mapActions("CreateQuizStore", ["setSlideQuestion", "setAnswer", "setImageData", "resetOrderingAnswer"]),
     setImage: function (data) {
       let val = [this.selectedSlideIndex, data]
       this.setImageData(val);
@@ -96,19 +89,22 @@ export default {
       let val = [this.selectedSlideIndex, this.inputQuestion];
       this.setSlideQuestion(val);
     },
-  },
+    changeCurrentIdx: function () {
+      this.currentIdx++;
+    },
+  }
 }
 </script>
 
 <style>
-#multiple-choice-creator {
+#ordering-creator {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-#multiple-choice-creator__question-box {
+#ordering-creator__question-box {
   width: 100%;
   height: 55%;
   border-radius: 30px;
@@ -119,7 +115,7 @@ export default {
   align-items: center;
 }
 
-#multiple-choice-creator__input-question {
+#ordering-creator__input-question {
   font-family: 'Nanum Pen Script', cursive;
   font-weight: bold;
   font-size: 38px;
@@ -129,8 +125,13 @@ export default {
   text-align: center;
 }
 
-#multiple-choice-creator__input-question:focus, #multiple-choice-creator__input-question:active {
+#ordering-creator__input-question:focus, #ordering-creator__input-question:active {
 	outline: none;
+}
+
+#ordering-creator__ordering {
+  width: 100%;
+  height: 43%;
 }
 
 input.image-input {
@@ -161,5 +162,4 @@ input.image-input {
 	width: 100%;
 	margin: 1% 0% 0% 0%;
 }
-
 </style>
