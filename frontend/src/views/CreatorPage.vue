@@ -29,7 +29,7 @@
       <div id="creator-page__content">
         <TextDiv message="지금 바로 퀴즈를 만들어보세요!" v-if ="quizDataLength === 0" />
         <ShortAnswerCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '단답형'"/>
-        <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" />
+        <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" @control-max-length="setAlert(val)"/>
         <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞히기'" />
         <TFCreator v-else-if="quizData.slideList[selectedSlideIndex].category === 'TF'"/>
       </div>
@@ -61,7 +61,7 @@
     />
     <QuizTypeDialog
       v-if="openQuizTypeDialog"
-      @close="openQuizTypeDialog = false" 
+      @close="closeDialog" 
     />
     <Alert
       :flag="flag"
@@ -179,7 +179,11 @@ export default {
           this.flag = !this.flag;
         })
     },
-  },
+    closeDialog: function () {
+      this.openQuizTypeDialog = false;
+      this.setSelectedSlideIndex(this.isSelectedSlide.length);
+    },
+  }
 }
 </script>
 
@@ -215,8 +219,16 @@ export default {
   background-color: #D0A9E1;
 }
 
+#creator-page__header .creator-page__header__button:nth-child(1):hover {
+  background-color: #a361bd;
+}
+
 #creator-page__header .creator-page__header__button:nth-child(3) {
   background-color: #F1DD83;
+}
+
+#creator-page__header .creator-page__header__button:nth-child(3):hover {
+  background-color: #c4b15d;
 }
 
 #creator-page__body {
@@ -259,6 +271,10 @@ export default {
   font-family: 'Nanum Pen Script', cursive;
   font-size: 30px;
   cursor: pointer;
+}
+
+#slide-create-button:hover {
+  background-color: #6067c9;
 }
 
 #slide-create-button span {

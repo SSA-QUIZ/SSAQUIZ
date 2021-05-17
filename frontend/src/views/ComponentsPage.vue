@@ -35,6 +35,7 @@
 
     <div id="component-title">ICONS</div>
     <Icons/>
+
     <!-- <div id="component-title">Ordering</div>
     <Ordering :answerData="answerData" />
     <OrderingFrame />
@@ -106,4 +107,5 @@ export default {
   font-size: 2rem;
   font-family: Jua;
 }
+
 </style>

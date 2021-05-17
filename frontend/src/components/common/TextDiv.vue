@@ -26,5 +26,13 @@ export default {
 }
 #text-div-emoticon {
 	font-size: 150px;
+	animation: motion 0.5s linear 0s infinite alternate;
+	margin-top: 0;
 }
+
+@keyframes motion {
+	0% {margin-top: 0px;}
+	100% {margin-top: 25px;}
+}
+
 </style>
