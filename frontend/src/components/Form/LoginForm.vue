@@ -5,7 +5,7 @@
     <InputButton @click.native="login" text="로그인 하기" />
     <GoogleLoginButton  @click.native="googleLogin"/>
     <br />
-    <router-link class="hyper-link" to="">퀴즈를 풀러 오셨어요?</router-link>
+    <router-link class="hyper-link" to="/">퀴즈를 풀러 오셨어요?</router-link>
     <br />
     <a class="hyper-link" @click="moveToSignup">아직 저희 회원이 아니신가요?</a>
   </div>
