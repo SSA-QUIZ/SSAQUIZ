@@ -87,19 +87,27 @@ export default {
         this.color = "red";
         this.flag = !this.flag;
       } else if (result === "password-fail-1") {
-        this.alertMessage = "8자리 ~ 20자리 이내로 영문,숫자,특수문자를 혼합하여 입력해주세요.";
+        this.alertMessage = "비밀번호는 8~20자리 이내로 영문,숫자,특수문자를 혼합하여 입력해주세요.";
         this.color = "red";
         this.flag = !this.flag;
       } else if (result === "password-fail-2") {
-        this.alertMessage = "공백없이 입력해주세요.";
+        this.alertMessage = "비밀번호는 공백없이 입력해주세요.";
         this.color = "red";
         this.flag = !this.flag;        
       } else if (result === "password-fail-3") {
-        this.alertMessage = "영문,숫자,특수문자를 혼합하여 입력해주세요.";
+        this.alertMessage = "비밀번호는 영문,숫자,특수문자를 혼합하여 입력해주세요.";
         this.color = "red";
         this.flag = !this.flag;      
       } else if (result === "password-fail-4") {
-        this.alertMessage ="비밀번호와 비밀번호 확인이 다릅니다.";
+        this.alertMessage = "비밀번호와 비밀번호 확인이 다릅니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else if (result === "nickname-fail") {
+        this.alertMessage = "닉네임은 영문 대소문자, 한글, 숫자, '_'로 이루어진 2~15글자로 작성해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else if (result === "duplicate-email") {
+        this.alertMessage = "이미 가입된 이메일입니다.";
         this.color = "red";
         this.flag = !this.flag;
       }
