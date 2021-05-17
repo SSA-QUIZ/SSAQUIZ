@@ -1,28 +1,23 @@
 <template>
   <div id="solving-quiz-page-t-container">
+    <button @click="disconnect_ws">테스트</button>
     <Header @time-zero="sendFinMessage(quizIndex)" mode="playQuiz" :time="time" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="solving-quiz-page-t-content">
-      <div class="solving-quiz-t-div solving-quiz-t-div__side">
-      </div>
-      <div class="solving-quiz-t-div solving-quiz-t-div__center">
-        <template v-if="category==='4지선다'" >
-          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath" />
-          <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
-        </template>
-        <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath" />
-        <template v-if="category==='순서맞히기'" >
-          <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath" />
-          <Ordering class="solving-quiz-page-content__ordering" />
-        </template>
-        <template v-else-if="category==='TF'" >
-          <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath" />
-          <TFChoice id="solving-quiz-t-tf" :height="100"/>
-        </template>
-      </div>
-      <div class="solving-quiz-t-div solving-quiz-t-div__side">
-        <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
-      </div>
+      <template v-if="category==='4지선다'" >
+        <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
+      </template>
+      <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+      <template v-if="category==='순서맞히기'" >
+        <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <Ordering class="solving-quiz-page-content__ordering" />
+      </template>
+      <template v-else-if="category==='TF'" >
+        <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <TFChoice id="solving-quiz-t-tf" :height="100" />
+      </template>
+      <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
     </div>
   </div>
 </template>
@@ -79,7 +74,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["sendFinMessage"])
+    ...mapActions("CreateQuizRoomStore", ["disconnect_ws", "sendFinMessage"])
   },
 }
 </script>
@@ -95,7 +90,8 @@ export default {
 }
 #solving-quiz-page-t-content {
   display: flex;
-  width:100%;
+  flex-flow: column;
+  width:80%;
   height: 75%;
   justify-content:center;
   align-items: center; 
@@ -114,26 +110,6 @@ export default {
   width: 70%;
   height: 60%;
   margin: 5px;
-
   display: flex;
-}
-
-.solving-quiz-t-div {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-}
-.solving-quiz-t-div__side {
-  width: 10%;
-}
-.solving-quiz-t-div__center {
-  width: 80%;
-  margin-bottom: 30px;
-}
-.solving-quiz-t-content__ordering {
-  display: flex;
-  height: 100%;
 }
 </style>

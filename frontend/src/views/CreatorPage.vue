@@ -27,7 +27,7 @@
         </div>
       </div>
       <div id="creator-page__content">
-        <TextDiv message="지금 바로 퀴즈를 만들어보세요!" v-if ="quizDataLength === 0" />
+        <TextDiv message="슬라이드를 추가해보세요!" v-if ="quizDataLength === 0" />
         <ShortAnswerCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '단답형'"/>
         <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" />
         <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞히기'" />
@@ -54,7 +54,7 @@
     </div>
     <Confirm 
       emoticon="🤔"
-      content="작업한 내용이 저장되지 않았습니다.<br>정말로 나가시겠습니까?" 
+      content="작업한 내용이 저장되지 않습니다.<br>정말로 나가시겠습니까?" 
       @close="openExitConfirm = false" 
       @accept="openExitConfirm = false; exit();"
       v-if="openExitConfirm" 
@@ -144,8 +144,10 @@ export default {
   },
   mounted: function () {
     this.setSelectedSlideIndex(0);
+    this.setIsStudent(false);
   },
   methods: {
+    ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("CreateQuizStore", [
       "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide"
     ]),
@@ -163,8 +165,7 @@ export default {
       this.$router.push({ name: "UserPage" });
     },
     save: function () {
-      let data = this.quizData;
-      axios.post("https://k4a304.p.ssafy.io/api-quiz/slide-all", data)
+      axios.post("https://k4a304.p.ssafy.io/api-quiz/slide-all", this.quizData)
         .then(res => {
           console.log(res.data);
           this.alertMessage = "퀴즈를 저장했습니다!";

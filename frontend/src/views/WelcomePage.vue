@@ -16,8 +16,8 @@
           </li>
           <li>
             <div id="nickname-form">
-              <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" @press-enter="connectQuiz" />
-              <InputButton @click.native="connectQuiz" text="퀴즈 풀러가기" />
+              <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" @press-enter="checkNickname" />
+              <InputButton @click.native="checkNickname" text="퀴즈 풀러가기" />
             </div>
           </li>
         </ul>
@@ -47,11 +47,11 @@ export default {
   },
   data: function () {
     return {
-      PIN: Number,
-      nickname: String,
-      flag: false,
+      PIN: '',
+      nickname: '',
       color: '',
       alertMessage: '',
+      flag: false,
     };
   },
   watch: {
@@ -61,17 +61,20 @@ export default {
         this.color = "red";
         this.flag = !this.flag;
         this.setIsValidNickname();
+        this.disconnectWS();
 
       } else if (newVal === 2) {
         this.alertMessage = "닉네임이 이미 존재합니다. 다른 닉네임을 설정해주세요."
         this.color = "red";
         this.flag = !this.flag;
         this.setIsValidNickname();
+        this.disconnectWS();
       } else if (newVal === 3) {
         this.alertMessage = "닉네임을 입력해주세요."
         this.color = "red";
         this.flag = !this.flag;
         this.setIsValidNickname();
+        this.disconnectWS();
       } else if (newVal === 4) {
         this.$router.push({ name: "LobbyPageS", params: {nickname: this.nickname} });
       }
@@ -82,25 +85,34 @@ export default {
   },
   mounted: function () {
     this.getToken();
+    this.setDefaultDataStudent();
+    this.setDefaultData();
   },
   methods: {
-    ...mapActions("PlayQuizStore", ["setPINWS", "setIsValidNickname"]),
+    ...mapActions("PlayQuizStore", ["setPINWS", "setIsValidNickname", "disconnectWS", "setDefaultDataStudent"]),
+    ...mapActions("CreateQuizRoomStore", ["setDefaultData"]),
     changePIN: function (data) {
       this.PIN = data;
     },
     checkPIN: function () {
-      axios.get(`https://k4a304.p.ssafy.io/api-play/pin/${this.PIN}`)
-        .then(res => {
-          let msg = res.data.data;
-          if (msg === "PIN find success") {
-            this.moveToNickname();
-          } else if (msg === "PIN find fail") {
-            this.alertMessage = "PIN을 확인해주세요.";
-            this.color = "red";
-            this.flag = !this.flag;
-          }
-        })
-        .catch(err => console.log(err))
+      if (this.PIN === '') {
+        this.alertMessage = "PIN을 확인해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else {
+        axios.get(`https://k4a304.p.ssafy.io/api-play/pin/${this.PIN}`)
+          .then(res => {
+            let msg = res.data.data;
+            if (msg === "PIN find success") {
+              this.moveToNickname();
+            } else if (msg === "PIN find fail") {
+              this.alertMessage = "PIN을 확인해주세요.";
+              this.color = "red";
+              this.flag = !this.flag;
+            }
+          })
+          .catch(err => console.log(err))
+      }
     },
     changeNickname: function (data) {
       this.nickname = data;
@@ -108,8 +120,17 @@ export default {
     moveToNickname: function () {
       document.getElementById("pos2").checked = true;
     },
+    checkNickname: function () {
+      var nicknameRegExp = /^[_a-zA-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{2,15}$/;
+      if (!nicknameRegExp.test(this.nickname)) {
+        this.alertMessage = "닉네임은 영문 대소문자, 한글, 숫자, '_'로 이루어진 2~15글자로 작성해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else {
+        this.connectQuiz();
+      }
+    },
     connectQuiz: function () {
-      console.log(this.PIN + " " + this.nickname + " websocket 연결")
       this.setPINWS([this.PIN, this.nickname]);
     },
     // 구글 로그인 token
@@ -163,7 +184,7 @@ export default {
   justify-content: center;
 }
 
-#welcome-page #PIN-form {
+#welcome-page #PIN-form, #welcome-page #nickname-form {
   display: flex;
   max-width: 100vw;
   display: flex;

@@ -5,25 +5,64 @@
     <div class="text">1등은 누구일까요?!</div>
     <img class="logo" src="@/assets/images/resultLogo.png"/>
     <div @click="moveToUserPage" class="router-image">
-      <img src="@/assets/images/shrimp2.png"/>
-      <span>메인 페이지로 GO!</span>
+      <img src="@/assets/images/shrimp.png"/>
     </div>
     <Podium/>
     <Winner/>
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color    
+    />
   </div>
 </template>
 
 <script>
 import Podium from "@/components/ResultPageTemplate/Podium.vue";
 import Winner from "@/components/ResultPageTemplate/Winner.vue";
+import Alert from '@/components/Popup/Alert.vue';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: "ResultPage",
   components: {
     Podium,
     Winner,
+    Alert
+  },
+  data: function () {
+    return {
+      flag: false,
+      alertMessage: '',
+      color: '',
+    }
+  },
+  computed: {
+    ...mapState("CommonStore", ["isStudent"]),
+    ...mapState("PlayQuizStore", ["teacherDisconnected"]),
+  },
+  watch: {
+    teacherDisconnected: function (newVal) {
+      if (newVal === true) {
+        this.alertMessage = "퀴즈가 종료되었습니다. 잠시 후 메인페이지로 이동합니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+        setTimeout (() =>   {
+          this.disconnectWS(); 
+          this.$router.push({name: "WelcomePage"});
+        }, 2500);
+      }
+    },
   },
   methods: {
+    ...mapActions("PlayQuizStore", ["disconnectWS"]),
+    ...mapActions("CreateQuizRoomStore", ["disconnectTeacherWS", "sendExitTeacherMessage"]),
     moveToUserPage: function () {
+      if (this.isStudent === true) {
+        this.disconnectWS();
+      } else if (this.isStudent === false) {
+        this.sendExitTeacherMessage();
+        // this.disconnectTeacherWS();
+      }
       this.$router.push({ name: "WelcomePage" });
     }
   }
@@ -112,7 +151,7 @@ export default {
   z-index: 5;
   cursor: pointer;
 
-  animation: shaking infinite, router-effect .3s ease both 8.5s;
+  animation: shaking infinite, router-effect .3s ease both 10.5s;
 	animation-duration: 1.8s;
 	animation-timing-function: linear;
 }
@@ -126,10 +165,6 @@ export default {
   height: 80%;
 }
 
-#result .router-image span {
-  font-family: Jua;
-  font-size: 1.5rem;
-}
 
 /* 애니메이션 효과 */
 
