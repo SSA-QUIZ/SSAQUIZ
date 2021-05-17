@@ -186,7 +186,7 @@ const PlayQuizStore = {
           } else if (type === "END") {
             commit('SET_RESULTDATA', content);
             commit('SET_ISEND', true);
-          } else if (type === "LEAVE" || content === "teacher disconnected") {
+          } else if (type === "LEAVE" && content === "teacher disconnected") {
             commit('SET_TEACHER_DISCONNECTED', true);
           } else if (type === "JOIN") {
             if (content === "join fail (over length)") {
