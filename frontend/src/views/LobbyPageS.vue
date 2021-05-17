@@ -20,7 +20,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import NicknameButton from '@/components/common/NicknameButton.vue';
-import Alert from '../components/Popup/Alert.vue';
+import Alert from '@/components/Popup/Alert.vue';
 
 export default {
   name: "LobbyPageS",

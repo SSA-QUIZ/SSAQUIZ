@@ -9,28 +9,59 @@
     </div>
     <Podium/>
     <Winner/>
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color    
+    />
   </div>
 </template>
 
 <script>
 import Podium from "@/components/ResultPageTemplate/Podium.vue";
 import Winner from "@/components/ResultPageTemplate/Winner.vue";
-import { mapState } from 'vuex';
+import Alert from '@/components/Popup/Alert.vue';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: "ResultPage",
   components: {
     Podium,
     Winner,
+    Alert
+  },
+  data: function () {
+    return {
+      flag: false,
+      alertMessage: '',
+      color: '',
+    }
   },
   computed: {
     ...mapState("CommonStore", ["isStudent"]),
+    ...mapState("PlayQuizStore", ["teacherDisconnected"]),
+  },
+  watch: {
+    teacherDisconnected: function (newVal) {
+      if (newVal === true) {
+        this.alertMessage = "퀴즈가 종료되었습니다. 잠시 후 메인페이지로 이동합니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+        setTimeout (() =>   {
+          this.disconnectWS(); 
+          this.$router.push({name: "WelcomePage"});
+        }, 2500);
+      }
+    },
   },
   methods: {
+    ...mapActions("PlayQuizStore", ["disconnectWS"]),
+    ...mapActions("CreateQuizRoomStore", ["disconnectTeacherWS", "sendExitTeacherMessage"]),
     moveToUserPage: function () {
       if (this.isStudent === true) {
-        // 학생 웹소켓 끊기
-      } else if (this.Student === false) {
-        // 선생님 웹소켓 끊기
+        this.disconnectWS();
+      } else if (this.isStudent === false) {
+        this.sendExitTeacherMessage();
+        // this.disconnectTeacherWS();
       }
       this.$router.push({ name: "WelcomePage" });
     }

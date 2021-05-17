@@ -85,9 +85,12 @@ export default {
   },
   mounted: function () {
     this.getToken();
+    this.setDefaultDataStudent();
+    this.setDefaultData();
   },
   methods: {
-    ...mapActions("PlayQuizStore", ["setPINWS", "setIsValidNickname", "disconnectWS"]),
+    ...mapActions("PlayQuizStore", ["setPINWS", "setIsValidNickname", "disconnectWS", "setDefaultDataStudent"]),
+    ...mapActions("CreateQuizRoomStore", ["setDefaultData"]),
     changePIN: function (data) {
       this.PIN = data;
     },

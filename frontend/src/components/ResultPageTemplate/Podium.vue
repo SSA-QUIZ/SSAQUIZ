@@ -30,9 +30,6 @@
 import { mapState } from 'vuex'
 export default {
   name: "Podium",
-  mounted: function () {
-    console.log(mapState)
-  },
   computed: {
     ...mapState("CommonStore", ["isStudent"]),
     ...mapState("CreateQuizRoomStore", ["resultData"]),
