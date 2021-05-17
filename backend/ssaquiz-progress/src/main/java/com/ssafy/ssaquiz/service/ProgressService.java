@@ -167,10 +167,14 @@ public class ProgressService {
 
     @Transactional
     public void deleteInRedis(int pin) {
-        int questionCnt = Integer.parseInt(redisUtil.getData(ANSWER_CNT + pin));
-        for (int i = 0; i < questionCnt; i++) {
-            redisUtil.deleteZdata(QUESTION + i + pin, 0, -1);
+        String questionCntStr = redisUtil.getData(ANSWER_CNT + pin);
+        if(questionCntStr != null) {
+            int questionCnt = Integer.parseInt(questionCntStr);
+            for (int i = 0; i < questionCnt; i++) {
+                redisUtil.deleteZdata(QUESTION + i + pin, 0, -1);
+            }
         }
+
         redisUtil.deleteZdata(USER_LIST + pin, 0, -1);
         redisUtil.deleteData(Integer.toString(pin));
     }
