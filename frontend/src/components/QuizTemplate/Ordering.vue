@@ -19,6 +19,14 @@
           @click-button="setOrderingAnswer([index, currentIdx]); changeCurrentIdx();"
         />
         <OrderingButton
+          class="solving-button"
+          v-else-if="mode === 'solving'"
+          mode="solving"
+          :key="index"
+          :index="index"
+          @click.native="clickAnswer(index)"
+        />
+        <OrderingButton
           v-else
           mode="ordering"
           :key="index"
@@ -41,9 +49,10 @@ export default {
     OrderingButton,
     CreatorOrderingButton
   },
-  props: ['mode', 'currentIdx'],
+  props: ['mode', 'currentIdx', 'setColor'],
   data: function () {
     return {
+      answerColor: ["#ffdc46", "#ff85b1", "#7cb1ff", "#aaed81"],
     }
   },
   computed: {
@@ -59,11 +68,22 @@ export default {
       return temp;
     },
   },
+  watch: {
+    setColor: function () {
+      for (let i = 0; i < 4; i++) {
+        document.getElementsByClassName('solving-button')[i].style.backgroundColor = this.answerColor[i];
+      }
+    }
+  },
   methods: {
     ...mapActions("CreateQuizStore", ["setOrderingAnswer"]),
     changeCurrentIdx: function () {
       this.$emit('change-current-idx');
     },
+    clickAnswer: function (idx) {
+      document.getElementsByClassName('solving-button')[idx-1].style.backgroundColor = "gray";
+      this.$emit('click-answer', idx);
+    }
   },
 }
 </script>
@@ -73,5 +93,6 @@ export default {
   display: flex;
   width: 100%;
   height: 98%;
+  margin-top: 20px;
 }
 </style>

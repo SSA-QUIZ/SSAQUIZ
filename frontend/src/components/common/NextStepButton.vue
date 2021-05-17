@@ -12,13 +12,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .step-button {
   position: absolute;
-  z-index: 2;
+  top: 50%;
   right: 5%;
-  top: 43%;
-  z-index: 2;
 }
 
 .step-button:hover {
@@ -26,14 +24,15 @@ export default {
   transform: scale(1.2);
 }
 
-@media (max-width: 1100px) {
-  .step-button {
-    position: absolute;
-    z-index: 2;
-    right: 5%;
-    top: 87%;
-    z-index: 2;
-  }
+img {
+  width: 100px;
+  height: 100px;
 }
 
+@media(max-width: 1200px) {
+  img {
+    width: 70px;
+    height: 70px;
+  }
+}
 </style>

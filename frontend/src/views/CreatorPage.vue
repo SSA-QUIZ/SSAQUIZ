@@ -165,8 +165,7 @@ export default {
       this.$router.push({ name: "UserPage" });
     },
     save: function () {
-      let data = this.quizData;
-      axios.post("https://k4a304.p.ssafy.io/api-quiz/slide-all", data)
+      axios.post("https://k4a304.p.ssafy.io/api-quiz/slide-all", this.quizData)
         .then(res => {
           console.log(res.data);
           this.alertMessage = "퀴즈를 저장했습니다!";
