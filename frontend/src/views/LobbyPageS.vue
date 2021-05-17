@@ -73,7 +73,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #lobby-page--student {
   height: 100%;
   background-color: #CFE1F6;
@@ -99,6 +99,20 @@ export default {
   display: table-cell;
   text-align: center;
   margin-top: 10px;
+}
+
+::-webkit-scrollbar { width: 30px; }
+
+::-webkit-scrollbar-track { 
+  background-color: #F2F2F2;
+  border-radius: 0px 15px 15px 0px; 
+}
+
+::-webkit-scrollbar-thumb { 
+  background: #c4c4c4; 
+  border-radius: 15px;
+  background-clip: padding-box;
+  border : 8px solid transparent;
 }
 
 @media (max-width: 700px) {
