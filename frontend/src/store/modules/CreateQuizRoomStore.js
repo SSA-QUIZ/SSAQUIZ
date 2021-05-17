@@ -54,6 +54,15 @@ const CreateQuizRoomStore = {
       };
       ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage))
     },
+    DELETE_STUDENTS: function (state, value) {
+      let newStudents = state.students.filter(student => student.nickname !== value)
+      state.students = newStudents;
+      let UserListMessage = {
+        type: "USERLIST",
+        content: state.students,
+      };
+      ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage))
+    },
     SEND_ANSWERLIST: function (state, value) {
       state.stompClient = value;
     },
@@ -199,6 +208,11 @@ const CreateQuizRoomStore = {
               } else if (type === "END") {
                 commit("SET_RESULTDATA", JSON.parse(msg.body).content);
                 commit("SET_ISEND", true);
+              } else if (type === "LEAVE" && content === "teacher disconnecting") {
+                ws.disconnect(() => {}, {});
+                commit("DISCONNECT_WS", ws);
+              } else if (type === "LEAVE" && content === "student disconnected") {
+                commit('DELETE_STUDENTS', JSON.parse(msg.body).sender);
               }
             })
             let sendEnterTeacherMessage = {
