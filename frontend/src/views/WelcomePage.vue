@@ -184,7 +184,7 @@ export default {
   justify-content: center;
 }
 
-#welcome-page #PIN-form {
+#welcome-page #PIN-form, #welcome-page #nickname-form {
   display: flex;
   max-width: 100vw;
   display: flex;
