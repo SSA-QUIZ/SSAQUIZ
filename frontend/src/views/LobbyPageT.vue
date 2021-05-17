@@ -97,7 +97,6 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-left: 13%;
 }
 
 #lobby-page--teacher__info {
