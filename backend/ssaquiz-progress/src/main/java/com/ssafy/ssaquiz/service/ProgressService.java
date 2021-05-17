@@ -20,6 +20,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 @Service
 public class ProgressService {
@@ -76,18 +77,21 @@ public class ProgressService {
 
         if (message == null || message.getSender() == null) {
             message.setContent("join fail (null)");
+            headerAccessor.getSessionAttributes().put("student", "join fail (null)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
 
         if (message.getSender().length() > 15) {
             message.setContent("join fail (over length)");
+            headerAccessor.getSessionAttributes().put("student", "join fail (over length)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
 
         if ("".equals(message.getSender()) || message.getSender().replaceAll(" ", "").length() == 0) {
             message.setContent("join fail (space character)");
+            headerAccessor.getSessionAttributes().put("student", "join fail (space character)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
@@ -100,6 +104,7 @@ public class ProgressService {
         }
 
         message.setContent("join fail (overlap)");
+        headerAccessor.getSessionAttributes().put("student", "join fail (overlap)");
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -262,8 +267,8 @@ public class ProgressService {
         }
 
         // student disconnect (teacher exist)
-        if (!"".equals(teacher) && teacher != null && pin != -1 && !"".equals(nickname) && nickname != null) {
-            logger.info("student disconnected (" + nickname + ")");
+        if (!"".equals(teacher) && pin != -1 && !nickname.startsWith("join fail") && !"".equals(nickname)) {
+            logger.info("student disconnected (teacher exist)(" + nickname + ")");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
@@ -276,8 +281,8 @@ public class ProgressService {
         }
 
         // student disconnect (teacher not exist)
-        if ("".equals(teacher) && pin != -1 && !"".equals(nickname) && nickname != null) {
-            logger.info("student disconnected (" + nickname + ")");
+        if ("".equals(teacher) && pin != -1 && !nickname.startsWith("join fail") && !"".equals(nickname)) {
+            logger.info("student disconnected (teacher not exist)(" + nickname + ")");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
@@ -288,19 +293,20 @@ public class ProgressService {
         }
 
         // student disconnect (nickname overlap)
-        if ("".equals(nickname)) {
-            logger.info("student disconnected (overlap)");
+        if (nickname.startsWith("join fail") && pin != -1) {
+            String causeType = nickname.substring(9);
+            logger.info("student disconnected" + causeType);
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
-            message.setContent("student disconnected (overlap)");
+            message.setContent("student disconnected" + causeType);
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
 
         // teacher disconnect (quiz end)
-        if ("".equals(teacher)) {
-            logger.info("teacher disconnected");
+        if ("".equals(teacher) && pin != -1) {
+            logger.info("teacher disconnected (quiz end)");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
@@ -310,8 +316,8 @@ public class ProgressService {
         }
 
         // teacher disconnect (quiz ongoing)
-        if (pin != -1 && !"".equals(teacher) && teacher != null) {
-            logger.info("teacher disconnected");
+        if (!"".equals(teacher) && pin != -1) {
+            logger.info("teacher disconnected (quiz ongoing)");
 
             Message message = new Message();
             message.setType(MessageType.LEAVE);
