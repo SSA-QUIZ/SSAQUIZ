@@ -1,7 +1,7 @@
 <template>
   <div>
     <OrderingFrame class="solving-quiz-page-content__ordering" :solvingString="solvingString" />
-    <Ordering mode="solving" class="solving-quiz-page-content__ordering" @click-answer="setAnswer" />
+    <Ordering mode="solving" class="solving-quiz-page-content__ordering" :setColor="setColor" @click-answer="setAnswer" />
     <div class="solving-quiz-page__button">
       <button class="solving-quiz-page__ordering__button" style="background-color: #c3356a;" @click="resetAnswer">초기화</button>
       <button class="solving-quiz-page__ordering__button" @click="clickButton([answer, username, quizIndex])">제출</button>
@@ -25,6 +25,7 @@ export default {
       index: 0,
       answerArray: [0, 0, 0, 0],
       solvingString: "0000",
+      setColor: false,
     }
   },
   computed: {
@@ -39,6 +40,7 @@ export default {
       this.index = 0;
       this.answerArray = [0, 0, 0, 0];
       this.solvingString = "0000";
+      this.setColor = !this.setColor;
     },
     setAnswer: function (val) {
       if (this.answerArray[val-1] === 0 && this.index < 4) {
