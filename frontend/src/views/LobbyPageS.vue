@@ -47,7 +47,7 @@ export default {
     this.setUsername(this.user.nickname);
   },
   computed: {
-    ...mapState("PlayQuizStore", ["students", "isStart", "teacherDisconnected", "disconnectWS"])
+    ...mapState("PlayQuizStore", ["students", "isStart", "teacherDisconnected"])
   },
   watch: {
     teacherDisconnected: function (newVal) {
@@ -55,7 +55,7 @@ export default {
         this.alertMessage = "퀴즈가 종료되었습니다. 잠시 후 메인페이지로 이동합니다.";
         this.color = "red";
         this.flag = !this.flag;
-        setTimeout (() => {
+        setTimeout (() =>   {
           this.disconnectWS(); 
           this.$router.push({name: "WelcomePage"});
         }, 2500);
@@ -68,7 +68,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("PlayQuizStore", ["defaultIsStart", "setUsername"])
+    ...mapActions("PlayQuizStore", ["defaultIsStart", "setUsername", "disconnectWS"])
   },
 }
 </script>
