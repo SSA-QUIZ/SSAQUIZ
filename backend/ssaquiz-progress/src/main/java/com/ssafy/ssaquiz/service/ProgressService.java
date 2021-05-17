@@ -20,7 +20,6 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 @Service
 public class ProgressService {
@@ -48,6 +47,9 @@ public class ProgressService {
     @Value("${prefix.question}")
     private String QUESTION;
 
+    @Value("${prefix.teacher}")
+    private String TEACHER;
+
     private static final Logger logger = LoggerFactory.getLogger(ProgressService.class);
 
     public void enterTeacher(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
@@ -57,6 +59,8 @@ public class ProgressService {
         headerAccessor.getSessionAttributes().put("pin", pin);
         headerAccessor.getSessionAttributes().put("teacher", "true");
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+
+        redisUtil.setData(TEACHER + pin, "exist");
     }
 
     public void exitTeacher(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
@@ -267,7 +271,7 @@ public class ProgressService {
         }
 
         // student disconnect (teacher exist)
-        if (!"".equals(teacher) && pin != -1 && !nickname.startsWith("join fail") && !"".equals(nickname)) {
+        if (pin != -1 && redisUtil.getData(TEACHER + pin) != null && !nickname.startsWith("join fail") && !"".equals(nickname)) {
             logger.info("student disconnected (teacher exist)(" + nickname + ")");
 
             Message message = new Message();
@@ -281,7 +285,7 @@ public class ProgressService {
         }
 
         // student disconnect (teacher not exist)
-        if ("".equals(teacher) && pin != -1 && !nickname.startsWith("join fail") && !"".equals(nickname)) {
+        if (pin != -1 && redisUtil.getData(TEACHER + pin) == null && !nickname.startsWith("join fail") && !"".equals(nickname)) {
             logger.info("student disconnected (teacher not exist)(" + nickname + ")");
 
             Message message = new Message();
@@ -312,6 +316,8 @@ public class ProgressService {
             message.setType(MessageType.LEAVE);
             message.setContent("teacher disconnected");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+
+            redisUtil.deleteData(TEACHER + pin);
             return;
         }
 
@@ -324,6 +330,7 @@ public class ProgressService {
             message.setContent("teacher disconnected");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
 
+            redisUtil.deleteData(TEACHER + pin);
             headerAccessor.getSessionAttributes().remove("teacher");
             deleteInRedis(pin);
             return;
