@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <OrderingFrame class="solving-quiz-page-content__ordering" :solvingString="solvingString" />
-    <Ordering mode="solving" class="solving-quiz-page-content__ordering" :setColor="setColor" @click-answer="setAnswer" />
-    <div class="solving-quiz-page__button">
-      <button class="solving-quiz-page__ordering__button" style="background-color: #c3356a;" @click="resetAnswer">초기화</button>
-      <button class="solving-quiz-page__ordering__button" @click="clickButton([answer, username, quizIndex])">제출</button>
+  <div id="ordering-answer-container">
+    <OrderingFrame class="ordering-answer-content" :solvingString="solvingString" />
+    <Ordering mode="solving" class="ordering-answer-content" :setColor="setColor" @click-answer="setAnswer" />
+    <div class="ordering-answer__button">
+      <button class="ordering-answer__ordering__button" style="background-color: #c3356a;" @click="resetAnswer">초기화</button>
+      <button class="ordering-answer__ordering__button" @click="clickButton([answer, username, quizIndex])">제출</button>
     </div>
   </div>
 </template>
@@ -60,5 +60,39 @@ export default {
 </script>
 
 <style>
+#ordering-answer-container {
+  width: 100%;
+  height: 40%;
+}
 
+.ordering-answer__ordering__button {
+  width: 120px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 35px;
+  font-family: Jua;
+  color: white;
+  background-color: #454995;
+  border-radius: 10px;
+  margin-right: 0.3%;
+}
+.ordering-answer__button {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1.5% 0 0 0;
+}
+
+@media(max-width: 700px) {
+  .ordering-answer__ordering__button {
+    width: 300px;
+    height: 60px;
+    font-size: 25px;
+    margin: 3% 0 0 2%;
+  }
+  .ordering-answer__button {
+    justify-content: center;
+  }
+}
 </style>

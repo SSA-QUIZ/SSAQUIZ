@@ -60,8 +60,8 @@ export default {
 #solving-quiz-page-content {
   display: flex;
   flex-flow: column;
-	width: 95%;
-  margin: 1% 2.5%;
+	width: 85%;
+  margin: 1% 7.5%;
   height: 70%;
 }
 .solving-quiz-page__ordering__button {

@@ -118,6 +118,7 @@ export default {
 @media (max-width: 700px) {
   #lobby-page--student__nickname {
     width: 95%;
+    height: 40%;
   }
 }
 
