@@ -65,6 +65,12 @@ header {
 	padding: 0vh 3vh 0vh 3vh;
   z-index: 1;
 }
+
+img:hover {
+  transition: all 0.25s linear;
+  transform: scale(1.05);
+}
+
 .header-content {
   width: 70%;
 	display: flex;

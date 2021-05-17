@@ -10,14 +10,18 @@
       </div>
     </button>
     <div class="quiz-set__buttons">
-      <button style="margin-right: 2%;" @click="$emit('edit-quiz')"><i class="far fa-edit"></i></button>
-      <button><i class="far fa-trash-alt" @click="$emit('delete-quiz')"></i></button>
+      <button style="margin-right: 2%;" @click="$emit('edit-quiz')">
+        <i class="material-icons">edit</i>
+      </button>
+      <button @click="$emit('delete-quiz')">
+        <i class="material-icons">delete</i>
+      </button>
     </div>
   </div>
 
 </template>
 
-<script>
+<script scoped>
 export default {
   name: 'QuizSet',
   props: [
@@ -89,6 +93,61 @@ export default {
   font-size: 30px;
   font-family: Jua;
   word-wrap: break-word;
+}
+
+/* 아이콘 */
+
+i.material-icons {
+    font-size: 2rem;
+		color: white;
+		position: relative;
+		border-radius: 50%;
+		padding: 5px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+		transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+i.material-icons:after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		border: solid 2px;
+		transform: scale(0.8);
+		position: absolute;
+		top: -1px;
+		left: 0px;
+		border-radius: 50%;
+		transition: all 0.2s ease;
+}
+
+i.material-icons:hover:after {
+		transform: scale(1);
+}
+
+i.material-icons:nth-of-type(1) {
+		background-color: #f3d795;
+}
+
+i.material-icons:nth-of-type(1):hover {
+		color: #f3d795;
+}
+
+i.material-icons:nth-of-type(1):after {
+		border-color: #f3d795;
+}
+
+i.material-icons:hover {
+		background-color: transparent;
+		cursor: pointer;
+		box-shadow: none;
+}
+
+@media (max-width:601px) {
+	i.material-icons {
+		padding:10px;
+		margin:5px;
+		font-size:1.8rem;
+	}
 }
 
 </style>
