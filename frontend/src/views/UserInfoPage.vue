@@ -4,9 +4,9 @@
     <div id="content">
       <div class="form">
         <!------ 프로필 이미지 ------>
-        <div class="profile">
+        <div class="profile" onclick="document.all.file.click();">
           <div class="img-wrapper">
-            <img class="image file-input" :src="defaultImg" onclick="document.all.file.click();">
+            <img class="image file-input" :src="defaultImg">
             <input type="file" name="file" class="file-input">
             <div class="hover"></div>
             <div class="image-upload-btn">
