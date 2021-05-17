@@ -44,6 +44,7 @@ const PlayQuizStore = {
       state.isSolved = false;
       state.isCorrect = false;
       state.isNext = false;
+      state.isEnd = false;
       state.isConnected = false;
       state.teacherDisconnected = false;
       state.isValidNickname = 0;
@@ -185,7 +186,7 @@ const PlayQuizStore = {
           } else if (type === "END") {
             commit('SET_RESULTDATA', content);
             commit('SET_ISEND', true);
-          } else if (type === "LEAVE" || content === "teacher disconnected") {
+          } else if (type === "LEAVE" && content === "teacher disconnected") {
             commit('SET_TEACHER_DISCONNECTED', true);
           } else if (type === "JOIN") {
             if (content === "join fail (over length)") {
