@@ -59,7 +59,7 @@ export default {
 	justify-content: center;
 	align-items: center;
   width: 100%;
-	/* height: 30vh; */
+	/* height: 20vh; */
 	margin: 0.3%;
 	border-radius: 15px;
 	font-family: Jua;
@@ -69,6 +69,5 @@ export default {
 .quiz-button__tf {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
-  
 }
 </style>

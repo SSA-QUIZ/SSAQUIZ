@@ -4,12 +4,12 @@
     <div id="content">
       <div class="form">
         <!------ 프로필 이미지 ------>
-        <div class="profile">
+        <div class="profile" onclick="document.all.file.click();">
           <div class="img-wrapper">
             <img class="image file-input" :src="defaultImg">
             <input type="file" name="file" class="file-input">
             <div class="hover"></div>
-            <div class="image-upload-btn" onclick="document.all.file.click();">
+            <div class="image-upload-btn">
               <span draggable="false"><i class="far fa-file-image"></i></span>
             </div>
           </div>
@@ -140,7 +140,9 @@ export default {
         this.color = "red";
         this.flag = !this.flag;
       } else {
-
+          if (this.nickname.length !== 0) {
+            localStorage.setItem("nickname", this.nickname);
+          }
         if (this.imgData.name == 'File') {
           // 1. 사진을 바꾸지 않을 때
           const data = { "email": localStorage.getItem('email'), "name": this.nickname, "password": this.password }
@@ -148,9 +150,9 @@ export default {
           axios.put("https://k4a304.p.ssafy.io/api-auth/auth/user", data)
           .then(res => {
             console.log(res);
-            if (this.nickname.length !== 0) {
-              localStorage.setItem("nickname", this.nickname);
-            }
+            // if (this.nickname.length !== 0) {
+            //   localStorage.setItem("nickname", this.nickname);
+            // }
           })
           .catch(err => console.log(err))
 
@@ -166,16 +168,17 @@ export default {
 
           axios.put("https://k4a304.p.ssafy.io/api-auth/auth/user-image", formData, headers)
           .then(res => {
-            localStorage.setItem("imageUrl", res.data.object.imageUrl)
-            if (this.nickname.length !== 0) {
-              localStorage.setItem("nickname", this.nickname);
-            }
+            localStorage.setItem("imageUrl", res.data.object.imageUrl);
+            this.$router.push({ name: "UserPage", params: { modify: "success", img: localStorage.getItem("imageUrl") } });
+            // if (this.nickname.length !== 0) {
+              //   localStorage.setItem("nickname", this.nickname);
+            // }
           })
           .catch(err => console.log(err))
         }
         this.password = "";
         this.passwordConfirm = "";
-        this.$router.push({ name: "UserPage", params: { modify: "success", img: localStorage.getItem("imageUrl") } });
+        
       }
     }
   }

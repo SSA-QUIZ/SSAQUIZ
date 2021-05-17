@@ -1,5 +1,5 @@
 <template>
-  <button :id="buttonId" class="creator-ordering-button" :style="style">
+  <button class="creator-ordering-button" :style="style">
     <template>
       <div class="creator-ordering-button">
         <p class="creator-ordering-button__icon"><i :class="answerStyle[index-1].icon"></i></p>
@@ -19,7 +19,6 @@ export default {
     'mode',
     'index',
     'answer',
-    'buttonId',
     'currentIdx'
 
   ],

@@ -4,21 +4,20 @@
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="answer-page-content">
       <template v-if="category==='4지선다'" >
-        <Quiz :title="question" image="@/assets/images/Default.png" class="quiz-div" />
-        <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" class="answer-div" />
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 70%" />
+        <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" />
       </template>
       <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
       <template v-else-if="category==='순서맞히기'">
-        <Quiz title="하이" image="@/assets/images/Default.png" class="quiz-div" />
-        <Ordering class="answer-page-content__ordering" />
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 60%" />
+        <Ordering mode="answer" style="height: 35%; margin-top: 20px;" />
       </template>
       <template v-else-if="category==='TF'">
-        <Quiz :title="question" image="@/assets/images/Default.png" class="quiz-div" />
-        <TrueFalseButton width="90%" height="20vh" :mode="answer==='0' ? 'True' : 'False'" />
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 75%" />
+        <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
       </template>
+      <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     </div>
-    <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
-    <div style="height: 3%;"></div>
   </div>
 </template>
 
@@ -63,7 +62,6 @@ export default {
         } else {
           this.$router.push({name: "InterimScorePage"});
         }
-        
       }
     },
   },
@@ -78,7 +76,10 @@ export default {
     },
     index: function () {
       return parseInt(this.quizData["slideList"][this.quizIndex]["answer"]);
-    }
+    },
+    imagePath: function () {
+      return this.quizData["slideList"][this.quizIndex]["imagePath"];
+    },
   },
   methods: {
     ...mapActions("CreateQuizRoomStore", ["setIsInterim", "setQuizIndex", "sendEndMessage"])
@@ -86,20 +87,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #answer-page-container {
   background-color: #F2F2F2;
   height: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin-bottom: -10%;
 }
-.quiz-div {
-  height: 60%;
-}
-.answer-div {
-  width: 95%;
-  height: auto;
+#answer-page-content {
+  width: 75%;
+  height: 100%;
 }
 </style>

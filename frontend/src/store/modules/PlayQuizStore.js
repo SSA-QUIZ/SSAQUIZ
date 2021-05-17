@@ -22,12 +22,35 @@ const PlayQuizStore = {
     isCorrect: false,
     isNext: false,
     isEnd: false,
+    isConnected: false,
+    teacherDisconnected: false,
     isValidNickname: 0,
     resultData2: [],
     answerData: {}
   },
   getters: {},
   mutations: {
+    SET_DEFAULT_DATA_STUDENT: function (state) {
+      pin = "",
+      state.students = [];
+      state.isStart = false;
+      state.category = '';
+      state.totalNum = 0;
+      state.quizIndex = 0;
+      state.username = '';
+      state.score = 0;
+      state.plusScore = 0;
+      state.isFin = false;
+      state.isSolved = false;
+      state.isCorrect = false;
+      state.isNext = false;
+      state.isEnd = false;
+      state.isConnected = false;
+      state.teacherDisconnected = false;
+      state.isValidNickname = 0;
+      state.resultData2 = [];
+      state.answerData = {};
+    },
     SET_PINWS: function (state, value) {
       state.PIN = value;
     },
@@ -87,9 +110,21 @@ const PlayQuizStore = {
     },
     SET_ANSWER_DATA: function (state, value) {
       state.answerData = value;
-    }
+    },
+    DISCONNECT_WS: function (state, value) {
+      state.stompClient = value;
+    },
+    SET_ISCONNECTED: function (state, value) {
+      state.isConnected = value;
+    },
+    SET_TEACHER_DISCONNECTED: function (state, value) {
+      state.teacherDisconnected = value;
+    },
   },
   actions: {
+    setDefaultDataStudent: function ({ commit }) {
+      commit('SET_DEFAULT_DATA_STUDENT');
+    },
     setIsValidNickname: function ({ commit }, value) {
       commit("SET_ISVALIDNICKNAME", value);
     },
@@ -151,12 +186,14 @@ const PlayQuizStore = {
           } else if (type === "END") {
             commit('SET_RESULTDATA', content);
             commit('SET_ISEND', true);
+          } else if (type === "LEAVE" && content === "teacher disconnected") {
+            commit('SET_TEACHER_DISCONNECTED', true);
           } else if (type === "JOIN") {
             if (content === "join fail (over length)") {
               commit('SET_ISVALIDNICKNAME', 1);
             } else if (content === "join fail (overlap)") {
               commit('SET_ISVALIDNICKNAME', 2);
-            } else if (content === "join fail (null)") {
+            } else if (content === "join fail (null)" || content === "join fail (space character)") {
               commit('SET_ISVALIDNICKNAME', 3);
             } else {
               commit('SET_ISVALIDNICKNAME', 4);
@@ -177,6 +214,10 @@ const PlayQuizStore = {
     },
     setAnswerData: function ({ commit }, value) {
       commit('SET_ANSWER_DATA', value);
+    },
+    disconnectWS: function ({ commit }) {
+      ws.disconnect();
+      commit('DISCONNECT_WS', ws);
     }
   }
 };

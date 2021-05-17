@@ -27,4 +27,11 @@ export default {
   font-size: 30px;
 }
 
+@media (max-width: 700px) {
+  .v-chip__content {
+    font-family: Jua;
+    font-size: 25px;
+  }
+}
+
 </style>

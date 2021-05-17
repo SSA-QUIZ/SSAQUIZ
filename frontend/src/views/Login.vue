@@ -58,12 +58,16 @@ export default {
       document.getElementById("pos1").checked = true;
     },
     loginFail: function (result) {
-      if (result === "invalid") {
-        this.alertMessage = "아이디나 비밀번호가 틀렸어요! 다시 시도해주세요~";
+      if (result === "password mismatch") {
+        this.alertMessage = "비밀번호가 틀렸어요! 다시 시도해주세요~";
         this.color = "red";
         this.flag = !this.flag;
-      } else {
+      } else if (result === "email does not exist") {
         this.alertMessage = "등록된 회원이 아닙니다! 회원가입 해주세요~";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else if (result === "loginRequest is null") {
+        this.alertMessage = "이메일이나 비밀번호를 입력하지 않으셨습니다~";
         this.color = "red";
         this.flag = !this.flag;
       }
@@ -78,8 +82,32 @@ export default {
         this.alertMessage = "이메일이 이미 존재합니다!";
         this.color = "red";
         this.flag = !this.flag;
-      } else {
-        this.alertMessage = "비밀번호가 일치하지 않습니다! 다시 입력해주세요!";
+      } else if (result === "email-fail") {
+        this.alertMessage = "이메일 형식을 확인해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else if (result === "password-fail-1") {
+        this.alertMessage = "비밀번호는 8~20자리 이내로 영문,숫자,특수문자를 혼합하여 입력해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else if (result === "password-fail-2") {
+        this.alertMessage = "비밀번호는 공백없이 입력해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;        
+      } else if (result === "password-fail-3") {
+        this.alertMessage = "비밀번호는 영문,숫자,특수문자를 혼합하여 입력해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;      
+      } else if (result === "password-fail-4") {
+        this.alertMessage = "비밀번호와 비밀번호 확인이 다릅니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else if (result === "nickname-fail") {
+        this.alertMessage = "닉네임은 영문 대소문자, 한글, 숫자, '_'로 이루어진 2~15글자로 작성해주세요.";
+        this.color = "red";
+        this.flag = !this.flag;
+      } else if (result === "duplicate-email") {
+        this.alertMessage = "이미 가입된 이메일입니다.";
         this.color = "red";
         this.flag = !this.flag;
       }

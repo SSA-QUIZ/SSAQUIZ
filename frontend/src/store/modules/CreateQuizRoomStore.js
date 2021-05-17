@@ -36,6 +36,21 @@ const CreateQuizRoomStore = {
   },
   getters: {},
   mutations: {
+    SET_DEFAULT_DATA: function (state) {
+      pin = "";
+      state.students = [];
+      state.isStart = false;
+      state.quizData = Object;
+      state.quizIndex = 0;
+      state.solvedNum = 0;
+      state.isFin = false;
+      state.isInterim = false;
+      state.isNext = false;
+      state.category = '';
+      state.isEnd = false;
+      state.scoreBoardData = [];
+      state.resultData = [];
+    },
     SET_PINWS: function (state, value) {
       state.PIN = value;
     },
@@ -48,6 +63,15 @@ const CreateQuizRoomStore = {
     ADD_STUDENTS: function (state, value) {
       let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
       state.students.push({nickname: value, color: randomColor});
+      let UserListMessage = {
+        type: "USERLIST",
+        content: state.students,
+      };
+      ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage))
+    },
+    DELETE_STUDENTS: function (state, value) {
+      let newStudents = state.students.filter(student => student.nickname !== value)
+      state.students = newStudents;
       let UserListMessage = {
         type: "USERLIST",
         content: state.students,
@@ -102,8 +126,25 @@ const CreateQuizRoomStore = {
     SET_RESULTDATA: function (state, value) {
       state.resultData = value;
     },
+    DISCONNECT_WS: function (state, value) {
+      state.stompClient = value;
+    }
   },
   actions: {
+    setDefaultData: function ({ commit }) {
+      commit('SET_DEFAULT_DATA');
+    },
+    disconnectTeacherWS: function ({ commit }) {
+      ws.disconnect(() => {}, {});
+      commit("DISCONNECT_WS", ws);
+    },
+    sendExitTeacherMessage({ commit }) {
+      let sendExitTeacherMessage = {
+        type: "LEAVE",
+      };
+      ws.send(`/quiz/room/exitTeacher/${pin}`, {}, JSON.stringify(sendExitTeacherMessage));
+      commit('SET_STOMP_CLIENT', ws);
+    },
     sendEndMessage: function ({ commit }) {
       let sendEndMessage = {
         type: "END"
@@ -192,8 +233,17 @@ const CreateQuizRoomStore = {
               } else if (type === "END") {
                 commit("SET_RESULTDATA", JSON.parse(msg.body).content);
                 commit("SET_ISEND", true);
+              } else if (type === "LEAVE" && content === "teacher disconnecting") {
+                ws.disconnect(() => {}, {});
+                commit("DISCONNECT_WS", ws);
+              } else if (type === "LEAVE" && content === "student disconnected") {
+                commit('DELETE_STUDENTS', JSON.parse(msg.body).sender);
               }
             })
+            let sendEnterTeacherMessage = {
+              type: "TEACHER",
+            };
+            ws.send(`/quiz/room/enterTeacher/${pin}`, {}, JSON.stringify(sendEnterTeacherMessage));
             commit('SUBSCRIBE_QUIZ_ROOM', ws);
           })
           commit('SET_STOMP_CLIENT', ws);

@@ -1,21 +1,40 @@
 <template>
   <div id="ordering-container">
-    <template v-for="index in 4">
-      <CreatorOrderingButton 
-        v-if="mode === 'create'"
-        :key="index"
-        :index="index"
-        :currentIdx="currentIdx"
-        @click-button="setOrderingAnswer([index, currentIdx]); changeCurrentIdx();"
-      />
-      <OrderingButton
-        v-else
-        mode="ordering"
-        :key="index"
-        :index="index"
-        :buttonId="buttonId + index"
-      />
+    <template v-if="mode === 'answer'">
+      <template v-for="(i, index) in showAnswer">
+        <OrderingButton
+          mode="ordering"
+          :key="index"
+          :index="i+1"
+        />
+      </template>
     </template>
+    <template v-else>
+      <template v-for="index in 4">
+        <CreatorOrderingButton 
+          v-if="mode === 'create'"
+          :key="index"
+          :index="index"
+          :currentIdx="currentIdx"
+          @click-button="setOrderingAnswer([index, currentIdx]); changeCurrentIdx();"
+        />
+        <OrderingButton
+          class="solving-button"
+          v-else-if="mode === 'solving'"
+          mode="solving"
+          :key="index"
+          :index="index"
+          @click.native="clickAnswer(index)"
+        />
+        <OrderingButton
+          v-else
+          mode="ordering"
+          :key="index"
+          :index="index"
+        />
+      </template>
+    </template>
+
   </div>
 </template>
 
@@ -30,23 +49,41 @@ export default {
     OrderingButton,
     CreatorOrderingButton
   },
-  props: ['mode', 'currentIdx'],
+  props: ['mode', 'currentIdx', 'setColor'],
   data: function () {
     return {
-      buttonId: '',
+      answerColor: ["#ffdc46", "#ff85b1", "#7cb1ff", "#aaed81"],
     }
   },
-  created: function () {
-    this.buttonId = 'button'
-  },
   computed: {
-    ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex"]),
+    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
+    answer: function () {
+      return this.quizData.slideList[this.quizIndex].answer;
+    },
+    showAnswer: function () {
+      let temp = [];
+      for (let i = 1; i < 5; i ++) {
+        temp.push(this.quizData.slideList[this.quizIndex].answer.indexOf(i.toString()));
+      }
+      return temp;
+    },
+  },
+  watch: {
+    setColor: function () {
+      for (let i = 0; i < 4; i++) {
+        document.getElementsByClassName('solving-button')[i].style.backgroundColor = this.answerColor[i];
+      }
+    }
   },
   methods: {
     ...mapActions("CreateQuizStore", ["setOrderingAnswer"]),
     changeCurrentIdx: function () {
       this.$emit('change-current-idx');
     },
+    clickAnswer: function (idx) {
+      document.getElementsByClassName('solving-button')[idx-1].style.backgroundColor = "gray";
+      this.$emit('click-answer', idx);
+    }
   },
 }
 </script>
@@ -56,5 +93,6 @@ export default {
   display: flex;
   width: 100%;
   height: 98%;
+  margin-top: 20px;
 }
 </style>
