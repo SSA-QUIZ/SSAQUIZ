@@ -204,13 +204,13 @@ export default {
   }
   .wheel{
     position: absolute;
-    left:48%;
-    top: 15%;
+    left:45%;
+    top: 20%;
     display: block;
     width: 40px;
     height: 40px;
-    transform-origin: center 600%;
-    animation: spin 3s linear infinite;
+    transform-origin: center 480%;
+    animation: spin 2.5s linear infinite;
   }
   .inner-wheel{
     top: -70px;
