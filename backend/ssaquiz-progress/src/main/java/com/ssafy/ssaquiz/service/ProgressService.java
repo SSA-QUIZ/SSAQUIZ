@@ -72,6 +72,8 @@ public class ProgressService {
         logger.info("enterUser()");
         logger.info(message.toString());
 
+        headerAccessor.getSessionAttributes().put("pin", pin);
+
         if (message == null || message.getSender() == null) {
             message.setContent("join fail (null)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
@@ -92,7 +94,6 @@ public class ProgressService {
 
         if (registUser(USER_LIST + pin, message.getSender())) {
             message.setContent("join success");
-            headerAccessor.getSessionAttributes().put("pin", pin);
             headerAccessor.getSessionAttributes().put("student", message.getSender());
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
@@ -168,7 +169,7 @@ public class ProgressService {
     @Transactional
     public void deleteInRedis(int pin) {
         String questionCntStr = redisUtil.getData(ANSWER_CNT + pin);
-        if(questionCntStr != null) {
+        if (questionCntStr != null) {
             int questionCnt = Integer.parseInt(questionCntStr);
             for (int i = 0; i < questionCnt; i++) {
                 redisUtil.deleteZdata(QUESTION + i + pin, 0, -1);
@@ -282,6 +283,17 @@ public class ProgressService {
             message.setType(MessageType.LEAVE);
             message.setSender(nickname);
             message.setContent("student disconnected");
+            simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
+            return;
+        }
+
+        // student disconnect (nickname overlap)
+        if ("".equals(nickname)) {
+            logger.info("student disconnected (overlap)");
+
+            Message message = new Message();
+            message.setType(MessageType.LEAVE);
+            message.setContent("student disconnected (overlap)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
