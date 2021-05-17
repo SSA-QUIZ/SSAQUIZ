@@ -123,4 +123,9 @@ public class RedisUtil {
         ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
         return valueOperations.remove(key, member);
     }
+
+    public Long getZCnt(String key) {
+        ZSetOperations<String, String> valueOperations = stringRedisTemplate.opsForZSet();
+        return valueOperations.zCard(key);
+    }
 }
