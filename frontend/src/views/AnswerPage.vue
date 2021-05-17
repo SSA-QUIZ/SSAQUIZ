@@ -9,7 +9,7 @@
       </template>
       <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
       <template v-else-if="category==='순서맞히기'">
-        <Quiz title="하이" :image="imagePath !== '' ? imagePath : 'default'" style="height: 60%" />
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 60%" />
         <Ordering mode="answer" style="height: 35%; margin-top: 20px;" />
       </template>
       <template v-else-if="category==='TF'">
