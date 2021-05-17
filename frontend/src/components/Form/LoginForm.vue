@@ -87,5 +87,6 @@ export default {
   font-family: "Noto Sans KR", sans-serif;
   color: grey;
   margin: 5px 0 0 0;
+  text-decoration: underline;
 }
 </style>
