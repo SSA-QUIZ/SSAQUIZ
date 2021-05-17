@@ -1,6 +1,5 @@
 <template>
   <div id="solving-quiz-page-t-container">
-    <button @click="disconnect_ws">테스트</button>
     <Header @time-zero="sendFinMessage(quizIndex)" mode="playQuiz" :time="time" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="solving-quiz-page-t-content">
@@ -74,7 +73,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["disconnect_ws", "sendFinMessage"])
+    ...mapActions("CreateQuizRoomStore", ["sendFinMessage"])
   },
 }
 </script>
