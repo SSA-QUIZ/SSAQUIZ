@@ -3,7 +3,7 @@
     <InputBox placeholder="ID를 입력해주세요." type="text" @change-input="setEmail" />
     <InputBox placeholder="PW를 입력해주세요." type="password" @change-input="setPassword" />
     <InputButton @click.native="login" text="로그인 하기" />
-    <InputButton @click.native="googleLogin" text="구글로 로그인하기" />
+    <GoogleLoginButton  @click.native="googleLogin"/>
     <br />
     <router-link class="hyper-link" to="">퀴즈를 풀러 오셨어요?</router-link>
     <br />
@@ -17,11 +17,14 @@ import { GOOGLE_AUTH_URL } from "@/config/index.js";
 
 import InputBox from "@/components/common/InputBox.vue";
 import InputButton from "@/components/common/InputButton.vue";
+import GoogleLoginButton from '@/components/common/GoogleLoginButton.vue';
+
 export default {
   name: "LoginForm",
   components: {
     InputBox,
     InputButton,
+    GoogleLoginButton
   },
   data: function () {
     return {

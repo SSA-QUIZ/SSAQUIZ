@@ -1,11 +1,11 @@
 <template>
-  <div id="multiple-choice-creator">
-    <div id="multiple-choice-creator__question-box">
+  <div id="TF-creator">
+    <div id="TF-creator__question-box">
       <input type="text" 
         placeholder="문제를 입력해주세요." 
         :value="question"
         @input="changeQuestion" 
-        id="multiple-choice-creator__input-question"
+        id="TF-creator__input-question"
       >
       <input type="file" name="file" class="image-input">
       <!-- 이미지 등록 안했을 때 -->
@@ -18,12 +18,8 @@
     
     <div>
       <div class="choice-row">
-        <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
-        <CreatorQuizButton :index=1 height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
-      </div>
-      <div class="choice-row">
-        <CreatorQuizButton :index=2 height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
-        <CreatorQuizButton :index=3 height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
+        <CreatorQuizButton :index=0 height="350px" margin="0 5px 0 0" color="#636be8" quiz="TF" msg="True" />
+        <CreatorQuizButton :index=1 height="350px" margin="0 0 0 5px" color="#e7427e" quiz="TF" msg="False"/>
       </div>
     </div>
   </div>
@@ -36,10 +32,7 @@ import { mapActions, mapState } from 'vuex';
 import CreatorQuizButton from '@/components/QuizCreator/CreatorQuizButton.vue';
 
 export default {
-  name: "MultipleChoiceCreator",
-  props: [
-    "slideIndex"
-  ],
+  name: "TFCreator",
   components: {
     CreatorQuizButton
   },
@@ -101,14 +94,14 @@ export default {
 </script>
 
 <style>
-#multiple-choice-creator {
+#TF-creator {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-#multiple-choice-creator__question-box {
+#TF-creator__question-box {
   width: 100%;
   height: 55%;
   border-radius: 30px;
@@ -119,7 +112,7 @@ export default {
   align-items: center;
 }
 
-#multiple-choice-creator__input-question {
+#TF-creator__input-question {
   font-family: 'Nanum Pen Script', cursive;
   font-weight: bold;
   font-size: 38px;
@@ -129,7 +122,7 @@ export default {
   text-align: center;
 }
 
-#multiple-choice-creator__input-question:focus, #multiple-choice-creator__input-question:active {
+#TF-creator__input-question:focus, #TF-creator__input-question:active {
 	outline: none;
 }
 
@@ -161,5 +154,4 @@ input.image-input {
 	width: 100%;
 	margin: 1% 0% 0% 0%;
 }
-
 </style>

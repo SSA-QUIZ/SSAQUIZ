@@ -4,17 +4,24 @@
       <span class="question">{{ title }}</span>
     </div>
     <div class="row">
-      <span class="answer">서울팀 장장주빈</span>
+      <span class="answer">{{ answer }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: "ShortAnswerResult",
   props: [
     "title"
-  ]
+  ],
+  computed: {
+    ...mapState("CreateQuizRoomStore", ["quizData", "quizIndex"]),
+    answer: function () {
+      return this.quizData["slideList"][this.quizIndex]["answer"];
+    },
+  },
 }
 </script>
 

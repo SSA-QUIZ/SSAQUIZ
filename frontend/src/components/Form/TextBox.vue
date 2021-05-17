@@ -5,22 +5,34 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "TextBox",
   props: [
-    "message"
+    "message",
   ],
   data: function () {
     return {
-      data: "",
+      inputAnswer: '',
     }
   },
   methods: {
     onInput: function (e) {
-			this.data = e.target.value;
-			this.$emit('change-input', this.data)
+      this.inputAnswer = e.target.value;
+			this.$emit('change-input',this.inputAnswer);
 		}
-  }
+  },
+  computed: {
+    ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex"]),
+    ...mapState("CommonStore", ["isStudent"]),
+    data: function () {
+      if (this.isStudent === false) {
+        return this.quizData["slideList"][this.selectedSlideIndex]["answer"];
+      } else {
+        return '';
+      }
+    },
+  },
 }
 </script>
 

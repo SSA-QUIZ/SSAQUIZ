@@ -2,11 +2,22 @@
   <div id="answer-page-container">
     <Header mode="off" />
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
-    <Quiz :title="question" image="@/assets/images/Default.png" id="quiz-div" />
-    <QuizButton color="#7cb1ff" icon="fa fa-car" :answer="answer" height="20vh" id="answer-div" />
-    <!-- <ShortAnswerResult title="우리 팀 팀장의 이름은?"/> -->
-    <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
-    <div style="height: 3%;"></div>
+    <div id="answer-page-content">
+      <template v-if="category==='4지선다'" >
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 70%" />
+        <QuizButton :color="answerStyle[index].color" :icon="answerStyle[index].icon" :answer="answer" height="20vh" />
+      </template>
+      <ShortAnswerResult v-else-if="category==='단답형'" :title="question"/>
+      <template v-else-if="category==='순서맞히기'">
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 60%" />
+        <Ordering mode="answer" style="height: 35%; margin-top: 20px;" />
+      </template>
+      <template v-else-if="category==='TF'">
+        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 75%" />
+        <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
+      </template>
+      <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
+    </div>
   </div>
 </template>
 
@@ -16,6 +27,9 @@ import ProgressBar from '@/components/common/ProgressBar.vue';
 import Quiz from '@/components/common/Quiz.vue';
 import QuizButton from '@/components/common/QuizButton.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
+import ShortAnswerResult from '@/components/QuizTemplate/ShortAnswerResult.vue';
+import Ordering from '@/components/QuizTemplate/Ordering.vue';
+import TrueFalseButton from '@/components/QuizCreator/TrueFalseButton.vue';
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -25,8 +39,14 @@ export default {
     ProgressBar,
     Quiz,
     QuizButton,
-    // ShortAnswerResult,
+    ShortAnswerResult,
+    Ordering,
     NextStepButton,
+    TrueFalseButton,
+  },
+  data: function () {
+    return {
+    }
   },
   watch: {
     isEnd: function (newVal) {
@@ -42,17 +62,23 @@ export default {
         } else {
           this.$router.push({name: "InterimScorePage"});
         }
-        
       }
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd"]),
+    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd", "category"]),
+    ...mapState("CreateQuizStore", ["answerStyle"]),
     question: function () {
       return this.quizData["slideList"][this.quizIndex]["question"];
     },
     answer: function () {
       return this.quizData["slideList"][this.quizIndex]["answerList"][this.quizData["slideList"][this.quizIndex]["answer"]];
+    },
+    index: function () {
+      return parseInt(this.quizData["slideList"][this.quizIndex]["answer"]);
+    },
+    imagePath: function () {
+      return this.quizData["slideList"][this.quizIndex]["imagePath"];
     },
   },
   methods: {
@@ -61,20 +87,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #answer-page-container {
   background-color: #F2F2F2;
   height: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin-bottom: -10%;
 }
-#quiz-div {
-  height: 60%;
-}
-#answer-div {
-  width: 95%;
-  height: auto;
+#answer-page-content {
+  width: 75%;
+  height: 100%;
 }
 </style>
