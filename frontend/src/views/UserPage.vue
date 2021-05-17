@@ -27,6 +27,9 @@
           <button @click="openDialog = true" style="font-size: 5vh; color: #4F37DE;"><i class="material-icons">add</i></button>
         </div>
         <div id="quiz-set-list__list">
+          <template v-if="quizList.length === 0">
+            <TextDiv message="지금 바로 퀴즈를 만들어보세요!" />
+          </template>
           <template v-for="(quiz, index) in quizList">
             <QuizSet 
               :key="index" 
@@ -73,18 +76,19 @@ import QuizSet from '@/components/QuizSet.vue';
 import Dialog from '@/components/Popup/Dialog';
 import Confirm from "@/components/Popup/Confirm.vue";
 import Alert from "@/components/Popup/Alert.vue";
+import TextDiv from '@/components/common/TextDiv.vue';
 
 export default {
   name: 'UserPage',
   components: {
     WaveBG,
     FishEffect,
-
     Header,
     QuizSet,
     Confirm,
     Alert,
-    Dialog
+    Dialog,
+    TextDiv
   },
   data: function () {
     return {
@@ -367,16 +371,16 @@ i.material-icons:hover {
 }
 
 #quiz-set-list__title > button > i.material-icons:nth-of-type(1) {
-		background-color: #d59acb;
+		background-color: #636be8;
 }
 
 #quiz-set-list__title > button > i.material-icons:nth-of-type(1):hover {
-		color: #d59acb;
+		color: #636be8;
     background-color: transparent;
 }
 
 #quiz-set-list__title > button > i.material-icons:nth-of-type(1):after {
-		border-color: #d59acb;
+		border-color: #636be8;
 }
 
 @media (max-width:601px) {
