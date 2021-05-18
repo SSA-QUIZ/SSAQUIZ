@@ -9,21 +9,22 @@
           <img class="image" :src="profileImg">
         </div>
         <div id="profile__info">
-          <div style="font-size: 5vh; font-weight: 900; font-family: Jua;">
-            {{ nickname }}
-            <button v-if="googleLogin==='false'" style="font-size: 3vh; color: gray;" @click="moveToUserInfo">
+          <div id="profile__username">
+            <span id="profile__username-text">{{ nickname }}</span>
+            <div v-if="googleLogin==='false'" id="profile__button" @click="moveToUserInfo">
               <i class="material-icons">settings</i>
-            </button>
-            <button style="font-size: 3.5vh; color: gray; margin-left: 10px; margin-top: 3px;" @click="logoutConfirm">
+            </div>
+            <div id="profile__button" @click="logoutConfirm">
               <i class="material-icons">power_settings_new</i>
-            </button>
+            </div>
           </div>
-          <div><u>{{ email }}</u></div>
+          <div><u id="profile__email">{{ email }}</u></div>
         </div>
       </div>
+
       <div id="quiz-set-list">
         <div id="quiz-set-list__title">
-          <span style="font-size: 4vh; font-family: Jua;">{{ nickname }}님의 퀴즈</span>
+          <span id="quiz-set-list__title-text">{{ nickname }}님의 퀴즈</span>
           <button @click="openDialog = true" style="font-size: 5vh; color: #4F37DE;"><i class="material-icons">add</i></button>
         </div>
         <div id="quiz-set-list__list">
@@ -214,37 +215,34 @@ export default {
 <style scoped>
 #user-page-container {
   background-color: #CFE1F6;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
+
 }
 
 #user-page-content {
   display: flex;
-  height: 87.5%;
+  height: 85%;
   z-index: 1;
 }
 
-#user-page-content > #profile {
+#profile {
   display: flex;
+  padding-top: 5%;
   width: 40%;
-  height: 60%;
-  align-items: center;
-}
-
-#profile__image {
-  font-size: 18vh;
-  color: #4F37DE;
-  margin-left: 7%;
+  align-items: baseline;
 }
 
 /* 프로필 이미지 */
 #profile .img-wrapper {
-  width:150px;
-  height:150px;
-  transform:translate(17%,-20%);
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  transform: translate(17%,-20%);
   border-radius: 70%;
   overflow: hidden;
   margin-right: 30px;
+  z-index: 1;
 }
 
 #profile .img-wrapper img {
@@ -253,32 +251,50 @@ export default {
   height:inherit;
 }
 
+#profile__info {
+  margin-left: 200px;
+  z-index: 1;
+}
+
+#profile__username {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  font-weight: 900;
+  font-family: Jua;
+}
+
+#profile__username-text {
+  font-size: 3rem;
+  white-space: nowrap;
+  margin-right: 5%;
+}
+
+#profile__button {
+  height: 3rem;
+  margin: 0 1%;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+#profile__email {
+  font-size: 1rem;
+}
 #quiz-set-list {
   display: flex;
   flex-flow: column;
-  justify-content: center;
+  justify-content: baseline;
   align-items: center;
-  width:60%;
-  min-height: 100%;
+  width: 60%;
+  height: 100%;
   z-index: 1;
-}
-
-#profile__info {
-  margin-left: 5%;
-  font-size: 2vh;
-  z-index: 1;
-}
-
-#profile__info button:hover {
-  transition: all 0.25s linear;
-  transform: scale(1.2);
 }
 
 #quiz-set-list__list {
   display: flex;
   flex-wrap: wrap;
-  width: 90%;
-  height: 70%;
+  width: 95%;
+  height: 80%;
   border-radius: 15px;
   background-color: white;
   overflow-x: no-display;
@@ -291,6 +307,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1%;
+}
+
+#quiz-set-list__title-text {
+  font-size: 3rem;
+  font-family: Jua;
 }
 
 #quiz-set-list__title button:hover {
@@ -364,10 +385,6 @@ i.material-icons:hover {
 		transform: rotate(90deg);
 		cursor: pointer;
 		box-shadow: none;
-}
-
-#quiz-set-list__title > button > i.material-icons {
-  font-size: 3.4rem;
 }
 
 #quiz-set-list__title > button > i.material-icons:nth-of-type(1) {
