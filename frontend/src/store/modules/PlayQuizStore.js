@@ -60,6 +60,9 @@ const PlayQuizStore = {
     SUBSCRIBE_QUIZ_ROOM: function (state, value) {
       state.stompClient = value;
     },
+    SET_STUDENTS: function (state, value) {
+      state.students = value;
+    },
     ADD_STUDENTS: function (state, value) {
       state.students.push(value);
     },
@@ -176,6 +179,8 @@ const PlayQuizStore = {
           let content = JSON.parse(msg.body).content;
           if (type === "START") {
             commit('SET_ISSTART', true);
+          } else if (type === "USERLIST") {
+            commit('SET_STUDENTS', content);
           } else if (type === "ADDUSER") {
             commit('ADD_STUDENTS', content);
           } else if (type === "DELETEUSER") {
