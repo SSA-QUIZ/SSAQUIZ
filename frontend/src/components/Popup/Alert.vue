@@ -44,46 +44,68 @@ export default {
 }
 
 .snackbar {
-	left: 50%;
-	bottom: 0;
-	z-index: 3;
-	width: 60%;
-	height: 0px;
-	margin-left: -30%;
-	line-height: 50px;
-	position: absolute;
-	background-color: white;
-	transition: all .3s;
+  left: 50%;
+  bottom: 0;
+  z-index: 3;
+  width: 60%;
+  height: 0px;
+  margin-left: -30%;
+  line-height: 50px;
+  position: absolute;
+  background-color: white;
+  transition: all .3s;
   border-radius: 15px 15px 0px 0px;
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .snackbar.active {
-	height: 55px;
+   height: 55px;
 }
 
 .snackbar > span {
-	border: 0;
-	float: left;
-	color: #454995;
-	cursor: pointer;
-	font-size: 15px;
-	margin-left: 3%;
+  display: block;
+  border: 0;
+  float: left;
+  color: #454995;
+  cursor: pointer;
+  font-size: 15px;
+  margin-left: 3%;
   font-weight: bold;
-	font-family: 'Noto Sans KR', sans-serif;
-	background: transparent;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: transparent;
+
+  text-overflow: ellipsis;
 }
 
 .snackbar > button {
-	border: 0;
+  border: 0;
   width:15%;
   height:100%;
-	float: right;
-	color: #454995;
-	display: block;
-	cursor: pointer;
+  float: right;
+  color: #454995;
+  display: block;
+  cursor: pointer;
   font-family: 'Noto Sans KR', sans-serif;
-	position: relative;
-	background: transparent;
+  position: relative;
+  background: transparent;
+}
+
+@media (max-width: 500px) {
+  .snackbar {
+    left: 30%;
+    bottom: 0;
+    z-index: 3;
+    width: 100%;
+    height: 0px;
+    line-height: 30px;
+    position: absolute;
+    background-color: white;
+    transition: all .3s;
+    border-radius: 15px 15px 0px 0px;
+    overflow: hidden;
+  }
+  .snackbar.active {
+    height: 55px;
+  }
 }
 </style>
