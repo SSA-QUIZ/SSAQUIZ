@@ -5,6 +5,7 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -29,5 +30,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // "/pin" 시작되는 메시지가 메시지 브로커로 라우팅 되도록 정의
         // 클라이언트 입장에서는 받을때, 서버입장에서는 보낼때
         registry.enableSimpleBroker("/pin");
+    }
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registration) {
+        registration.setMessageSizeLimit(160 * 64 * 1024); // default : 64 * 1024
+        registration.setSendTimeLimit(100 * 10000); // default : 10 * 10000
+        registration.setSendBufferSizeLimit(3* 512 * 1024); // default : 512 * 1024
     }
 }
