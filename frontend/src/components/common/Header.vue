@@ -42,7 +42,7 @@ export default {
     },
     countDown: function () {
       if (this.second == 0) {
-        // this.$emit('time-zero')
+        this.$emit('time-zero')
         clearInterval(this.timer);
       } else {
         this.second--;
