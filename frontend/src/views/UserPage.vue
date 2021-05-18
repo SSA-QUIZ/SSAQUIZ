@@ -9,16 +9,14 @@
           <img class="image" :src="profileImg">
         </div>
         <div id="profile__info">
-          <div id="profile__info__container" style="font-size: 5vh; font-weight: 900; font-family: Jua;">
+          <div style="font-size: 5vh; font-weight: 900; font-family: Jua;">
             {{ nickname }}
-            <div id="profile__info__buttons">
-              <button class="pro-button" style="margin-right: 5px; margin-left: 5px;" v-if="googleLogin==='false'" @click="moveToUserInfo">
-                <i class="material-icons">settings</i>
-              </button>
-              <button class="pro-button" @click="logoutConfirm">
-                <i class="material-icons">power_settings_new</i>
-              </button>
-            </div>
+            <button v-if="googleLogin==='false'" style="font-size: 3vh; color: gray;" @click="moveToUserInfo">
+              <i class="material-icons">settings</i>
+            </button>
+            <button style="font-size: 3.5vh; color: gray; margin-left: 10px; margin-top: 3px;" @click="logoutConfirm">
+              <i class="material-icons">power_settings_new</i>
+            </button>
           </div>
           <div><u>{{ email }}</u></div>
         </div>
@@ -300,29 +298,10 @@ export default {
   transform: scale(1.2);
 }
 
-#profile__info__container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .quiz-set {
   width: 40%;
   height: 38%;
   margin: 5%;
-}
-
-.pro-button {
-  display: flex;
-  margin-bottom: 5px;
-}
-
-#profile__info__buttons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 90%;
-  font-size: 3vh;
 }
 
 ::-webkit-scrollbar { width: 30px; }
