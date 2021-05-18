@@ -126,7 +126,7 @@ export default {
 
 #short-answer-creator__question-box {
   width: 100%;
-  height: 70%;
+  height: 50%;
   border-radius: 30px;
   background-color: #c4c4c4;
   display: flex;
@@ -158,7 +158,7 @@ export default {
 
 #short-answer-creator__answer-box {
   width: 100%;
-  height: 30%;
+  height: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
