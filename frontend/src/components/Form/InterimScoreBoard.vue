@@ -5,8 +5,8 @@
         <div :key="index">
           <div class="row">
             <img v-if="index===0" src="@/assets/images/gold.png" alt="gold"> 
-            <img v-else-if="index===1" src="@/assets/images/gold.png" alt="silver"> 
-            <img v-else-if="index===2" src="@/assets/images/gold.png" alt="bronze"> 
+            <img v-else-if="index===1" src="@/assets/images/silver.png" alt="silver"> 
+            <img v-else-if="index===2" src="@/assets/images/bronze.png" alt="bronze"> 
             <h1>{{ scoreBoardData[index]["value"] }}</h1>
           </div>
           <h1 class="score">{{ scoreBoardData[index]["score"] }}점</h1>
