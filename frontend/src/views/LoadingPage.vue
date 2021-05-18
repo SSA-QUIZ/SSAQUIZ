@@ -22,7 +22,10 @@ export default {
   data: function () {
     return {
       second: 3,
-      timer: setInterval(() => this.countDown(), 1000)
+      timer: setInterval(() => this.countDown(), 1000),
+      flag: false,
+      alertMessage: '',
+      color: '',
     }
   },
   watch: {
