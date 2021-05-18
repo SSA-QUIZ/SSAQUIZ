@@ -217,7 +217,7 @@ export default {
   background-color: #CFE1F6;
   height: 100vh;
   overflow: hidden;
-  padding: 0 5%
+
 }
 
 #user-page-content {
@@ -266,6 +266,7 @@ export default {
 
 #profile__username-text {
   font-size: 3rem;
+  white-space: nowrap;
   margin-right: 5%;
 }
 
@@ -292,7 +293,7 @@ export default {
 #quiz-set-list__list {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: 95%;
   height: 80%;
   border-radius: 15px;
   background-color: white;
