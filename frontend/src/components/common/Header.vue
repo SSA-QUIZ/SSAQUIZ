@@ -1,8 +1,6 @@
 <template>
-  <header>
-    <div style="width: 30%; z-index: 1;">
-      <img width="100%" src="@/assets/images/SSAQUIZ.png" @click="goWelcomePage" style="cursor: pointer;">
-    </div>
+  <header id="ssaquiz-header">
+    <img id="header-logo" src="@/assets/images/SSAQUIZ.png" @click="goWelcomePage">
     <div class="header-content" v-if="mode == 'userInfo'">
       <div class="header-content-text">{{ nickname }}</div>
       <div id="header-content-score">{{ score }}</div>
@@ -44,7 +42,7 @@ export default {
     },
     countDown: function () {
       if (this.second == 0) {
-        this.$emit('time-zero')
+        // this.$emit('time-zero')
         clearInterval(this.timer);
       } else {
         this.second--;
@@ -55,15 +53,20 @@ export default {
 </script>
 
 <style scoped>
-header {
+#ssaquiz-header {
   width: 100%;
 	height: 15%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-  margin-bottom: -2%;
-	padding: 0vh 3vh 0vh 3vh;
+	padding: 0 1.5%;
   z-index: 1;
+}
+
+#header-logo {
+  width: 30%;
+  z-index: 1;
+  cursor: pointer;
 }
 
 img:hover {
