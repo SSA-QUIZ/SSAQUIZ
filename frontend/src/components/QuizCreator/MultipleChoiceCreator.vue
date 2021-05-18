@@ -23,14 +23,14 @@
         ></textarea>
       </div>
     </div>
-    <div>
+    <div id="multiple-choice-creator__answer-box">
       <div class="choice-row">
-        <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
-        <CreatorQuizButton :index=1 height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
+        <CreatorQuizButton :index=0 height="185px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
+        <CreatorQuizButton :index=1 height="185px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
       </div>
       <div class="choice-row">
-        <CreatorQuizButton :index=2 height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
-        <CreatorQuizButton :index=3 height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
+        <CreatorQuizButton :index=2 height="185px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
+        <CreatorQuizButton :index=3 height="185px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
       </div>
     </div>
   </div>
@@ -142,12 +142,17 @@ export default {
 
 #multiple-choice-creator__question-box {
   width: 100%;
-  height: 55%;
+  height: 50%;
   border-radius: 30px;
   background-color: #c4c4c4;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#multiple-choice-creator__answer-box {
+  width: 100%;
+  height: 50%;
 }
 
 #text-container {
@@ -226,6 +231,7 @@ input.image-input {
 .choice-row {
 	display: flex;
 	width: 100%;
+  height: 48%;
 	margin: 1% 0% 0% 0%;
 }
 
