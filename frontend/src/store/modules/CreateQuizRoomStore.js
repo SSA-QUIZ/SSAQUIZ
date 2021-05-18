@@ -77,7 +77,7 @@ const CreateQuizRoomStore = {
         content: state.students
       };
       ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
-    }
+    },
     // ADD_STUDENTS: function (state, value) {
     //   let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
     //   state.students.push({nickname: value, color: randomColor});
