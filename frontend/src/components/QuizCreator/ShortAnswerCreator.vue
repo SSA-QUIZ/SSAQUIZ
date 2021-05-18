@@ -16,8 +16,10 @@
         <textarea 
           placeholder="문제를 입력해주세요."
           :value="question"
-          @input="changeQuestion" 
-          class="multiple-choice-creator__input-question"
+          @input="changeQuestion"  
+          @focus="setSize(true)"
+          @blur="setSize(false)"
+          class="creator__input-question"
         ></textarea>
       </div>
     </div>
@@ -95,6 +97,21 @@ export default {
       let val = [this.selectedSlideIndex, this.inputQuestion];
       this.setSlideQuestion(val);
     },
+    setSize: function (flag) {
+      let element = document.getElementsByClassName('creator__input-question')[0];
+      console.log(element, this.selectedSlideIndex)
+      let cal;
+      if (flag) {
+        cal = setInterval(
+          function() {
+            element.style.height = '1px';
+            element.style.height = (element.scrollHeight + 12) + 'px';
+          }, 100);
+      }
+      else {
+        clearInterval(cal);
+      }
+    } 
   }
 }
 </script>
@@ -109,7 +126,7 @@ export default {
 
 #short-answer-creator__question-box {
   width: 100%;
-  height: 70%;
+  height: 50%;
   border-radius: 30px;
   background-color: #c4c4c4;
   display: flex;
@@ -141,7 +158,7 @@ export default {
 
 #short-answer-creator__answer-box {
   width: 100%;
-  height: 30%;
+  height: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
