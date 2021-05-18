@@ -39,7 +39,7 @@ export default {
   justify-content: center;
   align-items: center;
   
-  background-color: rgba(51, 51, 51, 0.5);
+  background-color: rgba(51, 51, 51, 0.7);
   z-index: 3;
 }
 #result .king-whale-container {
