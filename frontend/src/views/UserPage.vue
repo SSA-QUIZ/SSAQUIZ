@@ -1,7 +1,6 @@
 <template>
   <div id="user-page-container">
-    <WaveBG />
-    <FishEffect/>
+    <Clouds />
     <Header mode="off" />
     <div id="user-page-content">
       <div id="profile">
@@ -70,8 +69,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import WaveBG from '@/components/effects/WaveBG.vue';
-import FishEffect from '@/components/effects/FishEffect.vue';
+import Clouds from '@/components/effects/Clouds.vue';
 import Header from '@/components/common/Header.vue';
 import QuizSet from '@/components/QuizSet.vue';
 import Dialog from '@/components/Popup/Dialog';
@@ -82,8 +80,7 @@ import TextDiv from '@/components/common/TextDiv.vue';
 export default {
   name: 'UserPage',
   components: {
-    WaveBG,
-    FishEffect,
+    Clouds,
     Header,
     QuizSet,
     Confirm,
@@ -217,7 +214,6 @@ export default {
   background-color: #CFE1F6;
   height: 100vh;
   overflow: hidden;
-
 }
 
 #user-page-content {
