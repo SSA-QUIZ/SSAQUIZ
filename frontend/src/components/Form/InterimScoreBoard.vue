@@ -4,10 +4,14 @@
       <template v-for="(student, index) in scoreBoardData">
         <div :key="index">
           <div class="row">
-            <img v-if="index===0" src="@/assets/images/gold.png" alt="gold"> 
-            <img v-else-if="index===1" src="@/assets/images/silver.png" alt="silver"> 
-            <img v-else-if="index===2" src="@/assets/images/bronze.png" alt="bronze"> 
-            <h1>{{ scoreBoardData[index]["value"] }}</h1>
+            <div class="col-1">
+              <img v-if="index===0" src="@/assets/images/gold.png" alt="gold"> 
+              <img v-else-if="index===1" src="@/assets/images/silver.png" alt="silver"> 
+              <img v-else-if="index===2" src="@/assets/images/bronze.png" alt="bronze">
+            </div>
+            <div class="col-2">
+              <h1>{{ scoreBoardData[index]["value"] }}</h1>
+            </div>
           </div>
           <h1 class="score">{{ scoreBoardData[index]["score"] }}점</h1>
         </div>
@@ -47,7 +51,7 @@ export default {
 #board .scores {
   width: 80%;
   height: 50%;
-  margin-top: 8%;
+  margin-top: 3%;
 }
 
 #board .scores > div {
@@ -71,9 +75,18 @@ export default {
   width: 100%;
 }
 
-#board .scores .row img {
+#board .scores .row .col-1 {
   width: 15%;
+}
+
+#board .scores .row .col-2 {
+  width: 85%;
+}
+
+#board .scores .row img {
+  width: 100%;
   float: left;
+  display: block;
 }
 
 #board .scores .row h1 {
