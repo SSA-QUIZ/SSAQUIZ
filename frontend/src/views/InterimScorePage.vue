@@ -37,6 +37,13 @@ export default {
     BubbleBG,
     Alert
   },
+  data: function () {
+    return {
+      flag: false,
+      alertMessage: '',
+      color: ''
+    }
+  },
   watch: {
     isNext: function (newVal) {
       if (newVal === true) {
