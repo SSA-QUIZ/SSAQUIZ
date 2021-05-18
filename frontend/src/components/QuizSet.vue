@@ -10,7 +10,7 @@
       </div>
     </button>
     <div class="quiz-set__buttons">
-      <button style="margin-right: 5px;" @click="$emit('edit-quiz')">
+      <button style="margin-right: 2%;" @click="$emit('edit-quiz')">
         <i class="material-icons">edit</i>
       </button>
       <button @click="$emit('delete-quiz')">
