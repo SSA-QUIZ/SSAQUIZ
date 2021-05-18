@@ -60,7 +60,7 @@ const CreateQuizRoomStore = {
     SUBSCRIBE_QUIZ_ROOM: function (state, value) {
       state.stompClient = value;
     },
-    SET_STUDNTS: function (state, value) {
+    SET_STUDENTS: function (state, value) {
       let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
       state.students.push({nickname: value, color: randomColor});
       let UserListMessage = {
