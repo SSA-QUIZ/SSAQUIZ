@@ -47,8 +47,6 @@ export default {
 
 #short-answer .submit {
   display: flex-end;
-  /* justify-content: end; */
-
   position: absolute;
   bottom: 8%;
   right: 5%;
@@ -60,11 +58,7 @@ export default {
   }
 
   #short-answer .submit {
-    display: flex-end;
-    /* justify-content: end; */
-    position: absolute;
-    top: 48%;
-    left: 9%;
+    position: static;
   }
 }
 </style>
