@@ -9,8 +9,7 @@ public enum MessageType {
     END,
     CATEGORY,
     SUBMIT,
-    ADDUSER,
-    DELETEUSER,
+    USERLIST,
     TOTALNUM,
     TEACHER
 }
