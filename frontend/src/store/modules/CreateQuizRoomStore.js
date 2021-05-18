@@ -60,12 +60,12 @@ const CreateQuizRoomStore = {
     SUBSCRIBE_QUIZ_ROOM: function (state, value) {
       state.stompClient = value;
     },
-    ADD_STUDENTS: function (state, value) {
+    SET_STUDNTS: function (state, value) {
       let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
       state.students.push({nickname: value, color: randomColor});
       let UserListMessage = {
-        type: "ADDUSER",
-        content: {nickname: value, color: randomColor},
+        type: "USERLIST",
+        content: state.students
       };
       ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
     },
@@ -73,11 +73,29 @@ const CreateQuizRoomStore = {
       let newStudents = state.students.filter(student => student.nickname !== value);
       state.students = newStudents;
       let UserListMessage = {
-        type: "DELETEUSER",
-        content: value,
+        type: "USERLIST",
+        content: state.students
       };
       ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
-    },
+    }
+    // ADD_STUDENTS: function (state, value) {
+    //   let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
+    //   state.students.push({nickname: value, color: randomColor});
+    //   let UserListMessage = {
+    //     type: "ADDUSER",
+    //     content: {nickname: value, color: randomColor},
+    //   };
+    //   ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
+    // },
+    // DELETE_STUDENTS: function (state, value) {
+    //   let newStudents = state.students.filter(student => student.nickname !== value);
+    //   state.students = newStudents;
+    //   let UserListMessage = {
+    //     type: "DELETEUSER",
+    //     content: value,
+    //   };
+    //   ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
+    // },
     SEND_ANSWERLIST: function (state, value) {
       state.stompClient = value;
     },
@@ -219,7 +237,7 @@ const CreateQuizRoomStore = {
               let type = JSON.parse(msg.body).type
               let content = JSON.parse(msg.body).content
               if (type === "JOIN" && content === "join success") {
-                commit('ADD_STUDENTS', JSON.parse(msg.body).sender);
+                commit('SET_STUDENTS', JSON.parse(msg.body).sender);
               } else if (type === "START") {
                 commit('SET_ISSTART', true);
               } else if (type === "SUBMIT") {
