@@ -64,19 +64,19 @@ const CreateQuizRoomStore = {
       let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
       state.students.push({nickname: value, color: randomColor});
       let UserListMessage = {
-        type: "USERLIST",
-        content: state.students,
+        type: "ADDUSER",
+        content: {nickname: value, color: randomColor},
       };
-      ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage))
+      ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
     },
     DELETE_STUDENTS: function (state, value) {
-      let newStudents = state.students.filter(student => student.nickname !== value)
+      let newStudents = state.students.filter(student => student.nickname !== value);
       state.students = newStudents;
       let UserListMessage = {
-        type: "USERLIST",
-        content: state.students,
+        type: "DELETEUSER",
+        content: value,
       };
-      ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage))
+      ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
     },
     SEND_ANSWERLIST: function (state, value) {
       state.stompClient = value;
