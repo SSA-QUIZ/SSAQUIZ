@@ -16,17 +16,22 @@
         <textarea 
           placeholder="문제를 입력해주세요."
           :value="question"
-          @input="changeQuestion" 
-          class="multiple-choice-creator__input-question"
+          @input="changeQuestion"  
+          @focus="setSize(true)"
+          @blur="setSize(false)"
+          class="creator__input-question"
         ></textarea>
       </div>
     </div>
-    <div class="ordering-creator__button">
-      <button class="ordering-creator__ordering__button" @click="resetOrderingAnswer(); currentIdx=1;">초기화</button>
+    <div id="ordering-creator__answer-box">
+      <div class="ordering-creator__button">
+        <button class="ordering-creator__ordering__button" @click="resetOrderingAnswer(); currentIdx=1;">초기화</button>
+      </div>
+      <div id="ordering-creator__ordering">
+        <Ordering mode="create" :currentIdx="currentIdx" @change-current-idx="changeCurrentIdx" />
+      </div>
     </div>
-    <div id="ordering-creator__ordering">
-      <Ordering mode="create" :currentIdx="currentIdx" @change-current-idx="changeCurrentIdx" />
-    </div>
+
   </div>
 </template>
 
@@ -97,6 +102,20 @@ export default {
     changeCurrentIdx: function () {
       this.currentIdx++;
     },
+    setSize: function (flag) {
+      let element = document.getElementsByClassName('creator__input-question')[0];
+      let cal;
+      if (flag) {
+        cal = setInterval(
+          function() {
+            element.style.height = '1px';
+            element.style.height = (element.scrollHeight + 12) + 'px';
+          }, 100);
+      }
+      else {
+        clearInterval(cal);
+      }
+    } 
   }
 }
 </script>
@@ -109,7 +128,7 @@ export default {
   justify-content: space-between;
 }
 
-#ordering-creator__question-box {
+/* #ordering-creator__question-box {
   width: 100%;
   height: 55%;
   border-radius: 30px;
@@ -117,6 +136,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+} */
+#ordering-creator__question-box {
+  width: 100%;
+  height: 50%;
+  border-radius: 30px;
+  background-color: #c4c4c4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#ordering-creator__answer-box {
+  width: 100%;
+  height: 50%;
 }
 
 #ordering-creator__input-question {
@@ -135,9 +168,8 @@ export default {
 
 #ordering-creator__ordering {
   width: 100%;
-  height: 50%;
+  height: 85%;
   margin-top: -1.5%;
-  margin-bottom: 2%;
 }
 
 input.image-input {
