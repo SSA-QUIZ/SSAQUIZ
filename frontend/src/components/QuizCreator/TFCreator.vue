@@ -16,8 +16,10 @@
         <textarea 
           placeholder="문제를 입력해주세요."
           :value="question"
-          @input="changeQuestion" 
-          class="multiple-choice-creator__input-question"
+          @input="changeQuestion"  
+          @focus="setSize(true)"
+          @blur="setSize(false)"
+          class="creator__input-question"
         ></textarea>
       </div>
     </div>
@@ -95,6 +97,20 @@ export default {
       let val = [this.selectedSlideIndex, this.inputQuestion];
       this.setSlideQuestion(val);
     },
+    setSize: function (flag) {
+      let element = document.getElementsByClassName('creator__input-question')[0];
+      let cal;
+      if (flag) {
+        cal = setInterval(
+          function() {
+            element.style.height = '1px';
+            element.style.height = (element.scrollHeight + 12) + 'px';
+          }, 100);
+      }
+      else {
+        clearInterval(cal);
+      }
+    } 
   },
 }
 </script>
