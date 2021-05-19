@@ -3,7 +3,7 @@
     <div class="settings__option" v-for="(option, index) in optionList" :key="index">
       <input type="radio" name="radioBox" :id="option.id" v-if="index == 0" checked @click="selectOption(index)">
       <input type="radio" name="radioBox" :id="option.id" v-else @click="selectOption(index)">
-      <label :for="option.id">{{ option.name }}</label>
+      <label class="radio-text" :for="option.id">{{ option.name }}</label>
     </div>
   </div>
 </template>
@@ -57,5 +57,7 @@ export default {
 </script>
 
 <style scoped>
-
+.radio-text {
+  font-family: 'Jua';
+}
 </style>

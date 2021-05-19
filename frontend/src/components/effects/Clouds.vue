@@ -18,17 +18,17 @@ export default {
 	content: "";
 	display: block;
 	height: 100%;
-	min-width: 2560px;
-	width: 100%;
-	background-size: auto 100%;
+	min-width: 200vw;
+	background-size: auto 100vw;
 	-webkit-animation: clouds linear infinite alternate;
 	animation: clouds linear infinite alternate;
 }
 
 .clouds {
 	position: absolute;
-	width: 100%;
-	bottom: 1px;
+	width: 200vw;
+	bottom: 0;
+	left: 0;
 }
 
 .cloudsWrapper {
@@ -36,7 +36,7 @@ export default {
 	overflow: hidden;
 	top: -150px;
 	height: 150px;
-	width: 100%;
+	width: 200vw;
 }
 
 .cloudsWrapper:after {

@@ -153,8 +153,11 @@ const CreateQuizRoomStore = {
       commit('SET_DEFAULT_DATA');
     },
     disconnectTeacherWS: function ({ commit }) {
-      ws.disconnect(() => {}, {});
-      commit("DISCONNECT_WS", ws);
+      console.log(ws);
+      if (ws !== undefined) {
+        ws.disconnect(() => {}, {});
+        commit("DISCONNECT_WS", ws);
+      }
     },
     sendExitTeacherMessage({ commit }) {
       let sendExitTeacherMessage = {

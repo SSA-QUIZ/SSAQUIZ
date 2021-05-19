@@ -13,7 +13,7 @@
             @click.native="addShortAnswer" />
         </div>
         <div class="type-row">
-          <QuizButton style="font-size: 40px;" margin="5px" answer="순서맞히기" width="48%" height="150px" color="#7cb1ff"
+          <QuizButton style="font-size: 40px;" margin="5px" answer="순서맞추기" width="48%" height="150px" color="#7cb1ff"
             @click.native="addOrder" />
           <QuizButton style="font-size: 40px;" margin="5px" answer="TF" width="48%" height="150px" color="#aaed81" 
             @click.native="addVote" />
@@ -72,7 +72,7 @@ export default {
     },
     addOrder: function () {
       let defaultValue = {
-        "category": "순서맞히기",
+        "category": "순서맞추기",
         "question": "",
         "imagePath": "",
         "answer": "0000",

@@ -13,7 +13,7 @@
           <span>정답을 입력해주세요.</span>
         </div>
       </template>
-      <template v-if="category==='순서맞히기'" >
+      <template v-if="category==='순서맞추기'" >
         <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
         <Ordering id="solving-quiz-t-ordering" />
       </template>

@@ -15,7 +15,7 @@
           <span>{{quizData["slideList"][this.quizIndex]["answer"]}}</span>
         </div>
       </template>
-      <template v-else-if="category==='순서맞히기'">
+      <template v-else-if="category==='순서맞추기'">
         <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
         <Ordering id="answer-ordering" mode="answer" />
       </template>

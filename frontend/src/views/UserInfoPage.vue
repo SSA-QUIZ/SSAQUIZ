@@ -1,6 +1,5 @@
 <template>
   <div id="user-info">
-    <div class="stars"></div>
     <Logo/>
     <div id="content">
       <div class="form">

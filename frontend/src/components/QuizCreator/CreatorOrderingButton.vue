@@ -80,7 +80,6 @@ export default {
 }
 .creator-ordering-button__input {
   font-family: 'Jua';
-  font-weight: bold;
   font-size: 50px;
   height: 50px;
   max-height: 100px;

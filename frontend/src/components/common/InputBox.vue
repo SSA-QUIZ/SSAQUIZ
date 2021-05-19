@@ -25,7 +25,6 @@ export default {
 <style scoped>
 .input-box {
   font-family: 'Jua', sans-serif !important;
-	/* font-weight: bold; */
 	max-width: 100%;
 	width: 300px;
 	height: 50px;
@@ -35,12 +34,12 @@ export default {
 	border-radius: 5px;
 	text-align: center;
 	margin: 5px 0;
+	border: 1px solid black;
 }
 
 .input-box:focus, .input-box:active {
 	outline: none;
-
-border: 3px solid #545DE3;
+	border: 3px solid #545DE3;
 }
 /* input[type=password] 글씨 보이게 하기 */
 input[type=password] {

@@ -28,6 +28,10 @@
       :alertMessage=alertMessage
       :color=color    
     />
+    <img class="whale" id="purple-whale" src="@/assets/images/보라고래.png" alt="보라고래">
+    <img class="whale" id="pink-whale" src="@/assets/images/핑크고래.png" alt="핑크고래">
+    <img class="whale" id="mobile-whale" src="@/assets/images/모바일고래.png" alt="모바일고래">
+    <img class="whale" id="student-whale" src="@/assets/images/학생고래.png" alt="학생고래">
   </div>
 </template>
 
@@ -87,10 +91,12 @@ export default {
     this.getToken();
     this.setDefaultDataStudent();
     this.setDefaultData();
+    this.disconnectWS();
+    this.disconnectTeacherWS();
   },
   methods: {
     ...mapActions("PlayQuizStore", ["setPINWS", "setIsValidNickname", "disconnectWS", "setDefaultDataStudent"]),
-    ...mapActions("CreateQuizRoomStore", ["setDefaultData"]),
+    ...mapActions("CreateQuizRoomStore", ["setDefaultData", "disconnectTeacherWS"]),
     changePIN: function (data) {
       this.PIN = data;
     },
@@ -178,7 +184,8 @@ export default {
 
 <style scoped>
 #welcome-page {
-  height: 100%;
+  height: 100vh;
+  max-height: 100vh;
   background-color: #cfe1f6;
   display: flex;
   justify-content: center;
@@ -187,19 +194,25 @@ export default {
 #welcome-page #PIN-form, #welcome-page #nickname-form {
   display: flex;
   max-width: 100vw;
-  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 #welcome-page #PIN-form .ssaquiz-image {
   width: 95%;
+  height: auto;
+  object-fit: contain;
+  max-height: 45vh;
+  z-index: 1;
 }
 
 #welcome-page #PIN-form .ssaquiz-logo {
   width: 95%;
-  justify-content: center;
+  height: auto;
+  object-fit: contain;
+  max-height: 10vh;
   margin: 0 0 15px 0;
+  z-index: 1;
 }
 
 #welcome-page #PIN-form .hyperlink {
@@ -247,4 +260,31 @@ export default {
   margin-left: -105%;
 }
 
+.whale {
+  position: absolute;
+  height: 10vmax;
+  width: auto;
+  object-fit: contain;
+  z-index: 0;
+}
+#pink-whale {
+  left: 10px;
+}
+#mobile-whale {
+  left: 10px;
+  bottom: 10px;
+}
+#purple-whale {
+  right: 10px;
+}
+#student-whale {
+  right: 10px;
+  bottom: 10px;
+}
+
+@media (max-width: 700px) {
+  .whale {
+    display: none;
+  }
+}
 </style>
