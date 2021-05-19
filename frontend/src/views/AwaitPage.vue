@@ -116,6 +116,7 @@ export default {
   #await .container .row > img {
     width: 50%;
     height: auto;
+    object-fit: contain;
     margin-top: 30px;
   }
 }

@@ -131,20 +131,20 @@ export default {
 
 #result .podium-container span {
   font-family: 'Jua';
-  font-size: 7vh;
+  font-size: 3rem;
 }
 
 @media (max-width: 600px) {
   #result .podium-container span {
     font-family: 'Jua';
-    font-size: 6vh;
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 480px) {
   #result .podium-container span {
     font-family: 'Jua';
-    font-size: 5vh;
+    font-size: 1rem;
   }
 }
 
