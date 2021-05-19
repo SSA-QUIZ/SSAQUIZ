@@ -117,11 +117,11 @@ export default {
     }
   },
   computed: {
+    ...mapState("CreateQuizStore", ['quizData']),
     ...mapState("CreateQuizRoomStore", ['PIN']),
     ...mapState("UserStore", ['quizList', 'newQuizId']),
   },
   created: function () {
-    console.log(localStorage.getItem('id'));
     this.setQuizList(localStorage.getItem('id'));
   },
   mounted: function () {
@@ -167,7 +167,7 @@ export default {
         .catch(err => console.log(err))
     },
     editQuiz: function (id) {
-      this.getQuizData(id);
+      this.getQuizData(id)
       this.$router.push({ name: "CreatorPage", params: {"workbookId" : id} });
     },
     deleteQuiz: function (id) {
