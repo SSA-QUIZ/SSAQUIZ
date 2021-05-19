@@ -8,7 +8,7 @@
     <!-- 메인 -->
     <div class="container">
       <div class="row">
-        <img src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
+        <img id="await-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
       </div>
       <div class="row">
         <div class="loading">
@@ -112,17 +112,25 @@ export default {
   margin-bottom: 7%;
 }
 
+@media (max-width: 700px) {
+  #await .container .row > img {
+    width: 50%;
+    height: auto;
+    margin-top: 30px;
+  }
+}
+
 #await .container h1 {
   color: black;
   font-size: 65px;
-  font-family: Jua;
+  font-family: 'Jua';
   margin-top: 150px;
 }
 
 #await .container span {
   color: black;
   font-size: 200px;
-  font-family: Jua;
+  font-family: 'Jua';
   margin-bottom: 7%;
 }
 

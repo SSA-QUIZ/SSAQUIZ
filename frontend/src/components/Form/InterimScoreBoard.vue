@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #board {
   flex-wrap: wrap;
   display: flex;
@@ -64,7 +64,7 @@ export default {
 #board .scores .score{
   color: black;
   font-size: 2.5vw;
-  font-family: Jua;
+  font-family: 'Jua';
   width: 30%;
   margin-top: 3%;
   margin-left: 3%;
@@ -92,7 +92,7 @@ export default {
 #board .scores .row h1 {
   color: black;
   font-size: 3vw;
-  font-family: Jua;
+  font-family: 'Jua';
   margin-top: 3%;
   margin-left: 3%;
 }

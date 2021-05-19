@@ -99,7 +99,7 @@ export default {
 	height: 30vh;
 	margin: 0.3%;
 	border-radius: 15px;
-	font-family: Jua;
+	font-family: 'Jua';
 	font-size: 6rem;
   padding: 0 auto;
 }

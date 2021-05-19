@@ -36,10 +36,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #text-box .text-box-input {
-  font-family: 'Noto Sans KR', sans-serif !important;
-	font-weight: bold;
+  font-family: 'Jua';
   font-size: 30px;
 	width: 100%;
 	height: 150px;
@@ -48,7 +47,6 @@ export default {
 	border: 3px solid #FFFFFF;
 	border-radius: 5px;
 	text-align: center;
-	margin-left: 2.5%;
 }
 
 #text-box .text-box-input:focus, #text-box .text-box-input:active {
@@ -59,7 +57,6 @@ export default {
 @media (max-width: 700px) {
   #text-box .text-box-input {
     font-size: 20px;
-    margin-left: 0%;
   }
 }
 </style>

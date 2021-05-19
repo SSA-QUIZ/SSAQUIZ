@@ -114,7 +114,7 @@ export default {
 .loding-page__animation {
 	-webkit-animation: jello-horizontal 1s steps(2, end) infinite both;  
   font-size : 15rem;
-  font-family : Jua;
+  font-family : 'Jua';
   font-weight: bold;
   color: white;
 }

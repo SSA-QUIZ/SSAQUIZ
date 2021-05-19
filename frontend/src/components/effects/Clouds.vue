@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* 구름 */
 .cloudsWrapper:before,
 .cloudsWrapper:after {
@@ -34,7 +34,7 @@ export default {
 .cloudsWrapper {
 	position: absolute;
 	overflow: hidden;
-	top: -149px;
+	top: -150px;
 	height: 150px;
 	width: 100%;
 }

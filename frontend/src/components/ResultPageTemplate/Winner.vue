@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #result .king-whale-container {
   display: flex;
   width: 100%;
@@ -60,7 +60,7 @@ export default {
 #result .king-whale-container h1 {
   position: absolute;
   bottom: 21vh;
-  font-family:Jua;
+  font-family:'Jua';
   font-size: 4rem;
   z-index: 4;
 
@@ -74,7 +74,7 @@ export default {
   #result .king-whale-container h1 {
     position: absolute;
     bottom: 27vh;
-    font-family: Jua;
+    font-family: 'Jua';
     font-size: 3rem;
     z-index: 4;
 

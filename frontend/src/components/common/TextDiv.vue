@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #text-div {
 	width: 100%;
 	height: 100%;
@@ -21,7 +21,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	font-size: 50px;
-	font-family: Jua;
+	font-family: 'Jua';
 	color: #454995;
 }
 #text-div-emoticon {

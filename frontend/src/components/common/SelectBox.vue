@@ -57,7 +57,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .select-title {
   display: block;
   font-family: 'Nanum Pen Script', cursive;

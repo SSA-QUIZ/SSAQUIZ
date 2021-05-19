@@ -58,11 +58,10 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  width: 100%;
-	/* height: 20vh; */
-	margin: 0.3%;
+  width: 50%;
+  margin: 5px;
 	border-radius: 15px;
-	font-family: Jua;
+	font-family: 'Jua';
 	font-size: 60px;
   padding: 0 auto;
 }

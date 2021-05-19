@@ -54,9 +54,6 @@ export default {
       return this.quizData["slideList"][this.quizIndex]["answerList"][this.index-1];
     },
   },
-  created: function () {
-    this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
-  },
   mounted: function () {
     if (this.mode === 'ordering' || this.mode === 'solving') {
       this.style = 'background-color: ' + this.answerStyle[this.index-1].color;
@@ -84,11 +81,11 @@ export default {
 	align-items: center;
   width: 100%;
 	height: 100%;
-	margin: 0.3%;
+	margin: 0 0.3% 0 0.3%;
 	border-radius: 15px;
-	font-family: Jua;
+	font-family: 'Jua';
 	font-size: 3rem;
-  padding: 0 auto;
+  /* padding: 0 auto; */
 }
 .ordering-button, .ordering-button__frame {
 	justify-content: center;
@@ -99,8 +96,7 @@ export default {
   font-size: 2.5rem;
 }
 .ordering-button__input {
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: "Jua";
   font-size: 50px;
   height: 50px;
   max-height: 100px;

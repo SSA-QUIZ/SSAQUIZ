@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #cloud {
 	background: red;
 	position: relative;

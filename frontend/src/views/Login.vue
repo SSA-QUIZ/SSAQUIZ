@@ -115,7 +115,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 /* login css */
 
 #login {

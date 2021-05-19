@@ -1,7 +1,7 @@
 <template>
   <div id="tf-choice">
-    <TrueFalseButton @click.native="clickButton(['0', username, quizIndex])" mode="True" width="50%" height=height fontSize="100px" class="tf"/>
-    <TrueFalseButton @click.native="clickButton(['1', username, quizIndex])" mode="False" width="50%" height=height fontSize="100px" class="tf"/>
+    <TrueFalseButton @click.native="clickButton(['0', username, quizIndex])" mode="True" class="tf"/>
+    <TrueFalseButton @click.native="clickButton(['1', username, quizIndex])" mode="False" class="tf"/>
   </div>
 </template>
 
@@ -36,26 +36,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #tf-choice {
   display: flex;
-  height: 60%;
-  margin: 5%;
+  height: 100%;
 }
 
 @media (max-width: 700px) {
 	#tf-choice {
-    height: 70%;
-    margin: 5%;
-
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   .tf {
     display: block;
-    width: 90% !important;
-    height: 50% !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 </style>

@@ -108,8 +108,8 @@ export default {
 }
 
 .PIN-button {
-  font-family: 'Noto Sans KR', sans-serif;
-	font-weight: bold;
+  font-family: 'Jua';
+	padding-top: 2px;
   font-size: 40px;
 	color: #FFFFFF;
   max-width: 100%;

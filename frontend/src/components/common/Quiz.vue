@@ -1,9 +1,9 @@
 <template>
   <div id="quiz-container">
-    <div class="quiz-content">
-      <img v-if="image==='default'" src="../../assets/images/Default.png" style="max-width:25%; margin-bottom: 2%;"/>
-      <img v-else :src="image" style="max-width:25%; margin-bottom: 2%;"/>
-      <span>{{ title }}</span>
+    <div id="quiz-content">
+      <img id="quiz-image" v-if="image==='default'" src="../../assets/images/Default.png"/>
+      <img id="quiz-image" v-else :src="image" />
+      <span id="quiz-text">{{ title }}</span>
     </div>  
   </div>
 </template>
@@ -16,27 +16,31 @@ export default {
     'image'
   ],
   methods: {
-    // getSrc: function () {
-    //   return require(this.image);
-    // }
   }
 }
 </script>
 
-<style>
+<style scoped>
 #quiz-container {
   width: 100%;
-  height: 100%;
+  height: 50%;
   display: flex;
   flex-flow: column;
 }
-.quiz-content {
+
+#quiz-content {
   display: flex;
   flex-flow: column;
   justify-content: center;
   align-items: center;
   font-size: 50px;
-  font-family: Jua;
+  font-family: 'Jua';
   height: 100%;
 }
+
+#quiz-image {
+  max-width: 100%;
+  max-height: 75%;
+}
+
 </style>

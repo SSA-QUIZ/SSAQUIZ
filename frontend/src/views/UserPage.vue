@@ -257,7 +257,7 @@ export default {
   align-items: center;
   max-width: 100%;
   font-weight: 900;
-  font-family: Jua;
+  font-family: 'Jua';
 }
 
 #profile__username-text {
@@ -307,7 +307,7 @@ export default {
 
 #quiz-set-list__title-text {
   font-size: 3rem;
-  font-family: Jua;
+  font-family: 'Jua';
 }
 
 #quiz-set-list__title button:hover {

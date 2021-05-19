@@ -10,7 +10,7 @@
         <div>현재까지</div>
         <div><span style="color: red;">{{ solvedNum }}명 </span>응답</div>
       </div>
-      <div id="header-content-second">{{ second }}</div>
+      <div id="header-content-second"><span>{{ second }}</span></div>
     </div>
     <div class="header-content" v-else></div>
   </header>
@@ -42,7 +42,7 @@ export default {
     },
     countDown: function () {
       if (this.second == 0) {
-        this.$emit('time-zero')
+        // this.$emit('time-zero');
         clearInterval(this.timer);
       } else {
         this.second--;
@@ -59,12 +59,14 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 1.5%;
   z-index: 1;
 }
 
 #header-logo {
-  width: 30%;
+  height: 80%;
+  width: auto;
+  max-width: 30%;
+  object-fit: contain;
   z-index: 1;
   cursor: pointer;
 }
@@ -76,12 +78,13 @@ img:hover {
 
 .header-content {
   width: 70%;
+  height: 50%;
 	display: flex;
 	justify-content:flex-end;
 	align-items: center;
 }
 .header-content-text {
-  width: 40%;
+  width: calc(100% - 13vh);
   text-align: end;
 	font-family: "Jua";
 	font-size: 3.5vh;
@@ -89,13 +92,16 @@ img:hover {
 	margin-right: 3%;
 }
 #header-content-score {
+  width: 13vh;
+  height: 100%;
 	font-size: 3.5vh;
-	font-weight: 900;
+	font-weight: bold;
 	color: rgb(129, 129, 129);
 	background-color: #e2e2e2;
 	border-radius: 20px;
-  margin-right: 3%;
-	padding: 1vh 3vh 1vh 3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #header-content-second {
@@ -105,7 +111,6 @@ img:hover {
 	color: white;
 	background-color: #4f37de;
 	border-radius: 50%;
-  margin-right: 3%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,7 +119,6 @@ img:hover {
 @media (max-width: 700px) {
   .header-content-text {
     font-size: 2.5vh;
-    margin-right: 2%;
   }
   #header-content-second {
     width: 70px;

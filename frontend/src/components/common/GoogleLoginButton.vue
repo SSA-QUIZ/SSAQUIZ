@@ -63,9 +63,10 @@ export default {
 }
 
 .g-sign-in-button .text-container {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: bold;
+    font-family: 'Jua', sans-serif;
+    /* font-weight: bold; */
     line-height: 48px;
+    padding-top: 3px;
     vertical-align: top;
     border: none;
     display: inline-block;

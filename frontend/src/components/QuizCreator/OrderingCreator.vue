@@ -120,7 +120,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #ordering-creator {
   height: 100%;
   display: flex;
@@ -228,7 +228,7 @@ input.image-input {
   justify-content: center;
   align-items: center;
   font-size: 25px;
-  font-family: Jua;
+  font-family: 'Jua';
   color: white;
   background-color: #c3356a;
   border-radius: 10px;

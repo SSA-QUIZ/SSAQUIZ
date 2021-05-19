@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #quiz-set {
   width: 90%;
   height: 90%;

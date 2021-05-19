@@ -220,12 +220,12 @@ export default {
 
 #user-info #content a{
   color: red;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Jua';
 }
 
 /* 수정버튼 */
 #user-info #content .update-button {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Jua';
 	font-weight: bold;
 	color: #FFFFFF;
   max-width: 100%;
@@ -252,7 +252,7 @@ export default {
 
 /* 취소버튼 */
 #user-info #content .cancel-button {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Jua";
 	font-weight: bold;
 	color: #FFFFFF;
   max-width: 100%;

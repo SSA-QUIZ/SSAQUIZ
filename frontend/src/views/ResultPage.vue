@@ -75,7 +75,8 @@ export default {
 #result {
   display: flex;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
 }
 
 /* 두구두구 효과 */
@@ -124,7 +125,7 @@ export default {
   color: #cfe1f6;
   text-shadow: 0 1px 0 #fff;
   font-size: 3rem;
-  font-family: Jua;
+  font-family: 'Jua';
   color: #545de3;
   position: absolute;
   top: 50%;
@@ -135,8 +136,10 @@ export default {
 
 #result .logo {
   position: absolute;
-  width: 330px;
-  height: 90px;
+  width: 100vw;
+  height: auto;
+  max-height: 10%;
+  object-fit: contain;
   animation: comeIn both .2s ease 5.5s;
 }
 

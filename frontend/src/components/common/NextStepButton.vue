@@ -16,7 +16,7 @@ export default {
 .step-button {
   position: absolute;
   top: 50%;
-  right: 5%;
+  right: 3%;
   z-index: 99;
 }
 
@@ -26,8 +26,8 @@ export default {
 }
 
 img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 }
 
 @media(max-width: 1200px) {

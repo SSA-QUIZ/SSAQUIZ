@@ -39,21 +39,25 @@ export default {
   },
 }
 </script>
-<style>
+
+<style scoped>
 
 #multiple-choice {
 	display: flex;
 	flex-direction: column;
-  margin-top: 10px;
-  padding: 2.5%;
+  height: 100%;
 }
 .choice-row {
 	display: flex;
+  justify-content: center;
+  height: 50%;
 	width: 100%;
+  margin: 5px;
 }
 .choice {
 	height: 100%;
-  width: 48%;
+  width: 50%;
+  margin: 5px;
 }
 
 @media (max-width: 700px) {
@@ -66,16 +70,17 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
 	}
 	.choice {
     height: 100px;
-    margin: 5px;
-    width: 95%;
+    margin: 5px 0;
+    width: 100%;
 	}
 	.quiz-button {
-    height: 100px !important;
+    height: 50% !important;
     font-size: 2.5rem !important;
-    margin: 5px !important;
+    margin: 5px 0 !important;
 	}
 }
 </style>

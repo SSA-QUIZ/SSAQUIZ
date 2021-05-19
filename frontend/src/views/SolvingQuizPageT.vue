@@ -4,17 +4,22 @@
     <ProgressBar :index="quizIndex+1" :all="quizData['slideList'].length" />
     <div id="solving-quiz-page-t-content">
       <template v-if="category==='4지선다'" >
-        <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
-        <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3vw" />
+        <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <MultipleChoice id="solving-quiz-t-choice" :choice="choices" />
       </template>
-      <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+      <template v-else-if="category==='단답형'" >
+        <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <div class="text-box-input" >
+          <span>정답을 입력해주세요.</span>
+        </div>
+      </template>
       <template v-if="category==='순서맞히기'" >
-        <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
-        <Ordering class="solving-quiz-page-content__ordering" />
+        <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <Ordering id="solving-quiz-t-ordering" />
       </template>
       <template v-else-if="category==='TF'" >
         <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
-        <TFChoice id="solving-quiz-t-tf" :height="100" />
+        <TFChoice id="solving-quiz-t-tf" />
       </template>
       <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
     </div>
@@ -28,7 +33,6 @@ import Quiz from '@/components/common/Quiz.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
 import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import { mapActions, mapState } from 'vuex';
-import ShortAnswerT from '@/components/QuizTemplate/ShortAnswerT.vue';
 import Ordering from '@/components/QuizTemplate/Ordering.vue';
 import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
 
@@ -41,7 +45,6 @@ export default {
     Quiz,
     NextStepButton,
     MultipleChoice,
-    ShortAnswerT,
     Ordering,
     TFChoice
   },
@@ -81,34 +84,55 @@ export default {
 <style scoped>
 #solving-quiz-page-t-container {
   background-color: #F2F2F2;
-  height: 100%;
+  height: 100vh;
+  padding: 0 10% 1% 10%;
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin-bottom: -10%;
 }
 #solving-quiz-page-t-content {
   display: flex;
   flex-flow: column;
-  width:80%;
+  width: 100%;
   height: 75%;
   justify-content:center;
   align-items: center; 
 }
-.solving-quiz-t-quiz {
+#solving-quiz-t-quiz {
+  width: 100%;
   height: 50%;
-  margin: 10px;
+  display: flex;
+  flex-flow: column;
 }
 #solving-quiz-t-choice {
-  width: 70%;
-  height: 60%;
-  margin: 5px;
-}
-
-#solving-quiz-t-tf {
-  width: 70%;
-  height: 60%;
-  margin: 5px;
+  width: 100%;
+  height: 50%;
   display: flex;
+  flex-direction: column;
+}
+#solving-quiz-t-ordering {
+  display: flex;
+  width: 100%;
+  height: 50%;
+}
+#solving-quiz-t-tf {
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+.text-box-input {
+  font-family: 'Jua';
+  font-size: 30px;
+	width: 100%;
+	height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	background-color: #FFFFFF;
+	border: 3px solid #FFFFFF;
+	border-radius: 5px;
+	text-align: center;
+  outline: none;
+	border: 3px solid #545DE3;
 }
 </style>
