@@ -17,6 +17,7 @@ import InterimScorePage from '@/views/InterimScorePage.vue';
 import AwaitPage from '@/views/AwaitPage.vue';
 import ResultPage from '@/views/ResultPage.vue';
 import LoadingPage from '@/views/LoadingPage.vue';
+import Test from '@/views/Test.vue';
 
 Vue.use(VueRouter)
 
@@ -105,6 +106,11 @@ const routes = [
     path: '/solving-quiz-t',
     name: 'SolvingQuizPageT',
     component: SolvingQuizPageT
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   },
 ]
 

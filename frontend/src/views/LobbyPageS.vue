@@ -98,7 +98,7 @@ export default {
   overflow: auto;
   display: table-cell;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0 30px 0;
 }
 
 ::-webkit-scrollbar { width: 30px; }
@@ -118,6 +118,7 @@ export default {
 @media (max-width: 700px) {
   #lobby-page--student__nickname {
     width: 95%;
+    height: 40%;
   }
 }
 

@@ -17,18 +17,20 @@
           placeholder="문제를 입력해주세요."
           :value="question"
           @input="changeQuestion" 
-          class="multiple-choice-creator__input-question"
+          @focus="setSize(true)"
+          @blur="setSize(false)"
+          class="creator__input-question"
         ></textarea>
       </div>
     </div>
-    <div>
+    <div id="multiple-choice-creator__answer-box">
       <div class="choice-row">
-        <CreatorQuizButton :index=0 height="225px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
-        <CreatorQuizButton :index=1 height="225px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
+        <CreatorQuizButton :index=0 height="185px" margin="0 5px 0 0" color="#ffdc46" icon="fas fa-cat" class="choice" />
+        <CreatorQuizButton :index=1 height="185px" margin="0 0 0 5px" color="#ff85b1" icon="fas fa-leaf" class="choice" />
       </div>
       <div class="choice-row">
-        <CreatorQuizButton :index=2 height="225px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
-        <CreatorQuizButton :index=3 height="225px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
+        <CreatorQuizButton :index=2 height="185px" margin="0 5px 0 0" color="#7cb1ff" icon="fa fa-car" class="choice" />
+        <CreatorQuizButton :index=3 height="185px" margin="0 0 0 5px" color="#aaed81" icon="fas fa-pills" class="choice" />
       </div>
     </div>
   </div>
@@ -112,6 +114,20 @@ export default {
       let val = [this.selectedSlideIndex, this.inputQuestion];
       this.setSlideQuestion(val);
     },
+    setSize: function (flag) {
+      let element = document.getElementsByClassName('creator__input-question')[0];
+      let cal;
+      if (flag) {
+        cal = setInterval(
+          function() {
+            element.style.height = '1px';
+            element.style.height = (element.scrollHeight + 12) + 'px';
+          }, 100);
+      }
+      else {
+        clearInterval(cal);
+      }
+    } 
   },
 }
 </script>
@@ -126,40 +142,46 @@ export default {
 
 #multiple-choice-creator__question-box {
   width: 100%;
-  height: 55%;
+  height: 50%;
   border-radius: 30px;
   background-color: #d8d8d8;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+#multiple-choice-creator__answer-box {
+  width: 100%;
+  height: 50%;
+}
+
 #text-container {
   height: 260px;
   width: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 5%;
 }
 
 #text-container textarea {
   overflow: hidden;
 }
 
-#text-container .multiple-choice-creator__input-question {
+#text-container .creator__input-question {
   font-family: 'Nanum Pen Script', cursive;
   font-weight: bold;
   font-size: 38px;
-  height: 50%;
+  height: 20%;
   width: 100%;
-  margin-bottom: 10px;
   text-align: center;
   resize: none;
   /* border: 2px solid black;
   border-radius: 10%; */
 }
 
-.multiple-choice-creator__input-question:focus, 
-.multiple-choice-creator__input-question:active {
+.creator__input-question:focus, 
+.creator__input-question:active {
 	outline: none;
 }
 
@@ -215,6 +237,7 @@ input.image-input {
 .choice-row {
 	display: flex;
 	width: 100%;
+  height: 48%;
 	margin: 1% 0% 0% 0%;
 }
 

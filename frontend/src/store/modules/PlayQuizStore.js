@@ -63,6 +63,13 @@ const PlayQuizStore = {
     SET_STUDENTS: function (state, value) {
       state.students = value;
     },
+    ADD_STUDENTS: function (state, value) {
+      state.students.push(value);
+    },
+    DELETE_STUDENTS: function (state, value) {
+      let newStudents = state.students.filter(student => student.nickname !== value);
+      state.students = newStudents
+    },
     SET_ISSTART: function (state, value) {
       state.isStart = value;
     },
@@ -174,6 +181,10 @@ const PlayQuizStore = {
             commit('SET_ISSTART', true);
           } else if (type === "USERLIST") {
             commit('SET_STUDENTS', content);
+          } else if (type === "ADDUSER") {
+            commit('ADD_STUDENTS', content);
+          } else if (type === "DELETEUSER") {
+            commit('DELETE_STUDENTS', content);
           } else if (type === "TOTALNUM") {
             commit('SET_TOTALNUM', content);
           } else if (type === "CATEGORY") {

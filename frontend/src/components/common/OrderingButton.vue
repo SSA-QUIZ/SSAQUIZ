@@ -8,7 +8,7 @@
     </template>
     <template v-else>
       <div class="ordering-button__frame">
-        <p style="font-size: 5rem;">{{ index+1 }}</p>
+        <p class="ordering-button__index">{{ index+1 }}</p>
       </div>
     </template>
   </button>
@@ -107,7 +107,17 @@ export default {
   width: 100%;
   text-align: center;
 }
-.ordering-button__icon {
+.ordering-button__icon, .ordering-button__index {
   font-size: 5rem;
 }
+
+@media (max-width: 700px) {
+  .ordering-button__icon, .ordering-button__index {
+    font-size: 3rem;
+  }
+  .ordering-button {
+    margin: 1%;
+  }
+}
+
 </style>

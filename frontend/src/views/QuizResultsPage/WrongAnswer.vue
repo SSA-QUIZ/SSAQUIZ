@@ -6,18 +6,32 @@
     <p id="emoticon">😭</p>
     <p>토닥토닥💦</p>
     </div>
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color    
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import Header from '@/components/common/Header.vue';
+import Alert from '@/components/Popup/Alert.vue';
 
 export default {
   name: 'WrongAnswer',
   components: {
-    Header
+    Header,
+		Alert
   },
+	data: function () {
+		return {
+      flag: false,
+      alertMessage: '',
+      color: '',
+		}
+	},
 	watch: {
 		isNext: function (newVal) {
 			if (newVal === true) {
@@ -32,13 +46,24 @@ export default {
 			if (newVal === true) {
 				this.$router.push({ name: "ResultPage" });
 			}
-		}
+		},
+    teacherDisconnected: function (newVal) {
+      if (newVal === true) {
+        this.alertMessage = "퀴즈가 종료되었습니다. 잠시 후 메인페이지로 이동합니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+        setTimeout (() =>   {
+          this.disconnectWS(); 
+          this.$router.push({name: "WelcomePage"});
+        }, 2500);
+      }
+    },
 	},
 	methods: {
 		...mapActions("PlayQuizStore", ["setIsFin", "setIsSolved", "setIsCorrect", "setIsNext"])
 	},
 	computed: {
-		...mapState("PlayQuizStore", ["isNext", "isEnd", "username", "score"])
+		...mapState("PlayQuizStore", ["isNext", "isEnd", "username", "score", "teacherDisconnected"])
 	}
 }
 </script>
