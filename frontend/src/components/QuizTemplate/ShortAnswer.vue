@@ -1,9 +1,7 @@
 <template>
   <div id="short-answer">
     <TextBox message="답안을 작성해주세요." @change-input="setAnswer"/>
-    <div class="submit">
-      <InputButton @click.native="clickButton([answer, username, quizIndex]);" text="제출하기"/>
-    </div>
+    <InputButton id="short-answer-button" @click.native="clickButton([answer, username, quizIndex]);" text="제출하기"/>
   </div>
 </template>
 
@@ -36,29 +34,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #short-answer {
-	width: 95%;
+  height: 100%;
+	width: 100%;
+  display: flex;
 	flex-direction: column;
-  margin-top: 1.5vh;
-	padding: 3vh;
-  height: 70%;
+  justify-content: center;
 }
 
-#short-answer .submit {
-  display: flex-end;
-  position: absolute;
-  bottom: 8%;
-  right: 5%;
+#short-answer-button {
+  margin-top: 10px;
+  width: 100%;
+  height: 10%;
+  font-size: 30px;
 }
 
 @media (max-width: 700px) {
   #short-answer {
     width: 100%;
+    justify-content: flex-start;
   }
-
-  #short-answer .submit {
-    position: static;
+  #short-answer-button {
+    font-size: 20px;
+    font-weight: normal;
   }
 }
 </style>

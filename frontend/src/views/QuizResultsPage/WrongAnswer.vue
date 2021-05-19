@@ -68,9 +68,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #quiz-results-container--red {
 	background-color: #FF85B1;
-	height: 100%;
+  height: 100vh;
+  padding: 0 10% 1% 10%;
+}
+
+@media (max-width: 480px) {
+  #quiz-results-container--red {
+    padding: 0 3% 1% 3%;
+  }
 }
 </style>

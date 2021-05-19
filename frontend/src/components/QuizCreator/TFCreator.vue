@@ -115,7 +115,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #TF-creator {
   height: 100%;
   display: flex;

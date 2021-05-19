@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 /* 배경 효과 */
 .bubbles{

@@ -74,12 +74,12 @@ export default {
 	height: 100%;
 	margin: 0.3%;
 	border-radius: 15px;
-	font-family: Jua;
+	font-family: 'Jua';
 	font-size: 3rem;
   padding: 0 auto;
 }
 .creator-ordering-button__input {
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: 'Jua';
   font-weight: bold;
   font-size: 50px;
   height: 50px;

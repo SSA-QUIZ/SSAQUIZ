@@ -67,7 +67,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* podium 영역 */
 #result .podium-container {
   position: absolute;
@@ -130,20 +130,20 @@ export default {
 }
 
 #result .podium-container span {
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: 'Jua';
   font-size: 7vh;
 }
 
 @media (max-width: 600px) {
   #result .podium-container span {
-    font-family: 'Nanum Pen Script', cursive;
+    font-family: 'Jua';
     font-size: 6vh;
   }
 }
 
 @media (max-width: 480px) {
   #result .podium-container span {
-    font-family: 'Nanum Pen Script', cursive;
+    font-family: 'Jua';
     font-size: 5vh;
   }
 }

@@ -116,7 +116,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #short-answer-creator {
   height: 100%;
   display: flex;

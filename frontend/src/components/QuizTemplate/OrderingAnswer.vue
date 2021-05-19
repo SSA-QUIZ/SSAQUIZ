@@ -1,7 +1,7 @@
 <template>
   <div id="ordering-answer-container">
-    <OrderingFrame class="ordering-answer-content" :solvingString="solvingString" />
-    <Ordering mode="solving" class="ordering-answer-content" :setColor="setColor" @click-answer="setAnswer" />
+    <OrderingFrame :solvingString="solvingString" />
+    <Ordering mode="solving" :setColor="setColor" @click-answer="setAnswer" />
     <div class="ordering-answer__button">
       <button class="ordering-answer__ordering__button" style="background-color: #c3356a;" @click="resetAnswer">초기화</button>
       <button class="ordering-answer__ordering__button" @click="clickButton([answer, username, quizIndex])">제출</button>
@@ -59,10 +59,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #ordering-answer-container {
   width: 100%;
-  height: 40%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
 
 .ordering-answer__ordering__button {
@@ -72,7 +75,7 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 35px;
-  font-family: Jua;
+  font-family: 'Jua';
   color: white;
   background-color: #454995;
   border-radius: 10px;

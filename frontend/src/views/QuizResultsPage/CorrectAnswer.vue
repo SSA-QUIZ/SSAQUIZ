@@ -68,10 +68,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #quiz-results-container--blue {
 	background-color: #7CB1FF;
-	height: 100%;
+  height: 100vh;
+  padding: 0 10% 1% 10%;
+}
+
+@media (max-width: 480px) {
+  #quiz-results-container--blue {
+    padding: 0 3% 1% 3%;
+  }
 }
 
 #quiz-results-content {
@@ -81,7 +88,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	font-size: 4rem;
-	font-family: Jua;
+	font-family: 'Jua';
 }
 
 #quiz-results-content > #title {

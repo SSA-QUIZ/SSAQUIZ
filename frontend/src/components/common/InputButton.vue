@@ -9,15 +9,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .input-button {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: bold;
+	font-family: 'Jua', sans-serif;
 	color: #FFFFFF;
   max-width: 100%;
 	width: 300px;
 	height: 50px;
-	padding: 10px;
+	padding-top: 4px;
 	background-color: #545DE3;
 	border-radius: 5px;
 	margin: 5px 0;

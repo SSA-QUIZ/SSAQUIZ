@@ -56,7 +56,7 @@ table {
 @font-face {
 	font-family: "Jua";
 	src: url("./fonts/BMJUA.ttf");
-  }
+}
 
 /* font 끝 */
 
@@ -100,7 +100,6 @@ input:focus:-ms-input-placeholder, textarea:focus:-ms-input-placeholder {
 }
 
 /* <input> focus 시 placeholder 안보이게 하기 끝 */
-
 
 /* app 화면 높이 지정 시작 */
 

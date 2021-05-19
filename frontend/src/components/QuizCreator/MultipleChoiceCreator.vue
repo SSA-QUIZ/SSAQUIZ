@@ -132,7 +132,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #multiple-choice-creator {
   height: 100%;
   display: flex;

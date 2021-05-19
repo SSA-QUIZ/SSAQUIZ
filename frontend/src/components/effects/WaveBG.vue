@@ -11,7 +11,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .ocean {
   position:absolute;
   width:100%;

@@ -88,11 +88,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #ordering-container {
   display: flex;
   width: 100%;
-  height: 98%;
+  height: 40%;
   margin-top: 20px;
 }
 </style>

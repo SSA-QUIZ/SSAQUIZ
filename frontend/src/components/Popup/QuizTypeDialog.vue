@@ -103,7 +103,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .overlay, .dialog-container {
   width: 100%;
   height: 100%;
@@ -131,7 +131,7 @@ export default {
   opacity: 1;
   position: absolute;
   background-color: white;
-  font-family: Jua;
+  font-family: 'Jua';
   border-radius: 15px;
 }
 #dialog-title {
@@ -147,6 +147,6 @@ export default {
 }
 .input-box {
   border: 1px solid black;
-  font-family: Jua;
+  font-family: 'Jua';
 }
 </style>

@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #logo {
   position: fixed;
   display: inline-block;

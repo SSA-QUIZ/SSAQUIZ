@@ -36,19 +36,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #progress-bar {
   width: 100%;
-	padding: 1vh 4vh 2vh 4vh;
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 #progress {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: Jua;
-	font-size: 3vh;
-	font-weight: 900;
-	margin-bottom: 2%;
+	font-family: 'Jua';
+	font-size: 2rem;
+	font-weight: bold;
 }
 #progress-all {
 	position: relative; 

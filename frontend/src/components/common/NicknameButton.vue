@@ -3,7 +3,7 @@
     class="nickname-button"
     large
   >
-    {{student.nickname}}
+    <span class="nickname-text">{{student.nickname}}</span>
   </v-chip>
 </template>
 
@@ -16,21 +16,21 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .nickname-button {
   margin: 1vh;
   vertical-align: baseline;
 }
 
-.v-chip__content {
-  font-family: Jua;
+.nickname-text {
+  font-family: 'Jua';
   font-size: 30px;
 }
 
 @media (max-width: 700px) {
-  .v-chip__content {
-    font-family: Jua;
-    font-size: 25px;
+  .nickname-text {
+    font-family: 'Jua';
+    font-size: 18px;
   }
 }
 

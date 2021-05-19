@@ -96,7 +96,7 @@ export default {
 #content #title {
   color: white;
   font-size: 4.5vw;
-  font-family: Jua;
+  font-family: 'Jua';
   width: 90%;
   display: flex;
   align-items: center;
@@ -106,7 +106,7 @@ export default {
 #content .mention {
   color: white;
   font-size: 3vw;
-  font-family: Jua;
+  font-family: 'Jua';
   width: 90%;
   display: flex;
   justify-content: center;

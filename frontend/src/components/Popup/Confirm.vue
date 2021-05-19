@@ -24,7 +24,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .overlay, .confirm-container {
   width: 100%;
   height: 100%;
@@ -49,7 +49,7 @@ export default {
   opacity: 1;
   position: absolute;
   background-color: white;
-  font-family: Jua;
+  font-family: 'Jua';
   border-radius: 15px;
 }
 #confirm-content {

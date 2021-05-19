@@ -78,7 +78,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #login-form {
   text-align: center;
   margin-top: 55px;
@@ -86,7 +86,7 @@ export default {
 }
 
 #login-form .hyper-link {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Jua", sans-serif;
   color: grey;
   margin: 5px 0 0 0;
   text-decoration: underline;

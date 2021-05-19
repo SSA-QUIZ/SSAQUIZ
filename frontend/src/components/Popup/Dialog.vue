@@ -66,7 +66,7 @@ export default {
   opacity: 1;
   position: absolute;
   background-color: white;
-  font-family: Jua;
+  font-family: 'Jua';
   border-radius: 15px;
 }
 #dialog-content {
@@ -83,6 +83,6 @@ export default {
 }
 .input-box {
   border: 1px solid black;
-  font-family: Jua;
+  font-family: 'Jua';
 }
 </style>

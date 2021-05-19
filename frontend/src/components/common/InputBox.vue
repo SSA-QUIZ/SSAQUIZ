@@ -18,20 +18,20 @@ export default {
 		pressEnter: function () {
 			this.$emit('press-enter')
 		}
-	}
+	},
 }
 </script>
 
-<style>
+<style scoped>
 .input-box {
-  font-family: 'Noto Sans KR', sans-serif !important;
-	font-weight: bold;
+  font-family: 'Jua', sans-serif !important;
+	/* font-weight: bold; */
 	max-width: 100%;
 	width: 300px;
 	height: 50px;
-	padding: 10px;
 	background-color: #FFFFFF;
 	border: 3px solid #FFFFFF;
+	padding-top: 4px;
 	border-radius: 5px;
 	text-align: center;
 	margin: 5px 0;
@@ -39,6 +39,17 @@ export default {
 
 .input-box:focus, .input-box:active {
 	outline: none;
-	border: 3px solid #545DE3;
+
+border: 3px solid #545DE3;
 }
+/* input[type=password] 글씨 보이게 하기 */
+input[type=password] {
+	font-family: "Noto Sans KR", sans-serif !important;
+	padding-top: 0px;
+}
+
+input[type=password]::placeholder {
+	font-family: "Jua";
+}
+
 </style>

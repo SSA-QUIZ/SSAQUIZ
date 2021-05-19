@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #short-answer-t {
   width: 100%;
   height: 55%;

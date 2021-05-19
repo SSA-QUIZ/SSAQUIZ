@@ -61,10 +61,9 @@ export default {
 	justify-content: space-between;
 	align-items: center;
   width: 100%;
-	height: 30vh;
-	margin: 0.3%;
+	height: 100%;
 	border-radius: 15px;
-	font-family: Jua;
+	font-family: 'Jua';
 	font-size: 60px;
   padding: 0 auto;
 }

@@ -115,7 +115,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Signup.vue */
 #signup-form {
   text-align: center;
@@ -124,7 +124,7 @@ export default {
 }
 
 #signup-form .hyper-link {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Jua";
   color: grey;
   margin: 5px 0 0 0;
   text-decoration: underline;

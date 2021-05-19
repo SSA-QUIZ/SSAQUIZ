@@ -176,7 +176,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #welcome-page {
   height: 100%;
   background-color: #cfe1f6;
@@ -203,7 +203,7 @@ export default {
 }
 
 #welcome-page #PIN-form .hyperlink {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Jua";
   color: grey;
   margin: 5px 0 0 0;
 }

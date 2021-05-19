@@ -37,10 +37,10 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #ordering-frame-container {
   display: flex;
   width: 100%;
-  height: 98%;
+  height: 40%;
 }
 </style>
