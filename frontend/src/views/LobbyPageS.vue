@@ -75,7 +75,7 @@ export default {
 
 <style scoped>
 #lobby-page--student {
-  height: 100%;
+  height: 100vh;
   background-color: #CFE1F6;
   display: flex;
   flex-direction: column;
@@ -118,7 +118,17 @@ export default {
 @media (max-width: 700px) {
   #lobby-page--student__nickname {
     width: 95%;
-    height: 40%;
+    height: 40vh;
+    max-height: 40%;
+    border-width: 10px 0 10px 10px;
+    border-style: solid;
+    border-color: #FFFFFF;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    overflow: auto;
+    display: table-cell;
+    text-align: center;
+    margin: 10px 0 30px 0;
   }
 }
 
