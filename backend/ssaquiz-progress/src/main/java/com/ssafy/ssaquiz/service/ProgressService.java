@@ -193,7 +193,7 @@ public class ProgressService {
         logger.info("endQuiz()");
         logger.info(message.toString());
 
-        redisUtil.setData(TIME + pin, Long.toString(System.currentTimeMillis() / 100));
+        redisUtil.setData(TIME + pin, Long.toString(System.currentTimeMillis()));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -212,7 +212,8 @@ public class ProgressService {
         boolean isCorrect = grade(ANSWER_LIST + pin, message.getQuizNum(), (String) message.getContent());
 
         if (isCorrect) {
-            long score = 600 - ((System.currentTimeMillis() / 100) - Long.parseLong(redisUtil.getData(TIME + pin)));
+            long time = System.currentTimeMillis() - Long.parseLong(redisUtil.getData(TIME + pin)) - 3000;
+            double score = 500 + 500 * Math.max(0, 1 - (time / 20000.0));
             double multiplyNum = Double.parseDouble((String) redisUtil.getHdata(MULTIPLY_LIST + pin, message.getQuizNum()));
             long plusScore = Math.round(score * multiplyNum);
             redisUtil.addZdata(QUESTION + message.getQuizNum() + pin, message.getSender(), plusScore);
@@ -229,6 +230,8 @@ public class ProgressService {
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
             return;
         }
+
+        redisUtil.addZdata(QUESTION + message.getQuizNum() + pin, message.getSender(), 0.0);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("answer", false);
@@ -400,10 +403,15 @@ public class ProgressService {
 
     public double getScore(String key, Object nickname) {
         if (key == null || nickname == null) {
-            return -1.0;
+            return 0.0;
         }
 
-        return redisUtil.getScore(key, nickname);
+        Object score = redisUtil.getScore(key, nickname);
+        if (score == null) {
+            return 0.0;
+        }
+
+        return (double) score;
     }
 
     public boolean grade(String key, String quizNum, String answer) {
