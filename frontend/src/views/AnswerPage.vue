@@ -14,7 +14,7 @@
       </template>
       <template v-else-if="category==='TF'">
         <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'" style="height: 75%" />
-        <TrueFalseButton height="20vh" :mode="answer==='0' ? 'True' : 'False'"  style="height: 20%" />
+        <TrueFalseButton height="20vh" :mode="index === 0 ? 'True' : 'False'"  style="height: 20%" />
       </template>
       <NextStepButton @click.native="setIsInterim(true)" dark="true"/>
     </div>

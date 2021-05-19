@@ -5,7 +5,7 @@
     <div id="solving-quiz-page-t-content">
       <template v-if="category==='4지선다'" >
         <Quiz class="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
-        <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3.5vw" />
+        <MultipleChoice id="solving-quiz-t-choice" :choice="choices" height="15vh" font="3vw" />
       </template>
       <ShortAnswerT v-else-if="category==='단답형'" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
       <template v-if="category==='순서맞히기'" >

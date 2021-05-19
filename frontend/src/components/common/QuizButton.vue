@@ -3,7 +3,7 @@
     <template>
       <div v-if="answer" class="quiz-button-div">
         <span style="text-align: left;"><i :class="icon"></i></span>
-        <span>{{ answer }}</span>
+        <span class="answer">{{ answer }}</span>
         <span></span>
       </div>
       <div v-else class="quiz-button-div">
@@ -44,6 +44,12 @@ export default {
       if (this.height != undefined) this.style += "height: " + this.height + ";\n";
       if (this.font != undefined) this.style += "font-size: " + this.font + ";\n";
       if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
+      
+      if (14 < this.answer.length && this.answer.length <= 25) {
+        this.style += "font-size: " + "2rem" + ";\n";
+      } else if (25 < this.answer.length) {
+        this.style += "font-size: " + "1.8rem" + ";\n";
+      }
     }
   }
 }
@@ -68,6 +74,11 @@ export default {
 	align-items: center;
   width: 100%;
 }
+
+.quiz-button-div .answer {
+  width: 100%;
+}
+
 .quiz-button-ordering, .quiz-button-ordering-frame {
 	justify-content: center;
   width: 100%;
@@ -78,6 +89,7 @@ export default {
 }
 i {
   margin: 30px;
+  font-size: 3rem;
 }
 span {
   width: 33%;

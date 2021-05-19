@@ -47,21 +47,18 @@ export default {
 
 #short-answer .submit {
   display: flex-end;
-  /* justify-content: end; */
-
   position: absolute;
   bottom: 8%;
   right: 5%;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 700px) {
+  #short-answer {
+    width: 100%;
+  }
 
   #short-answer .submit {
-    display: flex-end;
-    /* justify-content: end; */
-    position: absolute;
-    top: 48%;
-    left: 9%;
+    position: static;
   }
 }
 </style>

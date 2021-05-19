@@ -55,4 +55,11 @@ export default {
 	outline: none;
 	border: 3px solid #545DE3;
 }
+
+@media (max-width: 700px) {
+  #text-box .text-box-input {
+    font-size: 20px;
+    margin-left: 0%;
+  }
+}
 </style>
