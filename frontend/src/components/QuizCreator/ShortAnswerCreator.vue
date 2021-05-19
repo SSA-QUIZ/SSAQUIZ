@@ -99,7 +99,6 @@ export default {
     },
     setSize: function (flag) {
       let element = document.getElementsByClassName('creator__input-question')[0];
-      console.log(element, this.selectedSlideIndex)
       let cal;
       if (flag) {
         cal = setInterval(

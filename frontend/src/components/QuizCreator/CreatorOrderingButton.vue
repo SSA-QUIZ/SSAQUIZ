@@ -29,10 +29,28 @@ export default {
       style: '',
       clicked: false,
       typed: false,
+      answerStyle: [
+        {
+          "icon": "fas fa-cat",
+          "color": "#ffdc46"
+        },
+        {
+          "icon": "fas fa-leaf",
+          "color": "#ff85b1"
+        },
+        {
+          "icon": "fa fa-car",
+          "color": "#7cb1ff"
+        },
+        {
+          "icon": "fas fa-pills",
+          "color": "#aaed81"
+        }
+      ]
     }
   },
   computed: {
-    ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex", "answerStyle"]),
+    ...mapState("CreateQuizStore", ["quizData", "selectedSlideIndex"]),
     choice: function () {
       this.typed;
       return this.quizData["slideList"][this.selectedSlideIndex]["answerList"][this.index-1];

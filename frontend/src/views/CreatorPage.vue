@@ -1,7 +1,7 @@
 <template>
   <div id="creator-page">
     <div id="creator-page__header">
-      <button class="creator-page__header__button" @click="openExitConfirm = true">나가기</button>
+      <button class="creator-page__header__button" @click="checkQuizData">나가기</button>
       <img class="ssaquiz-logo" src="@/assets/images/SSAQUIZ.png" alt="SSAQUIZ">
       <button class="creator-page__header__button" @click="save">저장하기</button>
     </div>
@@ -131,7 +131,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex']),
+    ...mapState("CreateQuizStore", ['quizData', 'selectedSlideIndex', 'preQuizData']),
     quizDataLength: function () {
       if (this.quizData.slideList === undefined) {
         return 0;
@@ -149,7 +149,7 @@ export default {
   methods: {
     ...mapActions("CommonStore", ["setIsStudent"]),
     ...mapActions("CreateQuizStore", [
-      "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide"
+      "addQuiz", "getQuizData", "resetQuizData", "setSelectedSlideIndex", "removeSlide", "setPreQuizData"
     ]),
     selectSlide: function (idx) {
       this.isSelectedSlide = 
@@ -166,8 +166,8 @@ export default {
     },
     save: function () {
       axios.post("https://k4a304.p.ssafy.io/api-quiz/slide-all", this.quizData)
-        .then(res => {
-          console.log(res.data);
+        .then(() => {
+          this.setPreQuizData(this.quizData);
           this.alertMessage = "퀴즈를 저장했습니다!";
           this.color = "#454995";
           this.flag = !this.flag;
@@ -183,6 +183,14 @@ export default {
       this.openQuizTypeDialog = false;
       this.setSelectedSlideIndex(this.isSelectedSlide.length);
     },
+    checkQuizData: function () {
+      if (JSON.stringify(this.preQuizData) !== JSON.stringify(this.quizData)) {
+        this.openExitConfirm = true;
+      }
+      else {
+        this.exit();
+      }
+    }
   }
 }
 </script>

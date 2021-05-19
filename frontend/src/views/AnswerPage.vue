@@ -46,6 +46,24 @@ export default {
   },
   data: function () {
     return {
+      answerStyle: [
+        {
+          "icon": "fas fa-cat",
+          "color": "#ffdc46"
+        },
+        {
+          "icon": "fas fa-leaf",
+          "color": "#ff85b1"
+        },
+        {
+          "icon": "fa fa-car",
+          "color": "#7cb1ff"
+        },
+        {
+          "icon": "fas fa-pills",
+          "color": "#aaed81"
+        }
+      ]
     }
   },
   watch: {
@@ -67,7 +85,6 @@ export default {
   },
   computed: {
     ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd", "category"]),
-    ...mapState("CreateQuizStore", ["answerStyle"]),
     question: function () {
       return this.quizData["slideList"][this.quizIndex]["question"];
     },
