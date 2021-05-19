@@ -28,7 +28,7 @@
         <button class="ordering-creator__ordering__button" @click="resetOrderingAnswer(); currentIdx=1;">초기화</button>
       </div>
       <div id="ordering-creator__ordering">
-        <Ordering mode="create" :currentIdx="currentIdx" @change-current-idx="changeCurrentIdx" />
+        <Ordering id="ordering-creator__ordering__choices" mode="create" :currentIdx="currentIdx" @change-current-idx="changeCurrentIdx" />
       </div>
     </div>
 
@@ -128,15 +128,6 @@ export default {
   justify-content: space-between;
 }
 
-/* #ordering-creator__question-box {
-  width: 100%;
-  height: 55%;
-  border-radius: 30px;
-  background-color: #c4c4c4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 #ordering-creator__question-box {
   width: 100%;
   height: 50%;
@@ -153,8 +144,7 @@ export default {
 }
 
 #ordering-creator__input-question {
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 38px;
   height: 40px;
   width: 100%;
@@ -171,7 +161,38 @@ export default {
   height: 85%;
   margin-top: -1.5%;
 }
+#ordering-creator__ordering__choices {
+  display: flex;
+  width: 100%;
+  height: calc(100% - 1.5%);
+  margin-top: 20px;
+}
+#text-container {
+  height: 260px;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5%;
+}
 
+#text-container textarea {
+  overflow: hidden;
+}
+
+#text-container .creator__input-question {
+  font-family: 'Jua';
+  font-size: 38px;
+  height: 20%;
+  width: 100%;
+  text-align: center;
+  resize: none;
+}
+
+.creator__input-question:focus, 
+.creator__input-question:active {
+	outline: none;
+}
 input.image-input {
   display: none;
   cursor: pointer;
@@ -187,7 +208,7 @@ input.image-input {
 /* hover시 이미지 변경 가능 */
 .tooltip {
   display: inline-block;
-  font-weight: bold;
+  font-family: 'Jua';
 }
 
 .tooltip-text {

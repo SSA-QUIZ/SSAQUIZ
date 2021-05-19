@@ -227,8 +227,10 @@ const PlayQuizStore = {
       commit('SET_ANSWER_DATA', value);
     },
     disconnectWS: function ({ commit }) {
-      ws.disconnect();
-      commit('DISCONNECT_WS', ws);
+      if (ws !== undefined && ws.connected === true) {
+        ws.disconnect();
+        commit('DISCONNECT_WS', ws);
+      }
     }
   }
 };

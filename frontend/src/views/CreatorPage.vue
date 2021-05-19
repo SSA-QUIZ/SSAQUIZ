@@ -30,7 +30,7 @@
         <TextDiv message="슬라이드를 추가해보세요!" v-if ="quizDataLength === 0" />
         <ShortAnswerCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '단답형'"/>
         <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" @control-max-length="setAlert(val)"/>
-        <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞히기'" />
+        <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞추기'" />
         <TFCreator v-else-if="quizData.slideList[selectedSlideIndex].category === 'TF'"/>
       </div>
       <div id="creator-page__settings">
@@ -207,8 +207,7 @@ export default {
 }
 
 #creator-page__header .creator-page__header__button {
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 38px;
   width: 164px;
   height: 78px;
@@ -268,7 +267,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: 'Jua';
   font-size: 30px;
   cursor: pointer;
 }
@@ -298,22 +297,19 @@ export default {
 
 .settings__title {
   display: block;
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 38px;
   padding-bottom: 10px;
 }
 
 .settings__subtitle {
   display: block;
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 25px;
 }
 
 .settings__option {
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -344,7 +340,7 @@ select {
   width: 200px;
   padding: 5px 10px;
   background-color: #c4c4c4;
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: 'Jua';
   font-size: 25px;
   border-radius: 15px;
   background: url('~@/assets/images/caret-down.png') #c4c4c4 no-repeat 95% 50%;

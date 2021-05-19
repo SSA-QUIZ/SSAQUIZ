@@ -60,8 +60,7 @@ export default {
 <style scoped>
 .select-title {
   display: block;
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 25px;
 }
 
@@ -69,7 +68,7 @@ select {
   width: 200px;
   padding: 5px 10px;
   background-color: #c4c4c4;
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: 'Jua';
   font-size: 25px;
   border-radius: 15px;
   background: url('~@/assets/images/caret-down.png') #c4c4c4 no-repeat 95% 50%;

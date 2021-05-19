@@ -144,9 +144,9 @@ export default {
   width: 100%;
   height: 50%;
   border-radius: 30px;
-  background-color: #d8d8d8;
+  background-color: #c4c4c4;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -169,16 +169,14 @@ export default {
 }
 
 #text-container .creator__input-question {
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 38px;
   height: 20%;
   width: 100%;
   text-align: center;
   resize: none;
-  /* border: 2px solid black;
-  border-radius: 10%; */
 }
+
 
 .creator__input-question:focus, 
 .creator__input-question:active {
@@ -205,7 +203,7 @@ input.image-input {
 /* hover시 이미지 변경 가능 */
 .tooltip {
   display: inline-block;
-  font-weight: bold;
+  font-family: 'Jua';
 }
 
 .tooltip-text {

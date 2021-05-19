@@ -105,8 +105,7 @@ export default {
 }
 
 .creator-quiz-button__input {
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+	font-family: 'Jua';
   font-size: 50px;
   height: 50px;
   width: 100%;

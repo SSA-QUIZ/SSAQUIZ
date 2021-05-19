@@ -5,15 +5,11 @@
       <span v-if ="isSelected" @click="$emit('delete-slide')">
         <i class="fas fa-times"></i>
       </span>
-      <!-- <img v-if="slide.imagePath" :src="slide.imagePath"> -->
-      <!-- <img v-else src="@/assets/images/Default.png"> -->
     </div>
     <div v-else class="quiz-img" :style="{ 'background-image' : `url(${defaultImage})`, 'background-size' : 'cover' }" :class="{ 'quiz-img__selected' : isSelected}">
       <span v-if ="isSelected" @click="$emit('delete-slide')">
         <i class="fas fa-times"></i>
       </span>
-      <!-- <img v-if="slide.imagePath" :src="slide.imagePath"> -->
-      <!-- <img v-else src="@/assets/images/Default.png"> -->
     </div>
   </div>
 </template>
@@ -66,7 +62,6 @@ export default {
 
 .quiz-img img {
   width: 75%;
-  /* background-size: cover; */
 }
 
 .quiz-img__selected {
@@ -76,8 +71,7 @@ export default {
 
 .slide-number {
   width: 38px;
-  font-family: 'Nanum Pen Script', cursive;
-  font-weight: bold;
+  font-family: 'Jua';
   font-size: 38px;
 }
 
