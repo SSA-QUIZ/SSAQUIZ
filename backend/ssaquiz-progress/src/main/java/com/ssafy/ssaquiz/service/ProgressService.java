@@ -300,7 +300,7 @@ public class ProgressService {
         }
 
         // student disconnect (nickname overlap)
-        if (nickname.startsWith("join fail") && pin != -1) {
+        if (pin != -1 && nickname.startsWith("join fail")) {
             String causeType = nickname.substring(9);
             logger.info("student disconnected" + causeType);
 
@@ -312,7 +312,7 @@ public class ProgressService {
         }
 
         // teacher disconnect (quiz end)
-        if ("".equals(teacher) && pin != -1) {
+        if (pin != -1 && redisUtil.getData(TEACHER + pin) != null && "".equals(teacher)) {
             logger.info("teacher disconnected (quiz end)");
 
             Message message = new Message();
@@ -325,7 +325,7 @@ public class ProgressService {
         }
 
         // teacher disconnect (quiz ongoing)
-        if (!"".equals(teacher) && pin != -1) {
+        if (pin != -1 && redisUtil.getData(TEACHER + pin) != null && !"".equals(teacher)) {
             logger.info("teacher disconnected (quiz ongoing)");
 
             Message message = new Message();
