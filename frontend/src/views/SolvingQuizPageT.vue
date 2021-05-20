@@ -22,6 +22,7 @@
         <TFChoice id="solving-quiz-t-tf" />
       </template>
       <NextStepButton @click.native="sendFinMessage(quizIndex)" dark="true" />
+      <Spinner v-if="scoreFactor !== 0"/>
     </div>
   </div>
 </template>
@@ -35,6 +36,7 @@ import MultipleChoice from '@/components/QuizTemplate/MultipleChoice.vue';
 import { mapActions, mapState } from 'vuex';
 import Ordering from '@/components/QuizTemplate/Ordering.vue';
 import TFChoice from '@/components/QuizTemplate/TFChoice.vue';
+import Spinner from '@/components/common/Spinner.vue';
 
 
 export default {
@@ -46,7 +48,8 @@ export default {
     NextStepButton,
     MultipleChoice,
     Ordering,
-    TFChoice
+    TFChoice,
+    Spinner
   },
   data: function () {
     return {
@@ -73,6 +76,9 @@ export default {
     },
     time: function () {
       return this.timeLimit[this.quizData["slideList"][this.quizIndex]["time"]];
+    },
+    scoreFactor: function () {
+      return this.quizData["slideList"][this.quizIndex]["scoreFactor"];
     },
   },
   methods: {
