@@ -89,11 +89,14 @@ export default {
 
 .ssaquiz-logo {
   max-width: 100%;
+  height: auto;
+  object-fit: contain;
 	justify-content: center;
 	margin: 0 0 15px 0;
 }
 
 #lobby-page--teacher__body {
+  height: 70%;
   width: 100%;
   display: flex;
   justify-content: center;

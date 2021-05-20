@@ -46,9 +46,9 @@ export default {
       if (this.margin != undefined) this.style += "margin: " + this.margin + ";\n";
       
       if (14 < this.answer.length && this.answer.length <= 25) {
-        this.style += "font-size: " + "2rem" + ";\n";
+        this.style += "font-size: " + "1.5rem" + ";\n";
       } else if (25 < this.answer.length) {
-        this.style += "font-size: " + "1.8rem" + ";\n";
+        this.style += "font-size: " + "1rem" + ";\n";
       }
     }
   }
@@ -64,7 +64,7 @@ export default {
 	height: 100%;
 	border-radius: 15px;
 	font-family: 'Jua';
-	font-size: 60px;
+	font-size: 2rem;
   padding: 0 auto;
 }
 .quiz-button-div {
