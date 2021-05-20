@@ -72,7 +72,7 @@ export default {
 
 <style scoped>
 #lobby-page--teacher {
-  height: 100%;
+  height: 100vh;
   background-color: #CFE1F6;
   display: flex;
   flex-direction: column;
@@ -80,7 +80,7 @@ export default {
 }
 
 #lobby-page--teacher__header {
-  margin: 150px 0 50px 0;
+  height: 30%;
   max-width: 100vw;
   width: 95%;
   display: flex;
