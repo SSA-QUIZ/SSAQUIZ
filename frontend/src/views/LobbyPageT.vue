@@ -73,6 +73,7 @@ export default {
 <style scoped>
 #lobby-page--teacher {
   height: 100vh;
+  width: 100vw;
   background-color: #CFE1F6;
   display: flex;
   flex-direction: column;
@@ -81,14 +82,13 @@ export default {
 
 #lobby-page--teacher__header {
   height: 30%;
-  max-width: 100vw;
-  width: 95%;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .ssaquiz-logo {
-  max-width: 100%;
+  width: 30%;
   height: auto;
   object-fit: contain;
 	justify-content: center;

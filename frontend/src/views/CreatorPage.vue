@@ -208,7 +208,7 @@ export default {
 
 #creator-page__header .creator-page__header__button {
   font-family: 'Jua';
-  font-size: 38px;
+  font-size: 1.5rem;
   width: 164px;
   height: 78px;
   border-radius: 30px;
@@ -251,7 +251,6 @@ export default {
 
 #creator-page__preview {
   overflow: auto;
-
   width: 100%;
   height: 90%;
 
@@ -268,7 +267,7 @@ export default {
   justify-content: center;
   align-items: center;
   font-family: 'Jua';
-  font-size: 30px;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
