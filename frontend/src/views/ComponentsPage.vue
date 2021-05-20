@@ -36,6 +36,9 @@
     <div id="component-title">ICONS</div>
     <Icons/>
 
+    <div id="component-title">Spinner</div>
+    <Spinner/>
+
     <!-- <div id="component-title">Ordering</div>
     <Ordering :answerData="answerData" />
     <OrderingFrame />
@@ -52,6 +55,7 @@ import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Header from '@/components/common/Header.vue';
 import GoogleLoginButton from '@/components/common/GoogleLoginButton.vue';
 import Icons from '@/components/common/Icons.vue';
+import Spinner from '@/components/common/Spinner.vue';
 // import Ordering from '@/components/QuizTemplate/Ordering.vue';
 // import OrderingFrame from '@/components/QuizTemplate/OrderingFrame.vue';
 // import TrueFalseButton from '@/components/QuizCreator/TrueFalseButton.vue';
@@ -65,6 +69,7 @@ export default {
     Header,
     GoogleLoginButton,
     Icons,
+    Spinner,
     // Ordering,
     // OrderingFrame,
     // TrueFalseButton,
