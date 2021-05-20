@@ -197,9 +197,10 @@ export default {
 
 <style scoped>
 #creator-page {
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
   background-color: #f2f2f2;
-  padding: 0 10px 0 10px;
+  padding: 0 1vw 0 1vw;
 }
 
 #creator-page__header {
@@ -210,16 +211,17 @@ export default {
 }
 
 #creator-page__header .ssaquiz-logo {
-  height: 100px;
+  height: 100%;
+  width: auto;
   margin-bottom: 0;
 }
 
 #creator-page__header .creator-page__header__button {
   font-family: 'Jua';
   font-size: 1.5rem;
-  width: 164px;
-  height: 78px;
-  border-radius: 30px;
+  width: 8%;
+  height: 70%;
+  border-radius: 15vmax;
 }
 
 #creator-page__header .creator-page__header__button:nth-child(1) {
@@ -245,8 +247,8 @@ export default {
 }
 
 #creator-page__preview-wrap {
-  margin: 5px 0 5px 0;
-  padding: 5px 0 0 0;
+  margin: 1vh 0 1vh 0;
+  padding: 1vh 0 0 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -261,13 +263,12 @@ export default {
   overflow: auto;
   width: 100%;
   height: 90%;
-
 }
 
 #slide-create-button {
   width: 70%;
   height: 10%;
-  margin: 10px;
+  margin: 4%;
   background-color: #989DED;
   border-radius: 15px;
   text-align: center;
@@ -289,12 +290,11 @@ export default {
 
 #creator-page__content {
   flex: 4;
-  margin: 0 10px 0 10px;
-  padding: 5px;
+  margin: 1vh 1vw 1vh 1vw;
 }
 
 #creator-page__settings {
-  margin: 5px 0 5px 0;
+  margin: 1vh 0 1vh 0;
   padding: 5px 0 0 10px;
   flex: 1;
   border: 4px solid #9B9797;
