@@ -346,6 +346,10 @@ public class ProgressService {
         String exist = "";
         while (exist != null) {
             pin = RandomStringUtils.randomNumeric(6);
+            if (pin.startsWith("0")) {
+                continue;
+            }
+
             exist = redisUtil.getData(pin);
         }
 
