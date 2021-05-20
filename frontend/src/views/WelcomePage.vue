@@ -28,10 +28,6 @@
       :alertMessage=alertMessage
       :color=color    
     />
-    <img class="whale" id="purple-whale" src="@/assets/images/보라고래.png" alt="보라고래">
-    <img class="whale" id="pink-whale" src="@/assets/images/핑크고래.png" alt="핑크고래">
-    <img class="whale" id="mobile-whale" src="@/assets/images/모바일고래.png" alt="모바일고래">
-    <img class="whale" id="student-whale" src="@/assets/images/businessWhale.png" alt="학생고래">
   </div>
 </template>
 
@@ -258,28 +254,6 @@ export default {
 }
 #pos2:checked ~ ul {
   margin-left: -105%;
-}
-
-.whale {
-  position: absolute;
-  height: 10vmax;
-  width: auto;
-  object-fit: contain;
-  z-index: 0;
-}
-#pink-whale {
-  left: 10px;
-}
-#mobile-whale {
-  left: 10px;
-  bottom: 10px;
-}
-#purple-whale {
-  right: 10px;
-}
-#student-whale {
-  right: 10px;
-  bottom: 10px;
 }
 
 @media (max-width: 700px) {
