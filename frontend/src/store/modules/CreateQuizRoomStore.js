@@ -70,13 +70,15 @@ const CreateQuizRoomStore = {
       ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
     },
     DELETE_STUDENTS: function (state, value) {
-      let newStudents = state.students.filter(student => student.nickname !== value);
-      state.students = newStudents;
-      let UserListMessage = {
-        type: "USERLIST",
-        content: state.students
-      };
-      ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
+      if (state.isStart === false) {
+        let newStudents = state.students.filter(student => student.nickname !== value);
+        state.students = newStudents;
+        let UserListMessage = {
+          type: "USERLIST",
+          content: state.students
+        };
+        ws.send(`/quiz/room/sendUserList/${pin}`, {}, JSON.stringify(UserListMessage));
+      }
     },
     // ADD_STUDENTS: function (state, value) {
     //   let randomColor = colorList[Math.floor(Math.random() * colorList.length)];
