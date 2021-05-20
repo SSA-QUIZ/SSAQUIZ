@@ -31,7 +31,7 @@
     <img class="whale" id="purple-whale" src="@/assets/images/보라고래.png" alt="보라고래">
     <img class="whale" id="pink-whale" src="@/assets/images/핑크고래.png" alt="핑크고래">
     <img class="whale" id="mobile-whale" src="@/assets/images/모바일고래.png" alt="모바일고래">
-    <img class="whale" id="student-whale" src="@/assets/images/학생고래.png" alt="학생고래">
+    <img class="whale" id="student-whale" src="@/assets/images/businessWhale.png" alt="학생고래">
   </div>
 </template>
 
