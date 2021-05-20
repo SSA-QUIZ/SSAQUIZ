@@ -7,6 +7,9 @@
       <div id="lobby-page--teacher__info">
         <button class="PIN-button">{{ PIN }}</button>
         <img class="QR-code" src="@/assets/images/QRcode.png" alt="QRcode">
+        <div id="lobby-page--teacher__number">
+          <span>현재 <span style="color: #545DE3;">{{ students.length }}명</span> 참여 중</span>
+        </div>
       </div>
       <div id="lobby-page--teacher__nickname">
         <template
@@ -98,13 +101,14 @@ export default {
 #lobby-page--teacher__body {
   height: 70%;
   width: 100%;
+  padding: 0 10% 1% 10%;
   display: flex;
   justify-content: center;
 }
 
 #lobby-page--teacher__info {
   margin-right: 30px;
-  width: 300px;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,24 +116,24 @@ export default {
 
 .PIN-button {
   font-family: 'Jua';
-	padding-top: 2px;
-  font-size: 40px;
+	padding-top: 0.1rem;
+  font-size: 2rem;
 	color: #FFFFFF;
-  max-width: 100%;
-	width: 250px;
-	height: 60px;
+	width: 50%;
+	height: 10%;
 	background-color: #545DE3;
 	border-radius: 20px;
 }
 
 .QR-code {
-  width: 85%;
-  margin-top: 10%;
+  width: 50%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 #lobby-page--teacher__nickname {
-  width: 600px;
-  height: 400px;
+  width: 50%;
+  height: 80%;
   border-width: 10px 0 10px 10px;
   border-style: solid;
   border-color: #FFFFFF;
@@ -138,6 +142,14 @@ export default {
   overflow: auto;
   display: table-cell;
   text-align: center;
+}
+
+#lobby-page--teacher__number {
+  width: 100%;
+  font-family: "Jua";
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
 ::-webkit-scrollbar { width: 30px; }
@@ -154,7 +166,7 @@ export default {
   border : 8px solid transparent;
 }
 
-@media(max-width: 1500px) {
+/* @media(max-width: 1500px) {
   #lobby-page--teacher__nickname {
     width: 350px;
     height: 350px;
@@ -162,5 +174,5 @@ export default {
   #lobby-page--teacher__info {
     width: 300px;
   }
-}
+} */
 </style>
