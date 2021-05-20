@@ -168,6 +168,7 @@ const PlayQuizStore = {
       pin = value[0];
       commit('SET_PINWS', pin);
       ws = Stomp.over(new SockJS("https://k4a304.p.ssafy.io/api-play/connect"));
+      ws.debug = () => {};
       ws.connect({}, () => {
         const subscribeMessage = {
           sender: value[1],
