@@ -5,28 +5,14 @@ const CreateQuizStore = {
   state: {
     quizData: {},
     selectedSlideIndex: 0,
-    answerStyle: [
-      {
-        "icon": "fas fa-cat",
-        "color": "#ffdc46"
-      },
-      {
-        "icon": "fas fa-leaf",
-        "color": "#ff85b1"
-      },
-      {
-        "icon": "fa fa-car",
-        "color": "#7cb1ff"
-      },
-      {
-        "icon": "fas fa-pills",
-        "color": "#aaed81"
-      }
-    ]
+    preQuizData: {},
   },
   mutations: {
     SET_QUIZ_DATA: function (state, value) {
       state.quizData = value;
+    },
+    SET_PRE_QUIZ_DATA: function (state, value) {
+      state.preQuizData = JSON.parse(JSON.stringify(value));
     },
     SET_SLIDE_QUESTION: function (state, value) {
       state.quizData.slideList[value[0]].question = value[1];
@@ -71,8 +57,12 @@ const CreateQuizStore = {
       axios.get("https://k4a304.p.ssafy.io/api-quiz/workbook/" + value)
         .then(res => {
           commit('SET_QUIZ_DATA', res.data.object);
+          commit('SET_PRE_QUIZ_DATA', res.data.object);
         })
         .catch(err => console.log(err))
+    },
+    setPreQuizData: function ({ commit }, value) {
+      commit('SET_PRE_QUIZ_DATA', value);
     },
     setSlideQuestion: function ({ commit }, value) {
       commit('SET_SLIDE_QUESTION', value);
