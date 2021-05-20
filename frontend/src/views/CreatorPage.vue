@@ -30,7 +30,7 @@
         <TextDiv message="슬라이드를 추가해보세요!" v-if ="quizDataLength === 0" />
         <ShortAnswerCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '단답형'"/>
         <MultipleChoiceCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '4지선다'" @control-max-length="setAlert(val)"/>
-        <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞추기'" />
+        <OrderingCreator v-else-if="quizData.slideList[selectedSlideIndex].category === '순서맞추기' || quizData.slideList[selectedSlideIndex].category === '순서맞히기'" />
         <TFCreator v-else-if="quizData.slideList[selectedSlideIndex].category === 'TF'"/>
       </div>
       <div id="creator-page__settings">
