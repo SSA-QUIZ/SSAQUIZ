@@ -234,6 +234,7 @@ const CreateQuizRoomStore = {
           pin = res.data.object;
           commit('SET_PINWS', pin);
           ws = Stomp.over(new SockJS("https://k4a304.p.ssafy.io/api-play/connect"));
+          ws.debug = () => {};
           ws.connect({}, () => {
             ws.subscribe(`/pin/${pin}`, (msg) => {
               let type = JSON.parse(msg.body).type
