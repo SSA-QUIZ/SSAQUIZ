@@ -53,9 +53,6 @@ public class ProgressService {
     private static final Logger logger = LoggerFactory.getLogger(ProgressService.class);
 
     public void enterTeacher(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
-        logger.info("enterTeacher()");
-        logger.info(message.toString());
-
         headerAccessor.getSessionAttributes().put("pin", pin);
         headerAccessor.getSessionAttributes().put("teacher", "true");
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
@@ -64,9 +61,6 @@ public class ProgressService {
     }
 
     public void exitTeacher(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
-        logger.info("exitTeacher()");
-        logger.info(message.toString());
-
         message.setType(MessageType.LEAVE);
         message.setContent("teacher disconnecting");
         headerAccessor.getSessionAttributes().remove("teacher");
@@ -74,9 +68,6 @@ public class ProgressService {
     }
 
     public void enterUser(int pin, Message message, SimpMessageHeaderAccessor headerAccessor) {
-        logger.info("enterUser()");
-        logger.info(message.toString());
-
         headerAccessor.getSessionAttributes().put("pin", pin);
 
         if (message == null || message.getSender() == null) {
@@ -113,16 +104,10 @@ public class ProgressService {
     }
 
     public void exitUser(int pin, Message message) {
-        logger.info("outsideUser()");
-        logger.info(message.toString());
-
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     public void startQuiz(int pin, Message message) {
-        logger.info("startQuiz()");
-        logger.info(message.toString());
-
         if (message == null || message.getContent() == null) {
             message.setContent("start fail (null)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
@@ -145,9 +130,6 @@ public class ProgressService {
     }
 
     public void finishQuiz(int pin, Message message) {
-        logger.info("finishQuiz()");
-        logger.info(message.toString());
-
         if (message == null || message.getQuizNum() == null) {
             message.setContent("finish fail (null)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
@@ -159,16 +141,10 @@ public class ProgressService {
     }
 
     public void nextQuiz(int pin, Message message) {
-        logger.info("nextQuiz()");
-        logger.info(message.toString());
-
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     public void endQuiz(int pin, Message message) {
-        logger.info("sendCategory()");
-        logger.info(message.toString());
-
         message.setContent(viewRanking(USER_LIST + pin, 0, 2));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
 
@@ -190,18 +166,12 @@ public class ProgressService {
     }
 
     public void sendCategory(int pin, Message message) {
-        logger.info("endQuiz()");
-        logger.info(message.toString());
-
         redisUtil.setData(TIME + pin, Long.toString(System.currentTimeMillis()));
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     @Transactional
     public void sendAnswer(int pin, Message message) {
-        logger.info("sendAnswer()");
-        logger.info(message.toString());
-
         if (message == null || message.getContent() == null || message.getSender() == null || message.getQuizNum() == null) {
             message.setContent("submit fail (null)");
             simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
@@ -245,16 +215,10 @@ public class ProgressService {
     }
 
     public void sendUserList(int pin, Message message) {
-        logger.info("sendUserList()");
-        logger.info(message.toString());
-
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
     public void sendTotalNum(int pin, Message message) {
-        logger.info("sendTotalNum()");
-        logger.info(message.toString());
-
         simpMessagingTemplate.convertAndSend("/pin/" + pin, message);
     }
 
@@ -275,8 +239,6 @@ public class ProgressService {
 
         // student disconnect (teacher exist)
         if (pin != -1 && redisUtil.getData(TEACHER + pin) != null && !nickname.startsWith("join fail") && !"".equals(nickname)) {
-            logger.info("student disconnected (teacher exist)(" + nickname + ")");
-
             Message message = new Message();
             message.setType(MessageType.LEAVE);
             message.setSender(nickname);
@@ -289,8 +251,6 @@ public class ProgressService {
 
         // student disconnect (teacher not exist)
         if (pin != -1 && redisUtil.getData(TEACHER + pin) == null && !nickname.startsWith("join fail") && !"".equals(nickname)) {
-            logger.info("student disconnected (teacher not exist)(" + nickname + ")");
-
             Message message = new Message();
             message.setType(MessageType.LEAVE);
             message.setSender(nickname);
@@ -302,8 +262,6 @@ public class ProgressService {
         // student disconnect (nickname overlap)
         if (pin != -1 && nickname.startsWith("join fail")) {
             String causeType = nickname.substring(9);
-            logger.info("student disconnected" + causeType);
-
             Message message = new Message();
             message.setType(MessageType.LEAVE);
             message.setContent("student disconnected" + causeType);
@@ -313,8 +271,6 @@ public class ProgressService {
 
         // teacher disconnect (quiz end)
         if (pin != -1 && redisUtil.getData(TEACHER + pin) != null && "".equals(teacher)) {
-            logger.info("teacher disconnected (quiz end)");
-
             Message message = new Message();
             message.setType(MessageType.LEAVE);
             message.setContent("teacher disconnected");
@@ -326,8 +282,6 @@ public class ProgressService {
 
         // teacher disconnect (quiz ongoing)
         if (pin != -1 && redisUtil.getData(TEACHER + pin) != null && !"".equals(teacher)) {
-            logger.info("teacher disconnected (quiz ongoing)");
-
             Message message = new Message();
             message.setType(MessageType.LEAVE);
             message.setContent("teacher disconnected");
