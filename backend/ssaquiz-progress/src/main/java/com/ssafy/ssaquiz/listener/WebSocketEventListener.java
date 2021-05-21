@@ -18,7 +18,6 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        logger.info("user connection");
     }
 
     @EventListener
