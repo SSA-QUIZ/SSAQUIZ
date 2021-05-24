@@ -41,6 +41,11 @@ public class ProgressController {
         progressService.exitUser(pin, message);
     }
 
+    @MessageMapping("/room/banUser/{pin}")
+    public void banUser(@DestinationVariable("pin") int pin, @Payload Message message) {
+        progressService.banUser(pin, message);
+    }
+
     @MessageMapping("/room/startQuiz/{pin}")
     public void startQuiz(@DestinationVariable("pin") int pin, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) {
         progressService.startQuiz(pin, message);

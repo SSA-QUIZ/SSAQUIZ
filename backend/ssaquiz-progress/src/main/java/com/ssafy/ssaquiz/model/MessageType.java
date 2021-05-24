@@ -11,5 +11,6 @@ public enum MessageType {
     SUBMIT,
     USERLIST,
     TOTALNUM,
-    TEACHER
+    TEACHER,
+    BAN
 }
