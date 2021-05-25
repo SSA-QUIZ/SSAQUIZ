@@ -3,10 +3,10 @@
     <BubbleBG/>
     <Logo />
     <div id="content">
-      <h1 id="title">중간점검</h1>
+      <h1 id="title">퀴즈결과</h1>
       <!-- 점수판 -->
       <InterimScoreBoard/>
-      <NextStepButton @click.native="nextQuiz" />
+      <NextStepButton @click.native="clickNextButton" />
       <!-- <h1 class="mention">문어님이 현재까지 3번 연속이나 답을 맞추셨어요!</h1> -->
       <!-- 배경의 고래 이미지 -->
       <img class="whale-img-1" src="@/assets/images/pinkWhale.png">
@@ -45,6 +45,11 @@ export default {
     }
   },
   watch: {
+    isEnd: function (newVal) {
+      if (newVal === true) {
+        this.$router.push({name: "ResultPage"});
+      }
+    },
     isNext: function (newVal) {
       if (newVal === true) {
         this.setIsInterim(false);
@@ -66,10 +71,17 @@ export default {
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["isNext", "teacherDisconnected"])
+    ...mapState("CreateQuizRoomStore", ["isNext", "teacherDisconnected", "quizIndex", "isEnd", "quizData"])
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["nextQuiz", "setIsInterim", "setIsNext", "setIsFin", "disconnectWS"])
+    ...mapActions("CreateQuizRoomStore", ["nextQuiz", "setIsInterim", "setIsNext", "setIsFin", "disconnectWS", "sendEndMessage"]),
+    clickNextButton: function () {
+      if (this.quizData.slideList.length === this.quizIndex) {
+        this.sendEndMessage();
+      } else {
+        this.nextQuiz();
+      }
+    },
   },
 }
 </script>
