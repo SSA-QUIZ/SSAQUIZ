@@ -47,7 +47,7 @@ export default {
     this.setUsername(this.user.nickname);
   },
   computed: {
-    ...mapState("PlayQuizStore", ["students", "isStart", "teacherDisconnected"])
+    ...mapState("PlayQuizStore", ["students", "isStart", "teacherDisconnected", "isBan"])
   },
   watch: {
     teacherDisconnected: function (newVal) {
@@ -65,7 +65,18 @@ export default {
       if (val === true) {
         this.$router.push({name: "LoadingPage"})
       }
-    }
+    },
+    isBan: function (newVal) {
+      if (newVal === true) {
+        this.alertMessage = "강퇴당하셨습니다. 잠시 후 메인페이지로 이동합니다.";
+        this.color = "red";
+        this.flag = !this.flag;
+        setTimeout (() =>   {
+          this.disconnectWS(); 
+          this.$router.push({name: "WelcomePage"});
+        }, 2500);
+      }
+    },
   },
   methods: {
     ...mapActions("PlayQuizStore", ["defaultIsStart", "setUsername", "disconnectWS"])
