@@ -17,7 +17,7 @@
           <li>
             <div id="nickname-form">
               <InputBox type="text" placeholder="닉네임을 입력해주세요" @change-input="changeNickname" @press-enter="checkNickname" />
-              <InputButton @click.native="checkNickname" text="퀴즈 풀러가기" />
+              <InputButton @click.native="checkNickname" :blocked="blocked" text="퀴즈 풀러가기" />
             </div>
           </li>
         </ul>
@@ -52,6 +52,7 @@ export default {
       color: '',
       alertMessage: '',
       flag: false,
+      blocked: false,
     };
   },
   watch: {
@@ -129,6 +130,7 @@ export default {
         this.color = "red";
         this.flag = !this.flag;
       } else {
+        this.blocked = true;
         this.connectQuiz();
       }
     },
