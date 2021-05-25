@@ -148,7 +148,7 @@ const CreateQuizRoomStore = {
     },
     DISCONNECT_WS: function (state, value) {
       state.stompClient = value;
-    }
+    },
   },
   actions: {
     setDefaultData: function ({ commit }) {
@@ -280,6 +280,14 @@ const CreateQuizRoomStore = {
       };
       ws.send(`/quiz/room/startQuiz/${pin}`, {}, JSON.stringify(sendStartMessage))
       commit('SEND_ANSWERLIST', ws);
+    },
+    banStudent: function ({ commit }, value) {
+      const sendBanStudentMessage = {
+        type: "BAN",
+        content: value
+      };
+      ws.send(`/quiz/room/banUser/${pin}`, {}, JSON.stringify(sendBanStudentMessage));
+      commit('SET_STOMP_CLIENT', ws);
     },
   }
 };
