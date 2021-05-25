@@ -74,24 +74,15 @@ export default {
     }
   },
   watch: {
-    isEnd: function (newVal) {
-      if (newVal === true) {
-        this.$router.push({name: "ResultPage"});
-      }
-    },
     isInterim: function (newVal) {
       if (newVal === true) {
         this.setQuizIndex();
-        if (this.quizData.slideList.length === this.quizIndex) {
-          this.sendEndMessage();
-        } else {
-          this.$router.push({name: "InterimScorePage"});
-        }
+        this.$router.push({name: "InterimScorePage"});
       }
     },
   },
   computed: {
-    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "isEnd", "category"]),
+    ...mapState("CreateQuizRoomStore", ["isInterim", "quizIndex", "quizData", "category"]),
     question: function () {
       return this.quizData["slideList"][this.quizIndex]["question"];
     },
