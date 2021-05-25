@@ -26,7 +26,8 @@ const PlayQuizStore = {
     teacherDisconnected: false,
     isValidNickname: 0,
     resultData2: [],
-    answerData: {}
+    answerData: {},
+    isBan: false,
   },
   getters: {},
   mutations: {
@@ -50,6 +51,7 @@ const PlayQuizStore = {
       state.isValidNickname = 0;
       state.resultData2 = [];
       state.answerData = {};
+      state.isBan = false;
     },
     SET_PINWS: function (state, value) {
       state.PIN = value;
@@ -126,6 +128,9 @@ const PlayQuizStore = {
     },
     SET_TEACHER_DISCONNECTED: function (state, value) {
       state.teacherDisconnected = value;
+    },
+    SET_ISBAN: function (state, value) {
+      state.isBan = value;
     },
   },
   actions: {
@@ -213,12 +218,19 @@ const PlayQuizStore = {
           }
         })
         ws.subscribe(`/pin/${value[0]}/nickname/${value[1]}`, (msg) => {
-          let isCorrectAnswer = JSON.parse(msg.body).content.answer;
-          let newScore = JSON.parse(msg.body).content.CurrentScore;
-          let plusScore = JSON.parse(msg.body).content.plusScore;
-          commit('SET_ISCORRECT', isCorrectAnswer);
-          commit('SET_SCORE', newScore);
-          commit('SET_PLUSSCORE', plusScore);
+          let type = JSON.parse(msg.body).type;
+          if (type === "BAN") {
+            ws.disconnect();
+            commit('SET_ISBAN', true);
+            commit('DISCONNECT_WS', ws);
+          } else {
+            let isCorrectAnswer = JSON.parse(msg.body).content.answer;
+            let newScore = JSON.parse(msg.body).content.CurrentScore;
+            let plusScore = JSON.parse(msg.body).content.plusScore;
+            commit('SET_ISCORRECT', isCorrectAnswer);
+            commit('SET_SCORE', newScore);
+            commit('SET_PLUSSCORE', plusScore);
+          }
         })
         commit('SUBSCRIBE_QUIZ_ROOM', ws);
         return 1

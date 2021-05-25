@@ -14,7 +14,7 @@
       <div id="lobby-page--teacher__nickname">
         <template
           v-for="(student, index) in students"
-        ><NicknameButton :key="index" :student=student :index=index /></template>
+        ><NicknameButton :key="index" :student=student :index=index @click.native="clickNickname(student)" /></template>
       </div>
       <NextStepButton @click.native="clickStartButton"/>
     </div>
@@ -53,7 +53,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("CreateQuizRoomStore", ["sendStartMessage", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum"]),
+    ...mapActions("CreateQuizRoomStore", ["sendStartMessage", "defaultIsStart", "startQuiz", "setQuizData", "sendTotalNum", "banStudent"]),
     clickStartButton: function () {
       axios.get(`https://k4a304.p.ssafy.io/api-quiz/workbook/${this.quizId}`)
         .then(res => {
@@ -68,6 +68,9 @@ export default {
           this.startQuiz();
         })
         .catch(err => console.log(err))
+    },
+    clickNickname: function (student) {
+      this.banStudent(student.nickname);
     },
   },
 }
