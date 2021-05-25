@@ -63,11 +63,12 @@ export default {
         this.flag = !this.flag;
         this.setIsValidNickname();
         this.disconnectWS();
-
+        this.blocked = false;
       } else if (newVal === 2) {
         this.alertMessage = "닉네임이 이미 존재합니다. 다른 닉네임을 설정해주세요."
         this.color = "red";
         this.flag = !this.flag;
+        this.blocked = false;
         this.setIsValidNickname();
         this.disconnectWS();
       } else if (newVal === 3) {
@@ -76,6 +77,7 @@ export default {
         this.flag = !this.flag;
         this.setIsValidNickname();
         this.disconnectWS();
+        this.blocked = false;
       } else if (newVal === 4) {
         this.$router.push({ name: "LobbyPageS", params: {nickname: this.nickname} });
       }
@@ -136,6 +138,7 @@ export default {
     },
     connectQuiz: function () {
       this.setPINWS([this.PIN, this.nickname]);
+      console.log(this.isValidNickname);
     },
     // 구글 로그인 token
     getToken() {
