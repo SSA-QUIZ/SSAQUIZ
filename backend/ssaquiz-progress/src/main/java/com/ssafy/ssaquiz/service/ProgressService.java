@@ -108,7 +108,7 @@ public class ProgressService {
     }
 
     public void banUser(int pin, Message message) {
-        simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getSender(), message);
+        simpMessagingTemplate.convertAndSend("/pin/" + pin + "/nickname/" + message.getContent(), message);
     }
 
     public void startQuiz(int pin, Message message) {
