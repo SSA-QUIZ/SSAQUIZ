@@ -1,6 +1,6 @@
 <template>
   <!-- 퀴즈 풀러가기 의 로딩창 -->
-  <button v-if="blocked" id="loading-button" disabled>
+  <button v-if="blocked" class="loading-button" disabled>
 		<div class="pulse-container">  
 			<div class="pulse-bubble pulse-bubble-1"></div>
 			<div class="pulse-bubble pulse-bubble-2"></div>
@@ -8,7 +8,7 @@
 		</div>
 	</button>
 	<!-- 그 외의 모든 기능 -->
-  <button v-else id="input-button">{{ text }}</button>
+  <button v-else class="input-button">{{ text }}</button>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style scoped>
-#input-button {
+.input-button {
 	font-family: 'Jua', sans-serif;
 	color: #FFFFFF;
   max-width: 100%;
@@ -31,20 +31,20 @@ export default {
 	margin: 5px 0;
 }
 
-#input-button:hover {
+.input-button:hover {
 	background-color: #454995;
 }
 
-#input-button:focus {
+.input-button:focus {
   outline: none;
 }
 
-#input-button:active {
+.input-button:active {
 	background-color: #989DED;
 }
 
 /* 로딩바 */
-#loading-button {
+.loading-button {
 	font-family: 'Jua', sans-serif;
 	color: #FFFFFF;
   max-width: 100%;
