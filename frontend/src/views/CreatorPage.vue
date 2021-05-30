@@ -44,12 +44,7 @@
         <SelectBox 
           title="scoreFactor"
           :optionList="scoreFactorList"
-           />
-        <span class="settings__subtitle">추가 옵션</span>
-        <RadioBox 
-          title="type"
-          :optionList="typeList"
-          />
+        />
       </div>
     </div>
     <Confirm 
@@ -81,7 +76,6 @@ import QuizTypeDialog from '@/components/Popup/QuizTypeDialog.vue';
 import Confirm from '@/components/Popup/Confirm.vue';
 import Alert from "@/components/Popup/Alert.vue";
 import SelectBox from '@/components/common/SelectBox.vue';
-import RadioBox from '@/components/common/RadioBox.vue';
 import TextDiv from '@/components/common/TextDiv.vue';
 
 import { mapState, mapActions } from 'vuex';
@@ -99,7 +93,6 @@ export default {
     Confirm,
     Alert,
     SelectBox,
-    RadioBox,
     TextDiv
   },
   data: function () {
@@ -119,12 +112,6 @@ export default {
         {"name" :"x1.5", "value": 1.5},
         {"name" :"x2", "value": 2},
       ],
-      typeList: [
-        {"id": "none" ,"name" :"없음"},
-        {"id": "FIFO" ,"name" :"선착순"},
-        {"id": "random" ,"name" :"랜덤뽑기"},
-      ],
-
       flag: false,
       alertMessage: '',
       color: '',

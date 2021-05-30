@@ -26,8 +26,8 @@
     
     <div id="TF-creator__answer-box">
       <div class="tf-row">
-        <CreatorQuizButton :index=0 height="100%" margin="0 5px 0 0" color="#636be8" quiz="TF" msg="True" />
-        <CreatorQuizButton :index=1 height="100%" margin="0 0 0 5px" color="#e7427e" quiz="TF" msg="False"/>
+        <CreatorQuizButton :index=0 height="100%" margin="0 5px 0 0" color="#636be8" quiz="TF" msg="O"/>
+        <CreatorQuizButton :index=1 height="100%" margin="0 0 0 5px" color="#e7427e" quiz="TF" msg="X"/>
       </div>
     </div>
   </div>
