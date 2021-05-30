@@ -282,7 +282,6 @@ const CreateQuizRoomStore = {
       commit('SEND_ANSWERLIST', ws);
     },
     banStudent: function ({ commit }, value) {
-      console.log(value);
       commit('DELETE_STUDENTS', value)
       const sendBanStudentMessage = {
         type: "BAN",

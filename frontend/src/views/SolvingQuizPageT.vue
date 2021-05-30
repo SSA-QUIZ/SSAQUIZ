@@ -8,7 +8,7 @@
         <MultipleChoice id="solving-quiz-t-choice" :choice="choices" />
       </template>
       <template v-else-if="category==='단답형'" >
-        <Quiz id="solving-quiz-t-quiz" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
+        <Quiz id="solving-quiz-t-quiz-short" :title="question" :image="imagePath !== '' ? imagePath : 'default'" />
         <div class="text-box-input" >
           <span>정답을 입력해주세요.</span>
         </div>
@@ -103,6 +103,12 @@ export default {
   height: 75%;
   justify-content:center;
   align-items: center; 
+}
+#solving-quiz-t-quiz-short {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-flow: column;
 }
 #solving-quiz-t-quiz {
   width: 100%;

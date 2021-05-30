@@ -73,7 +73,6 @@ export default {
   font-weight: bold;
   font-family: 'Noto Sans KR', sans-serif;
   background: transparent;
-
   text-overflow: ellipsis;
 }
 

@@ -10,7 +10,7 @@
         </div>
       </template>
       <template v-else-if="category==='단답형'">
-        <Quiz :title="question" :image="imagePath !== '' ? imagePath : 'default'"/>
+        <Quiz id="answer-quiz-short" :title="question" :image="imagePath !== '' ? imagePath : 'default'"/>
         <div class="text-box-input" >
           <span>{{quizData["slideList"][this.quizIndex]["answer"]}}</span>
         </div>
@@ -131,6 +131,12 @@ export default {
   display: flex;
   width: 100%;
   height: 50%;
+}
+#answer-quiz-short {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-flow: column;
 }
 .text-box-input {
   font-family: 'Jua';
