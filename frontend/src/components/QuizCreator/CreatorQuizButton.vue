@@ -1,7 +1,7 @@
 <template>
   <button class="creator-quiz-button" :style="style">
     <span><i :class="icon"></i></span>
-    <span v-if="quiz==='TF'" class="creator-quiz-button__input">{{ msg }}</span>
+    <span v-if="quiz==='TF'" class="creator-quiz-button-tf__input">{{ msg }}</span>
     <input v-else :value="choice" @input="changeChoice" type="text" :placeholder=placeholder class="creator-quiz-button__input">
     <!-- 라디오 버튼 -->
     <div class="radio-box">
@@ -108,6 +108,16 @@ export default {
 	font-family: 'Jua';
   font-size: 50px;
   height: 50px;
+  width: 100%;
+  text-align: center;
+  margin-right: 30px;
+}
+
+.creator-quiz-button-tf__input {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  font-size: 100px;
+  height: 40%;
   width: 100%;
   text-align: center;
   margin-right: 30px;
