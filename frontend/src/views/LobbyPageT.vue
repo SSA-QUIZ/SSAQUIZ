@@ -99,7 +99,7 @@ export default {
     clickNickname: function (student) {
       this.content = "강제퇴장 시키겠습니까?";
       this.emoticon = "😯";
-      this.banStudentNickname = student.nickname;
+      this.banStudentNickname = student.n;
       this.confirmFlag = true;
     },
     forcedExit: function () {
