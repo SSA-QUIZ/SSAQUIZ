@@ -31,8 +31,8 @@ export default {
   data: function () {
     return {
       user: {
-        nickname: this.$route.params.nickname,
-        color: '#545DE3',
+        n: this.$route.params.nickname,
+        c: '8',
       },
       flag: false,
       alertMessage: '',
@@ -44,7 +44,7 @@ export default {
     this.defaultIsStart();
   },
   mounted: function () {
-    this.setUsername(this.user.nickname);
+    this.setUsername(this.user.n);
   },
   computed: {
     ...mapState("PlayQuizStore", ["students", "isStart", "teacherDisconnected", "isBan"])

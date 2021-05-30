@@ -82,4 +82,18 @@ span {
   right: 5%;
   font-size: 30px;
 }
+
+::-webkit-scrollbar { width: 30px; }
+
+::-webkit-scrollbar-track { 
+  background-color: #F2F2F2;
+  border-radius: 0px 15px 15px 0px; 
+}
+
+::-webkit-scrollbar-thumb { 
+  background: #c4c4c4; 
+  border-radius: 15px;
+  background-clip: padding-box;
+  border : 8px solid transparent;
+}
 </style>
