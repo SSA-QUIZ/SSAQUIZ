@@ -43,4 +43,10 @@ export default {
   max-height: 75%;
 }
 
+#quiz-text {
+  text-align: center;
+  word-break: keep-all;
+  font-size: 0.8em;
+}
+
 </style>

@@ -38,6 +38,8 @@ import InputButton from "@/components/common/InputButton.vue";
 import Alert from '../components/Popup/Alert.vue';
 import axios from 'axios';
 
+var timer;
+
 export default {
   name: "WelcomePage",
   components: {
@@ -79,9 +81,19 @@ export default {
         this.disconnectWS();
         this.blocked = false;
       } else if (newVal === 4) {
+        clearTimeout(timer);
         this.$router.push({ name: "LobbyPageS", params: {nickname: this.nickname} });
       }
     },
+    blocked: function (newVal) {
+      if (newVal === true) {
+        setTimeout(() => {
+          this.alertMessage = "오류가 발생했습니다. 새로고침 후 다시 시도해주세요.";
+          this.color = "red";
+          this.flag = !this.flag;
+        }, 5000);
+      }
+    }
   },
   computed: {
     ...mapState("PlayQuizStore", ["isValidNickname"]),
@@ -128,7 +140,7 @@ export default {
     checkNickname: function () {
       var nicknameRegExp = /^[_a-zA-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{2,15}$/;
       if (!nicknameRegExp.test(this.nickname)) {
-        this.alertMessage = "닉네임은 영문 대소문자, 한글, 숫자, '_'로 이루어진 2~15글자로 작성해주세요.";
+        this.alertMessage = "닉네임은 영문, 한글, 숫자, '_'로 이루어진 2~15글자로 작성해주세요.";
         this.color = "red";
         this.flag = !this.flag;
       } else {
@@ -138,7 +150,6 @@ export default {
     },
     connectQuiz: function () {
       this.setPINWS([this.PIN, this.nickname]);
-      console.log(this.isValidNickname);
     },
     // 구글 로그인 token
     getToken() {
@@ -150,7 +161,6 @@ export default {
 
         // url로부터 token 획득하기
         var token = url.slice(idx + 6);
-        console.log(token);
         var last_char = token.slice(token.length - 1, token.length);
         if (last_char === "#") {
           token = token.slice(0, token.length - 1);

@@ -27,7 +27,6 @@ export default {
   data: function () {
     return {
       style: '',
-      temp: ["채원", "성진", "주빈", "나현"],
       answerStyle: [
         {
           "icon": "fas fa-cat",
@@ -102,6 +101,7 @@ export default {
   max-height: 100px;
   width: 100%;
   text-align: center;
+  word-break: keep-all;
 }
 .ordering-button__icon, .ordering-button__index {
   font-size: 5rem;
