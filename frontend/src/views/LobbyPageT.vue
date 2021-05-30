@@ -69,8 +69,8 @@ export default {
         })
         .catch(err => console.log(err))
     },
-    clickNickname: function (student) {
-      this.banStudent(student.nickname);
+    clickNickname: function (value) {
+      this.banStudent(value.n);
     },
   },
 }
