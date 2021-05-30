@@ -382,7 +382,7 @@ public class ProgressService {
         }
 
         String rightAnswer = (String) redisUtil.getHdata(key, quizNum);
-        if (answer.equals(rightAnswer)) {
+        if (answer.toUpperCase().equals(rightAnswer.toUpperCase())) {
             return true;
         }
 
