@@ -1,13 +1,13 @@
 <template>
   <div id="lobby-page--student">
+    <BubbleBG2/>
     <img class="ssaquiz-image" src="@/assets/images/WelcomPage-icon.png" alt="SSAQUIZ">
-    <NicknameButton 
-      :student="user"
-      :index="0"
-    />
-    <div id="lobby-page--student__nickname">
-      <template
-        v-for="(student, index) in students"><NicknameButton :key="index" :student="student" :index="index+1" /></template>
+    <img class="welcome-msg" src="@/assets/images/대기메세지2.png">
+    <div>
+      <NicknameButton 
+        :student="user"
+        :index="0"
+      />
     </div>
     <Alert
       :flag="flag"
@@ -20,12 +20,14 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import NicknameButton from '@/components/common/NicknameButton.vue';
+import BubbleBG2 from '@/components/effects/BubbleBG2.vue';
 import Alert from '@/components/Popup/Alert.vue';
 
 export default {
   name: "LobbyPageS",
   components: {
     NicknameButton,
+    BubbleBG2,
     Alert
   },
   data: function () {
@@ -47,7 +49,7 @@ export default {
     this.setUsername(this.user.n);
   },
   computed: {
-    ...mapState("PlayQuizStore", ["students", "isStart", "teacherDisconnected", "isBan"])
+    ...mapState("PlayQuizStore", ["isStart", "teacherDisconnected", "isBan"])
   },
   watch: {
     teacherDisconnected: function (newVal) {
@@ -86,30 +88,21 @@ export default {
 
 <style scoped>
 #lobby-page--student {
-  height: 100vh;
+  height: 100%;
   background-color: #CFE1F6;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+
+  font-family: Jua;
+  font-size: 2rem;
 }
 
 .ssaquiz-image {
   max-width: 100%;
 	margin: 0 0 15px 0;
-}
-
-#lobby-page--student__nickname {
-  width: 600px;
-  height: 400px;
-  border-width: 10px 0 10px 10px;
-  border-style: solid;
-  border-color: #FFFFFF;
-  border-radius: 20px;
-  background-color: #FFFFFF;
-  overflow: auto;
-  display: table-cell;
-  text-align: center;
-  margin: 10px 0 30px 0;
+	animation: motion 0.8s linear 0s infinite alternate;
 }
 
 ::-webkit-scrollbar { width: 30px; }
@@ -126,20 +119,19 @@ export default {
   border : 8px solid transparent;
 }
 
-@media (max-width: 700px) {
-  #lobby-page--student__nickname {
-    width: 95%;
-    height: 40vh;
-    max-height: 40%;
-    border-width: 10px 0 10px 10px;
-    border-style: solid;
-    border-color: #FFFFFF;
-    border-radius: 20px;
-    background-color: #FFFFFF;
-    overflow: auto;
-    display: table-cell;
-    text-align: center;
-    margin: 10px 0 30px 0;
+.welcome-msg {
+  width: 500px;
+}
+
+@keyframes motion {
+	100% {
+    transform: translateY(30px);
+  }
+}
+
+@media (max-width: 600px) {
+  .welcome-msg {
+    width: 300px;
   }
 }
 

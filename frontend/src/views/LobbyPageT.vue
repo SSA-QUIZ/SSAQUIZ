@@ -18,6 +18,18 @@
       </div>
       <NextStepButton @click.native="clickStartButton"/>
     </div>
+    <Confirm 
+      v-if="confirmFlag===true"
+      :content="content"
+      :emoticon="emoticon"
+      @close="confirmFlag=false"
+      @accept="forcedExit"
+    />
+    <Alert
+      :flag="flag"
+      :alertMessage=alertMessage
+      :color=color
+    />
   </div>
 </template>
 
@@ -25,18 +37,33 @@
 import { mapActions, mapState } from 'vuex';
 import NicknameButton from '@/components/common/NicknameButton.vue';
 import NextStepButton from '@/components/common/NextStepButton.vue';
+import Confirm from "@/components/Popup/Confirm.vue";
+import Alert from "@/components/Popup/Alert.vue";
 import axios from 'axios';
 
 export default {
   name: "LobbyPageT",
   components: {
     NicknameButton,
-    NextStepButton
+    NextStepButton,
+    Confirm,
+    Alert,
   },
   data: function () {
     return {
       PIN: this.$route.params.PIN,
       quizId: this.$route.params.quizId,
+
+      //banStudent
+      confirmFlag: false,
+      content: '',
+      emoticon: '',
+      banStudentNickname: '',
+
+      // Alert Message parameters
+      flag: false,
+      alertMessage: '',
+      color: '',
     }
   },
   created: function () {
@@ -69,9 +96,20 @@ export default {
         })
         .catch(err => console.log(err))
     },
-    clickNickname: function (value) {
-      this.banStudent(value.n);
+    clickNickname: function (student) {
+      this.content = "강제퇴장 시키겠습니까?";
+      this.emoticon = "😯";
+      this.banStudentNickname = student.nickname;
+      this.confirmFlag = true;
     },
+    forcedExit: function () {
+      this.banStudent(this.banStudentNickname);
+      this.confirmFlag = false;
+
+      this.alertMessage = "강제퇴장 완료!";
+      this.color = "blue";
+      this.flag = !this.flag;
+    }
   },
 }
 </script>

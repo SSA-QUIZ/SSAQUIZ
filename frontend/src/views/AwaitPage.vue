@@ -149,12 +149,10 @@ export default {
   animation-iteration-count: infinite;
 }
 
-
 .loading__letter > img {
   width: 80px;
   height: 80px;
 }
-
 
 .loading__letter:nth-child(2) {
   animation-delay: .1s;	
