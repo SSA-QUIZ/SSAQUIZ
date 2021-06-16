@@ -3,7 +3,7 @@
     <div id="dialog-container">
       <div id="dialog-title">
         <span>퀴즈 추가</span>
-        <span @click="$emit('close')"><i class="fas fa-times"></i></span>
+        <span @click="$emit('exit')"><i class="fas fa-times"></i></span>
       </div>
       <div id="dialog-content">
         <div class="type-row">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="overlay" @click="$emit('close')"></div>
+    <div class="overlay" @click="$emit('exit')"></div>
   </div>
 </template>
 
