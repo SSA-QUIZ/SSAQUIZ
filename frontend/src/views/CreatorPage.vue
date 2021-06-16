@@ -56,7 +56,8 @@
     />
     <QuizTypeDialog
       v-if="openQuizTypeDialog"
-      @close="closeDialog" 
+      @close="closeDialog"
+      @exit="exitDialog"
     />
     <Alert
       :flag="flag"
@@ -170,6 +171,9 @@ export default {
       this.openQuizTypeDialog = false;
       this.setSelectedSlideIndex(this.isSelectedSlide.length);
     },
+    exitDialog: function () {
+      this.openQuizTypeDialog = false;
+    }, 
     checkQuizData: function () {
       if (JSON.stringify(this.preQuizData) !== JSON.stringify(this.quizData)) {
         this.openExitConfirm = true;
